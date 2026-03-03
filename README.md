@@ -4,6 +4,8 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy them, or inject directly into the game's launch parameters.
 
+![Decky Proton Launch Preview](./assets/screenshot1.jpeg)
+
 ---
 
 ## Features
