@@ -1,76 +1,91 @@
-name: Build & Release Decky Plugin
+name: Build, Bump & Release Decky Plugin
 
 on:
   workflow_dispatch:
+    inputs:
+      bump:
+        description: "Select version bump type"
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
 
 permissions:
   contents: write
 
 jobs:
+  generate-changelog:
+    uses: ./.github/workflows/changelog.yml
+
   release:
     runs-on: ubuntu-latest
+    needs: generate-changelog
 
     steps:
-      # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
 
-      # Install pnpm globally
       - name: Install pnpm
         run: npm install -g pnpm
 
-      # Install project dependencies
       - name: Install dependencies
         run: pnpm install
 
-      # Build the Decky plugin
-      - name: Build plugin
-        run: pnpm build
-
-      # Prepare and zip the plugin
-      - name: Create release zip
+      - name: Setup Git user
         run: |
-          # Get plugin name and version
+          git config user.name "Decky CI"
+          git config user.email "ci@decky.app"
+
+      - name: Decode changelog
+        run: |
+          mkdir -p artifact
+          echo "${{ needs.generate-changelog.outputs.changelog }}" | base64 -d > artifact/release_notes.md
+          cat artifact/release_notes.md
+
+      - name: Bump version and create git tag
+        run: |
+          set -e
+          pnpm version ${{ github.event.inputs.bump }} -m "chore(release): v%s"
+          git push origin HEAD --follow-tags
+
+      - name: Build plugin
+        run: |
+          set -e
+          pnpm build
+
+      - name: Create plugin zip
+        run: |
+          set -e
           PLUGIN_NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
-
-          # Prepare artifact folder
           mkdir -p artifact/$PLUGIN_NAME
           cp -r dist artifact/$PLUGIN_NAME/
           cp plugin.json package.json artifact/$PLUGIN_NAME/
           cp LICENSE* README* artifact/$PLUGIN_NAME/ || true
-
-          # Zip the plugin
           pushd artifact
           zip -r "$PLUGIN_NAME-v$VERSION.zip" "$PLUGIN_NAME"
           popd
 
-          # Generate release notes from commits since last tag
-          LAST_TAG=$(git describe --tags --abbrev=0 || echo "")
-          if [ -n "$LAST_TAG" ]; then
-            NOTES=$(git log "$LAST_TAG"..HEAD --pretty=format:"- %s (%an)")
-          else
-            NOTES="Initial release"
-          fi
-          echo "$NOTES" > artifact/release_notes.txt
-
-      # Create GitHub release and upload zip
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -e
           PLUGIN_NAME=$(node -p "require('./package.json').name")
           VERSION=$(node -p "require('./package.json').version")
-
-          # Create release with release notes
-          gh release create "v$VERSION" artifact/"$PLUGIN_NAME-v$VERSION.zip" \
+          gh release create "v$VERSION" \
+            artifact/"$PLUGIN_NAME-v$VERSION.zip" \
             --title "v$VERSION" \
-            --notes-file artifact/release_notes.txt \
+            --notes-file artifact/release_notes.md \
             --draft=false \
             --prerelease=false

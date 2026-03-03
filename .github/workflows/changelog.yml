@@ -1,0 +1,100 @@
+name: Generate Changelog
+
+on:
+    workflow_call:
+        outputs:
+            changelog:
+                description: "Generated changelog as markdown"
+                value: ${{ jobs.changelog.outputs.changelog }}
+
+jobs:
+    changelog:
+        runs-on: ubuntu-latest
+        outputs:
+            changelog: ${{ steps.parse.outputs.changelog_b64 }}
+
+        steps:
+            - name: Checkout full history
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Fetch all tags
+              run: git fetch --tags
+
+            - name: Parse commits and generate changelog
+              id: parse
+              run: |
+                  LAST_TAG=$(git tag --sort=-creatordate | head -n1 || echo "")
+
+                  if [ -n "$LAST_TAG" ]; then
+                    TAG_SHA=$(git rev-list -n 1 "$LAST_TAG")
+                    HEAD_SHA=$(git rev-parse HEAD)
+                    [ "$TAG_SHA" = "$HEAD_SHA" ] && RANGE="" || RANGE="${TAG_SHA}..HEAD"
+                  else
+                    RANGE="HEAD"
+                  fi
+
+                  if [ -z "$RANGE" ]; then
+                    echo "changelog_b64=" >> $GITHUB_OUTPUT
+                    exit 0
+                  fi
+
+                  git log "$RANGE" --pretty=format:"%an|||%s" > /tmp/commits.txt
+
+                  FEATURES=()
+                  FIXES=()
+                  CHORES=()
+                  OTHERS=()
+
+                  while IFS= read -r line || [ -n "$line" ]; do
+                    author="${line%%|||*}"
+                    message="${line#*|||}"
+                    [ -z "$message" ] && continue
+
+                    clean=$(echo "$message" | sed -E 's/^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(\([^)]*\))?!?:[[:space:]]*//')
+
+                    if echo "$message" | grep -qiE '^feat(\([^)]*\))?!?:'; then
+                      FEATURES+=("- $clean ($author)")
+                    elif echo "$message" | grep -qiE '^fix(\([^)]*\))?!?:'; then
+                      FIXES+=("- $clean ($author)")
+                    elif echo "$message" | grep -qiE '^(chore|docs|style|refactor|perf|test|build|ci)(\([^)]*\))?!?:'; then
+                      [ "$message" != chore\(release\)* ] && CHORES+=("- $clean ($author)")
+                    else
+                      OTHERS+=("- $message ($author)")
+                    fi
+                  done < /tmp/commits.txt
+
+                  CHANGELOG=""
+
+                  if [ ${#FEATURES[@]} -gt 0 ]; then
+                    CHANGELOG+="## ✨ Features"$'\n\n'
+                    for item in "${FEATURES[@]}"; do CHANGELOG+="$item"$'\n'; done
+                    CHANGELOG+=$'\n'
+                  fi
+
+                  if [ ${#FIXES[@]} -gt 0 ]; then
+                    CHANGELOG+="## 🐛 Bug Fixes"$'\n\n'
+                    for item in "${FIXES[@]}"; do CHANGELOG+="$item"$'\n'; done
+                    CHANGELOG+=$'\n'
+                  fi
+
+                  if [ ${#CHORES[@]} -gt 0 ]; then
+                    CHANGELOG+="## 🔧 Chores"$'\n\n'
+                    for item in "${CHORES[@]}"; do CHANGELOG+="$item"$'\n'; done
+                    CHANGELOG+=$'\n'
+                  fi
+
+                  if [ ${#OTHERS[@]} -gt 0 ]; then
+                    CHANGELOG+="## 📦 Other"$'\n\n'
+                    for item in "${OTHERS[@]}"; do CHANGELOG+="$item"$'\n'; done
+                    CHANGELOG+=$'\n'
+                  fi
+
+                  if [ -z "$CHANGELOG" ]; then
+                    CHANGELOG="Initial release"
+                  fi
+
+                  echo "$CHANGELOG" > /tmp/changelog.md
+                  CHANGELOG_B64=$(base64 -w 0 /tmp/changelog.md)
+                  echo "changelog_b64=$CHANGELOG_B64" >> $GITHUB_OUTPUT
