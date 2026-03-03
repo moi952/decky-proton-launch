@@ -4,8 +4,8 @@
   "flags": ["debug", "_root"],
   "api_version": 1,
   "publish": {
-    "tags": ["template", "root"],
+    "tags": ["proton", "launch", "command"],
     "description": "Manage Proton launch options easily on Steam",
-    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+    "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/screenshot1.jpeg"
   }
 }

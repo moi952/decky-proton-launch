@@ -4,7 +4,7 @@ import {
   removeEventListener,
   toaster,
 } from "@decky/api";
-import { FaShip } from "react-icons/fa";
+import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
 import { Home } from "./screens/Home";
@@ -22,7 +22,7 @@ export default definePlugin(() => {
     name: "decky-proton-launch",
     titleView: <div className={staticClasses.Title}>Proton Launch</div>,
     content: <Home />,
-    icon: <FaShip />,
+    icon: <FaRocket />,
     onDismount() {
       removeEventListener("timer_event", listener);
       console.log("Plugin unloaded");
