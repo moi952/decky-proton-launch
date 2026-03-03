@@ -6,6 +6,7 @@ interface ActionButtonProps {
   onClick: () => void;
   size?: "small" | "medium" | "large";
   variant?: "primary" | "danger";
+  width?: string | number;
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
@@ -13,6 +14,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   onClick,
   size = "small",
   variant = "primary",
+  width,
 }) => {
   let style = {
     padding: "4px 8px",
@@ -33,7 +35,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        width: "fit-content",
+        width: width ?? "fit-content",
         minWidth: "unset",
         ...(variant === "danger" ? { backgroundColor: "red" } : {}),
       }}

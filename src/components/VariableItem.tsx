@@ -7,6 +7,7 @@ import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
 import { ButtonDeleteFavoriteModal } from "./ButtonDeleteFavoriteModal";
 import { useTranslation } from "react-i18next";
 import { FiPlus, FiCopy } from "react-icons/fi";
+import { ButtonDeleteCustomVariableModal } from "./ButtonDeleteCustomVariableModal";
 
 interface VariableItemProps {
   title: string;
@@ -14,6 +15,8 @@ interface VariableItemProps {
   value: string;
   onAdd: (line: string) => void;
   isFavorite?: boolean;
+  isCustom?: boolean;
+  customId?: string;
 }
 
 export const VariableItem: React.FC<VariableItemProps> = ({
@@ -22,15 +25,29 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   value,
   onAdd,
   isFavorite,
+  isCustom,
+  customId,
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const line = `${env}=${value}`;
-
+  const line = env === "" ? value : `${env}=${value}`;
   const { t } = useTranslation();
+
+  const renderActionButton = () => {
+    if (isFavorite) return <ButtonDeleteFavoriteModal title={title} />;
+    if (isCustom && customId)
+      return <ButtonDeleteCustomVariableModal id={customId} name={title} />;
+    return (
+      <ButtonFavoriteModal
+        variableName={title}
+        env={env}
+        value={value}
+        size="small"
+      />
+    );
+  };
 
   return (
     <>
-      {/* Collapse header */}
       <PanelSectionRow>
         <DialogButton
           onClick={() => setExpanded(!expanded)}
@@ -47,10 +64,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
 
         {expanded && (
           <PanelSectionRow>
-            {/* Expanded command below the buttons */}
             <div style={{ fontFamily: "monospace", color: "#eee" }}>{line}</div>
-
-            {/* Buttons just below the collapse */}
             <Focusable
               style={{ display: "flex", alignItems: "center", gap: "8px" }}
               flow-children="horizontal"
@@ -68,16 +82,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
               <ActionButton size="small" onClick={() => onAdd(line)}>
                 <FiPlus />
               </ActionButton>
-
-              {isFavorite ? (
-                <ButtonDeleteFavoriteModal title={title} />
-              ) : (
-                <ButtonFavoriteModal
-                  variableName={title}
-                  command={line}
-                  size="small"
-                />
-              )}
+              {renderActionButton()}
             </Focusable>
           </PanelSectionRow>
         )}

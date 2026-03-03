@@ -40,7 +40,9 @@
         "env": "PROTON_HIDE_NVIDIA_GPU",
         "value": "0"
       },
-      { "title": "enable_nvapi", "env": "PROTON_ENABLE_NVAPI", "value": "1" }
+      { "title": "enable_nvapi", "env": "PROTON_ENABLE_NVAPI", "value": "1" },
+      { "title": "enable_hdr_wsi", "env": "ENABLE_HDR_WSI", "value": "1" },
+      { "title": "proton_enable_hdr", "env": "PROTON_ENABLE_HDR", "value": "1" }
     ]
   },
   {

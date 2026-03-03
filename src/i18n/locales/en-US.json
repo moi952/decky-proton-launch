@@ -47,5 +47,22 @@
     "favorite_exists": "Name already exists",
     "add_to_favorite": "Add to favorites",
     "add": "Add"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Add custom variable",
+    "title": "Add a custom variable",
+    "field_name": "Name",
+    "field_env": "Environment variable",
+    "field_value": "Value",
+    "fields_required": "All fields are required",
+    "already_exists": "A variable with this name already exists",
+    "cancel": "Cancel",
+    "confirm": "Add to favorites"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Delete custom variable",
+    "description": "Delete \"{{variable_name}}\" ?",
+    "cancel": "Cancel",
+    "confirm": "Delete"
   }
 }

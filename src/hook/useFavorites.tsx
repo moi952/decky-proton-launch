@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 export interface Favorite {
   name: string;
   value: string;
+  env?: string;
+  custom?: boolean;
 }
 
 const STORAGE_KEY = "deck-proton-launch-favorites";

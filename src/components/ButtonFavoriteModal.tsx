@@ -13,12 +13,16 @@ import { useTranslation } from "react-i18next";
 import { FiStar } from "react-icons/fi";
 
 interface ButtonFavoriteModalProps {
-  command: string;
+  env?: string;
+  value?: string;
+  command?: string;
   variableName?: string;
   size?: "small" | "medium" | "large";
 }
 
 export const ButtonFavoriteModal: React.FC<ButtonFavoriteModalProps> = ({
+  env,
+  value,
   command,
   variableName = "",
   size = "small",
@@ -38,13 +42,17 @@ export const ButtonFavoriteModal: React.FC<ButtonFavoriteModalProps> = ({
           setError(t("name_required"));
           return;
         }
-
         if (favorites.some((f) => f.name === name.trim())) {
           setError(t("favorite_exists"));
           return;
         }
 
-        addFavorite({ name: name.trim(), value: command });
+        if (env && value) {
+          addFavorite({ name: name.trim(), env, value });
+        } else {
+          addFavorite({ name: name.trim(), env: "", value: command ?? "" });
+        }
+
         modalResult.Close();
       };
 

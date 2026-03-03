@@ -3,24 +3,21 @@ import variablesData from "../data/variables.json";
 import { CategorySection } from "../components/CategorySection";
 import { BottomBar } from "../components/BottomBar";
 import { PanelSectionRow, TextField } from "@decky/ui";
-import { useFavorites } from "../hook/useFavorites";
 import { useTranslation } from "react-i18next";
+import { CustomVariableSection } from "../components/CustomVariableSection";
+import { FavoriteSection } from "../components/FavoriteSection";
 
 export const Home: React.FC = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [search, setSearch] = useState("");
+  const { t } = useTranslation();
 
   const handleAdd = (line: string) => {
     if (!selected.includes(line)) setSelected([...selected, line]);
   };
 
-  const { favorites } = useFavorites();
-
-  const { t } = useTranslation();
-
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      {/* Research */}
       <PanelSectionRow>
         <TextField
           value={search}
@@ -30,22 +27,14 @@ export const Home: React.FC = () => {
         />
       </PanelSectionRow>
 
-      {/* Scrollable list */}
       <div style={{ flex: 1, overflowY: "auto" }}>
-        {favorites.length > 0 && (
-          <CategorySection
-            key="favorites"
-            category="favorites"
-            variables={favorites.map((f) => ({
-              title: f.name,
-              env: "",
-              value: f.value,
-            }))}
-            onAdd={handleAdd}
-            isFavorite
-          />
-        )}
+        {/* Favorites — combinaisons BottomBar */}
+        <FavoriteSection onAdd={handleAdd} />
 
+        {/* Custom variables — variables créées par l'utilisateur */}
+        <CustomVariableSection onAdd={handleAdd} />
+
+        {/* Variables prédéfinies */}
         {variablesData.map((cat) => (
           <CategorySection
             key={cat.category}
@@ -58,7 +47,6 @@ export const Home: React.FC = () => {
         ))}
       </div>
 
-      {/* Bottom bar always visible */}
       <div
         style={{
           position: "sticky",
