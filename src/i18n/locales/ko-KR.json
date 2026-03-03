@@ -4,7 +4,8 @@
     "performance": "성능",
     "compatibility": "호환성",
     "debug": "디버그",
-    "favorites": "즐겨찾기"
+    "favorites": "즐겨찾기",
+    "custom": "사용자 정의"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 업그레이드",
@@ -18,29 +19,51 @@
     "use_wined3d": "WineD3D 사용",
     "hide_nvidia_gpu": "NVIDIA GPU 숨기기",
     "enable_nvapi": "NVAPI 활성화",
-    "proton_log": "프로톤 로그",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton 로그",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR 표시기",
+    "dlss_indicator": "DLSS 표시기",
+    "xess_indicator": "XeSS 표시기",
+    "enable_hdr_wsi": "HDR WSI 활성화",
+    "proton_enable_hdr": "HDR 활성화"
   },
   "common": {
     "selected": "선택됨",
     "copy": "복사",
     "copy_cmd": "+Cmd",
     "add": "+",
-    "copy_all": "모두 복사",
+    "copy_all": "전체 복사",
     "inject": "주입",
     "search": "검색..."
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",
-    "description": "{{favorite_name}} 를 즐겨찾기에서 삭제하시겠습니까?",
+    "description": "{{favorite_name}}을(를) 즐겨찾기에서 삭제하시겠습니까?",
     "confirm": "삭제",
     "cancel": "취소"
   },
   "add_favorite_modal": {
     "cancel": "취소",
     "name_required": "이름은 필수입니다",
-    "favorite_exists": "이 이름은 이미 존재합니다",
+    "favorite_exists": "이름이 이미 존재합니다",
     "add_to_favorite": "즐겨찾기에 추가",
     "add": "추가"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "사용자 정의 변수 추가",
+    "title": "사용자 정의 변수 추가",
+    "field_name": "이름",
+    "field_env": "환경 변수",
+    "field_value": "값",
+    "fields_required": "모든 필드를 입력해야 합니다",
+    "already_exists": "동일한 이름의 변수가 이미 존재합니다",
+    "cancel": "취소",
+    "confirm": "즐겨찾기에 추가"
+  },
+  "delete_custom_variable_modal": {
+    "title": "사용자 정의 변수 삭제",
+    "description": "\"{{variable_name}}\"을(를) 삭제하시겠습니까?",
+    "cancel": "취소",
+    "confirm": "삭제"
   }
 }

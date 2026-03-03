@@ -4,22 +4,28 @@
     "performance": "Prestazioni",
     "compatibility": "Compatibilità",
     "debug": "Debug",
-    "favorites": "Preferiti"
+    "favorites": "Preferiti",
+    "custom": "Personalizzato"
   },
   "variables": {
-    "fsr4_upgrade": "Aggiornamento FSR4",
-    "fsr4_rdna3_upgrade": "Aggiornamento FSR4 RDNA3",
-    "dlss4_upgrade": "Aggiornamento DLSS4",
-    "xess_upgrade": "Aggiornamento XeSS",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
-    "no_esync": "Disattiva ESYNC",
-    "no_fsync": "Disattiva FSYNC",
+    "no_esync": "Disabilita ESYNC",
+    "no_fsync": "Disabilita FSYNC",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "Usa WineD3D",
     "hide_nvidia_gpu": "Nascondi GPU NVIDIA",
     "enable_nvapi": "Abilita NVAPI",
     "proton_log": "Log Proton",
-    "mangohud": "MangoHud"
+    "mangohud": "MangoHud",
+    "fsr_indicator": "Indicatore FSR",
+    "dlss_indicator": "Indicatore DLSS",
+    "xess_indicator": "Indicatore XeSS",
+    "enable_hdr_wsi": "Abilita HDR WSI",
+    "proton_enable_hdr": "Abilita HDR"
   },
   "common": {
     "selected": "Selezionato",
@@ -31,16 +37,33 @@
     "search": "Cerca..."
   },
   "delete_favorite_modal": {
-    "title": "Elimina preferito",
+    "title": "Elimina preferiti",
     "description": "Sei sicuro di voler rimuovere {{favorite_name}} dai preferiti?",
     "confirm": "Elimina",
     "cancel": "Annulla"
   },
   "add_favorite_modal": {
     "cancel": "Annulla",
-    "name_required": "Il nome è richiesto",
-    "favorite_exists": "Il nome esiste già",
+    "name_required": "Il nome è obbligatorio",
+    "favorite_exists": "Nome già esistente",
     "add_to_favorite": "Aggiungi ai preferiti",
     "add": "Aggiungi"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Aggiungi variabile personalizzata",
+    "title": "Aggiungi variabile personalizzata",
+    "field_name": "Nome",
+    "field_env": "Variabile ambiente",
+    "field_value": "Valore",
+    "fields_required": "Tutti i campi sono obbligatori",
+    "already_exists": "Esiste già una variabile con questo nome",
+    "cancel": "Annulla",
+    "confirm": "Aggiungi ai preferiti"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Elimina variabile personalizzata",
+    "description": "Eliminare \"{{variable_name}}\"?",
+    "cancel": "Annulla",
+    "confirm": "Elimina"
   }
 }

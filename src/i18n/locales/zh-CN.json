@@ -1,10 +1,11 @@
 {
   "categories": {
-    "upscale": "提升缩放",
+    "upscale": "Upscale",
     "performance": "性能",
     "compatibility": "兼容性",
     "debug": "调试",
-    "favorites": "收藏"
+    "favorites": "收藏",
+    "custom": "自定义"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 升级",
@@ -19,20 +20,25 @@
     "hide_nvidia_gpu": "隐藏 NVIDIA GPU",
     "enable_nvapi": "启用 NVAPI",
     "proton_log": "Proton 日志",
-    "mangohud": "MangoHud"
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR 指示器",
+    "dlss_indicator": "DLSS 指示器",
+    "xess_indicator": "XeSS 指示器",
+    "enable_hdr_wsi": "启用 HDR WSI",
+    "proton_enable_hdr": "启用 HDR"
   },
   "common": {
     "selected": "已选择",
     "copy": "复制",
     "copy_cmd": "+Cmd",
     "add": "+",
-    "copy_all": "全部复制",
+    "copy_all": "复制全部",
     "inject": "注入",
     "search": "搜索..."
   },
   "delete_favorite_modal": {
     "title": "删除收藏",
-    "description": "您确定要将 {{favorite_name}} 从收藏中删除吗？",
+    "description": "确定要从收藏中删除 {{favorite_name}} 吗？",
     "confirm": "删除",
     "cancel": "取消"
   },
@@ -42,5 +48,22 @@
     "favorite_exists": "名称已存在",
     "add_to_favorite": "添加到收藏",
     "add": "添加"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "添加自定义变量",
+    "title": "添加自定义变量",
+    "field_name": "名称",
+    "field_env": "环境变量",
+    "field_value": "值",
+    "fields_required": "所有字段为必填项",
+    "already_exists": "该名称的变量已存在",
+    "cancel": "取消",
+    "confirm": "添加到收藏"
+  },
+  "delete_custom_variable_modal": {
+    "title": "删除自定义变量",
+    "description": "删除 \"{{variable_name}}\" ?",
+    "cancel": "取消",
+    "confirm": "删除"
   }
 }

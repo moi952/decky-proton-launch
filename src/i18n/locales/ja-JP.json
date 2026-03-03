@@ -4,25 +4,31 @@
     "performance": "パフォーマンス",
     "compatibility": "互換性",
     "debug": "デバッグ",
-    "favorites": "お気に入り"
+    "favorites": "お気に入り",
+    "custom": "カスタム"
   },
   "variables": {
-    "fsr4_upgrade": "FSR4 アップグレード",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 アップグレード",
-    "dlss4_upgrade": "DLSS4 アップグレード",
-    "xess_upgrade": "XeSS アップグレード",
-    "dxvk_async": "DXVK 非同期",
-    "no_esync": "ESYNC 無効",
-    "no_fsync": "FSYNC 無効",
+    "fsr4_upgrade": "FSR4アップグレード",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3アップグレード",
+    "dlss4_upgrade": "DLSS4アップグレード",
+    "xess_upgrade": "XeSSアップグレード",
+    "dxvk_async": "DXVK非同期",
+    "no_esync": "ESYNC無効",
+    "no_fsync": "FSYNC無効",
     "radv_perftest_aco": "RADV PerfTest ACO",
-    "use_wined3d": "WineD3D を使用",
-    "hide_nvidia_gpu": "NVIDIA GPU を隠す",
-    "enable_nvapi": "NVAPI を有効化",
-    "proton_log": "Proton ログ",
-    "mangohud": "MangoHud"
+    "use_wined3d": "WineD3Dを使用",
+    "hide_nvidia_gpu": "NVIDIA GPUを非表示",
+    "enable_nvapi": "NVAPI有効化",
+    "proton_log": "Protonログ",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSRインジケータ",
+    "dlss_indicator": "DLSSインジケータ",
+    "xess_indicator": "XeSSインジケータ",
+    "enable_hdr_wsi": "HDR WSI有効化",
+    "proton_enable_hdr": "HDR有効化"
   },
   "common": {
-    "selected": "選択済み",
+    "selected": "選択",
     "copy": "コピー",
     "copy_cmd": "+Cmd",
     "add": "+",
@@ -31,16 +37,33 @@
     "search": "検索..."
   },
   "delete_favorite_modal": {
-    "title": "お気に入りを削除",
-    "description": "{{favorite_name}} をお気に入りから削除しますか？",
+    "title": "お気に入り削除",
+    "description": "{{favorite_name}}をお気に入りから削除してもよろしいですか？",
     "confirm": "削除",
     "cancel": "キャンセル"
   },
   "add_favorite_modal": {
     "cancel": "キャンセル",
     "name_required": "名前は必須です",
-    "favorite_exists": "名前は既に存在します",
+    "favorite_exists": "名前はすでに存在します",
     "add_to_favorite": "お気に入りに追加",
     "add": "追加"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "カスタム変数を追加",
+    "title": "カスタム変数を追加",
+    "field_name": "名前",
+    "field_env": "環境変数",
+    "field_value": "値",
+    "fields_required": "すべての項目を入力してください",
+    "already_exists": "同じ名前の変数がすでに存在します",
+    "cancel": "キャンセル",
+    "confirm": "お気に入りに追加"
+  },
+  "delete_custom_variable_modal": {
+    "title": "カスタム変数を削除",
+    "description": "\"{{variable_name}}\"を削除しますか？",
+    "cancel": "キャンセル",
+    "confirm": "削除"
   }
 }

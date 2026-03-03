@@ -4,7 +4,8 @@
     "performance": "Prestaties",
     "compatibility": "Compatibiliteit",
     "debug": "Debug",
-    "favorites": "Favorieten"
+    "favorites": "Favorieten",
+    "custom": "Aangepast"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
@@ -12,18 +13,23 @@
     "dlss4_upgrade": "DLSS4 Upgrade",
     "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
-    "no_esync": "Schakel ESYNC uit",
-    "no_fsync": "Schakel FSYNC uit",
+    "no_esync": "ESYNC uitschakelen",
+    "no_fsync": "FSYNC uitschakelen",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "Gebruik WineD3D",
     "hide_nvidia_gpu": "Verberg NVIDIA GPU",
-    "enable_nvapi": "Schakel NVAPI in",
+    "enable_nvapi": "NVAPI inschakelen",
     "proton_log": "Proton Log",
-    "mangohud": "MangoHud"
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR-indicator",
+    "dlss_indicator": "DLSS-indicator",
+    "xess_indicator": "XeSS-indicator",
+    "enable_hdr_wsi": "HDR WSI inschakelen",
+    "proton_enable_hdr": "HDR inschakelen"
   },
   "common": {
     "selected": "Geselecteerd",
-    "copy": "Kopieer",
+    "copy": "Kopiëren",
     "copy_cmd": "+Cmd",
     "add": "+",
     "copy_all": "Alles kopiëren",
@@ -31,16 +37,33 @@
     "search": "Zoeken..."
   },
   "delete_favorite_modal": {
-    "title": "Verwijder favoriet",
-    "description": "Weet je zeker dat je {{favorite_name}} uit favorieten wilt verwijderen?",
+    "title": "Favorieten verwijderen",
+    "description": "Weet je zeker dat je {{favorite_name}} uit je favorieten wilt verwijderen?",
     "confirm": "Verwijderen",
     "cancel": "Annuleren"
   },
   "add_favorite_modal": {
     "cancel": "Annuleren",
-    "name_required": "Naam is vereist",
+    "name_required": "Naam is verplicht",
     "favorite_exists": "Naam bestaat al",
     "add_to_favorite": "Toevoegen aan favorieten",
     "add": "Toevoegen"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Aangepaste variabele toevoegen",
+    "title": "Aangepaste variabele toevoegen",
+    "field_name": "Naam",
+    "field_env": "Omgevingsvariabele",
+    "field_value": "Waarde",
+    "fields_required": "Alle velden zijn verplicht",
+    "already_exists": "Er bestaat al een variabele met deze naam",
+    "cancel": "Annuleren",
+    "confirm": "Toevoegen aan favorieten"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Aangepaste variabele verwijderen",
+    "description": "Verwijder \"{{variable_name}}\"?",
+    "cancel": "Annuleren",
+    "confirm": "Verwijderen"
   }
 }

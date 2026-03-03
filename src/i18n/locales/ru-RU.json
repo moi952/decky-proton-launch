@@ -1,33 +1,39 @@
 {
   "categories": {
-    "upscale": "Улучшение",
+    "upscale": "Upscale",
     "performance": "Производительность",
     "compatibility": "Совместимость",
     "debug": "Отладка",
-    "favorites": "Избранное"
+    "favorites": "Избранное",
+    "custom": "Пользовательское"
   },
   "variables": {
-    "fsr4_upgrade": "FSR4 Улучшение",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Улучшение",
-    "dlss4_upgrade": "DLSS4 Улучшение",
-    "xess_upgrade": "XeSS Улучшение",
-    "dxvk_async": "Асинхронный DXVK",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
+    "dxvk_async": "DXVK Async",
     "no_esync": "Отключить ESYNC",
     "no_fsync": "Отключить FSYNC",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "Использовать WineD3D",
     "hide_nvidia_gpu": "Скрыть GPU NVIDIA",
     "enable_nvapi": "Включить NVAPI",
-    "proton_log": "Протон Лог",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "Индикатор FSR",
+    "dlss_indicator": "Индикатор DLSS",
+    "xess_indicator": "Индикатор XeSS",
+    "enable_hdr_wsi": "Включить HDR WSI",
+    "proton_enable_hdr": "Включить HDR"
   },
   "common": {
     "selected": "Выбрано",
     "copy": "Копировать",
-    "copy_cmd": "+Ком",
+    "copy_cmd": "+Cmd",
     "add": "+",
-    "copy_all": "Копировать Всё",
-    "inject": "Внедрить",
+    "copy_all": "Копировать всё",
+    "inject": "Инжект",
     "search": "Поиск..."
   },
   "delete_favorite_modal": {
@@ -38,9 +44,26 @@
   },
   "add_favorite_modal": {
     "cancel": "Отмена",
-    "name_required": "Имя обязательно",
-    "favorite_exists": "Имя уже существует",
+    "name_required": "Требуется имя",
+    "favorite_exists": "Имя уже используется",
     "add_to_favorite": "Добавить в избранное",
     "add": "Добавить"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Добавить пользовательскую переменную",
+    "title": "Добавить пользовательскую переменную",
+    "field_name": "Имя",
+    "field_env": "Переменная окружения",
+    "field_value": "Значение",
+    "fields_required": "Все поля обязательны",
+    "already_exists": "Переменная с таким именем уже существует",
+    "cancel": "Отмена",
+    "confirm": "Добавить в избранное"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Удалить пользовательскую переменную",
+    "description": "Удалить \"{{variable_name}}\"?",
+    "cancel": "Отмена",
+    "confirm": "Удалить"
   }
 }

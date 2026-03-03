@@ -1,38 +1,44 @@
 {
   "categories": {
-    "upscale": "Yükseltme",
+    "upscale": "Upscale",
     "performance": "Performans",
     "compatibility": "Uyumluluk",
-    "debug": "Hata Ayıkama",
-    "favorites": "Favoriler"
+    "debug": "Hata Ayıklama",
+    "favorites": "Favoriler",
+    "custom": "Özel"
   },
   "variables": {
-    "fsr4_upgrade": "FSR4 Yükseltme",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Yükseltme",
-    "dlss4_upgrade": "DLSS4 Yükseltme",
-    "xess_upgrade": "XeSS Yükseltme",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
     "no_esync": "ESYNC Devre Dışı",
     "no_fsync": "FSYNC Devre Dışı",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "WineD3D Kullan",
-    "hide_nvidia_gpu": "NVIDIA GPU’yu Gizle",
+    "hide_nvidia_gpu": "NVIDIA GPU Gizle",
     "enable_nvapi": "NVAPI Etkinleştir",
-    "proton_log": "Proton Günlüğü",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR Göstergesi",
+    "dlss_indicator": "DLSS Göstergesi",
+    "xess_indicator": "XeSS Göstergesi",
+    "enable_hdr_wsi": "HDR WSI Etkinleştir",
+    "proton_enable_hdr": "HDR Etkinleştir"
   },
   "common": {
-    "selected": "Seçildi",
+    "selected": "Seçili",
     "copy": "Kopyala",
     "copy_cmd": "+Cmd",
     "add": "+",
-    "copy_all": "Hepsini kopyala",
+    "copy_all": "Tümünü kopyala",
     "inject": "Enjekte et",
     "search": "Ara..."
   },
   "delete_favorite_modal": {
-    "title": "Favoriyi Sil",
-    "description": "{{favorite_name}} favorilerden kaldırılsın mı?",
+    "title": "Favorileri Sil",
+    "description": "{{favorite_name}} favorilerden silinsin mi?",
     "confirm": "Sil",
     "cancel": "İptal"
   },
@@ -42,5 +48,22 @@
     "favorite_exists": "İsim zaten var",
     "add_to_favorite": "Favorilere ekle",
     "add": "Ekle"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Özel değişken ekle",
+    "title": "Özel değişken ekle",
+    "field_name": "İsim",
+    "field_env": "Çevresel Değişken",
+    "field_value": "Değer",
+    "fields_required": "Tüm alanlar gerekli",
+    "already_exists": "Bu isimde bir değişken zaten var",
+    "cancel": "İptal",
+    "confirm": "Favorilere ekle"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Özel değişkeni sil",
+    "description": "\"{{variable_name}}\" silinsin mi?",
+    "cancel": "İptal",
+    "confirm": "Sil"
   }
 }

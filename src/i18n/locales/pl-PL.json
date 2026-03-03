@@ -2,15 +2,16 @@
   "categories": {
     "upscale": "Upscale",
     "performance": "Wydajność",
-    "compatibility": "Zgodność",
+    "compatibility": "Kompatybilność",
     "debug": "Debug",
-    "favorites": "Ulubione"
+    "favorites": "Ulubione",
+    "custom": "Niestandardowe"
   },
   "variables": {
-    "fsr4_upgrade": "Aktualizacja FSR4",
-    "fsr4_rdna3_upgrade": "Aktualizacja FSR4 RDNA3",
-    "dlss4_upgrade": "Aktualizacja DLSS4",
-    "xess_upgrade": "Aktualizacja XeSS",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
     "no_esync": "Wyłącz ESYNC",
     "no_fsync": "Wyłącz FSYNC",
@@ -19,15 +20,20 @@
     "hide_nvidia_gpu": "Ukryj GPU NVIDIA",
     "enable_nvapi": "Włącz NVAPI",
     "proton_log": "Proton Log",
-    "mangohud": "MangoHud"
+    "mangohud": "MangoHud",
+    "fsr_indicator": "Wskaźnik FSR",
+    "dlss_indicator": "Wskaźnik DLSS",
+    "xess_indicator": "Wskaźnik XeSS",
+    "enable_hdr_wsi": "Włącz HDR WSI",
+    "proton_enable_hdr": "Włącz HDR"
   },
   "common": {
-    "selected": "Zaznaczone",
+    "selected": "Wybrane",
     "copy": "Kopiuj",
     "copy_cmd": "+Cmd",
     "add": "+",
     "copy_all": "Kopiuj wszystko",
-    "inject": "Wstrzyknij",
+    "inject": "Wstrzyknięcie",
     "search": "Szukaj..."
   },
   "delete_favorite_modal": {
@@ -42,5 +48,22 @@
     "favorite_exists": "Nazwa już istnieje",
     "add_to_favorite": "Dodaj do ulubionych",
     "add": "Dodaj"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Dodaj zmienną niestandardową",
+    "title": "Dodaj zmienną niestandardową",
+    "field_name": "Nazwa",
+    "field_env": "Zmienna środowiskowa",
+    "field_value": "Wartość",
+    "fields_required": "Wszystkie pola są wymagane",
+    "already_exists": "Zmienna o tej nazwie już istnieje",
+    "cancel": "Anuluj",
+    "confirm": "Dodaj do ulubionych"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Usuń zmienną niestandardową",
+    "description": "Usunąć \"{{variable_name}}\"?",
+    "cancel": "Anuluj",
+    "confirm": "Usuń"
   }
 }

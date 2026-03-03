@@ -1,38 +1,44 @@
 {
   "categories": {
-    "upscale": "Melhoria de Escala",
+    "upscale": "Upscale",
     "performance": "Desempenho",
     "compatibility": "Compatibilidade",
-    "debug": "Depuração",
-    "favorites": "Favoritos"
+    "debug": "Debug",
+    "favorites": "Favoritos",
+    "custom": "Personalizado"
   },
   "variables": {
-    "fsr4_upgrade": "Upgrade FSR4",
-    "fsr4_rdna3_upgrade": "Upgrade FSR4 RDNA3",
-    "dlss4_upgrade": "Upgrade DLSS4",
-    "xess_upgrade": "Upgrade XeSS",
-    "dxvk_async": "DXVK Assíncrono",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
+    "dxvk_async": "DXVK Async",
     "no_esync": "Desativar ESYNC",
     "no_fsync": "Desativar FSYNC",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "Usar WineD3D",
     "hide_nvidia_gpu": "Ocultar GPU NVIDIA",
     "enable_nvapi": "Ativar NVAPI",
-    "proton_log": "Log do Proton",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "Indicador FSR",
+    "dlss_indicator": "Indicador DLSS",
+    "xess_indicator": "Indicador XeSS",
+    "enable_hdr_wsi": "Ativar HDR WSI",
+    "proton_enable_hdr": "Ativar HDR"
   },
   "common": {
     "selected": "Selecionado",
     "copy": "Copiar",
     "copy_cmd": "+Cmd",
     "add": "+",
-    "copy_all": "Copiar Tudo",
+    "copy_all": "Copiar tudo",
     "inject": "Injetar",
     "search": "Pesquisar..."
   },
   "delete_favorite_modal": {
-    "title": "Remover Favorito",
-    "description": "Tem certeza de que deseja remover {{favorite_name}} dos seus favoritos?",
+    "title": "Remover favoritos",
+    "description": "Tem certeza de que deseja remover {{favorite_name}} dos favoritos?",
     "confirm": "Remover",
     "cancel": "Cancelar"
   },
@@ -42,5 +48,22 @@
     "favorite_exists": "O nome já existe",
     "add_to_favorite": "Adicionar aos favoritos",
     "add": "Adicionar"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Adicionar variável personalizada",
+    "title": "Adicionar variável personalizada",
+    "field_name": "Nome",
+    "field_env": "Variável de ambiente",
+    "field_value": "Valor",
+    "fields_required": "Todos os campos são obrigatórios",
+    "already_exists": "Uma variável com este nome já existe",
+    "cancel": "Cancelar",
+    "confirm": "Adicionar aos favoritos"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Remover variável personalizada",
+    "description": "Remover \"{{variable_name}}\"?",
+    "cancel": "Cancelar",
+    "confirm": "Remover"
   }
 }

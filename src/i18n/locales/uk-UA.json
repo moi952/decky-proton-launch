@@ -1,25 +1,31 @@
 {
   "categories": {
-    "upscale": "Підвищення якості",
+    "upscale": "Upscale",
     "performance": "Продуктивність",
     "compatibility": "Сумісність",
     "debug": "Налагодження",
-    "favorites": "Улюблені"
+    "favorites": "Обране",
+    "custom": "Користувацьке"
   },
   "variables": {
-    "fsr4_upgrade": "Оновлення FSR4",
-    "fsr4_rdna3_upgrade": "Оновлення FSR4 RDNA3",
-    "dlss4_upgrade": "Оновлення DLSS4",
-    "xess_upgrade": "Оновлення XeSS",
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
     "no_esync": "Вимкнути ESYNC",
     "no_fsync": "Вимкнути FSYNC",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "use_wined3d": "Використовувати WineD3D",
-    "hide_nvidia_gpu": "Приховати GPU NVIDIA",
+    "hide_nvidia_gpu": "Сховати GPU NVIDIA",
     "enable_nvapi": "Увімкнути NVAPI",
-    "proton_log": "Протонний журнал",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "Індикатор FSR",
+    "dlss_indicator": "Індикатор DLSS",
+    "xess_indicator": "Індикатор XeSS",
+    "enable_hdr_wsi": "Увімкнути HDR WSI",
+    "proton_enable_hdr": "Увімкнути HDR"
   },
   "common": {
     "selected": "Вибрано",
@@ -27,20 +33,37 @@
     "copy_cmd": "+Cmd",
     "add": "+",
     "copy_all": "Копіювати все",
-    "inject": "Впровадити",
+    "inject": "Інжект",
     "search": "Пошук..."
   },
   "delete_favorite_modal": {
-    "title": "Видалити із улюблених",
-    "description": "Ви впевнені, що хочете видалити {{favorite_name}} з улюблених?",
+    "title": "Видалити з обраного",
+    "description": "Ви впевнені, що хочете видалити {{favorite_name}} з обраного?",
     "confirm": "Видалити",
     "cancel": "Скасувати"
   },
   "add_favorite_modal": {
     "cancel": "Скасувати",
-    "name_required": "Потрібно ім’я",
-    "favorite_exists": "Ім’я вже використовується",
-    "add_to_favorite": "Додати до улюблених",
+    "name_required": "Потрібна назва",
+    "favorite_exists": "Назва вже існує",
+    "add_to_favorite": "Додати в обране",
     "add": "Додати"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Додати користувацьку змінну",
+    "title": "Додати користувацьку змінну",
+    "field_name": "Назва",
+    "field_env": "Змінна середовища",
+    "field_value": "Значення",
+    "fields_required": "Усі поля обов'язкові",
+    "already_exists": "Змінна з цією назвою вже існує",
+    "cancel": "Скасувати",
+    "confirm": "Додати в обране"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Видалити користувацьку змінну",
+    "description": "Видалити \"{{variable_name}}\"?",
+    "cancel": "Скасувати",
+    "confirm": "Видалити"
   }
 }

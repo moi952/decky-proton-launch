@@ -37,7 +37,7 @@
     "search": "Search..."
   },
   "delete_favorite_modal": {
-    "title": "Delete Favorite",
+    "title": "Delete Favorites",
     "description": "Are you sure you want to remove {{favorite_name}} from your favorites?",
     "confirm": "Delete",
     "cancel": "Cancel"
@@ -46,23 +46,23 @@
     "cancel": "Cancel",
     "name_required": "Name is required",
     "favorite_exists": "Name already exists",
-    "add_to_favorite": "Add to favorites",
+    "add_to_favorite": "Add to Favorites",
     "add": "Add"
   },
   "add_custom_variable_modal": {
-    "button_label": "Add custom variable",
-    "title": "Add a custom variable",
+    "button_label": "Add Custom Variable",
+    "title": "Add Custom Variable",
     "field_name": "Name",
-    "field_env": "Environment variable",
+    "field_env": "Environment Variable",
     "field_value": "Value",
     "fields_required": "All fields are required",
     "already_exists": "A variable with this name already exists",
     "cancel": "Cancel",
-    "confirm": "Add to favorites"
+    "confirm": "Add to Favorites"
   },
   "delete_custom_variable_modal": {
-    "title": "Delete custom variable",
-    "description": "Delete \"{{variable_name}}\" ?",
+    "title": "Delete Custom Variable",
+    "description": "Delete \"{{variable_name}}\"?",
     "cancel": "Cancel",
     "confirm": "Delete"
   }

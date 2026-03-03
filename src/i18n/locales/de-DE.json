@@ -1,10 +1,11 @@
 {
   "categories": {
-    "upscale": "Skalierung",
+    "upscale": "Upscale",
     "performance": "Leistung",
     "compatibility": "Kompatibilität",
     "debug": "Debug",
-    "favorites": "Favoriten"
+    "favorites": "Favoriten",
+    "custom": "Benutzerdefiniert"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
@@ -18,11 +19,16 @@
     "use_wined3d": "WineD3D verwenden",
     "hide_nvidia_gpu": "NVIDIA GPU ausblenden",
     "enable_nvapi": "NVAPI aktivieren",
-    "proton_log": "Proton Protokoll",
-    "mangohud": "MangoHud"
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR Indikator",
+    "dlss_indicator": "DLSS Indikator",
+    "xess_indicator": "XeSS Indikator",
+    "enable_hdr_wsi": "HDR WSI aktivieren",
+    "proton_enable_hdr": "HDR aktivieren"
   },
   "common": {
-    "selected": "Ausgewählt",
+    "selected": "Auswahl",
     "copy": "Kopieren",
     "copy_cmd": "+Cmd",
     "add": "+",
@@ -31,16 +37,33 @@
     "search": "Suche..."
   },
   "delete_favorite_modal": {
-    "title": "Favorit löschen",
-    "description": "Möchten Sie {{favorite_name}} wirklich aus den Favoriten entfernen?",
+    "title": "Favoriten löschen",
+    "description": "Möchten Sie {{favorite_name}} aus Ihren Favoriten löschen?",
     "confirm": "Löschen",
     "cancel": "Abbrechen"
   },
   "add_favorite_modal": {
     "cancel": "Abbrechen",
-    "name_required": "Name ist erforderlich",
-    "favorite_exists": "Name existiert bereits",
+    "name_required": "Name erforderlich",
+    "favorite_exists": "Name bereits vergeben",
     "add_to_favorite": "Zu Favoriten hinzufügen",
     "add": "Hinzufügen"
+  },
+  "add_custom_variable_modal": {
+    "button_label": "Benutzerdefinierte Variable hinzufügen",
+    "title": "Benutzerdefinierte Variable hinzufügen",
+    "field_name": "Name",
+    "field_env": "Umgebungsvariable",
+    "field_value": "Wert",
+    "fields_required": "Alle Felder sind erforderlich",
+    "already_exists": "Eine Variable mit diesem Namen existiert bereits",
+    "cancel": "Abbrechen",
+    "confirm": "Zu Favoriten hinzufügen"
+  },
+  "delete_custom_variable_modal": {
+    "title": "Benutzerdefinierte Variable löschen",
+    "description": "Variable \"{{variable_name}}\" löschen?",
+    "cancel": "Abbrechen",
+    "confirm": "Löschen"
   }
 }
