@@ -4,7 +4,8 @@
     "performance": "Performance",
     "compatibility": "Compatibility",
     "debug": "Debug",
-    "favorites": "Favorites"
+    "favorites": "Favorites",
+    "custom": "Custom"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
