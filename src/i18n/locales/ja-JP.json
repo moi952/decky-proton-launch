@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "アップスケール",
+    "performance": "パフォーマンス",
+    "compatibility": "互換性",
+    "debug": "デバッグ",
+    "favorites": "お気に入り"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 アップグレード",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 アップグレード",
+    "dlss4_upgrade": "DLSS4 アップグレード",
+    "xess_upgrade": "XeSS アップグレード",
+    "dxvk_async": "DXVK 非同期",
+    "no_esync": "ESYNC 無効",
+    "no_fsync": "FSYNC 無効",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "WineD3D を使用",
+    "hide_nvidia_gpu": "NVIDIA GPU を隠す",
+    "enable_nvapi": "NVAPI を有効化",
+    "proton_log": "Proton ログ",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "選択済み",
+    "copy": "コピー",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "すべてコピー",
+    "inject": "注入",
+    "search": "検索..."
+  },
+  "delete_favorite_modal": {
+    "title": "お気に入りを削除",
+    "description": "{{favorite_name}} をお気に入りから削除しますか？",
+    "confirm": "削除",
+    "cancel": "キャンセル"
+  },
+  "add_favorite_modal": {
+    "cancel": "キャンセル",
+    "name_required": "名前は必須です",
+    "favorite_exists": "名前は既に存在します",
+    "add_to_favorite": "お気に入りに追加",
+    "add": "追加"
+  }
+}

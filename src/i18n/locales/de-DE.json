@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "Skalierung",
+    "performance": "Leistung",
+    "compatibility": "Kompatibilität",
+    "debug": "Debug",
+    "favorites": "Favoriten"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
+    "dxvk_async": "DXVK Async",
+    "no_esync": "ESYNC deaktivieren",
+    "no_fsync": "FSYNC deaktivieren",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "WineD3D verwenden",
+    "hide_nvidia_gpu": "NVIDIA GPU ausblenden",
+    "enable_nvapi": "NVAPI aktivieren",
+    "proton_log": "Proton Protokoll",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "Ausgewählt",
+    "copy": "Kopieren",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "Alles kopieren",
+    "inject": "Einfügen",
+    "search": "Suche..."
+  },
+  "delete_favorite_modal": {
+    "title": "Favorit löschen",
+    "description": "Möchten Sie {{favorite_name}} wirklich aus den Favoriten entfernen?",
+    "confirm": "Löschen",
+    "cancel": "Abbrechen"
+  },
+  "add_favorite_modal": {
+    "cancel": "Abbrechen",
+    "name_required": "Name ist erforderlich",
+    "favorite_exists": "Name existiert bereits",
+    "add_to_favorite": "Zu Favoriten hinzufügen",
+    "add": "Hinzufügen"
+  }
+}

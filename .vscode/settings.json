@@ -1,0 +1,40 @@
+{
+  // Editor Settings
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Prettier Configuration
+  "prettier.enable": true,
+  "prettier.configPath": ".prettierrc",
+
+  // ESLint Configuration
+  "eslint.enable": true,
+  "eslint.nodePath": "./node_modules",
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.options": {
+    "overrideConfigFile": ".eslintrc.cjs",
+    "extensions": [".ts", ".tsx"]
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+
+  // TypeScript Configuration
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // Stylelint Configuration
+  "stylelint.validate": ["css", "scss", "less"],
+
+  // i18n Ally Configuration
+  "i18n-ally.localesPaths": ["src/i18n", "src/i18n/locales"],
+  "i18n-ally.namespace": true,
+  "i18n-ally.sourceLanguage": "en-US",
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.defaultNamespace": "common"
+}

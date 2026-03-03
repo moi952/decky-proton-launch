@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "Підвищення якості",
+    "performance": "Продуктивність",
+    "compatibility": "Сумісність",
+    "debug": "Налагодження",
+    "favorites": "Улюблені"
+  },
+  "variables": {
+    "fsr4_upgrade": "Оновлення FSR4",
+    "fsr4_rdna3_upgrade": "Оновлення FSR4 RDNA3",
+    "dlss4_upgrade": "Оновлення DLSS4",
+    "xess_upgrade": "Оновлення XeSS",
+    "dxvk_async": "DXVK Async",
+    "no_esync": "Вимкнути ESYNC",
+    "no_fsync": "Вимкнути FSYNC",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "Використовувати WineD3D",
+    "hide_nvidia_gpu": "Приховати GPU NVIDIA",
+    "enable_nvapi": "Увімкнути NVAPI",
+    "proton_log": "Протонний журнал",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "Вибрано",
+    "copy": "Копіювати",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "Копіювати все",
+    "inject": "Впровадити",
+    "search": "Пошук..."
+  },
+  "delete_favorite_modal": {
+    "title": "Видалити із улюблених",
+    "description": "Ви впевнені, що хочете видалити {{favorite_name}} з улюблених?",
+    "confirm": "Видалити",
+    "cancel": "Скасувати"
+  },
+  "add_favorite_modal": {
+    "cancel": "Скасувати",
+    "name_required": "Потрібно ім’я",
+    "favorite_exists": "Ім’я вже використовується",
+    "add_to_favorite": "Додати до улюблених",
+    "add": "Додати"
+  }
+}

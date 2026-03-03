@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "Улучшение",
+    "performance": "Производительность",
+    "compatibility": "Совместимость",
+    "debug": "Отладка",
+    "favorites": "Избранное"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 Улучшение",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Улучшение",
+    "dlss4_upgrade": "DLSS4 Улучшение",
+    "xess_upgrade": "XeSS Улучшение",
+    "dxvk_async": "Асинхронный DXVK",
+    "no_esync": "Отключить ESYNC",
+    "no_fsync": "Отключить FSYNC",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "Использовать WineD3D",
+    "hide_nvidia_gpu": "Скрыть GPU NVIDIA",
+    "enable_nvapi": "Включить NVAPI",
+    "proton_log": "Протон Лог",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "Выбрано",
+    "copy": "Копировать",
+    "copy_cmd": "+Ком",
+    "add": "+",
+    "copy_all": "Копировать Всё",
+    "inject": "Внедрить",
+    "search": "Поиск..."
+  },
+  "delete_favorite_modal": {
+    "title": "Удалить из избранного",
+    "description": "Вы уверены, что хотите удалить {{favorite_name}} из избранного?",
+    "confirm": "Удалить",
+    "cancel": "Отмена"
+  },
+  "add_favorite_modal": {
+    "cancel": "Отмена",
+    "name_required": "Имя обязательно",
+    "favorite_exists": "Имя уже существует",
+    "add_to_favorite": "Добавить в избранное",
+    "add": "Добавить"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "Yükseltme",
+    "performance": "Performans",
+    "compatibility": "Uyumluluk",
+    "debug": "Hata Ayıkama",
+    "favorites": "Favoriler"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 Yükseltme",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Yükseltme",
+    "dlss4_upgrade": "DLSS4 Yükseltme",
+    "xess_upgrade": "XeSS Yükseltme",
+    "dxvk_async": "DXVK Async",
+    "no_esync": "ESYNC Devre Dışı",
+    "no_fsync": "FSYNC Devre Dışı",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "WineD3D Kullan",
+    "hide_nvidia_gpu": "NVIDIA GPU’yu Gizle",
+    "enable_nvapi": "NVAPI Etkinleştir",
+    "proton_log": "Proton Günlüğü",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "Seçildi",
+    "copy": "Kopyala",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "Hepsini kopyala",
+    "inject": "Enjekte et",
+    "search": "Ara..."
+  },
+  "delete_favorite_modal": {
+    "title": "Favoriyi Sil",
+    "description": "{{favorite_name}} favorilerden kaldırılsın mı?",
+    "confirm": "Sil",
+    "cancel": "İptal"
+  },
+  "add_favorite_modal": {
+    "cancel": "İptal",
+    "name_required": "İsim gerekli",
+    "favorite_exists": "İsim zaten var",
+    "add_to_favorite": "Favorilere ekle",
+    "add": "Ekle"
+  }
+}

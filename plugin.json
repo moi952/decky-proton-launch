@@ -1,0 +1,11 @@
+{
+  "name": "Decky proton launch",
+  "author": "moi952",
+  "flags": ["debug", "_root"],
+  "api_version": 1,
+  "publish": {
+    "tags": ["template", "root"],
+    "description": "Manage Proton launch options easily on Steam",
+    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+  }
+}

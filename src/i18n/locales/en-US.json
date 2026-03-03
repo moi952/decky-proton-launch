@@ -1,0 +1,51 @@
+{
+  "categories": {
+    "upscale": "Upscale",
+    "performance": "Performance",
+    "compatibility": "Compatibility",
+    "debug": "Debug",
+    "favorites": "Favorites"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "dlss4_upgrade": "DLSS4 Upgrade",
+    "xess_upgrade": "XeSS Upgrade",
+    "dxvk_async": "DXVK Async",
+    "no_esync": "Disable ESYNC",
+    "no_fsync": "Disable FSYNC",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "Use WineD3D",
+    "hide_nvidia_gpu": "Hide NVIDIA GPU",
+    "enable_nvapi": "Enable NVAPI",
+    "proton_log": "Proton Log",
+    "mangohud": "MangoHud",
+    "fsr_indicator": "FSR Indicator",
+    "dlss_indicator": "DLSS Indicator",
+    "xess_indicator": "XeSS Indicator",
+    "enable_hdr_wsi": "Enable HDR WSI",
+    "proton_enable_hdr": "Enable HDR"
+  },
+  "common": {
+    "selected": "Selected",
+    "copy": "Copy",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "Copy All",
+    "inject": "Inject",
+    "search": "Search..."
+  },
+  "delete_favorite_modal": {
+    "title": "Delete Favorite",
+    "description": "Are you sure you want to remove {{favorite_name}} from your favorites?",
+    "confirm": "Delete",
+    "cancel": "Cancel"
+  },
+  "add_favorite_modal": {
+    "cancel": "Cancel",
+    "name_required": "Name is required",
+    "favorite_exists": "Name already exists",
+    "add_to_favorite": "Add to favorites",
+    "add": "Add"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "업스케일",
+    "performance": "성능",
+    "compatibility": "호환성",
+    "debug": "디버그",
+    "favorites": "즐겨찾기"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 업그레이드",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 업그레이드",
+    "dlss4_upgrade": "DLSS4 업그레이드",
+    "xess_upgrade": "XeSS 업그레이드",
+    "dxvk_async": "DXVK 비동기",
+    "no_esync": "ESYNC 비활성화",
+    "no_fsync": "FSYNC 비활성화",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "WineD3D 사용",
+    "hide_nvidia_gpu": "NVIDIA GPU 숨기기",
+    "enable_nvapi": "NVAPI 활성화",
+    "proton_log": "프로톤 로그",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "선택됨",
+    "copy": "복사",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "모두 복사",
+    "inject": "주입",
+    "search": "검색..."
+  },
+  "delete_favorite_modal": {
+    "title": "즐겨찾기 삭제",
+    "description": "{{favorite_name}} 를 즐겨찾기에서 삭제하시겠습니까?",
+    "confirm": "삭제",
+    "cancel": "취소"
+  },
+  "add_favorite_modal": {
+    "cancel": "취소",
+    "name_required": "이름은 필수입니다",
+    "favorite_exists": "이 이름은 이미 존재합니다",
+    "add_to_favorite": "즐겨찾기에 추가",
+    "add": "추가"
+  }
+}

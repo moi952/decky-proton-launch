@@ -1,0 +1,46 @@
+{
+  "categories": {
+    "upscale": "提升缩放",
+    "performance": "性能",
+    "compatibility": "兼容性",
+    "debug": "调试",
+    "favorites": "收藏"
+  },
+  "variables": {
+    "fsr4_upgrade": "FSR4 升级",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 升级",
+    "dlss4_upgrade": "DLSS4 升级",
+    "xess_upgrade": "XeSS 升级",
+    "dxvk_async": "DXVK 异步",
+    "no_esync": "禁用 ESYNC",
+    "no_fsync": "禁用 FSYNC",
+    "radv_perftest_aco": "RADV PerfTest ACO",
+    "use_wined3d": "使用 WineD3D",
+    "hide_nvidia_gpu": "隐藏 NVIDIA GPU",
+    "enable_nvapi": "启用 NVAPI",
+    "proton_log": "Proton 日志",
+    "mangohud": "MangoHud"
+  },
+  "common": {
+    "selected": "已选择",
+    "copy": "复制",
+    "copy_cmd": "+Cmd",
+    "add": "+",
+    "copy_all": "全部复制",
+    "inject": "注入",
+    "search": "搜索..."
+  },
+  "delete_favorite_modal": {
+    "title": "删除收藏",
+    "description": "您确定要将 {{favorite_name}} 从收藏中删除吗？",
+    "confirm": "删除",
+    "cancel": "取消"
+  },
+  "add_favorite_modal": {
+    "cancel": "取消",
+    "name_required": "名称为必填项",
+    "favorite_exists": "名称已存在",
+    "add_to_favorite": "添加到收藏",
+    "add": "添加"
+  }
+}
