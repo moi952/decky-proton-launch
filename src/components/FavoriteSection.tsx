@@ -21,7 +21,7 @@ export const FavoriteSection: React.FC<FavoriteSectionProps> = ({ onAdd }) => {
           <VariableItem
             key={f.name}
             title={f.name}
-            env=""
+            env={f.env || ""}
             value={f.value}
             onAdd={onAdd}
             isFavorite
