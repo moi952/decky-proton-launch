@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <div style={{ position: "relative", height: "100%" }}>
       <PanelSectionRow>
         <TextField
           value={search}
@@ -27,14 +27,14 @@ export const Home: React.FC = () => {
         />
       </PanelSectionRow>
 
-      <div style={{ flex: 1, overflowY: "auto" }}>
-        {/* Favorites — combinaisons BottomBar */}
+      <div style={{ paddingBottom: "80px" }}>
+        {/* Favorites — BottomBar combinations */}
         <FavoriteSection onAdd={handleAdd} />
 
-        {/* Custom variables — variables créées par l'utilisateur */}
+        {/* Custom variables — user-created variables */}
         <CustomVariableSection onAdd={handleAdd} />
 
-        {/* Variables prédéfinies */}
+        {/* Predefined variables */}
         {variablesData.map((cat) => (
           <CategorySection
             key={cat.category}
@@ -51,8 +51,9 @@ export const Home: React.FC = () => {
         style={{
           position: "sticky",
           bottom: 0,
-          padding: 4,
-          backgroundColor: "inherit",
+          padding: "8px",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
         }}
       >
         <BottomBar selected={selected} />
