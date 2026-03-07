@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  DialogButton,
-  PanelSectionRow,
-  Focusable,
-  showModal,
-  ModalRoot,
-} from "@decky/ui";
+import { DialogButton, Focusable, showModal, ModalRoot } from "@decky/ui";
 import { useFavorites } from "../hook/useFavorites";
 import { ActionButton } from "./ActionButton";
 import { useTranslation } from "react-i18next";
@@ -22,45 +16,38 @@ export const ButtonDeleteFavoriteModal: React.FC<
   const { removeFavorite } = useFavorites();
 
   const { t } = useTranslation("delete_favorite_modal");
+  const { t: tCommon } = useTranslation();
 
   const handleOpen = () => {
     let modalResult: ReturnType<typeof showModal> | null = null;
 
     const ModalContent = () => (
       <ModalRoot>
-        <div
-          style={{ padding: "12px 16px", minWidth: "350px", maxWidth: "90vw" }}
-        >
-          <PanelSectionRow>
-            <div style={{ fontWeight: 600, marginBottom: 8 }}>{t("title")}</div>
-          </PanelSectionRow>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+          <div style={{ fontWeight: 600 }}>{t("title")}</div>
 
-          <PanelSectionRow>
-            <div>{t("description", { favorite_name: title })}</div>
-          </PanelSectionRow>
+          <div>{t("description", { favorite_name: title })}</div>
 
-          <PanelSectionRow>
-            <Focusable
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: "8px",
+          <Focusable
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "8px",
+            }}
+            flow-children="horizontal"
+          >
+            <DialogButton onClick={() => modalResult?.Close()}>
+              {tCommon("cancel")}
+            </DialogButton>
+            <DialogButton
+              onClick={() => {
+                removeFavorite(title);
+                modalResult?.Close();
               }}
-              flow-children="horizontal"
             >
-              <DialogButton onClick={() => modalResult?.Close()}>
-                {t("cancel")}
-              </DialogButton>
-              <DialogButton
-                onClick={() => {
-                  removeFavorite(title);
-                  modalResult?.Close();
-                }}
-              >
-                {t("confirm")}
-              </DialogButton>
-            </Focusable>
-          </PanelSectionRow>
+              {tCommon("delete")}
+            </DialogButton>
+          </Focusable>
         </div>
       </ModalRoot>
     );

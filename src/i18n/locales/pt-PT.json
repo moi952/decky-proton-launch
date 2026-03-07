@@ -41,16 +41,16 @@
     "add": "Adicionar",
     "copy_all": "Copiar tudo",
     "inject": "Injetar",
-    "search": "Pesquisar...",
+    "search": "Procurar...",
     "enabled": "Ativado",
     "disabled": "Desativado",
     "cancel": "Cancelar",
     "create": "Criar",
-    "delete": "Excluir"
+    "delete": "Eliminar"
   },
   "delete_favorite_modal": {
     "title": "Remover favoritos",
-    "description": "Tem certeza de que deseja remover {{favorite_name}} dos favoritos?"
+    "description": "Tem a certeza de que pretende remover {{favorite_name}} dos favoritos?"
   },
   "add_favorite_modal": {
     "name_required": "O nome é obrigatório",
@@ -64,10 +64,10 @@
     "field_env": "Variável de ambiente",
     "field_value": "Valor",
     "fields_required": "Todos os campos são obrigatórios",
-    "already_exists": "Uma variável com este nome já existe"
+    "already_exists": "Já existe uma variável com este nome"
   },
   "delete_custom_variable_modal": {
     "title": "Remover variável personalizada",
-    "description": "Remover \"{{variable_name}}\"?"
+    "description": "Eliminar \"{{variable_name}}\"?"
   }
 }

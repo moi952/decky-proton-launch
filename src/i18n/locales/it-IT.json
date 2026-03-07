@@ -5,7 +5,10 @@
     "compatibility": "Compatibilità",
     "debug": "Debug",
     "favorites": "Preferiti",
-    "custom": "Personalizzato"
+    "custom": "Personalizzato",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
@@ -15,7 +18,9 @@
     "dxvk_async": "DXVK Async",
     "no_esync": "Disabilita ESYNC",
     "no_fsync": "Disabilita FSYNC",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "Usa WineD3D",
     "hide_nvidia_gpu": "Nascondi GPU NVIDIA",
     "enable_nvapi": "Abilita NVAPI",
@@ -25,45 +30,44 @@
     "dlss_indicator": "Indicatore DLSS",
     "xess_indicator": "Indicatore XeSS",
     "enable_hdr_wsi": "Abilita HDR WSI",
-    "proton_enable_hdr": "Abilita HDR"
+    "proton_enable_hdr": "Abilita HDR",
+    "smooth_motion": "Abilita Smooth Motion",
+    "steam_deck_disabled": "Disabilita Steam Deck"
   },
   "common": {
     "selected": "Selezionato",
     "copy": "Copia",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "Aggiungi",
     "copy_all": "Copia tutto",
     "inject": "Inietta",
-    "search": "Cerca..."
+    "search": "Cerca...",
+    "enabled": "Attivato",
+    "disabled": "Disattivato",
+    "cancel": "Annulla",
+    "create": "Crea",
+    "delete": "Elimina"
   },
   "delete_favorite_modal": {
     "title": "Elimina preferiti",
-    "description": "Sei sicuro di voler rimuovere {{favorite_name}} dai preferiti?",
-    "confirm": "Elimina",
-    "cancel": "Annulla"
+    "description": "Sei sicuro di voler rimuovere {{favorite_name}} dai preferiti?"
   },
   "add_favorite_modal": {
-    "cancel": "Annulla",
     "name_required": "Il nome è obbligatorio",
     "favorite_exists": "Nome già esistente",
-    "add_to_favorite": "Aggiungi ai preferiti",
-    "add": "Aggiungi"
+    "add_to_favorite": "Aggiungi ai preferiti"
   },
   "add_custom_variable_modal": {
     "button_label": "Aggiungi variabile personalizzata",
     "title": "Aggiungi variabile personalizzata",
     "field_name": "Nome",
-    "field_env": "Variabile ambiente",
+    "field_env": "Variabile d'ambiente",
     "field_value": "Valore",
     "fields_required": "Tutti i campi sono obbligatori",
-    "already_exists": "Esiste già una variabile con questo nome",
-    "cancel": "Annulla",
-    "confirm": "Aggiungi ai preferiti"
+    "already_exists": "Esiste già una variabile con questo nome"
   },
   "delete_custom_variable_modal": {
     "title": "Elimina variabile personalizzata",
-    "description": "Eliminare \"{{variable_name}}\"?",
-    "cancel": "Annulla",
-    "confirm": "Elimina"
+    "description": "Eliminare \"{{variable_name}}\"?"
   }
 }

@@ -5,7 +5,10 @@
     "compatibility": "Совместимость",
     "debug": "Отладка",
     "favorites": "Избранное",
-    "custom": "Пользовательское"
+    "custom": "Пользовательское",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
@@ -15,7 +18,9 @@
     "dxvk_async": "DXVK Async",
     "no_esync": "Отключить ESYNC",
     "no_fsync": "Отключить FSYNC",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "Использовать WineD3D",
     "hide_nvidia_gpu": "Скрыть GPU NVIDIA",
     "enable_nvapi": "Включить NVAPI",
@@ -25,29 +30,32 @@
     "dlss_indicator": "Индикатор DLSS",
     "xess_indicator": "Индикатор XeSS",
     "enable_hdr_wsi": "Включить HDR WSI",
-    "proton_enable_hdr": "Включить HDR"
+    "proton_enable_hdr": "Включить HDR",
+    "smooth_motion": "Включить Smooth Motion",
+    "steam_deck_disabled": "Отключить Steam Deck"
   },
   "common": {
     "selected": "Выбрано",
     "copy": "Копировать",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "Добавить",
     "copy_all": "Копировать всё",
     "inject": "Инжект",
-    "search": "Поиск..."
+    "search": "Поиск...",
+    "enabled": "Включено",
+    "disabled": "Отключено",
+    "cancel": "Отмена",
+    "create": "Создать",
+    "delete": "Удалить"
   },
   "delete_favorite_modal": {
     "title": "Удалить из избранного",
-    "description": "Вы уверены, что хотите удалить {{favorite_name}} из избранного?",
-    "confirm": "Удалить",
-    "cancel": "Отмена"
+    "description": "Вы уверены, что хотите удалить {{favorite_name}} из избранного?"
   },
   "add_favorite_modal": {
-    "cancel": "Отмена",
     "name_required": "Требуется имя",
     "favorite_exists": "Имя уже используется",
-    "add_to_favorite": "Добавить в избранное",
-    "add": "Добавить"
+    "add_to_favorite": "Добавить в избранное"
   },
   "add_custom_variable_modal": {
     "button_label": "Добавить пользовательскую переменную",
@@ -56,14 +64,10 @@
     "field_env": "Переменная окружения",
     "field_value": "Значение",
     "fields_required": "Все поля обязательны",
-    "already_exists": "Переменная с таким именем уже существует",
-    "cancel": "Отмена",
-    "confirm": "Добавить в избранное"
+    "already_exists": "Переменная с таким именем уже существует"
   },
   "delete_custom_variable_modal": {
     "title": "Удалить пользовательскую переменную",
-    "description": "Удалить \"{{variable_name}}\"?",
-    "cancel": "Отмена",
-    "confirm": "Удалить"
+    "description": "Удалить \"{{variable_name}}\"?"
   }
 }

@@ -5,7 +5,10 @@
     "compatibility": "互換性",
     "debug": "デバッグ",
     "favorites": "お気に入り",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4アップグレード",
@@ -15,39 +18,44 @@
     "dxvk_async": "DXVK非同期",
     "no_esync": "ESYNC無効",
     "no_fsync": "FSYNC無効",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "WineD3Dを使用",
     "hide_nvidia_gpu": "NVIDIA GPUを非表示",
     "enable_nvapi": "NVAPI有効化",
     "proton_log": "Protonログ",
     "mangohud": "MangoHud",
-    "fsr_indicator": "FSRインジケータ",
-    "dlss_indicator": "DLSSインジケータ",
-    "xess_indicator": "XeSSインジケータ",
+    "fsr_indicator": "FSRインジケーター",
+    "dlss_indicator": "DLSSインジケーター",
+    "xess_indicator": "XeSSインジケーター",
     "enable_hdr_wsi": "HDR WSI有効化",
-    "proton_enable_hdr": "HDR有効化"
+    "proton_enable_hdr": "HDR有効化",
+    "smooth_motion": "Smooth Motion有効化",
+    "steam_deck_disabled": "Steam Deck無効化"
   },
   "common": {
     "selected": "選択",
     "copy": "コピー",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "追加",
     "copy_all": "すべてコピー",
     "inject": "注入",
-    "search": "検索..."
+    "search": "検索...",
+    "enabled": "有効",
+    "disabled": "無効",
+    "cancel": "キャンセル",
+    "create": "作成",
+    "delete": "削除"
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",
-    "description": "{{favorite_name}}をお気に入りから削除してもよろしいですか？",
-    "confirm": "削除",
-    "cancel": "キャンセル"
+    "description": "{{favorite_name}}をお気に入りから削除してもよろしいですか？"
   },
   "add_favorite_modal": {
-    "cancel": "キャンセル",
     "name_required": "名前は必須です",
     "favorite_exists": "名前はすでに存在します",
-    "add_to_favorite": "お気に入りに追加",
-    "add": "追加"
+    "add_to_favorite": "お気に入りに追加"
   },
   "add_custom_variable_modal": {
     "button_label": "カスタム変数を追加",
@@ -56,14 +64,10 @@
     "field_env": "環境変数",
     "field_value": "値",
     "fields_required": "すべての項目を入力してください",
-    "already_exists": "同じ名前の変数がすでに存在します",
-    "cancel": "キャンセル",
-    "confirm": "お気に入りに追加"
+    "already_exists": "同じ名前の変数がすでに存在します"
   },
   "delete_custom_variable_modal": {
     "title": "カスタム変数を削除",
-    "description": "\"{{variable_name}}\"を削除しますか？",
-    "cancel": "キャンセル",
-    "confirm": "削除"
+    "description": "\"{{variable_name}}\"を削除しますか？"
   }
 }

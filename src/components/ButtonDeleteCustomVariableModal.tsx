@@ -22,6 +22,7 @@ export const ButtonDeleteCustomVariableModal: React.FC<
 > = ({ id, name, size = "small" }) => {
   const { removeCustomVariable } = useCustomVariables();
   const { t } = useTranslation("delete_custom_variable_modal");
+  const { t: tCommon } = useTranslation();
 
   const handleOpen = () => {
     let modalResult: ReturnType<typeof showModal> | null = null;
@@ -47,7 +48,7 @@ export const ButtonDeleteCustomVariableModal: React.FC<
               flow-children="horizontal"
             >
               <DialogButton onClick={() => modalResult?.Close()}>
-                {t("cancel")}
+                {tCommon("cancel")}
               </DialogButton>
               <DialogButton
                 onClick={() => {
@@ -55,7 +56,7 @@ export const ButtonDeleteCustomVariableModal: React.FC<
                   modalResult?.Close();
                 }}
               >
-                {t("confirm")}
+                {tCommon("delete")}
               </DialogButton>
             </Focusable>
           </PanelSectionRow>

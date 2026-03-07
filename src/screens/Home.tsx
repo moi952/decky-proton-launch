@@ -6,6 +6,7 @@ import { PanelSectionRow, TextField } from "@decky/ui";
 import { useTranslation } from "react-i18next";
 import { CustomVariableSection } from "../components/CustomVariableSection";
 import { FavoriteSection } from "../components/FavoriteSection";
+import { Variable } from "../data/types";
 
 export const Home: React.FC = () => {
   const [selected, setSelected] = useState<string[]>([]);
@@ -14,6 +15,10 @@ export const Home: React.FC = () => {
 
   const handleAdd = (line: string) => {
     if (!selected.includes(line)) setSelected([...selected, line]);
+  };
+
+  const handleClean = () => {
+    setSelected([]);
   };
 
   return (
@@ -39,7 +44,7 @@ export const Home: React.FC = () => {
           <CategorySection
             key={cat.category}
             category={cat.category}
-            variables={cat.variables.filter((v) =>
+            variables={(cat.variables as Variable[]).filter((v) =>
               v.title.toLowerCase().includes(search.toLowerCase()),
             )}
             onAdd={handleAdd}
@@ -56,7 +61,7 @@ export const Home: React.FC = () => {
           WebkitBackdropFilter: "blur(20px)",
         }}
       >
-        <BottomBar selected={selected} />
+        <BottomBar selected={selected} onClean={handleClean} />
       </div>
     </div>
   );

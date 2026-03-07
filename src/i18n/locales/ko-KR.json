@@ -5,7 +5,10 @@
     "compatibility": "호환성",
     "debug": "디버그",
     "favorites": "즐겨찾기",
-    "custom": "사용자 정의"
+    "custom": "사용자 정의",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 업그레이드",
@@ -15,7 +18,9 @@
     "dxvk_async": "DXVK 비동기",
     "no_esync": "ESYNC 비활성화",
     "no_fsync": "FSYNC 비활성화",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "WineD3D 사용",
     "hide_nvidia_gpu": "NVIDIA GPU 숨기기",
     "enable_nvapi": "NVAPI 활성화",
@@ -25,29 +30,32 @@
     "dlss_indicator": "DLSS 표시기",
     "xess_indicator": "XeSS 표시기",
     "enable_hdr_wsi": "HDR WSI 활성화",
-    "proton_enable_hdr": "HDR 활성화"
+    "proton_enable_hdr": "HDR 활성화",
+    "smooth_motion": "Smooth Motion 활성화",
+    "steam_deck_disabled": "Steam Deck 비활성화"
   },
   "common": {
     "selected": "선택됨",
     "copy": "복사",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "추가",
     "copy_all": "전체 복사",
     "inject": "주입",
-    "search": "검색..."
+    "search": "검색...",
+    "enabled": "활성화",
+    "disabled": "비활성화",
+    "cancel": "취소",
+    "create": "생성",
+    "delete": "삭제"
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",
-    "description": "{{favorite_name}}을(를) 즐겨찾기에서 삭제하시겠습니까?",
-    "confirm": "삭제",
-    "cancel": "취소"
+    "description": "{{favorite_name}}을(를) 즐겨찾기에서 삭제하시겠습니까?"
   },
   "add_favorite_modal": {
-    "cancel": "취소",
     "name_required": "이름은 필수입니다",
     "favorite_exists": "이름이 이미 존재합니다",
-    "add_to_favorite": "즐겨찾기에 추가",
-    "add": "추가"
+    "add_to_favorite": "즐겨찾기에 추가"
   },
   "add_custom_variable_modal": {
     "button_label": "사용자 정의 변수 추가",
@@ -56,14 +64,10 @@
     "field_env": "환경 변수",
     "field_value": "값",
     "fields_required": "모든 필드를 입력해야 합니다",
-    "already_exists": "동일한 이름의 변수가 이미 존재합니다",
-    "cancel": "취소",
-    "confirm": "즐겨찾기에 추가"
+    "already_exists": "동일한 이름의 변수가 이미 존재합니다"
   },
   "delete_custom_variable_modal": {
     "title": "사용자 정의 변수 삭제",
-    "description": "\"{{variable_name}}\"을(를) 삭제하시겠습니까?",
-    "cancel": "취소",
-    "confirm": "삭제"
+    "description": "\"{{variable_name}}\"을(를) 삭제하시겠습니까?"
   }
 }

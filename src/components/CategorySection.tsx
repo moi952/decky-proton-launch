@@ -2,10 +2,11 @@ import React from "react";
 import { PanelSection } from "@decky/ui";
 import { VariableItem } from "./VariableItem";
 import { useTranslation } from "react-i18next";
+import { Variable } from "../data/types";
 
 interface CategorySectionProps {
   category: string;
-  variables: { title: string; env: string; value: string }[];
+  variables: Variable[];
   onAdd: (line: string) => void;
   isFavorite?: boolean;
 }
@@ -29,7 +30,8 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
             key={v.env || v.title}
             title={isFavorite ? v.title : tVariables(v.title)}
             env={v.env}
-            value={v.value}
+            value={"value" in v ? v.value : undefined}
+            variable={v}
             onAdd={onAdd}
             isFavorite={isFavorite}
           />
