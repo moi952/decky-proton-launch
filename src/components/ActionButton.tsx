@@ -29,19 +29,32 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   }
 
   return (
-    <DialogButton
-      style={{
-        ...style,
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: width ?? "fit-content",
-        minWidth: "unset",
-        ...(variant === "danger" ? { backgroundColor: "red" } : {}),
-      }}
-      onClick={onClick}
-    >
-      {children}
-    </DialogButton>
+    <>
+      <style>{`
+      .dialog-button.danger {
+          background-color: #ef4444 !important;
+          color: #fff;
+      }
+      .dialog-button.danger:focus,
+      .dialog-button.danger:hover {
+          color: #ef4444 !important;
+          background-color: #fff !important;
+      }
+    `}</style>
+      <DialogButton
+        className={`dialog-button ${variant === "danger" ? "danger" : "primary"}`}
+        style={{
+          ...style,
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: width ?? "fit-content",
+          minWidth: "unset",
+        }}
+        onClick={onClick}
+      >
+        {children}
+      </DialogButton>
+    </>
   );
 };

@@ -5,17 +5,22 @@
     "compatibility": "Compatibility",
     "debug": "Debug",
     "favorites": "Favorites",
-    "custom": "Custom"
+    "custom": "Custom",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
     "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
     "no_esync": "Disable ESYNC",
     "no_fsync": "Disable FSYNC",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "Use WineD3D",
     "hide_nvidia_gpu": "Hide NVIDIA GPU",
     "enable_nvapi": "Enable NVAPI",
@@ -25,29 +30,32 @@
     "dlss_indicator": "DLSS Indicator",
     "xess_indicator": "XeSS Indicator",
     "enable_hdr_wsi": "Enable HDR WSI",
-    "proton_enable_hdr": "Enable HDR"
+    "proton_enable_hdr": "Enable HDR",
+    "smooth_motion": "Enable Smooth Motion",
+    "steam_deck_disabled": "Disable Steam Deck"
   },
   "common": {
     "selected": "Selected",
     "copy": "Copy",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "Add",
     "copy_all": "Copy All",
     "inject": "Inject",
-    "search": "Search..."
+    "search": "Search...",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "cancel": "Cancel",
+    "create": "Create",
+    "delete": "Delete"
   },
   "delete_favorite_modal": {
     "title": "Delete Favorites",
-    "description": "Are you sure you want to remove {{favorite_name}} from your favorites?",
-    "confirm": "Delete",
-    "cancel": "Cancel"
+    "description": "Are you sure you want to remove {{favorite_name}} from your favorites?"
   },
   "add_favorite_modal": {
-    "cancel": "Cancel",
     "name_required": "Name is required",
     "favorite_exists": "Name already exists",
-    "add_to_favorite": "Add to Favorites",
-    "add": "Add"
+    "add_to_favorite": "Add to Favorites"
   },
   "add_custom_variable_modal": {
     "button_label": "Add Custom Variable",
@@ -56,14 +64,10 @@
     "field_env": "Environment Variable",
     "field_value": "Value",
     "fields_required": "All fields are required",
-    "already_exists": "A variable with this name already exists",
-    "cancel": "Cancel",
-    "confirm": "Add to Favorites"
+    "already_exists": "A variable with this name already exists"
   },
   "delete_custom_variable_modal": {
     "title": "Delete Custom Variable",
-    "description": "Delete \"{{variable_name}}\"?",
-    "cancel": "Cancel",
-    "confirm": "Delete"
+    "description": "Delete \"{{variable_name}}\"?"
   }
 }

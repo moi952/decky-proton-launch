@@ -5,7 +5,10 @@
     "compatibility": "Compatibiliteit",
     "debug": "Debug",
     "favorites": "Favorieten",
-    "custom": "Aangepast"
+    "custom": "Aangepast",
+    "intel_commands": "Intel",
+    "nvidia_commands": "NVIDIA",
+    "amd_commands": "AMD"
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
@@ -15,7 +18,9 @@
     "dxvk_async": "DXVK Async",
     "no_esync": "ESYNC uitschakelen",
     "no_fsync": "FSYNC uitschakelen",
+    "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
+    "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "Gebruik WineD3D",
     "hide_nvidia_gpu": "Verberg NVIDIA GPU",
     "enable_nvapi": "NVAPI inschakelen",
@@ -25,29 +30,32 @@
     "dlss_indicator": "DLSS-indicator",
     "xess_indicator": "XeSS-indicator",
     "enable_hdr_wsi": "HDR WSI inschakelen",
-    "proton_enable_hdr": "HDR inschakelen"
+    "proton_enable_hdr": "HDR inschakelen",
+    "smooth_motion": "Smooth Motion inschakelen",
+    "steam_deck_disabled": "Steam Deck uitschakelen"
   },
   "common": {
     "selected": "Geselecteerd",
     "copy": "Kopiëren",
     "copy_cmd": "+Cmd",
-    "add": "+",
+    "add": "Toevoegen",
     "copy_all": "Alles kopiëren",
     "inject": "Injecteren",
-    "search": "Zoeken..."
+    "search": "Zoeken...",
+    "enabled": "Ingeschakeld",
+    "disabled": "Uitgeschakeld",
+    "cancel": "Annuleren",
+    "create": "Aanmaken",
+    "delete": "Verwijderen"
   },
   "delete_favorite_modal": {
     "title": "Favorieten verwijderen",
-    "description": "Weet je zeker dat je {{favorite_name}} uit je favorieten wilt verwijderen?",
-    "confirm": "Verwijderen",
-    "cancel": "Annuleren"
+    "description": "Weet je zeker dat je {{favorite_name}} uit je favorieten wilt verwijderen?"
   },
   "add_favorite_modal": {
-    "cancel": "Annuleren",
     "name_required": "Naam is verplicht",
     "favorite_exists": "Naam bestaat al",
-    "add_to_favorite": "Toevoegen aan favorieten",
-    "add": "Toevoegen"
+    "add_to_favorite": "Toevoegen aan favorieten"
   },
   "add_custom_variable_modal": {
     "button_label": "Aangepaste variabele toevoegen",
@@ -56,14 +64,10 @@
     "field_env": "Omgevingsvariabele",
     "field_value": "Waarde",
     "fields_required": "Alle velden zijn verplicht",
-    "already_exists": "Er bestaat al een variabele met deze naam",
-    "cancel": "Annuleren",
-    "confirm": "Toevoegen aan favorieten"
+    "already_exists": "Er bestaat al een variabele met deze naam"
   },
   "delete_custom_variable_modal": {
     "title": "Aangepaste variabele verwijderen",
-    "description": "Verwijder \"{{variable_name}}\"?",
-    "cancel": "Annuleren",
-    "confirm": "Verwijderen"
+    "description": "Verwijder \"{{variable_name}}\"?"
   }
 }

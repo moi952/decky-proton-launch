@@ -3,7 +3,7 @@ import { PanelSection } from "@decky/ui";
 import { useCustomVariables } from "../hook/useCustomVariables";
 import { useTranslation } from "react-i18next";
 import { VariableItem } from "./VariableItem";
-import { AddCustomVariableModal } from "./AddCustomVariableModal";
+import { ButtonAddCustomVariableModal } from "./ButtonAddCustomVariableModal";
 
 interface CustomVariableSectionProps {
   onAdd: (line: string) => void;
@@ -18,7 +18,7 @@ export const CustomVariableSection: React.FC<CustomVariableSectionProps> = ({
   return (
     <PanelSection title={t("custom")}>
       <div style={{ display: "flex", gap: "8px", flexDirection: "column" }}>
-        <AddCustomVariableModal />
+        <ButtonAddCustomVariableModal />
         {customVariables.map((v) => (
           <VariableItem
             key={v.id}

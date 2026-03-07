@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  PanelSectionRow,
   DialogButton,
   TextField,
   showModal,
@@ -29,6 +28,7 @@ export const ButtonFavoriteModal: React.FC<ButtonFavoriteModalProps> = ({
 }) => {
   const { addFavorite, favorites } = useFavorites();
   const { t } = useTranslation("add_favorite_modal");
+  const { t: tCommon } = useTranslation();
 
   const handleOpen = () => {
     let modalResult: ReturnType<typeof showModal>;
@@ -58,58 +58,35 @@ export const ButtonFavoriteModal: React.FC<ButtonFavoriteModalProps> = ({
 
       return (
         <ModalRoot>
-          <div
-            style={{
-              padding: "12px 16px",
-              minWidth: "350px",
-              maxWidth: "90vw",
-            }}
-          >
-            <PanelSectionRow>
-              <div style={{ fontWeight: 600, marginBottom: 8 }}>
-                {t("add_to_favorite")}
-              </div>
-            </PanelSectionRow>
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div style={{ fontWeight: 600 }}>{t("add_to_favorite")}</div>
 
-            <PanelSectionRow>
-              <TextField
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setError("");
-                }}
-                style={{ width: "100%" }}
-              />
-            </PanelSectionRow>
+            <TextField
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                setError("");
+              }}
+              style={{ width: "100%" }}
+            />
 
-            {error && (
-              <div
-                style={{
-                  color: "red",
-                  fontSize: 12,
-                  marginLeft: 4,
-                  marginBottom: 4,
-                }}
-              >
-                {error}
-              </div>
-            )}
+            {error && <div style={{ color: "red", fontSize: 12 }}>{error}</div>}
 
-            <PanelSectionRow>
-              <Focusable
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  gap: "8px",
-                }}
-                flow-children="horizontal"
-              >
-                <DialogButton onClick={() => modalResult.Close()}>
-                  {t("cancel")}
-                </DialogButton>
-                <DialogButton onClick={handleConfirm}>{t("add")}</DialogButton>
-              </Focusable>
-            </PanelSectionRow>
+            <Focusable
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                gap: "8px",
+              }}
+              flow-children="horizontal"
+            >
+              <DialogButton onClick={() => modalResult.Close()}>
+                {tCommon("cancel")}
+              </DialogButton>
+              <DialogButton onClick={handleConfirm}>
+                {tCommon("add")}
+              </DialogButton>
+            </Focusable>
           </div>
         </ModalRoot>
       );

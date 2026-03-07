@@ -8,9 +8,14 @@ import { useTranslation } from "react-i18next";
 interface BottomBarProps {
   selected: string[];
   onInject?: (combined: string) => void;
+  onClean: () => void;
 }
 
-export const BottomBar: React.FC<BottomBarProps> = ({ selected, onInject }) => {
+export const BottomBar: React.FC<BottomBarProps> = ({
+  selected,
+  onInject,
+  onClean,
+}) => {
   const combined = selected.join(" ") + " %command%";
 
   const { t } = useTranslation();
@@ -21,7 +26,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({ selected, onInject }) => {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 4,
+          gap: "12px",
           width: "100%",
           fontFamily: "monospace",
         }}
@@ -37,23 +42,22 @@ export const BottomBar: React.FC<BottomBarProps> = ({ selected, onInject }) => {
         </div>
 
         <Focusable
-          style={{ display: "flex", alignItems: "center", gap: "1rem" }}
+          style={{ display: "flex", alignItems: "center", gap: "8px" }}
           flow-children="horizontal"
         >
           <ActionButton size="small" onClick={() => copy(combined)}>
             {t("copy_all")}
           </ActionButton>
 
-          <ActionButton
-            size="small"
-            onClick={() =>
-              onInject
-                ? onInject(combined)
-                : alert("Inject Launch Options: " + combined)
-            }
-          >
-            {t("inject")}
+          <ActionButton size="small" onClick={() => onClean()}>
+            {t("clean")}
           </ActionButton>
+
+          {onInject && (
+            <ActionButton size="small" onClick={() => onInject(combined)}>
+              {t("inject")}
+            </ActionButton>
+          )}
 
           <ButtonFavoriteModal command={selected.join(" ")} size="small" />
         </Focusable>

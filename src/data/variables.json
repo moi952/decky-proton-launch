@@ -1,25 +1,63 @@
 [
   {
-    "category": "upscale",
+    "category": "nvidia_commands",
     "variables": [
-      { "title": "fsr4_upgrade", "env": "PROTON_FSR4_UPGRADE", "value": "1" },
       {
-        "title": "fsr4_rdna3_upgrade",
-        "env": "PROTON_FSR4_RDNA3_UPGRADE",
+        "title": "dlss4_upgrade",
+        "env": "PROTON_DLSS4_UPGRADE",
+        "type": "bool",
         "value": "1"
       },
-      { "title": "dlss4_upgrade", "env": "PROTON_DLSS4_UPGRADE", "value": "1" },
-      { "title": "xess_upgrade", "env": "PROTON_XESS_UPGRADE", "value": "1" },
-
-      { "title": "fsr_indicator", "env": "PROTON_FSR_INDICATOR", "value": "1" },
       {
         "title": "dlss_indicator",
         "env": "PROTON_DLSS_INDICATOR",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "smooth_motion",
+        "env": "NVPRESENT_ENABLE_SMOOTH_MOTION",
+        "type": "bool",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "category": "amd_commands",
+    "variables": [
+      {
+        "title": "fsr4_upgrade",
+        "env": "PROTON_FSR4_UPGRADE",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "fsr4_rdna3_upgrade",
+        "env": "PROTON_FSR4_RDNA3_UPGRADE",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "fsr_indicator",
+        "env": "PROTON_FSR_INDICATOR",
+        "type": "bool",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "category": "intel_commands",
+    "variables": [
+      {
+        "title": "xess_upgrade",
+        "env": "PROTON_XESS_UPGRADE",
+        "type": "bool",
         "value": "1"
       },
       {
         "title": "xess_indicator",
         "env": "PROTON_XESS_INDICATOR",
+        "type": "bool",
         "value": "1"
       }
     ]
@@ -27,29 +65,75 @@
   {
     "category": "performance",
     "variables": [
-      { "title": "dxvk_async", "env": "DXVK_ASYNC", "value": "1" },
-      { "title": "radv_perftest_aco", "env": "RADV_PERFTEST", "value": "aco" }
+      {
+        "title": "dxvk_async",
+        "env": "DXVK_ASYNC",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "radv_perftest",
+        "env": "RADV_PERFTEST",
+        "type": "enum",
+        "defaultValue": "aco",
+        "values": [
+          { "title": "radv_perftest_aco", "value": "aco" },
+          { "title": "radv_perftest_gpl", "value": "gpl" }
+        ]
+      }
     ]
   },
   {
     "category": "compatibility",
     "variables": [
-      { "title": "use_wined3d", "env": "PROTON_USE_WINED3D", "value": "1" },
+      {
+        "title": "use_wined3d",
+        "env": "PROTON_USE_WINED3D",
+        "type": "bool",
+        "value": "1"
+      },
       {
         "title": "hide_nvidia_gpu",
         "env": "PROTON_HIDE_NVIDIA_GPU",
+        "type": "bool",
         "value": "0"
       },
-      { "title": "enable_nvapi", "env": "PROTON_ENABLE_NVAPI", "value": "1" },
-      { "title": "enable_hdr_wsi", "env": "ENABLE_HDR_WSI", "value": "1" },
-      { "title": "proton_enable_hdr", "env": "PROTON_ENABLE_HDR", "value": "1" }
+      {
+        "title": "enable_nvapi",
+        "env": "PROTON_ENABLE_NVAPI",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "enable_hdr_wsi",
+        "env": "ENABLE_HDR_WSI",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "proton_enable_hdr",
+        "env": "PROTON_ENABLE_HDR",
+        "type": "bool",
+        "value": "1"
+      },
+      {
+        "title": "steam_deck_disabled",
+        "env": "SteamDeck",
+        "type": "bool",
+        "value": "0"
+      }
     ]
   },
   {
     "category": "debug",
     "variables": [
-      { "title": "proton_log", "env": "PROTON_LOG", "value": "1" },
-      { "title": "mangohud", "env": "MANGOHUD", "value": "1" }
+      {
+        "title": "proton_log",
+        "env": "PROTON_LOG",
+        "type": "bool",
+        "value": "1"
+      },
+      { "title": "mangohud", "env": "MANGOHUD", "type": "bool", "value": "1" }
     ]
   }
 ]
