@@ -3,7 +3,7 @@ import { useFavorites } from "../context/FavoritesContext";
 import { VariableItem } from "./VariableItem";
 import { FiStar } from "react-icons/fi";
 import TitleSection from "./TitleSection";
-import PannelSectionCustom from "./PanelSectionCustom";
+import PanelSectionCustom from "./PanelSectionCustom";
 
 export const FavoriteSection: React.FC = () => {
   const { favorites } = useFavorites();
@@ -11,7 +11,7 @@ export const FavoriteSection: React.FC = () => {
   if (!favorites.length) return null;
 
   return (
-    <PannelSectionCustom>
+    <PanelSectionCustom>
       <TitleSection title="favorites" icon={<FiStar size={12} />} />
       <div style={{ display: "flex", gap: "8px", flexDirection: "column" }}>
         {favorites.map((f) => (
@@ -24,6 +24,6 @@ export const FavoriteSection: React.FC = () => {
           />
         ))}
       </div>
-    </PannelSectionCustom>
+    </PanelSectionCustom>
   );
 };

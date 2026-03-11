@@ -82,5 +82,9 @@
     "remove_from_fav": "削除",
     "remove_from_custom": "削除",
     "add_to_stack": "+ Stack"
+  },
+  "settings_view": {
+    "settings": "設定",
+    "settings_categories": "表示するカテゴリー"
   }
 }

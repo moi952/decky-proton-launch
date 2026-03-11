@@ -3,7 +3,7 @@ import { VariableItem } from "./VariableItem";
 import { useTranslation } from "react-i18next";
 import { Variable } from "../data/types";
 import TitleSection from "./TitleSection";
-import PannelSectionCustom from "./PanelSectionCustom";
+import PanelSectionCustom from "./PanelSectionCustom";
 
 interface CategorySectionProps {
   category: string;
@@ -21,7 +21,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
   if (!variables.length) return null;
 
   return (
-    <PannelSectionCustom>
+    <PanelSectionCustom>
       <TitleSection title={category} />
       <div
         style={{
@@ -41,6 +41,6 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
           />
         ))}
       </div>
-    </PannelSectionCustom>
+    </PanelSectionCustom>
   );
 };

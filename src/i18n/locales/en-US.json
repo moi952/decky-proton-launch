@@ -82,5 +82,9 @@
     "remove_from_fav": "Unfav",
     "remove_from_custom": "Remove",
     "add_to_stack": "+ Stack"
+  },
+  "settings_view": {
+    "settings": "Settings",
+    "settings_categories": "Visible categories"
   }
 }
