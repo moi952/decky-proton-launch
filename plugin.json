@@ -6,6 +6,6 @@
   "publish": {
     "tags": ["proton", "launch", "command"],
     "description": "Manage Proton launch options easily on Steam",
-    "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/screenshot1.jpeg"
+    "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/favorite_shortcuts.JPG"
   }
 }
