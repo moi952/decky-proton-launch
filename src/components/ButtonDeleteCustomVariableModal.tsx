@@ -1,15 +1,47 @@
 import React from "react";
-import {
-  DialogButton,
-  PanelSectionRow,
-  Focusable,
-  showModal,
-  ModalRoot,
-} from "@decky/ui";
-import { useCustomVariables } from "../hook/useCustomVariables";
+import { DialogButton, Focusable, ModalRoot } from "@decky/ui";
+import { useCustomVariables } from "../context/CustomVariablesContext";
 import { ActionButton } from "./ActionButton";
 import { useTranslation } from "react-i18next";
 import { FiTrash } from "react-icons/fi";
+import { openDeleteCustomVariableModal } from "../utils/modals";
+
+interface DeleteCustomVariableModalContentProps {
+  id: string;
+  name: string;
+  onClose: () => void;
+}
+
+export const DeleteCustomVariableModalContent: React.FC<
+  DeleteCustomVariableModalContentProps
+> = ({ id, name, onClose }) => {
+  const { removeCustomVariable } = useCustomVariables();
+  const { t } = useTranslation("delete_custom_variable_modal");
+  const { t: tCommon } = useTranslation();
+
+  return (
+    <ModalRoot>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ fontWeight: 600 }}>{t("title")}</div>
+        <div>{t("description", { variable_name: name })}</div>
+        <Focusable
+          style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}
+          flow-children="horizontal"
+        >
+          <DialogButton onClick={onClose}>{tCommon("cancel")}</DialogButton>
+          <DialogButton
+            onClick={() => {
+              removeCustomVariable(id);
+              onClose();
+            }}
+          >
+            {tCommon("delete")}
+          </DialogButton>
+        </Focusable>
+      </div>
+    </ModalRoot>
+  );
+};
 
 interface ButtonDeleteCustomVariableModalProps {
   id: string;
@@ -19,57 +51,12 @@ interface ButtonDeleteCustomVariableModalProps {
 
 export const ButtonDeleteCustomVariableModal: React.FC<
   ButtonDeleteCustomVariableModalProps
-> = ({ id, name, size = "small" }) => {
-  const { removeCustomVariable } = useCustomVariables();
-  const { t } = useTranslation("delete_custom_variable_modal");
-  const { t: tCommon } = useTranslation();
-
-  const handleOpen = () => {
-    let modalResult: ReturnType<typeof showModal> | null = null;
-
-    const ModalContent = () => (
-      <ModalRoot>
-        <div
-          style={{ padding: "12px 16px", minWidth: "350px", maxWidth: "90vw" }}
-        >
-          <PanelSectionRow>
-            <div style={{ fontWeight: 600, marginBottom: 8 }}>{t("title")}</div>
-          </PanelSectionRow>
-          <PanelSectionRow>
-            <div>{t("description", { variable_name: name })}</div>
-          </PanelSectionRow>
-          <PanelSectionRow>
-            <Focusable
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                gap: "8px",
-              }}
-              flow-children="horizontal"
-            >
-              <DialogButton onClick={() => modalResult?.Close()}>
-                {tCommon("cancel")}
-              </DialogButton>
-              <DialogButton
-                onClick={() => {
-                  removeCustomVariable(id);
-                  modalResult?.Close();
-                }}
-              >
-                {tCommon("delete")}
-              </DialogButton>
-            </Focusable>
-          </PanelSectionRow>
-        </div>
-      </ModalRoot>
-    );
-
-    modalResult = showModal(<ModalContent />);
-  };
-
-  return (
-    <ActionButton size={size} onClick={handleOpen} variant="danger">
-      <FiTrash />
-    </ActionButton>
-  );
-};
+> = ({ id, name, size = "small" }) => (
+  <ActionButton
+    size={size}
+    onClick={() => openDeleteCustomVariableModal(id, name)}
+    variant="danger"
+  >
+    <FiTrash />
+  </ActionButton>
+);

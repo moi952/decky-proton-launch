@@ -1,5 +1,9 @@
 import React from "react";
-import { DialogButton } from "@decky/ui";
+import { DialogButton, FooterLegendProps } from "@decky/ui";
+
+type GamepadEvt = Parameters<
+  NonNullable<FooterLegendProps["onSecondaryButton"]>
+>[0];
 
 interface ActionButtonProps {
   children: React.ReactNode;
@@ -7,6 +11,22 @@ interface ActionButtonProps {
   size?: "small" | "medium" | "large";
   variant?: "primary" | "danger";
   width?: string | number;
+
+  // X BUTTON
+  onSecondaryButton?: (evt: GamepadEvt) => void;
+  onSecondaryActionDescription?: React.ReactNode;
+  // Y BUTTON
+  onOptionsButton?: (evt: GamepadEvt) => void;
+  onOptionsActionDescription?: React.ReactNode;
+  // START BUTTON
+  onMenuButton?: (evt: GamepadEvt) => void;
+  onMenuActionDescription?: React.ReactNode;
+  // A BUTTON
+  onOKButton?: (evt: GamepadEvt) => void;
+  onOKActionDescription?: React.ReactNode;
+  // B BUTTON
+  onCancelButton?: (evt: GamepadEvt) => void;
+  onCancelActionDescription?: React.ReactNode;
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
@@ -15,6 +35,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   size = "small",
   variant = "primary",
   width,
+  onSecondaryButton,
+  onSecondaryActionDescription,
+  onOptionsButton,
+  onOptionsActionDescription,
+  onMenuButton,
+  onMenuActionDescription,
+  onOKButton,
+  onOKActionDescription,
 }) => {
   let style = {
     padding: "4px 8px",
@@ -52,6 +80,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
           minWidth: "unset",
         }}
         onClick={onClick}
+        onSecondaryButton={onSecondaryButton}
+        onSecondaryActionDescription={onSecondaryActionDescription}
+        onOptionsButton={onOptionsButton}
+        onOptionsActionDescription={onOptionsActionDescription}
+        onMenuButton={onMenuButton}
+        onMenuActionDescription={onMenuActionDescription}
+        onOKButton={onOKButton}
+        onOKActionDescription={onOKActionDescription}
       >
         {children}
       </DialogButton>

@@ -38,24 +38,28 @@
     "selected": "Seçili",
     "copy": "Kopyala",
     "copy_cmd": "+Cmd",
-    "add": "Ekle",
+    "copy_with_cmd": "%command% ile kopyala",
     "copy_all": "Tümünü kopyala",
+    "add": "Ekle",
+    "add_to_favorite": "Favorilere ekle",
+    "remove_from_favorite": "Favorilerden kaldır",
+    "add_to_stack": "Stack'e ekle",
     "inject": "Enjekte et",
     "search": "Ara...",
     "enabled": "Etkin",
     "disabled": "Devre Dışı",
     "cancel": "İptal",
     "create": "Oluştur",
-    "delete": "Sil"
+    "delete": "Sil",
+    "clean": "Temizle"
   },
   "delete_favorite_modal": {
-    "title": "Favorileri Sil",
+    "title": "Favoriyi sil",
     "description": "{{favorite_name}} favorilerden silinsin mi?"
   },
   "add_favorite_modal": {
     "name_required": "İsim gerekli",
-    "favorite_exists": "İsim zaten var",
-    "add_to_favorite": "Favorilere ekle"
+    "favorite_exists": "İsim zaten var"
   },
   "add_custom_variable_modal": {
     "button_label": "Özel değişken ekle",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Özel değişkeni sil",
     "description": "\"{{variable_name}}\" silinsin mi?"
+  },
+  "buttons": {
+    "details": "Detaylar",
+    "close": "Kapat",
+    "copier_cmd": "Kopyala +cmd",
+    "add_to_favori": "Favori",
+    "remove_from_fav": "Kaldır",
+    "remove_from_custom": "Sil",
+    "add_to_stack": "+ Stack"
   }
 }

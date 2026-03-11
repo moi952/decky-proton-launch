@@ -1,22 +1,17 @@
 import React from "react";
-import { PanelSection } from "@decky/ui";
-import { useCustomVariables } from "../hook/useCustomVariables";
-import { useTranslation } from "react-i18next";
+import { useCustomVariables } from "../context/CustomVariablesContext";
 import { VariableItem } from "./VariableItem";
 import { ButtonAddCustomVariableModal } from "./ButtonAddCustomVariableModal";
+import { FiSliders } from "react-icons/fi";
+import TitleSection from "./TitleSection";
+import PannelSectionCustom from "./PanelSectionCustom";
 
-interface CustomVariableSectionProps {
-  onAdd: (line: string) => void;
-}
-
-export const CustomVariableSection: React.FC<CustomVariableSectionProps> = ({
-  onAdd,
-}) => {
+export const CustomVariableSection: React.FC = () => {
   const { customVariables } = useCustomVariables();
-  const { t } = useTranslation("categories");
 
   return (
-    <PanelSection title={t("custom")}>
+    <PannelSectionCustom>
+      <TitleSection title="custom" icon={<FiSliders size={12} />} />
       <div style={{ display: "flex", gap: "8px", flexDirection: "column" }}>
         <ButtonAddCustomVariableModal />
         {customVariables.map((v) => (
@@ -25,12 +20,11 @@ export const CustomVariableSection: React.FC<CustomVariableSectionProps> = ({
             title={v.name}
             env={v.env}
             value={v.value}
-            onAdd={onAdd}
             isCustom
             customId={v.id}
           />
         ))}
       </div>
-    </PanelSection>
+    </PannelSectionCustom>
   );
 };

@@ -38,15 +38,20 @@
     "selected": "Wybrane",
     "copy": "Kopiuj",
     "copy_cmd": "+Cmd",
-    "add": "Dodaj",
+    "copy_with_cmd": "Kopiuj z %command%",
     "copy_all": "Kopiuj wszystko",
+    "add": "Dodaj",
+    "add_to_favorite": "Dodaj do ulubionych",
+    "remove_from_favorite": "Usuń z ulubionych",
+    "add_to_stack": "Dodaj do stosu",
     "inject": "Wstrzyknij",
     "search": "Szukaj...",
     "enabled": "Włączone",
     "disabled": "Wyłączone",
     "cancel": "Anuluj",
     "create": "Utwórz",
-    "delete": "Usuń"
+    "delete": "Usuń",
+    "clean": "Wyczyść"
   },
   "delete_favorite_modal": {
     "title": "Usuń ulubione",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "Nazwa jest wymagana",
-    "favorite_exists": "Nazwa już istnieje",
-    "add_to_favorite": "Dodaj do ulubionych"
+    "favorite_exists": "Nazwa już istnieje"
   },
   "add_custom_variable_modal": {
     "button_label": "Dodaj zmienną niestandardową",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Usuń zmienną niestandardową",
     "description": "Usunąć \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Szczegóły",
+    "close": "Zamknij",
+    "copier_cmd": "Kopiuj +cmd",
+    "add_to_favori": "Ulubione",
+    "remove_from_fav": "Usuń",
+    "remove_from_custom": "Usuń",
+    "add_to_stack": "+ Stack"
   }
 }

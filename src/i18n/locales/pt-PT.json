@@ -38,24 +38,28 @@
     "selected": "Selecionado",
     "copy": "Copiar",
     "copy_cmd": "+Cmd",
-    "add": "Adicionar",
+    "copy_with_cmd": "Copiar com %command%",
     "copy_all": "Copiar tudo",
+    "add": "Adicionar",
+    "add_to_favorite": "Adicionar aos favoritos",
+    "remove_from_favorite": "Remover dos favoritos",
+    "add_to_stack": "Adicionar ao stack",
     "inject": "Injetar",
     "search": "Procurar...",
     "enabled": "Ativado",
     "disabled": "Desativado",
     "cancel": "Cancelar",
     "create": "Criar",
-    "delete": "Eliminar"
+    "delete": "Eliminar",
+    "clean": "Limpar"
   },
   "delete_favorite_modal": {
-    "title": "Remover favoritos",
+    "title": "Remover favorito",
     "description": "Tem a certeza de que pretende remover {{favorite_name}} dos favoritos?"
   },
   "add_favorite_modal": {
     "name_required": "O nome é obrigatório",
-    "favorite_exists": "O nome já existe",
-    "add_to_favorite": "Adicionar aos favoritos"
+    "favorite_exists": "O nome já existe"
   },
   "add_custom_variable_modal": {
     "button_label": "Adicionar variável personalizada",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Remover variável personalizada",
     "description": "Eliminar \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Detalhes",
+    "close": "Fechar",
+    "copier_cmd": "Copiar +cmd",
+    "add_to_favori": "Favorito",
+    "remove_from_fav": "Remover",
+    "remove_from_custom": "Eliminar",
+    "add_to_stack": "+ Stack"
   }
 }

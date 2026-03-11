@@ -38,24 +38,28 @@
     "selected": "Geselecteerd",
     "copy": "Kopiëren",
     "copy_cmd": "+Cmd",
-    "add": "Toevoegen",
+    "copy_with_cmd": "Kopiëren met %command%",
     "copy_all": "Alles kopiëren",
+    "add": "Toevoegen",
+    "add_to_favorite": "Toevoegen aan favorieten",
+    "remove_from_favorite": "Verwijderen uit favorieten",
+    "add_to_stack": "Toevoegen aan stack",
     "inject": "Injecteren",
     "search": "Zoeken...",
     "enabled": "Ingeschakeld",
     "disabled": "Uitgeschakeld",
     "cancel": "Annuleren",
     "create": "Aanmaken",
-    "delete": "Verwijderen"
+    "delete": "Verwijderen",
+    "clean": "Wissen"
   },
   "delete_favorite_modal": {
-    "title": "Favorieten verwijderen",
+    "title": "Favoriet verwijderen",
     "description": "Weet je zeker dat je {{favorite_name}} uit je favorieten wilt verwijderen?"
   },
   "add_favorite_modal": {
     "name_required": "Naam is verplicht",
-    "favorite_exists": "Naam bestaat al",
-    "add_to_favorite": "Toevoegen aan favorieten"
+    "favorite_exists": "Naam bestaat al"
   },
   "add_custom_variable_modal": {
     "button_label": "Aangepaste variabele toevoegen",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Aangepaste variabele verwijderen",
     "description": "Verwijder \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Details",
+    "close": "Sluiten",
+    "copier_cmd": "Kopiëren +cmd",
+    "add_to_favori": "Favoriet",
+    "remove_from_fav": "Verwijderen",
+    "remove_from_custom": "Verwijderen",
+    "add_to_stack": "+ Stack"
   }
 }

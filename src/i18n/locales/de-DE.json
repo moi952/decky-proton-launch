@@ -22,13 +22,13 @@
     "radv_perftest_aco": "RADV PerfTest ACO",
     "radv_perftest_gpl": "RADV PerfTest GPL",
     "use_wined3d": "WineD3D verwenden",
-    "hide_nvidia_gpu": "NVIDIA GPU ausblenden",
+    "hide_nvidia_gpu": "NVIDIA GPU verstecken",
     "enable_nvapi": "NVAPI aktivieren",
     "proton_log": "Proton Log",
     "mangohud": "MangoHud",
-    "fsr_indicator": "FSR Indikator",
-    "dlss_indicator": "DLSS Indikator",
-    "xess_indicator": "XeSS Indikator",
+    "fsr_indicator": "FSR-Anzeige",
+    "dlss_indicator": "DLSS-Anzeige",
+    "xess_indicator": "XeSS-Anzeige",
     "enable_hdr_wsi": "HDR WSI aktivieren",
     "proton_enable_hdr": "HDR aktivieren",
     "smooth_motion": "Smooth Motion aktivieren",
@@ -38,24 +38,28 @@
     "selected": "Ausgewählt",
     "copy": "Kopieren",
     "copy_cmd": "+Cmd",
-    "add": "Hinzufügen",
+    "copy_with_cmd": "Mit %command% kopieren",
     "copy_all": "Alles kopieren",
-    "inject": "Einfügen",
-    "search": "Suche...",
+    "add": "Hinzufügen",
+    "add_to_favorite": "Zu Favoriten hinzufügen",
+    "remove_from_favorite": "Aus Favoriten entfernen",
+    "add_to_stack": "Zum Stack hinzufügen",
+    "inject": "Injizieren",
+    "search": "Suchen...",
     "enabled": "Aktiviert",
     "disabled": "Deaktiviert",
     "cancel": "Abbrechen",
     "create": "Erstellen",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "clean": "Leeren"
   },
   "delete_favorite_modal": {
-    "title": "Favoriten löschen",
-    "description": "Möchten Sie {{favorite_name}} aus Ihren Favoriten löschen?"
+    "title": "Favorit löschen",
+    "description": "Möchtest du {{favorite_name}} wirklich aus deinen Favoriten entfernen?"
   },
   "add_favorite_modal": {
-    "name_required": "Name erforderlich",
-    "favorite_exists": "Name bereits vergeben",
-    "add_to_favorite": "Zu Favoriten hinzufügen"
+    "name_required": "Name ist erforderlich",
+    "favorite_exists": "Name existiert bereits"
   },
   "add_custom_variable_modal": {
     "button_label": "Benutzerdefinierte Variable hinzufügen",
@@ -68,6 +72,15 @@
   },
   "delete_custom_variable_modal": {
     "title": "Benutzerdefinierte Variable löschen",
-    "description": "Variable \"{{variable_name}}\" löschen?"
+    "description": "\"{{variable_name}}\" löschen?"
+  },
+  "buttons": {
+    "details": "Details",
+    "close": "Schließen",
+    "copier_cmd": "Kopieren +cmd",
+    "add_to_favori": "Favorit",
+    "remove_from_fav": "Entfernen",
+    "remove_from_custom": "Löschen",
+    "add_to_stack": "+ Stack"
   }
 }

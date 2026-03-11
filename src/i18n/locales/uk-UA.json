@@ -38,15 +38,20 @@
     "selected": "Вибрано",
     "copy": "Копіювати",
     "copy_cmd": "+Cmd",
-    "add": "Додати",
+    "copy_with_cmd": "Копіювати з %command%",
     "copy_all": "Копіювати все",
+    "add": "Додати",
+    "add_to_favorite": "Додати в обране",
+    "remove_from_favorite": "Видалити з обраного",
+    "add_to_stack": "Додати до стеку",
     "inject": "Інжект",
     "search": "Пошук...",
     "enabled": "Увімкнено",
     "disabled": "Вимкнено",
     "cancel": "Скасувати",
     "create": "Створити",
-    "delete": "Видалити"
+    "delete": "Видалити",
+    "clean": "Очистити"
   },
   "delete_favorite_modal": {
     "title": "Видалити з обраного",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "Потрібна назва",
-    "favorite_exists": "Назва вже існує",
-    "add_to_favorite": "Додати в обране"
+    "favorite_exists": "Назва вже існує"
   },
   "add_custom_variable_modal": {
     "button_label": "Додати користувацьку змінну",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Видалити користувацьку змінну",
     "description": "Видалити \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Деталі",
+    "close": "Закрити",
+    "copier_cmd": "Копіювати +cmd",
+    "add_to_favori": "Обране",
+    "remove_from_fav": "Видалити",
+    "remove_from_custom": "Видалити",
+    "add_to_stack": "+ Stack"
   }
 }

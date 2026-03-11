@@ -1,21 +1,26 @@
 import React, { useState } from "react";
 import { PanelSectionRow, DialogButton, Focusable } from "@decky/ui";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
-import { copy } from "../utils/functions";
 import { ActionButton } from "./ActionButton";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
 import { ButtonDeleteFavoriteModal } from "./ButtonDeleteFavoriteModal";
-import { useTranslation } from "react-i18next";
-import { FiPlus, FiCopy } from "react-icons/fi";
 import { ButtonDeleteCustomVariableModal } from "./ButtonDeleteCustomVariableModal";
+import { useTranslation } from "react-i18next";
+import { FiPlus, FiCopy, FiStar, FiSliders } from "react-icons/fi";
 import { Variable } from "../data/types";
+import { useVariableActions } from "../hook/useVariableActions";
+import {
+  openFavoriteModal,
+  openDeleteFavoriteModal,
+  openDeleteCustomVariableModal,
+} from "../utils/modals";
+import GamepadLabel from "./GamepadLabel";
 
 interface VariableItemProps {
   title: string;
   env: string;
   value?: string;
   variable?: Variable;
-  onAdd: (line: string) => void;
   isFavorite?: boolean;
   isCustom?: boolean;
   customId?: string;
@@ -26,7 +31,6 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   env,
   value: valueProp,
   variable,
-  onAdd,
   isFavorite,
   isCustom,
   customId,
@@ -34,8 +38,8 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   const [expanded, setExpanded] = useState(false);
   const { t } = useTranslation();
   const { t: tVariables } = useTranslation("variables");
+  const { t: tButtons } = useTranslation("buttons");
 
-  // Valeur initiale selon le type
   const getInitialValue = () => {
     if (variable?.type === "enum") return variable.defaultValue;
     if (variable?.type === "bool") return variable.value;
@@ -43,7 +47,44 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   };
 
   const [selectedValue, setSelectedValue] = useState(getInitialValue);
-  const line = env === "" ? selectedValue : `${env}=${selectedValue}`;
+
+  const { line, copyLine, copyWithCmd, addToStack } = useVariableActions({
+    env,
+    selectedValue,
+  });
+
+  const handleFavoriteModal = () => {
+    if (isFavorite) {
+      openDeleteFavoriteModal(title);
+    } else if (isCustom && customId) {
+      openDeleteCustomVariableModal(customId, title);
+    } else {
+      openFavoriteModal({ variableName: title, env, value: selectedValue });
+    }
+  };
+
+  const getOptionsDescription = () => {
+    if (isFavorite)
+      return (
+        <GamepadLabel
+          text={tButtons("remove_from_fav")}
+          icon={<FiStar size={12} />}
+        />
+      );
+    if (isCustom)
+      return (
+        <GamepadLabel
+          text={tButtons("remove_from_custom")}
+          icon={<FiSliders size={12} />}
+        />
+      );
+    return (
+      <GamepadLabel
+        text={tButtons("add_to_favori")}
+        icon={<FiStar size={12} />}
+      />
+    );
+  };
 
   const renderValueChips = () => {
     if (!variable?.type) return null;
@@ -73,13 +114,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
 
     if (variable.type === "enum") {
       return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-          }}
-        >
+        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
           {variable.values.map((opt) => (
             <ActionButton
               key={opt.value}
@@ -123,6 +158,15 @@ export const VariableItem: React.FC<VariableItemProps> = ({
           fontSize: 13,
           padding: "4px 8px",
         }}
+        onOKActionDescription={
+          expanded ? tButtons("close") : tButtons("details")
+        }
+        onSecondaryActionDescription={tButtons("copier_cmd")}
+        onSecondaryButton={copyWithCmd}
+        onOptionsActionDescription={getOptionsDescription()}
+        onOptionsButton={handleFavoriteModal}
+        onMenuActionDescription={tButtons("add_to_stack")}
+        onMenuButton={addToStack}
       >
         {title}{" "}
         {expanded ? (
@@ -147,11 +191,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
           >
             {renderValueChips()}
             <div
-              style={{
-                fontFamily: "monospace",
-                color: "#aaa",
-                fontSize: 11,
-              }}
+              style={{ fontFamily: "monospace", color: "#aaa", fontSize: 11 }}
             >
               {line}
             </div>
@@ -164,17 +204,14 @@ export const VariableItem: React.FC<VariableItemProps> = ({
               }}
               flow-children="horizontal"
             >
-              <ActionButton size="small" onClick={() => copy(line)}>
+              <ActionButton size="small" onClick={copyLine}>
                 <FiCopy />
               </ActionButton>
-              <ActionButton
-                size="small"
-                onClick={() => copy(`${line} %command%`)}
-              >
+              <ActionButton size="small" onClick={copyWithCmd}>
                 <FiCopy />
                 {t("copy_cmd")}
               </ActionButton>
-              <ActionButton size="small" onClick={() => onAdd(line)}>
+              <ActionButton size="small" onClick={addToStack}>
                 <FiPlus />
               </ActionButton>
               {renderActionButton()}

@@ -38,15 +38,20 @@
     "selected": "選択",
     "copy": "コピー",
     "copy_cmd": "+Cmd",
-    "add": "追加",
+    "copy_with_cmd": "%command%付きでコピー",
     "copy_all": "すべてコピー",
+    "add": "追加",
+    "add_to_favorite": "お気に入りに追加",
+    "remove_from_favorite": "お気に入りから削除",
+    "add_to_stack": "スタックに追加",
     "inject": "注入",
     "search": "検索...",
     "enabled": "有効",
     "disabled": "無効",
     "cancel": "キャンセル",
     "create": "作成",
-    "delete": "削除"
+    "delete": "削除",
+    "clean": "クリア"
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "名前は必須です",
-    "favorite_exists": "名前はすでに存在します",
-    "add_to_favorite": "お気に入りに追加"
+    "favorite_exists": "名前はすでに存在します"
   },
   "add_custom_variable_modal": {
     "button_label": "カスタム変数を追加",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "カスタム変数を削除",
     "description": "\"{{variable_name}}\"を削除しますか？"
+  },
+  "buttons": {
+    "details": "詳細",
+    "close": "閉じる",
+    "copier_cmd": "コピー +cmd",
+    "add_to_favori": "お気に入り",
+    "remove_from_fav": "削除",
+    "remove_from_custom": "削除",
+    "add_to_stack": "+ Stack"
   }
 }
