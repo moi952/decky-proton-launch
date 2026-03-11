@@ -4,21 +4,13 @@ import { copy } from "../utils/functions";
 import { ActionButton } from "./ActionButton";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
 import { useTranslation } from "react-i18next";
+import { useLaunchStack } from "../context/LaunchStackContext";
 
-interface BottomBarProps {
-  selected: string[];
-  onInject?: (combined: string) => void;
-  onClean: () => void;
-}
-
-export const BottomBar: React.FC<BottomBarProps> = ({
-  selected,
-  onInject,
-  onClean,
-}) => {
-  const combined = selected.join(" ") + " %command%";
-
+export const BottomBar: React.FC = () => {
+  const { stack, clearStack } = useLaunchStack();
   const { t } = useTranslation();
+
+  const combined = stack.join(" ") + " %command%";
 
   return (
     <PanelSectionRow>
@@ -38,7 +30,7 @@ export const BottomBar: React.FC<BottomBarProps> = ({
             whiteSpace: "pre-wrap",
           }}
         >
-          {selected.length ? combined : ""}
+          {stack.length ? combined : ""}
         </div>
 
         <Focusable
@@ -49,17 +41,11 @@ export const BottomBar: React.FC<BottomBarProps> = ({
             {t("copy_all")}
           </ActionButton>
 
-          <ActionButton size="small" onClick={() => onClean()}>
+          <ActionButton size="small" onClick={clearStack}>
             {t("clean")}
           </ActionButton>
 
-          {onInject && (
-            <ActionButton size="small" onClick={() => onInject(combined)}>
-              {t("inject")}
-            </ActionButton>
-          )}
-
-          <ButtonFavoriteModal command={selected.join(" ")} size="small" />
+          <ButtonFavoriteModal command={stack.join(" ")} size="small" />
         </Focusable>
       </div>
     </PanelSectionRow>

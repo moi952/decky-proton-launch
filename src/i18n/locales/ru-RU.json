@@ -38,15 +38,20 @@
     "selected": "Выбрано",
     "copy": "Копировать",
     "copy_cmd": "+Cmd",
-    "add": "Добавить",
+    "copy_with_cmd": "Копировать с %command%",
     "copy_all": "Копировать всё",
+    "add": "Добавить",
+    "add_to_favorite": "Добавить в избранное",
+    "remove_from_favorite": "Удалить из избранного",
+    "add_to_stack": "Добавить в стек",
     "inject": "Инжект",
     "search": "Поиск...",
     "enabled": "Включено",
     "disabled": "Отключено",
     "cancel": "Отмена",
     "create": "Создать",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "clean": "Очистить"
   },
   "delete_favorite_modal": {
     "title": "Удалить из избранного",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "Требуется имя",
-    "favorite_exists": "Имя уже используется",
-    "add_to_favorite": "Добавить в избранное"
+    "favorite_exists": "Имя уже используется"
   },
   "add_custom_variable_modal": {
     "button_label": "Добавить пользовательскую переменную",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Удалить пользовательскую переменную",
     "description": "Удалить \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Детали",
+    "close": "Закрыть",
+    "copier_cmd": "Копировать +cmd",
+    "add_to_favori": "Избранное",
+    "remove_from_fav": "Удалить",
+    "remove_from_custom": "Удалить",
+    "add_to_stack": "+ Stack"
   }
 }

@@ -8,6 +8,7 @@ import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
 import { Home } from "./screens/Home";
+import { AppProvider } from "./context/AppProvider";
 
 export default definePlugin(() => {
   console.log("Proton Launch plugin initializing");
@@ -21,7 +22,11 @@ export default definePlugin(() => {
   return {
     name: "decky-proton-launch",
     titleView: <div className={staticClasses.Title}>Proton Launch</div>,
-    content: <Home />,
+    content: (
+      <AppProvider>
+        <Home />
+      </AppProvider>
+    ),
     icon: <FaRocket />,
     onDismount() {
       removeEventListener("timer_event", listener);

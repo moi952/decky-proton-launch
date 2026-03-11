@@ -1,21 +1,18 @@
 import React from "react";
-import { PanelSection } from "@decky/ui";
-import { useFavorites } from "../hook/useFavorites";
-import { useTranslation } from "react-i18next";
+import { useFavorites } from "../context/FavoritesContext";
 import { VariableItem } from "./VariableItem";
+import { FiStar } from "react-icons/fi";
+import TitleSection from "./TitleSection";
+import PannelSectionCustom from "./PanelSectionCustom";
 
-interface FavoriteSectionProps {
-  onAdd: (line: string) => void;
-}
-
-export const FavoriteSection: React.FC<FavoriteSectionProps> = ({ onAdd }) => {
+export const FavoriteSection: React.FC = () => {
   const { favorites } = useFavorites();
-  const { t } = useTranslation("categories");
 
   if (!favorites.length) return null;
 
   return (
-    <PanelSection title={t("favorites")}>
+    <PannelSectionCustom>
+      <TitleSection title="favorites" icon={<FiStar size={12} />} />
       <div style={{ display: "flex", gap: "8px", flexDirection: "column" }}>
         {favorites.map((f) => (
           <VariableItem
@@ -23,11 +20,10 @@ export const FavoriteSection: React.FC<FavoriteSectionProps> = ({ onAdd }) => {
             title={f.name}
             env={f.env || ""}
             value={f.value}
-            onAdd={onAdd}
             isFavorite
           />
         ))}
       </div>
-    </PanelSection>
+    </PannelSectionCustom>
   );
 };

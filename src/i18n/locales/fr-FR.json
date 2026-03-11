@@ -1,5 +1,6 @@
 {
   "categories": {
+    "upscale": "Upscale",
     "performance": "Performance",
     "compatibility": "Compatibilité",
     "debug": "Debug",
@@ -37,8 +38,12 @@
     "selected": "Sélection",
     "copy": "Copier",
     "copy_cmd": "+Cmd",
-    "add": "Ajouter",
+    "copy_with_cmd": "Copier avec %command%",
     "copy_all": "Tout copier",
+    "add": "Ajouter",
+    "add_to_favorite": "Ajouter aux favoris",
+    "remove_from_favorite": "Retirer des favoris",
+    "add_to_stack": "Ajouter à la combinaison",
     "inject": "Injecter",
     "search": "Recherche...",
     "enabled": "Activé",
@@ -50,12 +55,11 @@
   },
   "delete_favorite_modal": {
     "title": "Supprimer des favoris",
-    "description": "Etes vous sur de vouloir supprimer {{favorite_name}} de vos favoris"
+    "description": "Êtes-vous sûr de vouloir supprimer {{favorite_name}} de vos favoris ?"
   },
   "add_favorite_modal": {
     "name_required": "Le nom est requis",
-    "favorite_exists": "Le nom est deja utilisé",
-    "add_to_favorite": "Ajouter aux favoris"
+    "favorite_exists": "Le nom est déjà utilisé"
   },
   "add_custom_variable_modal": {
     "button_label": "Créer une variable personnalisée",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Supprimer la variable personnalisée",
     "description": "Supprimer \"{{variable_name}}\" ?"
+  },
+  "buttons": {
+    "details": "Détails",
+    "close": "Fermer",
+    "copier_cmd": "Copier +cmd",
+    "add_to_favori": "Favori",
+    "remove_from_fav": "Retirer",
+    "remove_from_custom": "Supprimer",
+    "add_to_stack": "+ Stack"
   }
 }

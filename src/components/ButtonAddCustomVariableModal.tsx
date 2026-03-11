@@ -6,7 +6,7 @@ import {
   TextField,
   ModalRoot,
 } from "@decky/ui";
-import { useCustomVariables } from "../hook/useCustomVariables";
+import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useTranslation } from "react-i18next";
 import { ActionButton } from "./ActionButton";
 
@@ -45,30 +45,25 @@ export const ButtonAddCustomVariableModal: React.FC = () => {
         <ModalRoot>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <div style={{ fontWeight: 600 }}>{t("title")}</div>
-
             <TextField
               label={t("field_name")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-
             <TextField
               label={t("field_env")}
               description="ex: PROTON_MY_VAR"
               value={env}
               onChange={(e) => setEnv(e.target.value)}
             />
-
             <TextField
               label={t("field_value")}
               value={value}
               onChange={(e) => setValue(e.target.value)}
             />
-
             {error && (
               <span style={{ color: "#ff4444", fontSize: 12 }}>{error}</span>
             )}
-
             <Focusable
               style={{
                 display: "flex",

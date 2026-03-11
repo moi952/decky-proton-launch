@@ -38,15 +38,20 @@
     "selected": "선택됨",
     "copy": "복사",
     "copy_cmd": "+Cmd",
-    "add": "추가",
+    "copy_with_cmd": "%command% 포함 복사",
     "copy_all": "전체 복사",
+    "add": "추가",
+    "add_to_favorite": "즐겨찾기에 추가",
+    "remove_from_favorite": "즐겨찾기에서 제거",
+    "add_to_stack": "스택에 추가",
     "inject": "주입",
     "search": "검색...",
     "enabled": "활성화",
     "disabled": "비활성화",
     "cancel": "취소",
     "create": "생성",
-    "delete": "삭제"
+    "delete": "삭제",
+    "clean": "지우기"
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "이름은 필수입니다",
-    "favorite_exists": "이름이 이미 존재합니다",
-    "add_to_favorite": "즐겨찾기에 추가"
+    "favorite_exists": "이름이 이미 존재합니다"
   },
   "add_custom_variable_modal": {
     "button_label": "사용자 정의 변수 추가",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "사용자 정의 변수 삭제",
     "description": "\"{{variable_name}}\"을(를) 삭제하시겠습니까?"
+  },
+  "buttons": {
+    "details": "세부정보",
+    "close": "닫기",
+    "copier_cmd": "복사 +cmd",
+    "add_to_favori": "즐겨찾기",
+    "remove_from_fav": "제거",
+    "remove_from_custom": "삭제",
+    "add_to_stack": "+ Stack"
   }
 }

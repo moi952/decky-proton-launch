@@ -12,7 +12,7 @@
   },
   "variables": {
     "fsr4_upgrade": "FSR4 Upgrade",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 RDNA3 Upgrade",
+    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
     "xess_upgrade": "XeSS Upgrade",
     "dxvk_async": "DXVK Async",
@@ -38,24 +38,28 @@
     "selected": "Selected",
     "copy": "Copy",
     "copy_cmd": "+Cmd",
-    "add": "Add",
+    "copy_with_cmd": "Copy with %command%",
     "copy_all": "Copy All",
+    "add": "Add",
+    "add_to_favorite": "Add to Favorites",
+    "remove_from_favorite": "Remove from Favorites",
+    "add_to_stack": "Add to Stack",
     "inject": "Inject",
     "search": "Search...",
     "enabled": "Enabled",
     "disabled": "Disabled",
     "cancel": "Cancel",
     "create": "Create",
-    "delete": "Delete"
+    "delete": "Delete",
+    "clean": "Clean"
   },
   "delete_favorite_modal": {
-    "title": "Delete Favorites",
+    "title": "Delete Favorite",
     "description": "Are you sure you want to remove {{favorite_name}} from your favorites?"
   },
   "add_favorite_modal": {
     "name_required": "Name is required",
-    "favorite_exists": "Name already exists",
-    "add_to_favorite": "Add to Favorites"
+    "favorite_exists": "Name already exists"
   },
   "add_custom_variable_modal": {
     "button_label": "Add Custom Variable",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "Delete Custom Variable",
     "description": "Delete \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "Details",
+    "close": "Close",
+    "copier_cmd": "Copy +cmd",
+    "add_to_favori": "Favorite",
+    "remove_from_fav": "Unfav",
+    "remove_from_custom": "Remove",
+    "add_to_stack": "+ Stack"
   }
 }

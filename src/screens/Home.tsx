@@ -2,44 +2,31 @@ import React, { useState } from "react";
 import variablesData from "../data/variables.json";
 import { CategorySection } from "../components/CategorySection";
 import { BottomBar } from "../components/BottomBar";
-import { PanelSectionRow, TextField } from "@decky/ui";
+import { TextField } from "@decky/ui";
 import { useTranslation } from "react-i18next";
 import { CustomVariableSection } from "../components/CustomVariableSection";
 import { FavoriteSection } from "../components/FavoriteSection";
 import { Variable } from "../data/types";
+import PannelSectionCustom from "../components/PanelSectionCustom";
 
 export const Home: React.FC = () => {
-  const [selected, setSelected] = useState<string[]>([]);
   const [search, setSearch] = useState("");
   const { t } = useTranslation();
 
-  const handleAdd = (line: string) => {
-    if (!selected.includes(line)) setSelected([...selected, line]);
-  };
-
-  const handleClean = () => {
-    setSelected([]);
-  };
-
   return (
     <div style={{ position: "relative", height: "100%" }}>
-      <PanelSectionRow>
+      <PannelSectionCustom>
         <TextField
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           label={t("search")}
-          style={{ width: "100%" }}
+          style={{ width: "100%", marginBottom: "0!important", padding: "4px" }}
         />
-      </PanelSectionRow>
+      </PannelSectionCustom>
 
       <div style={{ paddingBottom: "80px" }}>
-        {/* Favorites — BottomBar combinations */}
-        <FavoriteSection onAdd={handleAdd} />
-
-        {/* Custom variables — user-created variables */}
-        <CustomVariableSection onAdd={handleAdd} />
-
-        {/* Predefined variables */}
+        <FavoriteSection />
+        <CustomVariableSection />
         {variablesData.map((cat) => (
           <CategorySection
             key={cat.category}
@@ -47,7 +34,6 @@ export const Home: React.FC = () => {
             variables={(cat.variables as Variable[]).filter((v) =>
               v.title.toLowerCase().includes(search.toLowerCase()),
             )}
-            onAdd={handleAdd}
           />
         ))}
       </div>
@@ -61,7 +47,7 @@ export const Home: React.FC = () => {
           WebkitBackdropFilter: "blur(20px)",
         }}
       >
-        <BottomBar selected={selected} onClean={handleClean} />
+        <BottomBar />
       </div>
     </div>
   );

@@ -38,15 +38,20 @@
     "selected": "已选择",
     "copy": "复制",
     "copy_cmd": "+Cmd",
-    "add": "添加",
+    "copy_with_cmd": "复制含 %command%",
     "copy_all": "复制全部",
+    "add": "添加",
+    "add_to_favorite": "添加到收藏",
+    "remove_from_favorite": "从收藏中移除",
+    "add_to_stack": "添加到堆栈",
     "inject": "注入",
     "search": "搜索...",
     "enabled": "已启用",
     "disabled": "已禁用",
     "cancel": "取消",
     "create": "创建",
-    "delete": "删除"
+    "delete": "删除",
+    "clean": "清空"
   },
   "delete_favorite_modal": {
     "title": "删除收藏",
@@ -54,8 +59,7 @@
   },
   "add_favorite_modal": {
     "name_required": "名称为必填项",
-    "favorite_exists": "名称已存在",
-    "add_to_favorite": "添加到收藏"
+    "favorite_exists": "名称已存在"
   },
   "add_custom_variable_modal": {
     "button_label": "添加自定义变量",
@@ -69,5 +73,14 @@
   "delete_custom_variable_modal": {
     "title": "删除自定义变量",
     "description": "删除 \"{{variable_name}}\"?"
+  },
+  "buttons": {
+    "details": "详情",
+    "close": "关闭",
+    "copier_cmd": "复制 +cmd",
+    "add_to_favori": "收藏",
+    "remove_from_fav": "移除",
+    "remove_from_custom": "删除",
+    "add_to_stack": "+ Stack"
   }
 }
