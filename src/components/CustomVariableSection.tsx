@@ -4,13 +4,13 @@ import { VariableItem } from "./VariableItem";
 import { ButtonAddCustomVariableModal } from "./ButtonAddCustomVariableModal";
 import { FiSliders } from "react-icons/fi";
 import TitleSection from "./TitleSection";
-import PannelSectionCustom from "./PanelSectionCustom";
+import PanelSectionCustom from "./PanelSectionCustom";
 
 export const CustomVariableSection: React.FC = () => {
   const { customVariables } = useCustomVariables();
 
   return (
-    <PannelSectionCustom>
+    <PanelSectionCustom>
       <TitleSection title="custom" icon={<FiSliders size={12} />} />
       <div style={{ display: "flex", gap: "8px", flexDirection: "column" }}>
         <ButtonAddCustomVariableModal />
@@ -25,6 +25,6 @@ export const CustomVariableSection: React.FC = () => {
           />
         ))}
       </div>
-    </PannelSectionCustom>
+    </PanelSectionCustom>
   );
 };

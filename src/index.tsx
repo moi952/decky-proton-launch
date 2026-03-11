@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   definePlugin,
   addEventListener,
@@ -7,12 +8,21 @@ import {
 import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
-import { Home } from "./screens/Home";
 import { AppProvider } from "./context/AppProvider";
+import HomeView from "./views/HomeView";
+import { SettingsView } from "./views/SettingsView";
+
+type View = "home" | "settings";
+
+const App: React.FC = () => {
+  const [view, setView] = useState<View>("home");
+
+  if (view === "settings")
+    return <SettingsView onBack={() => setView("home")} />;
+  return <HomeView onSettings={() => setView("settings")} />;
+};
 
 export default definePlugin(() => {
-  console.log("Proton Launch plugin initializing");
-
   loadTranslations();
 
   const listener = addEventListener("timer_event", (...args) => {
@@ -24,13 +34,12 @@ export default definePlugin(() => {
     titleView: <div className={staticClasses.Title}>Proton Launch</div>,
     content: (
       <AppProvider>
-        <Home />
+        <App />
       </AppProvider>
     ),
     icon: <FaRocket />,
     onDismount() {
       removeEventListener("timer_event", listener);
-      console.log("Plugin unloaded");
     },
   };
 });

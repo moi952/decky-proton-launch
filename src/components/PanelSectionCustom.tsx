@@ -1,6 +1,6 @@
 import React from "react";
 
-const PannelSectionCustom: React.FC<{ children: React.ReactNode }> = ({
+const PanelSectionCustom: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
@@ -14,4 +14,4 @@ const PannelSectionCustom: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export default PannelSectionCustom;
+export default PanelSectionCustom;
