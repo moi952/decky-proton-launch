@@ -106,6 +106,29 @@ def _get_user_dirs() -> List[Path]:
     return dirs
 
 
+def _get_all_steamapps_dirs() -> List[Path]:
+    """Return all Steam library steamapps directories (internal + SD card, etc.)."""
+    dirs: List[Path] = []
+    main = _get_steam_path() / "steamapps"
+    if main.is_dir():
+        dirs.append(main)
+    lf = main / "libraryfolders.vdf"
+    if lf.is_file():
+        try:
+            data = _parse_vdf_text(lf.read_text(encoding="utf-8", errors="ignore"))
+            folders = data.get("libraryfolders", {})
+            for entry in folders.values():
+                if isinstance(entry, dict):
+                    path = entry.get("path", "")
+                    if path:
+                        candidate = Path(path) / "steamapps"
+                        if candidate.is_dir() and candidate not in dirs:
+                            dirs.append(candidate)
+        except Exception:
+            pass
+    return dirs
+
+
 def _get_shortcuts_paths() -> List[Path]:
     return [
         d / "config" / "shortcuts.vdf"
@@ -329,8 +352,7 @@ class Plugin:
             games: List[Dict[str, Any]] = []
             seen: set = set()
 
-            steamapps = _get_steam_path() / "steamapps"
-            if steamapps.is_dir():
+            for steamapps in _get_all_steamapps_dirs():
                 for acf in steamapps.glob("appmanifest_*.acf"):
                     try:
                         data = _parse_vdf_text(acf.read_text(encoding="utf-8", errors="ignore"))
@@ -548,8 +570,12 @@ class Plugin:
                                 appid = int(val)
                                 name = f"#{appid}"
                                 is_shortcut = True
-                                acf = _get_steam_path() / "steamapps" / f"appmanifest_{appid}.acf"
-                                if acf.is_file():
+                                acf = next(
+                                    (d / f"appmanifest_{appid}.acf" for d in _get_all_steamapps_dirs()
+                                     if (d / f"appmanifest_{appid}.acf").is_file()),
+                                    None,
+                                )
+                                if acf is not None:
                                     data = _parse_vdf_text(acf.read_text(encoding="utf-8", errors="ignore"))
                                     name = data.get("AppState", {}).get("name", name)
                                     is_shortcut = False
