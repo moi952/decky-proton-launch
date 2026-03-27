@@ -48,15 +48,15 @@ const fallbackCopy = (text: string) => {
   document.body.removeChild(el);
 };
 
-// Styles injectés une seule fois pour le focus natif (gamepad + clavier)
-const GAME_ROW_STYLES = `
+// Styles injected once for native focus (gamepad + keyboard)
+export const GAME_ROW_STYLES = `
   .plch-game-row:focus {
     border: 2px solid #dcdedf !important;
     background: #2a3a4a !important;
   }
 `;
 
-const GameRow: React.FC<{
+export const GameRow: React.FC<{
   game: SteamGame;
   hasProfile: boolean;
   isRunning: boolean;
@@ -250,8 +250,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
   return (
     <div>
-      <style>{GAME_ROW_STYLES}</style>
-      {/* Commande de lancement */}
+      {/* Launch command */}
       <PanelSectionCustom>
         {showCommand && (
           <div
@@ -282,7 +281,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         </ActionButton>
       </PanelSectionCustom>
 
-      {/* Bannière d'installation du script */}
+      {/* Script installation banner */}
       {scriptInstalled === false && (
         <PanelSectionCustom>
           <div
@@ -305,7 +304,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       )}
 
 
-      {/* Recherche */}
+      {/* Search */}
       <PanelSectionCustom style={{ paddingBottom: "6px" }}>
         <TextField
           value={search}
@@ -327,7 +326,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         </PanelSectionCustom>
       )}
 
-      {/* Jeux configurés — section repliable */}
+      {/* Configured games — collapsible section */}
       {!loading && configuredGames.length > 0 && (!q || configuredFiltered.length > 0) && (
         <PanelSectionCustom>
           <DialogButton
@@ -359,7 +358,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         </PanelSectionCustom>
       )}
 
-      {/* Tous les autres jeux */}
+      {/* All other games */}
       {!loading && unconfiguredFiltered.length > 0 && (
         <PanelSectionCustom>
           {unconfiguredFiltered.slice(0, 100).map((game) => (

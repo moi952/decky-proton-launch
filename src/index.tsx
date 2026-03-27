@@ -12,7 +12,7 @@ import { staticClasses } from "@decky/ui";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
 import { SettingsView } from "./views/SettingsView";
-import { GamesPickerView, SteamGame } from "./views/GamesPickerView";
+import { GamesPickerView, SteamGame, GAME_ROW_STYLES } from "./views/GamesPickerView";
 import { GameDetailView } from "./views/GameDetailView";
 import { useSettings } from "./context/SettingsContext";
 import { NavBar } from "./components/NavBar";
@@ -43,7 +43,7 @@ const App: React.FC = () => {
     call<[], boolean>("is_script_installed").then(setScriptInstalled);
   }, []);
 
-  // Détection du jeu en cours, polling toutes les 5s
+  // Detect running game, polling every 5s
   useEffect(() => {
     const poll = async () => {
       const result = await call<[], { appid: number; name: string; is_shortcut: boolean }>(
@@ -70,6 +70,7 @@ const App: React.FC = () => {
 
   return (
     <div>
+      <style>{GAME_ROW_STYLES}</style>
       <NavBar
         view={mainView}
         scriptInstalled={scriptInstalled}
