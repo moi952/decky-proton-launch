@@ -13,6 +13,7 @@ export const NowPlayingCard: React.FC<NowPlayingCardProps> = ({ game, onSelect }
       game={game}
       hasProfile={false}
       isRunning={true}
+      nowPlaying={true}
       onClick={onSelect}
     />
   </PanelSectionCustom>

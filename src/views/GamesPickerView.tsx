@@ -60,8 +60,9 @@ export const GameRow: React.FC<{
   game: SteamGame;
   hasProfile: boolean;
   isRunning: boolean;
+  nowPlaying?: boolean;
   onClick: () => void;
-}> = ({ game, hasProfile, isRunning, onClick }) => {
+}> = ({ game, hasProfile, isRunning, nowPlaying, onClick }) => {
   const [shortcutCover, setShortcutCover] = useState<string | null>(null);
 
   useEffect(() => {
@@ -71,7 +72,8 @@ export const GameRow: React.FC<{
     });
   }, [game.appid, game.is_shortcut]);
 
-  const border = hasProfile ? "2px solid #f5a623" : "2px solid transparent";
+  const border = nowPlaying ? "2px solid #4caf50" : hasProfile ? "2px solid #f5a623" : "2px solid transparent";
+  const background = nowPlaying ? "#0d1f0d" : "#1a1a2e";
 
   return (
     <div style={{ marginBottom: "4px" }}>
@@ -83,7 +85,7 @@ export const GameRow: React.FC<{
           overflow: "hidden",
           borderRadius: "6px",
           border,
-          background: "#1a1a2e",
+          background,
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
