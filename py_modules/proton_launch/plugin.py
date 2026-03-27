@@ -114,6 +114,31 @@ def _get_shortcuts_paths() -> List[Path]:
     ]
 
 
+def _get_shortcut_name(appid: int) -> str:
+    """Look up the display name of a non-Steam shortcut by its appid."""
+    for path in _get_shortcuts_paths():
+        try:
+            raw = path.read_bytes()
+            nodes, _ = _bvdf_read(raw, 0)
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    for etag, _, efields in children:
+                        if etag != 0x00:
+                            continue
+                        appid_val = None
+                        name = ""
+                        for f in efields:
+                            if f[0] == 0x02 and f[1].lower() == "appid":
+                                appid_val = f[2] & 0xFFFFFFFF
+                            if f[0] == 0x01 and f[1].lower() in ("appname", "name"):
+                                name = f[2]
+                        if appid_val == appid and name:
+                            return name
+        except Exception:
+            continue
+    return ""
+
+
 # ─── Profile / script helpers ─────────────────────────────────────────────────
 
 def _profiles_dir() -> Path:
@@ -528,6 +553,10 @@ class Plugin:
                                     data = _parse_vdf_text(acf.read_text(encoding="utf-8", errors="ignore"))
                                     name = data.get("AppState", {}).get("name", name)
                                     is_shortcut = False
+                                else:
+                                    shortcut_name = _get_shortcut_name(appid)
+                                    if shortcut_name:
+                                        name = shortcut_name
                                 return {"appid": appid, "name": name, "is_shortcut": is_shortcut}
                 except Exception:
                     continue
