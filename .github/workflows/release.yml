@@ -56,16 +56,6 @@ jobs:
         run: |
           set -e
           pnpm version ${{ github.event.inputs.bump }} -m "chore(release): v%s"
-          VERSION=$(node -p "require('./package.json').version")
-          node -e "
-            const fs = require('fs');
-            const p = './plugin.json';
-            const obj = JSON.parse(fs.readFileSync(p, 'utf8'));
-            obj.version = '$VERSION';
-            fs.writeFileSync(p, JSON.stringify(obj, null, 2) + '\n');
-          "
-          git add plugin.json
-          git commit --amend --no-edit
           git push origin HEAD --follow-tags
 
       - name: Build plugin
