@@ -8,9 +8,11 @@
     "custom": "Personnalisé",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Wrappers"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Paramètres",
-    "settings_categories": "Catégories visibles"
+    "settings_categories": "Catégories visibles",
+    "default_home": "Accueil par défaut",
+    "default_home_game_manager": "Ouvrir sur le gestionnaire de jeux",
+    "default_home_vars": "Liste des variables"
+  },
+  "launch_options_view": {
+    "title": "Options de lancement",
+    "search_placeholder": "Rechercher un jeu...",
+    "loading_games": "Chargement des jeux...",
+    "no_games": "Aucun jeu trouvé",
+    "non_steam": "Non-Steam",
+    "current_options_title": "Options de lancement actuelles",
+    "loading": "Chargement...",
+    "empty": "(vide)",
+    "managed_by_plugin": "Géré par le plugin :",
+    "stack_to_apply": "Stack à appliquer",
+    "apply_stack": "Appliquer le stack",
+    "remove_plugin_options": "Supprimer les options du plugin",
+    "clear_all": "Tout effacer",
+    "saving": "Enregistrement...",
+    "toast_updated": "Options de lancement mises à jour",
+    "toast_removed": "Options du plugin supprimées",
+    "toast_cleared": "Toutes les options ont été effacées",
+    "error_update": "Échec de la mise à jour des options",
+    "error_remove": "Échec de la suppression des options du plugin",
+    "error_clear": "Échec de l'effacement des options",
+    "error_backend": "Erreur de communication avec le backend",
+    "error_load": "Impossible de charger la liste des jeux"
+  },
+  "game_manager": {
+    "title": "Gestionnaire de jeux",
+    "search": "Rechercher un jeu...",
+    "loading": "Chargement...",
+    "no_games": "Aucun jeu trouvé",
+    "script_not_installed": "Script non installé. Installez-le pour appliquer les options de lancement.",
+    "install_script": "Installer le script",
+    "script_installed": "Script installé",
+    "profile_active": "Profil configuré",
+    "profile_none": "Aucun profil",
+    "launch_option_hint": "Ajouter aux options de lancement",
+    "copy": "Copier wrapper",
+    "copied": "Copié !",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "delete_profile": "Supprimer le profil",
+    "profile_deleted": "Profil supprimé",
+    "saving": "enregistrement...",
+    "error_save": "Erreur de sauvegarde",
+    "configured": "configurés"
   }
 }

@@ -8,9 +8,11 @@
     "custom": "Custom",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Wrappers"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Settings",
-    "settings_categories": "Visible categories"
+    "settings_categories": "Visible categories",
+    "default_home": "Default home",
+    "default_home_game_manager": "Open on game manager",
+    "default_home_vars": "Variable list"
+  },
+  "launch_options_view": {
+    "title": "Game launch options",
+    "search_placeholder": "Search games...",
+    "loading_games": "Loading games...",
+    "no_games": "No games found",
+    "non_steam": "Non-Steam",
+    "current_options_title": "Current launch options",
+    "loading": "Loading...",
+    "empty": "(empty)",
+    "managed_by_plugin": "Managed by plugin:",
+    "stack_to_apply": "Stack to apply",
+    "apply_stack": "Apply stack",
+    "remove_plugin_options": "Remove plugin options",
+    "clear_all": "Clear all",
+    "saving": "Saving...",
+    "toast_updated": "Launch options updated",
+    "toast_removed": "Plugin options removed",
+    "toast_cleared": "All launch options cleared",
+    "error_update": "Failed to update launch options",
+    "error_remove": "Failed to remove plugin options",
+    "error_clear": "Failed to clear launch options",
+    "error_backend": "Backend call failed",
+    "error_load": "Failed to load games list"
+  },
+  "game_manager": {
+    "title": "Game Manager",
+    "search": "Search games...",
+    "loading": "Loading...",
+    "no_games": "No games found",
+    "script_not_installed": "Script not installed. Install it to apply launch options.",
+    "install_script": "Install script",
+    "script_installed": "Script installed",
+    "profile_active": "Profile configured",
+    "profile_none": "No profile",
+    "launch_option_hint": "Add to launch options",
+    "copy": "Copy wrapper",
+    "copied": "Copied!",
+    "save": "Save",
+    "saved": "Saved",
+    "delete_profile": "Delete profile",
+    "profile_deleted": "Profile deleted",
+    "saving": "saving...",
+    "error_save": "Save error",
+    "configured": "configured"
   }
 }

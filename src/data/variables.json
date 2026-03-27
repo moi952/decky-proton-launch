@@ -63,6 +63,17 @@
     ]
   },
   {
+    "category": "wrappers",
+    "variables": [
+      {
+        "title": "lsfg",
+        "env": "__LSFG",
+        "type": "bool",
+        "value": "1"
+      }
+    ]
+  },
+  {
     "category": "performance",
     "variables": [
       {

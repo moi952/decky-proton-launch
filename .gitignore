@@ -53,3 +53,4 @@ out/*
 cli/
 cli/*
 cli/decky
+.example/

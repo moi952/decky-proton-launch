@@ -8,9 +8,11 @@
     "custom": "Benutzerdefiniert",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Wrapper"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Einstellungen",
-    "settings_categories": "Sichtbare Kategorien"
+    "settings_categories": "Sichtbare Kategorien",
+    "default_home": "Standard-Startseite",
+    "default_home_game_manager": "Im Spiele-Manager öffnen",
+    "default_home_vars": "Variablenliste"
+  },
+  "launch_options_view": {
+    "title": "Startoptionen",
+    "search_placeholder": "Spiel suchen...",
+    "loading_games": "Spiele werden geladen...",
+    "no_games": "Keine Spiele gefunden",
+    "non_steam": "Nicht-Steam",
+    "current_options_title": "Aktuelle Startoptionen",
+    "loading": "Laden...",
+    "empty": "(leer)",
+    "managed_by_plugin": "Vom Plugin verwaltet:",
+    "stack_to_apply": "Anzuwendender Stack",
+    "apply_stack": "Stack anwenden",
+    "remove_plugin_options": "Plugin-Optionen entfernen",
+    "clear_all": "Alles löschen",
+    "saving": "Speichern...",
+    "toast_updated": "Startoptionen aktualisiert",
+    "toast_removed": "Plugin-Optionen entfernt",
+    "toast_cleared": "Alle Startoptionen gelöscht",
+    "error_update": "Fehler beim Aktualisieren der Startoptionen",
+    "error_remove": "Fehler beim Entfernen der Plugin-Optionen",
+    "error_clear": "Fehler beim Löschen der Optionen",
+    "error_backend": "Backend-Verbindungsfehler",
+    "error_load": "Spieleliste konnte nicht geladen werden"
+  },
+  "game_manager": {
+    "title": "Spieleverwaltung",
+    "search": "Spiele suchen...",
+    "loading": "Laden...",
+    "no_games": "Keine Spiele gefunden",
+    "script_not_installed": "Skript nicht installiert. Installieren Sie es, um Startoptionen anzuwenden.",
+    "install_script": "Skript installieren",
+    "script_installed": "Skript installiert",
+    "profile_active": "Profil konfiguriert",
+    "profile_none": "Kein Profil",
+    "launch_option_hint": "Zu Startoptionen hinzufügen",
+    "copy": "Wrapper kopieren",
+    "copied": "Kopiert!",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "delete_profile": "Profil löschen",
+    "profile_deleted": "Profil gelöscht",
+    "saving": "Speichern...",
+    "error_save": "Speicherfehler",
+    "configured": "konfiguriert"
   }
 }

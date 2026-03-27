@@ -36,7 +36,8 @@ jobs:
                   PLUGIN_NAME=$(node -p "require('./package.json').name")
                   mkdir -p artifact/$PLUGIN_NAME
                   cp -r dist artifact/$PLUGIN_NAME/
-                  cp plugin.json package.json artifact/$PLUGIN_NAME/
+                  cp main.py plugin.json package.json artifact/$PLUGIN_NAME/
+                  cp -r py_modules artifact/$PLUGIN_NAME/
                   cp LICENSE* README* artifact/$PLUGIN_NAME/ || true
 
             - name: Slugify branch name

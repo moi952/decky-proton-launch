@@ -4,6 +4,7 @@ import {
   PanelSection,
   PanelSectionRow,
   ToggleField,
+  DropdownItem,
 } from "@decky/ui";
 import { useSettings } from "../context/SettingsContext";
 import { useTranslation } from "react-i18next";
@@ -16,7 +17,7 @@ interface SettingsViewProps {
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
-  const { isCategoryVisible, toggleCategory } = useSettings();
+  const { isCategoryVisible, toggleCategory, defaultHome, setDefaultHome } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
 
@@ -32,6 +33,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
           </ActionButton>
           <span style={{ fontWeight: 600 }}>{tSettings("settings")}</span>
         </Focusable>
+      </PanelSection>
+
+      <PanelSection title={tSettings("default_home")}>
+        <PanelSectionRow>
+          <DropdownItem
+            label={tSettings("default_home")}
+            rgOptions={[
+              { data: "home", label: tSettings("default_home_vars") },
+              { data: "game-manager", label: tSettings("default_home_game_manager") },
+            ]}
+            selectedOption={defaultHome}
+            onChange={(opt) => setDefaultHome(opt.data)}
+          />
+        </PanelSectionRow>
       </PanelSection>
 
       <PanelSection title={tSettings("settings_categories")}>

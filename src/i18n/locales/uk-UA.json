@@ -8,9 +8,11 @@
     "custom": "Користувацьке",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Обгортки"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Налаштування",
-    "settings_categories": "Видимі категорії"
+    "settings_categories": "Видимі категорії",
+    "default_home": "Домашня за замовчуванням",
+    "default_home_game_manager": "Відкрити в менеджері ігор",
+    "default_home_vars": "Список змінних"
+  },
+  "launch_options_view": {
+    "title": "Параметри запуску",
+    "search_placeholder": "Пошук гри...",
+    "loading_games": "Завантаження ігор...",
+    "no_games": "Ігри не знайдені",
+    "non_steam": "Не-Steam",
+    "current_options_title": "Поточні параметри запуску",
+    "loading": "Завантаження...",
+    "empty": "(порожньо)",
+    "managed_by_plugin": "Керується плагіном:",
+    "stack_to_apply": "Стек для застосування",
+    "apply_stack": "Застосувати стек",
+    "remove_plugin_options": "Видалити параметри плагіна",
+    "clear_all": "Очистити все",
+    "saving": "Збереження...",
+    "toast_updated": "Параметри запуску оновлені",
+    "toast_removed": "Параметри плагіна видалені",
+    "toast_cleared": "Усі параметри очищені",
+    "error_update": "Помилка оновлення параметрів",
+    "error_remove": "Помилка видалення параметрів плагіна",
+    "error_clear": "Помилка очищення параметрів",
+    "error_backend": "Помилка зв'язку з бекендом",
+    "error_load": "Не вдалося завантажити список ігор"
+  },
+  "game_manager": {
+    "title": "Менеджер ігор",
+    "search": "Пошук ігор...",
+    "loading": "Завантаження...",
+    "no_games": "Ігри не знайдені",
+    "script_not_installed": "Скрипт не встановлено. Встановіть його для застосування параметрів запуску.",
+    "install_script": "Встановити скрипт",
+    "script_installed": "Скрипт встановлено",
+    "profile_active": "Профіль налаштовано",
+    "profile_none": "Немає профілю",
+    "launch_option_hint": "Додати до параметрів запуску",
+    "copy": "Копіювати wrapper",
+    "copied": "Скопійовано!",
+    "save": "Зберегти",
+    "saved": "Збережено",
+    "delete_profile": "Видалити профіль",
+    "profile_deleted": "Профіль видалено",
+    "saving": "збереження...",
+    "error_save": "Помилка збереження",
+    "configured": "налаштовано"
   }
 }

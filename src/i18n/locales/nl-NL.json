@@ -8,9 +8,11 @@
     "custom": "Aangepast",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Wrappers"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Instellingen",
-    "settings_categories": "Zichtbare categorieën"
+    "settings_categories": "Zichtbare categorieën",
+    "default_home": "Standaard startpagina",
+    "default_home_game_manager": "Openen in spelbeheer",
+    "default_home_vars": "Variabelenlijst"
+  },
+  "launch_options_view": {
+    "title": "Startopties",
+    "search_placeholder": "Spel zoeken...",
+    "loading_games": "Spellen laden...",
+    "no_games": "Geen spellen gevonden",
+    "non_steam": "Niet-Steam",
+    "current_options_title": "Huidige startopties",
+    "loading": "Laden...",
+    "empty": "(leeg)",
+    "managed_by_plugin": "Beheerd door plugin:",
+    "stack_to_apply": "Toe te passen stack",
+    "apply_stack": "Stack toepassen",
+    "remove_plugin_options": "Plugin-opties verwijderen",
+    "clear_all": "Alles wissen",
+    "saving": "Opslaan...",
+    "toast_updated": "Startopties bijgewerkt",
+    "toast_removed": "Plugin-opties verwijderd",
+    "toast_cleared": "Alle startopties gewist",
+    "error_update": "Fout bij bijwerken van opties",
+    "error_remove": "Fout bij verwijderen van plugin-opties",
+    "error_clear": "Fout bij wissen van opties",
+    "error_backend": "Verbindingsfout met backend",
+    "error_load": "Kan spellenlijst niet laden"
+  },
+  "game_manager": {
+    "title": "Spellenbeheer",
+    "search": "Spellen zoeken...",
+    "loading": "Laden...",
+    "no_games": "Geen spellen gevonden",
+    "script_not_installed": "Script niet geïnstalleerd. Installeer het om startopties toe te passen.",
+    "install_script": "Script installeren",
+    "script_installed": "Script geïnstalleerd",
+    "profile_active": "Profiel geconfigureerd",
+    "profile_none": "Geen profiel",
+    "launch_option_hint": "Toevoegen aan startopties",
+    "copy": "Wrapper kopiëren",
+    "copied": "Gekopieerd!",
+    "save": "Opslaan",
+    "saved": "Opgeslagen",
+    "delete_profile": "Profiel verwijderen",
+    "profile_deleted": "Profiel verwijderd",
+    "saving": "opslaan...",
+    "error_save": "Opslagfout",
+    "configured": "geconfigureerd"
   }
 }
