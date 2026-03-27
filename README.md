@@ -2,24 +2,46 @@
 
 **Manage Proton launch options easily on your Steam Deck via Decky Loader.**
 
-Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy them, or inject directly into the game's launch parameters.
+Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-![Decky Proton Launch Favorite shortcuts](./assets/favorite_shortcuts.JPG)
-![Decky Proton Launch Custom shortcuts](./assets/custom_shortcuts.JPG)
-![Decky Proton Launch Multiple choice](./assets/multiple_choice.JPG)
-![Decky Proton Launch Settings](./assets/settings.JPG)
+---
+
+## Screenshots
+
+### Variable list & selection
+![Favorite shortcuts](./assets/favorite_shortcuts.JPG)
+![Multiple choice](./assets/multiple_choice.JPG)
+
+### Per-game configuration
+Click on any game to open its profile and configure launch options individually. Changes apply on next game launch.
+
+![Game detail page](./assets/game_page_detail.JPG)
+
+### Running game detection
+The plugin automatically detects the currently running game and shows it at the top — click it to jump directly to its settings.
+
+![Running game](./assets/played_game.JPG)
+
+### Settings
+The settings view lets you choose the default home tab (variable list or game manager) and toggle the visibility of each variable category to keep only what's relevant to you.
+
+![Settings](./assets/settings.jpeg)
+
+### Update notifications
+When a new version is available, a banner appears at the top with a direct link to download it.
+
+![Update button](./assets/update_button.JPG)
 
 ---
 
 ## Features
 
 - **Predefined Proton variables**: FSR4, DLSS4, XeSS, DXVK Async, ESYNC/FSYNC, MangoHud, and more
-- **Multi-selection support**: select several options and combine them into a single launch string
-- **Copy options**: copy the variable only, or variable + `%command%` ready to paste
-- **Inject directly**: append selected variables to a game's launch options in one click
-- **Favorites**: save your most-used combinations for quick access
-- **Custom variables**: create your own environment variables with a name, key and value
-- **Category visibility**: show or hide categories from the settings view
+- **Per-game profiles**: configure and save launch options per game
+- **Running game detection**: instantly jump to the settings of the game you're playing
+- **Wrapper script**: copy the `~/proton-launch %command%` wrapper or install it with one click
+- **Category visibility**: show or hide variable categories from the settings view
+- **Update notifications**: banner shown when a newer version is available on GitHub
 - **Gamepad navigation**: fully accessible with the Steam Deck controller
 - **Multi-language support**: EN, FR, DE, ES, IT, PT-BR, PT-PT, RU, PL, NL, TR, UK, JA, KO, ZH-CN
 
@@ -27,10 +49,12 @@ Decky Proton Launch provides a simple, intuitive interface to enable commonly us
 
 ## Installation
 
+Download the latest release zip from the [Releases page](https://github.com/moi952/decky-proton-launch/releases/latest) and load it via Decky Loader, or build from source:
+
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/decky-proton-launch.git
+git clone https://github.com/moi952/decky-proton-launch.git
 ```
 
 2. Install dependencies:
@@ -54,11 +78,11 @@ pnpm run build
 
 Contributions are welcome!
 
-- **New language**: add a JSON file in `src/locales/` following the existing structure and open a PR.
+- **New language**: add a JSON file in `src/i18n/locales/` following the existing structure and open a PR.
 - **New Proton variable**: propose it via an issue or a PR, following the category and naming conventions in `src/data/variables.json`.
 
 ---
 
 ## License
 
-MIT License
+BSD-3-Clause License

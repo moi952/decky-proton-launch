@@ -17,7 +17,8 @@ interface SettingsViewProps {
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
-  const { isCategoryVisible, toggleCategory, defaultHome, setDefaultHome } = useSettings();
+  const { isCategoryVisible, toggleCategory, defaultHome, setDefaultHome } =
+    useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
 
@@ -38,10 +39,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
       <PanelSection title={tSettings("default_home")}>
         <PanelSectionRow>
           <DropdownItem
-            label={tSettings("default_home")}
             rgOptions={[
               { data: "home", label: tSettings("default_home_vars") },
-              { data: "game-manager", label: tSettings("default_home_game_manager") },
+              {
+                data: "game-manager",
+                label: tSettings("default_home_game_manager"),
+              },
             ]}
             selectedOption={defaultHome}
             onChange={(opt) => setDefaultHome(opt.data)}
