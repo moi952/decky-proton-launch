@@ -8,9 +8,11 @@
     "custom": "Personalizzato",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Wrapper"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Impostazioni",
-    "settings_categories": "Categorie visibili"
+    "settings_categories": "Categorie visibili",
+    "default_home": "Home predefinita",
+    "default_home_game_manager": "Apri nel gestore giochi",
+    "default_home_vars": "Lista variabili"
+  },
+  "launch_options_view": {
+    "title": "Opzioni di avvio",
+    "search_placeholder": "Cerca gioco...",
+    "loading_games": "Caricamento giochi...",
+    "no_games": "Nessun gioco trovato",
+    "non_steam": "Non-Steam",
+    "current_options_title": "Opzioni di avvio attuali",
+    "loading": "Caricamento...",
+    "empty": "(vuoto)",
+    "managed_by_plugin": "Gestito dal plugin:",
+    "stack_to_apply": "Stack da applicare",
+    "apply_stack": "Applica stack",
+    "remove_plugin_options": "Rimuovi opzioni plugin",
+    "clear_all": "Cancella tutto",
+    "saving": "Salvataggio...",
+    "toast_updated": "Opzioni di avvio aggiornate",
+    "toast_removed": "Opzioni plugin rimosse",
+    "toast_cleared": "Tutte le opzioni cancellate",
+    "error_update": "Errore aggiornamento opzioni",
+    "error_remove": "Errore rimozione opzioni plugin",
+    "error_clear": "Errore cancellazione opzioni",
+    "error_backend": "Errore di comunicazione con il backend",
+    "error_load": "Impossibile caricare la lista dei giochi"
+  },
+  "game_manager": {
+    "title": "Gestione giochi",
+    "search": "Cerca giochi...",
+    "loading": "Caricamento...",
+    "no_games": "Nessun gioco trovato",
+    "script_not_installed": "Script non installato. Installalo per applicare le opzioni di avvio.",
+    "install_script": "Installa script",
+    "script_installed": "Script installato",
+    "profile_active": "Profilo configurato",
+    "profile_none": "Nessun profilo",
+    "launch_option_hint": "Aggiungi alle opzioni di avvio",
+    "copy": "Copia wrapper",
+    "copied": "Copiato!",
+    "save": "Salva",
+    "saved": "Salvato",
+    "delete_profile": "Elimina profilo",
+    "profile_deleted": "Profilo eliminato",
+    "saving": "salvataggio...",
+    "error_save": "Errore di salvataggio",
+    "configured": "configurati"
   }
 }

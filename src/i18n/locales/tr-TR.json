@@ -8,9 +8,11 @@
     "custom": "Özel",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Sarmalayıcılar"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,52 @@
   },
   "settings_view": {
     "settings": "Ayarlar",
-    "settings_categories": "Görünür kategoriler"
+    "settings_categories": "Görünür kategoriler",
+    "default_home": "Varsayılan ana sayfa",
+    "default_home_game_manager": "Oyun yöneticisinde aç",
+    "default_home_vars": "Değişken listesi"
+  },
+  "launch_options_view": {
+    "title": "Başlatma seçenekleri",
+    "search_placeholder": "Oyun ara...",
+    "loading_games": "Oyunlar yükleniyor...",
+    "no_games": "Oyun bulunamadı",
+    "non_steam": "Steam dışı",
+    "current_options_title": "Mevcut başlatma seçenekleri",
+    "loading": "Yükleniyor...",
+    "empty": "(boş)",
+    "managed_by_plugin": "Plugin tarafından yönetilen:",
+    "stack_to_apply": "Uygulanacak stack",
+    "apply_stack": "Stack uygula",
+    "remove_plugin_options": "Plugin seçeneklerini kaldır",
+    "clear_all": "Tümünü temizle",
+    "saving": "Kaydediliyor...",
+    "toast_updated": "Başlatma seçenekleri güncellendi",
+    "toast_removed": "Plugin seçenekleri kaldırıldı",
+    "toast_cleared": "Tüm seçenekler temizlendi",
+    "error_update": "Seçenekler güncellenemedi",
+    "error_remove": "Plugin seçenekleri kaldırılamadı",
+    "error_clear": "Seçenekler temizlenemedi",
+    "error_backend": "Backend bağlantı hatası",
+    "error_load": "Oyun listesi yüklenemedi"
+  },
+  "game_manager": {
+    "title": "Oyun Yöneticisi",
+    "search": "Oyun ara...",
+    "loading": "Yükleniyor...",
+    "no_games": "Oyun bulunamadı",
+    "script_not_installed": "Script kurulu değil. Başlatma seçeneklerini uygulamak için kurun.",
+    "install_script": "Script kur",
+    "script_installed": "Script kuruldu",
+    "profile_active": "Profil yapılandırıldı",
+    "profile_none": "Profil yok",
+    "launch_option_hint": "Başlatma seçeneklerine ekle",
+    "copy": "Wrapper kopyala",
+    "copied": "Kopyalandı!",
+    "save": "Kaydet",
+    "saved": "Kaydedildi",
+    "delete_profile": "Profili sil",
+    "profile_deleted": "Profil silindi",
+    "error_save": "Kaydetme hatası"
   }
 }

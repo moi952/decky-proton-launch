@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   definePlugin,
   addEventListener,
   removeEventListener,
   toaster,
+  call,
 } from "@decky/api";
 import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
@@ -11,15 +12,97 @@ import { staticClasses } from "@decky/ui";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
 import { SettingsView } from "./views/SettingsView";
+import { GamesPickerView, SteamGame } from "./views/GamesPickerView";
+import { GameDetailView } from "./views/GameDetailView";
+import { useSettings } from "./context/SettingsContext";
+import { NavBar } from "./components/NavBar";
+import { NowPlayingCard } from "./components/NowPlayingCard";
+import { UpdateBanner } from "./components/UpdateBanner";
 
-type View = "home" | "settings";
+type View = "home" | "settings" | "games-picker" | "game-detail";
+
+const getInitialView = (): View => {
+  try {
+    const v = localStorage.getItem("deck-proton-launch-default-home");
+    if (v === "game-manager") return "games-picker";
+  } catch {}
+  return "home";
+};
 
 const App: React.FC = () => {
-  const [view, setView] = useState<View>("home");
+  const { defaultHome } = useSettings();
+  const [view, setView] = useState<View>(getInitialView);
+  const [selectedGame, setSelectedGame] = useState<SteamGame | null>(null);
+  const [runningGame, setRunningGame] = useState<SteamGame | null>(null);
+  const [scriptInstalled, setScriptInstalled] = useState(false);
 
-  if (view === "settings")
-    return <SettingsView onBack={() => setView("home")} />;
-  return <HomeView onSettings={() => setView("settings")} />;
+  const goHome = () =>
+    setView(defaultHome === "game-manager" ? "games-picker" : "home");
+
+  useEffect(() => {
+    call<[], boolean>("is_script_installed").then(setScriptInstalled);
+  }, []);
+
+  // Détection du jeu en cours, polling toutes les 5s
+  useEffect(() => {
+    const poll = async () => {
+      const result = await call<[], { appid: number; name: string; is_shortcut: boolean }>(
+        "get_running_game"
+      );
+      setRunningGame(result.appid > 0 ? (result as SteamGame) : null);
+    };
+    poll();
+    const interval = setInterval(poll, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (view === "settings") return <SettingsView onBack={goHome} />;
+
+  if (view === "game-detail" && selectedGame)
+    return (
+      <GameDetailView
+        game={selectedGame}
+        onBack={() => setView("games-picker")}
+      />
+    );
+
+  const mainView = view as "home" | "games-picker";
+
+  return (
+    <div>
+      <NavBar
+        view={mainView}
+        scriptInstalled={scriptInstalled}
+        onHome={() => setView("home")}
+        onGamesManager={() => setView("games-picker")}
+        onSettings={() => setView("settings")}
+      />
+      <UpdateBanner />
+
+      {runningGame && (
+        <NowPlayingCard
+          game={runningGame}
+          onSelect={() => {
+            setSelectedGame(runningGame);
+            setView("game-detail");
+          }}
+        />
+      )}
+
+      {view === "home" && <HomeView />}
+
+      {view === "games-picker" && (
+        <GamesPickerView
+          runningGameId={runningGame?.appid ?? 0}
+          onSelectGame={(game) => {
+            setSelectedGame(game);
+            setView("game-detail");
+          }}
+          onScriptInstalled={() => setScriptInstalled(true)}
+        />
+      )}
+    </div>
+  );
 };
 
 export default definePlugin(() => {

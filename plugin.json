@@ -1,6 +1,7 @@
 {
   "name": "Decky proton launch",
   "author": "moi952",
+  "version": "0.5.0",
   "flags": ["debug", "_root"],
   "api_version": 1,
   "publish": {

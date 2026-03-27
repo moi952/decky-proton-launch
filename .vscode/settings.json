@@ -28,6 +28,11 @@
   // TypeScript Configuration
   "typescript.tsdk": "node_modules/typescript/lib",
 
+  // Python / Pylance — decky module is only available at runtime on Steam Deck
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingModuleSource": "none"
+  },
+
   // Stylelint Configuration
   "stylelint.validate": ["css", "scss", "less"],
 

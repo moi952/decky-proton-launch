@@ -8,9 +8,11 @@
     "custom": "カスタム",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "ラッパー"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4アップグレード",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3アップグレード",
     "dlss4_upgrade": "DLSS4アップグレード",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "設定",
-    "settings_categories": "表示するカテゴリー"
+    "settings_categories": "表示するカテゴリー",
+    "default_home": "デフォルトホーム",
+    "default_home_game_manager": "ゲームマネージャーを開く",
+    "default_home_vars": "変数リスト"
+  },
+  "launch_options_view": {
+    "title": "起動オプション",
+    "search_placeholder": "ゲームを検索...",
+    "loading_games": "ゲームを読み込み中...",
+    "no_games": "ゲームが見つかりません",
+    "non_steam": "非Steam",
+    "current_options_title": "現在の起動オプション",
+    "loading": "読み込み中...",
+    "empty": "（空）",
+    "managed_by_plugin": "プラグインが管理中：",
+    "stack_to_apply": "適用するスタック",
+    "apply_stack": "スタックを適用",
+    "remove_plugin_options": "プラグインのオプションを削除",
+    "clear_all": "すべてクリア",
+    "saving": "保存中...",
+    "toast_updated": "起動オプションを更新しました",
+    "toast_removed": "プラグインのオプションを削除しました",
+    "toast_cleared": "すべてのオプションをクリアしました",
+    "error_update": "オプションの更新に失敗しました",
+    "error_remove": "プラグインのオプション削除に失敗しました",
+    "error_clear": "オプションのクリアに失敗しました",
+    "error_backend": "バックエンド通信エラー",
+    "error_load": "ゲームリストの読み込みに失敗しました"
+  },
+  "game_manager": {
+    "title": "ゲームマネージャー",
+    "search": "ゲームを検索...",
+    "loading": "読み込み中...",
+    "no_games": "ゲームが見つかりません",
+    "script_not_installed": "スクリプトがインストールされていません。起動オプションを適用するにはインストールしてください。",
+    "install_script": "スクリプトをインストール",
+    "script_installed": "スクリプトインストール済み",
+    "profile_active": "プロファイル設定済",
+    "profile_none": "プロファイルなし",
+    "launch_option_hint": "起動オプションに追加",
+    "copy": "Wrapperをコピー",
+    "copied": "コピーしました！",
+    "save": "保存",
+    "saved": "保存しました",
+    "delete_profile": "プロファイルを削除",
+    "profile_deleted": "プロファイルを削除しました",
+    "saving": "保存中...",
+    "error_save": "保存エラー",
+    "configured": "設定済み"
   }
 }

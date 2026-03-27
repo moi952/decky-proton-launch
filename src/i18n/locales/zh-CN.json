@@ -8,9 +8,11 @@
     "custom": "自定义",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "包装器"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 升级",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 升级",
     "dlss4_upgrade": "DLSS4 升级",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "设置",
-    "settings_categories": "显示的分类"
+    "settings_categories": "显示的分类",
+    "default_home": "默认主页",
+    "default_home_game_manager": "在游戏管理器中打开",
+    "default_home_vars": "变量列表"
+  },
+  "launch_options_view": {
+    "title": "启动选项",
+    "search_placeholder": "搜索游戏...",
+    "loading_games": "正在加载游戏...",
+    "no_games": "未找到游戏",
+    "non_steam": "非Steam",
+    "current_options_title": "当前启动选项",
+    "loading": "加载中...",
+    "empty": "（空）",
+    "managed_by_plugin": "由插件管理：",
+    "stack_to_apply": "待应用的堆栈",
+    "apply_stack": "应用堆栈",
+    "remove_plugin_options": "移除插件选项",
+    "clear_all": "清除全部",
+    "saving": "保存中...",
+    "toast_updated": "启动选项已更新",
+    "toast_removed": "插件选项已移除",
+    "toast_cleared": "所有选项已清除",
+    "error_update": "更新选项失败",
+    "error_remove": "移除插件选项失败",
+    "error_clear": "清除选项失败",
+    "error_backend": "后端通信错误",
+    "error_load": "无法加载游戏列表"
+  },
+  "game_manager": {
+    "title": "游戏管理器",
+    "search": "搜索游戏...",
+    "loading": "加载中...",
+    "no_games": "未找到游戏",
+    "script_not_installed": "脚本未安装。请安装以应用启动选项。",
+    "install_script": "安装脚本",
+    "script_installed": "脚本已安装",
+    "profile_active": "配置文件已设置",
+    "profile_none": "无配置文件",
+    "launch_option_hint": "添加到启动选项",
+    "copy": "复制 Wrapper",
+    "copied": "已复制！",
+    "save": "保存",
+    "saved": "已保存",
+    "delete_profile": "删除配置文件",
+    "profile_deleted": "配置文件已删除",
+    "saving": "保存中...",
+    "error_save": "保存错误",
+    "configured": "已配置"
   }
 }

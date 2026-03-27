@@ -8,9 +8,11 @@
     "custom": "사용자 정의",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "래퍼"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 업그레이드",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 업그레이드",
     "dlss4_upgrade": "DLSS4 업그레이드",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "설정",
-    "settings_categories": "표시할 카테고리"
+    "settings_categories": "표시할 카테고리",
+    "default_home": "기본 홈",
+    "default_home_game_manager": "게임 관리자 열기",
+    "default_home_vars": "변수 목록"
+  },
+  "launch_options_view": {
+    "title": "실행 옵션",
+    "search_placeholder": "게임 검색...",
+    "loading_games": "게임 로드 중...",
+    "no_games": "게임을 찾을 수 없습니다",
+    "non_steam": "비Steam",
+    "current_options_title": "현재 실행 옵션",
+    "loading": "로드 중...",
+    "empty": "(비어 있음)",
+    "managed_by_plugin": "플러그인이 관리 중:",
+    "stack_to_apply": "적용할 스택",
+    "apply_stack": "스택 적용",
+    "remove_plugin_options": "플러그인 옵션 제거",
+    "clear_all": "모두 지우기",
+    "saving": "저장 중...",
+    "toast_updated": "실행 옵션이 업데이트되었습니다",
+    "toast_removed": "플러그인 옵션이 제거되었습니다",
+    "toast_cleared": "모든 옵션이 지워졌습니다",
+    "error_update": "옵션 업데이트에 실패했습니다",
+    "error_remove": "플러그인 옵션 제거에 실패했습니다",
+    "error_clear": "옵션 지우기에 실패했습니다",
+    "error_backend": "백엔드 통신 오류",
+    "error_load": "게임 목록을 불러올 수 없습니다"
+  },
+  "game_manager": {
+    "title": "게임 관리자",
+    "search": "게임 검색...",
+    "loading": "로드 중...",
+    "no_games": "게임을 찾을 수 없습니다",
+    "script_not_installed": "스크립트가 설치되지 않았습니다. 실행 옵션을 적용하려면 설치하세요.",
+    "install_script": "스크립트 설치",
+    "script_installed": "스크립트 설치됨",
+    "profile_active": "프로필 구성됨",
+    "profile_none": "프로필 없음",
+    "launch_option_hint": "실행 옵션에 추가",
+    "copy": "래퍼 복사",
+    "copied": "복사됨!",
+    "save": "저장",
+    "saved": "저장됨",
+    "delete_profile": "프로필 삭제",
+    "profile_deleted": "프로필이 삭제되었습니다",
+    "saving": "저장 중...",
+    "error_save": "저장 오류",
+    "configured": "구성됨"
   }
 }

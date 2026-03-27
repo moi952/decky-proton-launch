@@ -8,9 +8,11 @@
     "custom": "Пользовательское",
     "intel_commands": "Intel",
     "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD"
+    "amd_commands": "AMD",
+    "wrappers": "Обёртки"
   },
   "variables": {
+    "lsfg": "LSFG (~/lsfg)",
     "fsr4_upgrade": "FSR4 Upgrade",
     "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
     "dlss4_upgrade": "DLSS4 Upgrade",
@@ -85,6 +87,54 @@
   },
   "settings_view": {
     "settings": "Настройки",
-    "settings_categories": "Видимые категории"
+    "settings_categories": "Видимые категории",
+    "default_home": "Главная по умолчанию",
+    "default_home_game_manager": "Открывать в менеджере игр",
+    "default_home_vars": "Список переменных"
+  },
+  "launch_options_view": {
+    "title": "Параметры запуска",
+    "search_placeholder": "Поиск игры...",
+    "loading_games": "Загрузка игр...",
+    "no_games": "Игры не найдены",
+    "non_steam": "Не-Steam",
+    "current_options_title": "Текущие параметры запуска",
+    "loading": "Загрузка...",
+    "empty": "(пусто)",
+    "managed_by_plugin": "Управляется плагином:",
+    "stack_to_apply": "Применяемый стек",
+    "apply_stack": "Применить стек",
+    "remove_plugin_options": "Удалить параметры плагина",
+    "clear_all": "Очистить всё",
+    "saving": "Сохранение...",
+    "toast_updated": "Параметры запуска обновлены",
+    "toast_removed": "Параметры плагина удалены",
+    "toast_cleared": "Все параметры очищены",
+    "error_update": "Ошибка обновления параметров",
+    "error_remove": "Ошибка удаления параметров плагина",
+    "error_clear": "Ошибка очистки параметров",
+    "error_backend": "Ошибка связи с бэкендом",
+    "error_load": "Не удалось загрузить список игр"
+  },
+  "game_manager": {
+    "title": "Менеджер игр",
+    "search": "Поиск игр...",
+    "loading": "Загрузка...",
+    "no_games": "Игры не найдены",
+    "script_not_installed": "Скрипт не установлен. Установите его для применения параметров запуска.",
+    "install_script": "Установить скрипт",
+    "script_installed": "Скрипт установлен",
+    "profile_active": "Профиль настроен",
+    "profile_none": "Нет профиля",
+    "launch_option_hint": "Добавить в параметры запуска",
+    "copy": "Копировать wrapper",
+    "copied": "Скопировано!",
+    "save": "Сохранить",
+    "saved": "Сохранено",
+    "delete_profile": "Удалить профиль",
+    "profile_deleted": "Профиль удалён",
+    "saving": "сохранение...",
+    "error_save": "Ошибка сохранения",
+    "configured": "настроено"
   }
 }
