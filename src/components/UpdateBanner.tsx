@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { DialogButton } from "@decky/ui";
 // @ts-ignore — replaced at build time by rollup with the content of plugin.json
 import manifest from "@decky/manifest";
 
@@ -36,24 +37,30 @@ export const UpdateBanner: React.FC = () => {
   if (!latestVersion) return null;
 
   return (
-    <a
-      href={RELEASES_PAGE}
-      target="_blank"
-      rel="noreferrer"
-      style={{
-        display: "block",
-        margin: "0 16px 8px",
-        padding: "6px 10px",
-        background: "#1a2a1a",
-        border: "1px solid #4caf50",
-        borderRadius: "6px",
-        fontSize: 11,
-        color: "#4caf50",
-        textDecoration: "none",
-        textAlign: "center",
-      }}
-    >
-      ↑ v{latestVersion} available — click to download
-    </a>
+    <div style={{ margin: "0 16px 8px" }}>
+      <style>{`
+        .plch-update-btn:focus {
+          background: #4caf50 !important;
+          color: #fff !important;
+          border-color: #4caf50 !important;
+        }
+      `}</style>
+      <DialogButton
+        className="plch-update-btn"
+        onClick={() => window.open(RELEASES_PAGE, "_blank")}
+        style={{
+          padding: "6px 10px",
+          background: "#1a2a1a",
+          border: "1px solid #4caf50",
+          borderRadius: "6px",
+          fontSize: 11,
+          color: "#4caf50",
+          textAlign: "center",
+          width: "100%",
+        }}
+      >
+        ↑ v{latestVersion} available — click to download
+      </DialogButton>
+    </div>
   );
 };
