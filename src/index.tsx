@@ -12,12 +12,14 @@ import { staticClasses } from "@decky/ui";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
 import { SettingsView } from "./views/SettingsView";
-import { GamesPickerView, SteamGame, GAME_ROW_STYLES } from "./views/GamesPickerView";
+import { GamesPickerView } from "./views/GamesPickerView";
 import { GameDetailView } from "./views/GameDetailView";
 import { useSettings } from "./context/SettingsContext";
 import { NavBar } from "./components/NavBar";
 import { NowPlayingCard } from "./components/NowPlayingCard";
 import { UpdateBanner } from "./components/UpdateBanner";
+import { GAME_ROW_STYLES } from "./components/GameRow";
+import { SteamGame, ScriptStatus } from "./data/types";
 
 type View = "home" | "settings" | "games-picker" | "game-detail";
 
@@ -34,13 +36,13 @@ const App: React.FC = () => {
   const [view, setView] = useState<View>(getInitialView);
   const [selectedGame, setSelectedGame] = useState<SteamGame | null>(null);
   const [runningGame, setRunningGame] = useState<SteamGame | null>(null);
-  const [scriptInstalled, setScriptInstalled] = useState(false);
+  const [scriptStatus, setScriptStatus] = useState<ScriptStatus>("missing");
 
   const goHome = () =>
     setView(defaultHome === "game-manager" ? "games-picker" : "home");
 
   useEffect(() => {
-    call<[], boolean>("is_script_installed").then(setScriptInstalled);
+    call<[], ScriptStatus>("is_script_installed").then(setScriptStatus);
   }, []);
 
   // Detect running game, polling every 5s
@@ -73,7 +75,7 @@ const App: React.FC = () => {
       <style>{GAME_ROW_STYLES}</style>
       <NavBar
         view={mainView}
-        scriptInstalled={scriptInstalled}
+        scriptStatus={scriptStatus}
         onHome={() => setView("home")}
         onGamesManager={() => setView("games-picker")}
         onSettings={() => setView("settings")}
@@ -99,7 +101,7 @@ const App: React.FC = () => {
             setSelectedGame(game);
             setView("game-detail");
           }}
-          onScriptInstalled={() => setScriptInstalled(true)}
+          onScriptInstalled={() => setScriptStatus("current")}
         />
       )}
     </div>

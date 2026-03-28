@@ -17,6 +17,10 @@ Click on any game to open its profile and configure launch options individually.
 
 ![Game detail page](./assets/game_page_detail.JPG)
 
+When an option is enabled, you can instantly switch its value between **Enable** and **Disable** directly from the game profile.
+
+![Option states](./assets/options_states.jpeg)
+
 ### Running game detection
 The plugin automatically detects the currently running game and shows it at the top — click it to jump directly to its settings.
 

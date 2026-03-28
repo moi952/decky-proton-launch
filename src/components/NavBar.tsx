@@ -3,10 +3,11 @@ import { Focusable } from "@decky/ui";
 import { FiSettings, FiList, FiPlay } from "react-icons/fi";
 import { ActionButton } from "./ActionButton";
 import PanelSectionCustom from "./PanelSectionCustom";
+import { ScriptStatus } from "../data/types";
 
 interface NavBarProps {
   view: "home" | "games-picker";
-  scriptInstalled: boolean;
+  scriptStatus: ScriptStatus;
   onHome: () => void;
   onGamesManager: () => void;
   onSettings: () => void;
@@ -14,7 +15,7 @@ interface NavBarProps {
 
 export const NavBar: React.FC<NavBarProps> = ({
   view,
-  scriptInstalled,
+  scriptStatus,
   onHome,
   onGamesManager,
   onSettings,
@@ -35,8 +36,11 @@ export const NavBar: React.FC<NavBarProps> = ({
         </ActionButton>
       </div>
       <div style={{ flex: 1 }} />
-      {scriptInstalled && (
+      {scriptStatus === "current" && (
         <span style={{ color: "#4caf50", fontSize: 14, lineHeight: 1, paddingRight: 2 }}>✓</span>
+      )}
+      {scriptStatus === "outdated" && (
+        <span style={{ color: "#f5a623", fontSize: 14, lineHeight: 1, paddingRight: 2 }}>⚠</span>
       )}
       <ActionButton onClick={onSettings}>
         <FiSettings size={16} />

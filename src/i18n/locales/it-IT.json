@@ -23,19 +23,22 @@
     "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "radv_perftest_gpl": "RADV PerfTest GPL",
-    "use_wined3d": "Usa WineD3D",
-    "hide_nvidia_gpu": "Nascondi GPU NVIDIA",
-    "enable_nvapi": "Abilita NVAPI",
     "proton_log": "Log Proton",
     "mangohud": "MangoHud",
     "fsr_indicator": "Indicatore FSR",
     "dlss_indicator": "Indicatore DLSS",
     "xess_indicator": "Indicatore XeSS",
-    "enable_hdr_wsi": "Abilita HDR WSI",
-    "proton_enable_hdr": "Abilita HDR",
     "smooth_motion": "Abilita Smooth Motion",
-    "steam_deck_disabled": "Disabilita Steam Deck",
-    "use_ntsync": "NTSync"
+    "steam_deck": "Modalità Steam Deck",
+    "nvidia_gpu_masking": "Mascheratura GPU NVIDIA",
+    "wined3d": "WineD3D",
+    "ntsync": "NTSync",
+    "nvapi": "NVAPI",
+    "hdr_wsi": "HDR WSI",
+    "hdr": "HDR",
+    "enable_prefix": "Attiva",
+    "disable_prefix": "Disattiva",
+    "fgmod": "fgmod (~/fgmod/fgmod)"
   },
   "common": {
     "selected": "Selezionato",
@@ -136,6 +139,8 @@
     "profile_deleted": "Profilo eliminato",
     "saving": "salvataggio...",
     "error_save": "Errore di salvataggio",
-    "configured": "configurati"
+    "configured": "configurati",
+    "script_outdated": "Aggiornamento script richiesto. Reinstalla per applicare le modifiche.",
+    "reinstall_script": "Reinstalla script"
   }
 }

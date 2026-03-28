@@ -90,22 +90,19 @@ export const VariableItem: React.FC<VariableItemProps> = ({
     if (!variable?.type) return null;
 
     if (variable.type === "bool") {
-      const options = [
-        { title: "enabled", value: "1" },
-        { title: "disabled", value: "0" },
-      ];
+      if (variable.simple) return null;
       return (
         <Focusable
           style={{ display: "flex", gap: "6px" }}
           flow-children="horizontal"
         >
-          {options.map((opt) => (
+          {(["1", "0"] as const).map((v) => (
             <ActionButton
-              key={opt.value}
+              key={v}
               size="small"
-              onClick={() => setSelectedValue(opt.value)}
+              onClick={() => setSelectedValue(v)}
             >
-              {t(opt.title)}
+              {tVariables(v === "1" ? "enable_prefix" : "disable_prefix")}
             </ActionButton>
           ))}
         </Focusable>

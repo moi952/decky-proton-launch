@@ -1,28 +1,20 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  TextField,
-  DialogButton,
-} from "@decky/ui";
+import { TextField, DialogButton } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
+import { GameRow } from "../components/GameRow";
 import { FiCopy, FiChevronDown, FiChevronRight, FiEye, FiEyeOff } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
+import { SteamGame, ScriptStatus } from "../data/types";
 
-export interface SteamGame {
-  appid: number;
-  name: string;
-  is_shortcut: boolean;
-}
+export type { SteamGame };
 
 interface GamesPickerViewProps {
   runningGameId: number;
   onSelectGame: (game: SteamGame) => void;
   onScriptInstalled: () => void;
 }
-
-const COVER_URL = (appid: number) =>
-  `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`;
 
 const copyToClipboard = (text: string) => {
   try {
@@ -48,146 +40,6 @@ const fallbackCopy = (text: string) => {
   document.body.removeChild(el);
 };
 
-// Styles injected once for native focus (gamepad + keyboard)
-export const GAME_ROW_STYLES = `
-  .plch-game-row:focus {
-    border: 2px solid #dcdedf !important;
-    background: #2a3a4a !important;
-  }
-`;
-
-export const GameRow: React.FC<{
-  game: SteamGame;
-  hasProfile: boolean;
-  isRunning: boolean;
-  nowPlaying?: boolean;
-  onClick: () => void;
-}> = ({ game, hasProfile, isRunning, nowPlaying, onClick }) => {
-  const [shortcutCover, setShortcutCover] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!game.is_shortcut) return;
-    call<[number], string>("get_shortcut_cover", game.appid).then((url) => {
-      if (url) setShortcutCover(url);
-    });
-  }, [game.appid, game.is_shortcut]);
-
-  const border = nowPlaying ? "2px solid #4caf50" : hasProfile ? "2px solid #f5a623" : "2px solid transparent";
-  const background = nowPlaying ? "#0d1f0d" : "#1a1a2e";
-
-  return (
-    <div style={{ marginBottom: "4px" }}>
-      <DialogButton
-        className="plch-game-row"
-        onClick={onClick}
-        style={{
-          padding: 0,
-          overflow: "hidden",
-          borderRadius: "6px",
-          border,
-          background,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          width: "100%",
-        }}
-      >
-        <div style={{ position: "relative", width: 80, height: 37, flexShrink: 0 }}>
-          {game.is_shortcut && shortcutCover ? (
-            <img
-              src={shortcutCover}
-              alt=""
-              style={{ width: 80, height: 37, objectFit: "cover", display: "block" }}
-            />
-          ) : game.is_shortcut ? (
-            <div
-              style={{
-                width: 80,
-                height: 37,
-                background: "#2a2a3e",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 9,
-                color: "#666",
-              }}
-            >
-              Non-Steam
-            </div>
-          ) : (
-            <img
-              src={COVER_URL(game.appid)}
-              alt=""
-              style={{ width: 80, height: 37, objectFit: "cover", display: "block" }}
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-            />
-          )}
-          {(hasProfile || isRunning) && (
-            <div
-              style={{
-                position: "absolute",
-                bottom: 3,
-                left: 3,
-                display: "flex",
-                gap: "3px",
-              }}
-            >
-              {hasProfile && (
-                <span
-                  style={{
-                    background: "rgba(0,0,0,0.65)",
-                    borderRadius: "3px",
-                    padding: "1px 3px",
-                    fontSize: 10,
-                    lineHeight: 1,
-                    color: "#f5a623",
-                  }}
-                >
-                  ⚙
-                </span>
-              )}
-              {isRunning && (
-                <span
-                  style={{
-                    background: "rgba(0,0,0,0.65)",
-                    borderRadius: "3px",
-                    padding: "1px 3px",
-                    fontSize: 10,
-                    lineHeight: 1,
-                    color: "#4caf50",
-                  }}
-                >
-                  ▶
-                </span>
-              )}
-            </div>
-          )}
-        </div>
-        <div
-          style={{
-            padding: "4px 8px",
-            fontSize: 12,
-            color: "#fff",
-            flex: 1,
-          }}
-        >
-          <span
-            style={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical" as const,
-              textAlign: "left",
-            }}
-          >
-            {game.name}
-          </span>
-        </div>
-      </DialogButton>
-    </div>
-  );
-};
-
 export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   runningGameId,
   onSelectGame,
@@ -198,7 +50,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [games, setGames] = useState<SteamGame[]>([]);
   const [configuredApps, setConfiguredApps] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
-  const [scriptInstalled, setScriptInstalled] = useState<boolean | null>(null);
+  const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
   const [configuredExpanded, setConfiguredExpanded] = useState(false);
   const [showCommand, setShowCommand] = useState(false);
@@ -210,12 +62,12 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     Promise.all([
       call<[], SteamGame[]>("get_games"),
       call<[], number[]>("get_configured_apps"),
-      call<[], boolean>("is_script_installed"),
+      call<[], ScriptStatus>("is_script_installed"),
     ])
-      .then(([g, apps, installed]) => {
+      .then(([g, apps, status]) => {
         setGames(g);
         setConfiguredApps(new Set(apps));
-        setScriptInstalled(installed);
+        setScriptStatus(status);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -225,7 +77,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     try {
       const ok = await call<[], boolean>("install_script");
       if (ok) {
-        setScriptInstalled(true);
+        setScriptStatus("current");
         onScriptInstalled();
       }
     } finally {
@@ -249,6 +101,8 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   useEffect(() => {
     if (q && configuredFiltered.length > 0) setConfiguredExpanded(true);
   }, [q, configuredFiltered.length]);
+
+  const needsAction = scriptStatus === "missing" || scriptStatus === "outdated";
 
   return (
     <div>
@@ -284,7 +138,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       </PanelSectionCustom>
 
       {/* Script installation banner */}
-      {scriptInstalled === false && (
+      {needsAction && (
         <PanelSectionCustom>
           <div
             style={{
@@ -297,14 +151,13 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
               marginBottom: "6px",
             }}
           >
-            {t("script_not_installed")}
+            {scriptStatus === "outdated" ? t("script_outdated") : t("script_not_installed")}
           </div>
           <ActionButton onClick={installScript} width="100%">
-            {installing ? "..." : t("install_script")}
+            {installing ? "..." : t(scriptStatus === "outdated" ? "reinstall_script" : "install_script")}
           </ActionButton>
         </PanelSectionCustom>
       )}
-
 
       {/* Search */}
       <PanelSectionCustom style={{ paddingBottom: "6px" }}>

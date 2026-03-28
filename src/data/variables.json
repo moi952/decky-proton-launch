@@ -39,7 +39,7 @@
       },
       {
         "title": "fsr_indicator",
-        "env": "PROTON_FSR_INDICATOR",
+        "env": "PROTON_FSR4_INDICATOR",
         "type": "bool",
         "value": "1"
       }
@@ -69,7 +69,15 @@
         "title": "lsfg",
         "env": "__LSFG",
         "type": "bool",
-        "value": "1"
+        "value": "1",
+        "simple": true
+      },
+      {
+        "title": "fgmod",
+        "env": "__FGMOD",
+        "type": "bool",
+        "value": "1",
+        "simple": true
       }
     ]
   },
@@ -83,7 +91,7 @@
         "value": "1"
       },
       {
-        "title": "use_ntsync",
+        "title": "ntsync",
         "env": "PROTON_USE_NTSYNC",
         "type": "bool",
         "value": "1"
@@ -104,37 +112,37 @@
     "category": "compatibility",
     "variables": [
       {
-        "title": "use_wined3d",
+        "title": "wined3d",
         "env": "PROTON_USE_WINED3D",
         "type": "bool",
         "value": "1"
       },
       {
-        "title": "hide_nvidia_gpu",
+        "title": "nvidia_gpu_masking",
         "env": "PROTON_HIDE_NVIDIA_GPU",
         "type": "bool",
-        "value": "0"
+        "value": "1"
       },
       {
-        "title": "enable_nvapi",
+        "title": "nvapi",
         "env": "PROTON_ENABLE_NVAPI",
         "type": "bool",
         "value": "1"
       },
       {
-        "title": "enable_hdr_wsi",
+        "title": "hdr_wsi",
         "env": "ENABLE_HDR_WSI",
         "type": "bool",
         "value": "1"
       },
       {
-        "title": "proton_enable_hdr",
+        "title": "hdr",
         "env": "PROTON_ENABLE_HDR",
         "type": "bool",
         "value": "1"
       },
       {
-        "title": "steam_deck_disabled",
+        "title": "steam_deck",
         "env": "SteamDeck",
         "type": "bool",
         "value": "0"

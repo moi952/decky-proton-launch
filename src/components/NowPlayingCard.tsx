@@ -1,6 +1,7 @@
 import React from "react";
 import PanelSectionCustom from "./PanelSectionCustom";
-import { GameRow, SteamGame } from "../views/GamesPickerView";
+import { GameRow } from "./GameRow";
+import { SteamGame } from "../data/types";
 
 interface NowPlayingCardProps {
   game: SteamGame;
