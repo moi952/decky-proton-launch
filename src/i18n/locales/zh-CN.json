@@ -34,7 +34,10 @@
     "enable_hdr_wsi": "启用 HDR WSI",
     "proton_enable_hdr": "启用 HDR",
     "smooth_motion": "启用 Smooth Motion",
-    "steam_deck_disabled": "禁用 Steam Deck"
+    "steam_deck_disabled": "禁用 Steam Deck",
+    "use_ntsync": "NTSync",
+    "use_ntsync_0": "Disabled",
+    "use_ntsync_1": "Enabled"
   },
   "common": {
     "selected": "已选择",

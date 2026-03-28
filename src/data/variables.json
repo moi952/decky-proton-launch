@@ -83,6 +83,16 @@
         "value": "1"
       },
       {
+        "title": "use_ntsync",
+        "env": "PROTON_USE_NTSYNC",
+        "type": "enum",
+        "defaultValue": "1",
+        "values": [
+          { "title": "use_ntsync_0", "value": "0" },
+          { "title": "use_ntsync_1", "value": "1" }
+        ]
+      },
+      {
         "title": "radv_perftest",
         "env": "RADV_PERFTEST",
         "type": "enum",
