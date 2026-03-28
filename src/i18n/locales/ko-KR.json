@@ -23,18 +23,22 @@
     "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "radv_perftest_gpl": "RADV PerfTest GPL",
-    "use_wined3d": "WineD3D 사용",
-    "hide_nvidia_gpu": "NVIDIA GPU 숨기기",
-    "enable_nvapi": "NVAPI 활성화",
     "proton_log": "Proton 로그",
     "mangohud": "MangoHud",
     "fsr_indicator": "FSR 표시기",
     "dlss_indicator": "DLSS 표시기",
     "xess_indicator": "XeSS 표시기",
-    "enable_hdr_wsi": "HDR WSI 활성화",
-    "proton_enable_hdr": "HDR 활성화",
     "smooth_motion": "Smooth Motion 활성화",
-    "steam_deck_disabled": "Steam Deck 비활성화"
+    "steam_deck": "Steam Deck 모드",
+    "nvidia_gpu_masking": "NVIDIA GPU 마스킹",
+    "wined3d": "WineD3D",
+    "ntsync": "NTSync",
+    "nvapi": "NVAPI",
+    "hdr_wsi": "HDR WSI",
+    "hdr": "HDR",
+    "enable_prefix": "활성화",
+    "disable_prefix": "비활성화",
+    "fgmod": "fgmod (~/fgmod/fgmod)"
   },
   "common": {
     "selected": "선택됨",
@@ -135,6 +139,8 @@
     "profile_deleted": "프로필이 삭제되었습니다",
     "saving": "저장 중...",
     "error_save": "저장 오류",
-    "configured": "구성됨"
+    "configured": "구성됨",
+    "script_outdated": "스크립트 업데이트가 필요합니다. 변경 사항을 적용하려면 재설치하세요.",
+    "reinstall_script": "스크립트 재설치"
   }
 }

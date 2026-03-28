@@ -4,10 +4,11 @@ import {
   PanelSection,
   PanelSectionRow,
   ToggleField,
-  DialogButton,
 } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
+import { GameCover } from "../components/GameCover";
+import { ValButton } from "../components/ValButton";
 import { FiArrowLeft, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import variablesData from "../data/variables.json";
@@ -15,40 +16,15 @@ import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 
-const COVER_URL = (appid: number) =>
-  `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`;
-
-const GameCover: React.FC<{ game: { appid: number; is_shortcut: boolean; name: string } }> = ({ game }) => {
-  const [shortcutCover, setShortcutCover] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (!game.is_shortcut) return;
-    call<[number], string>("get_shortcut_cover", game.appid).then((url) => {
-      if (url) setShortcutCover(url);
-    });
-  }, [game.appid, game.is_shortcut]);
-
-  const src = game.is_shortcut ? shortcutCover : COVER_URL(game.appid);
-  if (!src) return null;
-
-  return (
-    <div style={{ padding: "0 16px 12px" }}>
-      <img
-        src={src}
-        alt=""
-        style={{ width: "100%", borderRadius: "6px", display: "block" }}
-        onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-      />
-    </div>
-  );
-};
-
 interface GameDetailViewProps {
   game: SteamGame;
   onBack: () => void;
 }
 
-export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) => {
+export const GameDetailView: React.FC<GameDetailViewProps> = ({
+  game,
+  onBack,
+}) => {
   const { t } = useTranslation("game_manager");
   const { t: tVars } = useTranslation("variables");
   const { t: tCat } = useTranslation("categories");
@@ -61,7 +37,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
   const [saving, setSaving] = useState(false);
   const [showLog, setShowLog] = useState(false);
   const [log, setLog] = useState<string>("");
-  const [launchOptionStatus, setLaunchOptionStatus] = useState<string | null>(null);
+  const [launchOptionStatus, setLaunchOptionStatus] = useState<string | null>(
+    null,
+  );
 
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
@@ -78,11 +56,15 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
       })
       .finally(() => {
         setLoading(false);
-        setTimeout(() => { initializedRef.current = true; }, 50);
+        setTimeout(() => {
+          initializedRef.current = true;
+        }, 50);
       });
   }, [game.appid]);
 
-  useEffect(() => { reload(); }, [reload]);
+  useEffect(() => {
+    reload();
+  }, [reload]);
 
   // Auto-save with debounce
   useEffect(() => {
@@ -100,7 +82,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
             "set_game_profile",
             game.appid,
             currentDraft,
-            game.name
+            game.name,
           );
         }
         setProfile(currentDraft);
@@ -147,7 +129,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
   };
 
   const loadLog = async () => {
-    const content = await call<[], string>("get_launch_log");
+    const content = await call<[number], string>("get_launch_log", game.appid);
     setLog(content);
     const status = game.is_shortcut
       ? "(non-Steam shortcut)"
@@ -179,7 +161,15 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
             >
               {game.name}
             </div>
-            <div style={{ fontSize: 10, color: hasProfile ? "#f5a623" : "#888", display: "flex", alignItems: "center", gap: 4 }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: hasProfile ? "#f5a623" : "#888",
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+              }}
+            >
               {hasProfile ? `⚙ ${t("profile_active")}` : t("profile_none")}
               {saving && <span style={{ color: "#666" }}>— {t("saving")}</span>}
             </div>
@@ -197,7 +187,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
             <PanelSectionRow>
               <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4 }}>
                 <span style={{ color: "#666" }}>LaunchOptions: </span>
-                <span style={{ color: launchOptionStatus.includes("~/proton-launch") ? "#4caf50" : "#f90" }}>
+                <span
+                  style={{
+                    color: launchOptionStatus.includes("~/proton-launch")
+                      ? "#4caf50"
+                      : "#f90",
+                  }}
+                >
                   {launchOptionStatus}
                 </span>
               </div>
@@ -244,54 +240,98 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
 
                   if (variable.type === "enum" && "values" in variable) {
                     return (
-                      <PanelSectionRow key={variable.env}>
-                        <ToggleField
-                          label={tVars(variable.title)}
-                          checked={isActive}
-                          onChange={() =>
-                            toggleVar(
-                              variable.env,
-                              ("defaultValue" in variable && (variable as any).defaultValue) ||
-                                (variable as any).values?.[0]?.value || "1"
-                            )
-                          }
-                        />
+                      <React.Fragment key={variable.env}>
+                        <PanelSectionRow>
+                          <ToggleField
+                            label={tVars(variable.title)}
+                            checked={isActive}
+                            onChange={() =>
+                              toggleVar(
+                                variable.env,
+                                ("defaultValue" in variable &&
+                                  (variable as any).defaultValue) ||
+                                  (variable as any).values?.[0]?.value ||
+                                  "1",
+                              )
+                            }
+                          />
+                        </PanelSectionRow>
                         {isActive && (
                           <Focusable
-                            style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "4px 16px 8px" }}
+                            style={{
+                              display: "flex",
+                              gap: "4px",
+                              flexWrap: "wrap",
+                              marginBottom: "8px",
+                              marginTop: "8px",
+                            }}
                             flow-children="horizontal"
                           >
                             {(variable as any).values.map(
                               (opt: { title: string; value: string }) => (
-                                <DialogButton
+                                <ValButton
                                   key={opt.value}
-                                  onClick={() => setVarValue(variable.env, opt.value)}
-                                  style={{
-                                    padding: "3px 8px",
-                                    fontSize: 11,
-                                    background: draft[variable.env] === opt.value ? "#4caf50" : "#333",
-                                    minWidth: 0,
-                                  }}
+                                  selected={draft[variable.env] === opt.value}
+                                  onClick={() =>
+                                    setVarValue(variable.env, opt.value)
+                                  }
                                 >
                                   {tVars(opt.title)}
-                                </DialogButton>
-                              )
+                                </ValButton>
+                              ),
                             )}
                           </Focusable>
                         )}
-                      </PanelSectionRow>
+                      </React.Fragment>
                     );
                   }
 
-                  return (
-                    <PanelSectionRow key={variable.env}>
-                      <ToggleField
-                        label={tVars(variable.title)}
-                        checked={isActive}
-                        onChange={() => toggleVar(variable.env, (variable as any).value ?? "1")}
-                      />
-                    </PanelSectionRow>
-                  );
+                  {
+                    const defaultVal = (variable as any).value ?? "1";
+                    const isSimple = (variable as any).simple === true;
+                    const currentVal = isActive
+                      ? (draft[variable.env] ?? defaultVal)
+                      : defaultVal;
+                    const label = isSimple
+                      ? tVars(variable.title)
+                      : `${tVars(currentVal === "1" ? "enable_prefix" : "disable_prefix")} ${tVars(variable.title)}`;
+                    return (
+                      <React.Fragment key={variable.env}>
+                        <PanelSectionRow>
+                          <ToggleField
+                            label={label}
+                            checked={isActive}
+                            onChange={() => toggleVar(variable.env, defaultVal)}
+                          />
+                        </PanelSectionRow>
+                        {isActive && !isSimple && (
+                          <Focusable
+                            style={{
+                              display: "flex",
+                              gap: "4px",
+                              marginBottom: "8px",
+                              marginTop: "8px",
+                            }}
+                            flow-children="horizontal"
+                          >
+                            {(["0", "1"] as const).map((v) => (
+                              <ValButton
+                                key={v}
+                                selected={draft[variable.env] === v}
+                                onClick={() => setVarValue(variable.env, v)}
+                              >
+                                {tVars(
+                                  v === "0"
+                                    ? "disable_prefix"
+                                    : "enable_prefix",
+                                )}
+                              </ValButton>
+                            ))}
+                          </Focusable>
+                        )}
+                      </React.Fragment>
+                    );
+                  }
                 })}
               </PanelSection>
             ))}
@@ -316,7 +356,10 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
       {hasProfile && (
         <PanelSection>
           <PanelSectionRow>
-            <ActionButton variant="danger" onClick={saving ? () => {} : deleteProfile}>
+            <ActionButton
+              variant="danger"
+              onClick={saving ? () => {} : deleteProfile}
+            >
               {t("delete_profile")}
             </ActionButton>
           </PanelSectionRow>

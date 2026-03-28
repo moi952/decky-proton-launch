@@ -398,17 +398,22 @@ class Plugin:
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v3"
+    SCRIPT_VERSION = "v4"
 
-    async def is_script_installed(self) -> bool:
+    async def is_script_installed(self) -> str:
+        """Return 'current', 'outdated', or 'missing'."""
         path = _script_path()
         if not path.is_file():
-            return False
+            return "missing"
         try:
             content = path.read_text(encoding="utf-8", errors="ignore")
-            return f"# decky-proton-launch {Plugin.SCRIPT_VERSION}" in content
+            if f"# decky-proton-launch {Plugin.SCRIPT_VERSION}" in content:
+                return "current"
+            if "# decky-proton-launch" in content:
+                return "outdated"
+            return "missing"
         except Exception:
-            return False
+            return "missing"
 
     async def install_script(self) -> bool:
         try:
@@ -447,6 +452,11 @@ class Plugin:
                 "if [ \"${__LSFG}\" = \"1\" ] && [ -x \"${HOME}/lsfg\" ]; then\n"
                 "    echo \"[proton-launch] chaining ~/lsfg\" >> \"${LOG}\"\n"
                 "    exec \"${HOME}/lsfg\" \"$@\"\n"
+                "fi\n"
+                "# Chain ~/fgmod/fgmod wrapper if enabled in profile\n"
+                "if [ \"${__FGMOD}\" = \"1\" ] && [ -x \"${HOME}/fgmod/fgmod\" ]; then\n"
+                "    echo \"[proton-launch] chaining ~/fgmod/fgmod\" >> \"${LOG}\"\n"
+                "    exec \"${HOME}/fgmod/fgmod\" \"$@\"\n"
                 "fi\n"
                 "exec \"$@\"\n",
                 encoding="utf-8",
@@ -512,19 +522,41 @@ class Plugin:
         """Return the absolute path of the launch wrapper script."""
         return str(_script_path())
 
-    async def get_launch_log(self) -> str:
-        """Return only the last launch session from /tmp/proton-launch.log."""
+    async def get_launch_log(self, app_id: int = 0) -> str:
+        """Return the last launch session for the given app_id from /tmp/proton-launch.log.
+        If app_id is 0, return the most recent session regardless of game."""
         try:
             log_path = Path("/tmp/proton-launch.log")
             if not log_path.is_file():
                 return "(no log yet — launch a game first)"
             lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
-            # Find the start of the last session (line starting with "=== ")
-            last_start = 0
-            for i, line in enumerate(lines):
+
+            # Split into sessions (each starts with "=== ")
+            sessions: List[List[str]] = []
+            current: List[str] = []
+            for line in lines:
                 if line.startswith("=== "):
-                    last_start = i
-            return "\n".join(lines[last_start:])
+                    if current:
+                        sessions.append(current)
+                    current = [line]
+                else:
+                    current.append(line)
+            if current:
+                sessions.append(current)
+
+            if not sessions:
+                return "(no log yet — launch a game first)"
+
+            if app_id == 0:
+                return "\n".join(sessions[-1])
+
+            # Find the most recent session for this app_id
+            marker = f"resolved APPID={app_id}"
+            for session in reversed(sessions):
+                if any(marker in line for line in session):
+                    return "\n".join(session)
+
+            return f"(no log found for appid={app_id} — launch the game first)"
         except Exception as e:
             return f"(error reading log: {e})"
 

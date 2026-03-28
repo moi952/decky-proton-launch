@@ -23,18 +23,22 @@
     "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "radv_perftest_gpl": "RADV PerfTest GPL",
-    "use_wined3d": "Usar WineD3D",
-    "hide_nvidia_gpu": "Ocultar GPU NVIDIA",
-    "enable_nvapi": "Ativar NVAPI",
     "proton_log": "Proton Log",
     "mangohud": "MangoHud",
     "fsr_indicator": "Indicador FSR",
     "dlss_indicator": "Indicador DLSS",
     "xess_indicator": "Indicador XeSS",
-    "enable_hdr_wsi": "Ativar HDR WSI",
-    "proton_enable_hdr": "Ativar HDR",
     "smooth_motion": "Ativar Smooth Motion",
-    "steam_deck_disabled": "Desativar Steam Deck"
+    "steam_deck": "Modo Steam Deck",
+    "nvidia_gpu_masking": "Mascaramento GPU NVIDIA",
+    "wined3d": "WineD3D",
+    "ntsync": "NTSync",
+    "nvapi": "NVAPI",
+    "hdr_wsi": "HDR WSI",
+    "hdr": "HDR",
+    "enable_prefix": "Ativar",
+    "disable_prefix": "Desativar",
+    "fgmod": "fgmod (~/fgmod/fgmod)"
   },
   "common": {
     "selected": "Selecionado",
@@ -133,6 +137,8 @@
     "saved": "Guardado",
     "delete_profile": "Eliminar perfil",
     "profile_deleted": "Perfil eliminado",
-    "error_save": "Erro ao guardar"
+    "error_save": "Erro ao guardar",
+    "script_outdated": "Atualização do script necessária. Reinstale para aplicar as alterações.",
+    "reinstall_script": "Reinstalar script"
   }
 }

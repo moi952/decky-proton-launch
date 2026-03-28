@@ -23,18 +23,22 @@
     "radv_perftest": "RADV PerfTest",
     "radv_perftest_aco": "RADV PerfTest ACO",
     "radv_perftest_gpl": "RADV PerfTest GPL",
-    "use_wined3d": "WineD3D Kullan",
-    "hide_nvidia_gpu": "NVIDIA GPU Gizle",
-    "enable_nvapi": "NVAPI Etkinleştir",
     "proton_log": "Proton Log",
     "mangohud": "MangoHud",
     "fsr_indicator": "FSR Göstergesi",
     "dlss_indicator": "DLSS Göstergesi",
     "xess_indicator": "XeSS Göstergesi",
-    "enable_hdr_wsi": "HDR WSI Etkinleştir",
-    "proton_enable_hdr": "HDR Etkinleştir",
     "smooth_motion": "Smooth Motion Etkinleştir",
-    "steam_deck_disabled": "Steam Deck Devre Dışı"
+    "steam_deck": "Steam Deck Modu",
+    "nvidia_gpu_masking": "NVIDIA GPU Maskeleme",
+    "wined3d": "WineD3D",
+    "ntsync": "NTSync",
+    "nvapi": "NVAPI",
+    "hdr_wsi": "HDR WSI",
+    "hdr": "HDR",
+    "enable_prefix": "Etkinleştir",
+    "disable_prefix": "Devre Dışı Bırak",
+    "fgmod": "fgmod (~/fgmod/fgmod)"
   },
   "common": {
     "selected": "Seçili",
@@ -133,6 +137,8 @@
     "saved": "Kaydedildi",
     "delete_profile": "Profili sil",
     "profile_deleted": "Profil silindi",
-    "error_save": "Kaydetme hatası"
+    "error_save": "Kaydetme hatası",
+    "script_outdated": "Komut dosyası güncellemesi gerekiyor. Değişiklikleri uygulamak için yeniden yükleyin.",
+    "reinstall_script": "Komut dosyasını yeniden yükle"
   }
 }
