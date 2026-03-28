@@ -57,7 +57,8 @@
     "cancel": "取消",
     "create": "创建",
     "delete": "删除",
-    "clean": "清空"
+    "clean": "清空",
+    "update_available": "↑ v{{version}} 可用 — 点击下载"
   },
   "delete_favorite_modal": {
     "title": "删除收藏",

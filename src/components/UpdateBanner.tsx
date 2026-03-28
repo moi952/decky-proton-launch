@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DialogButton } from "@decky/ui";
+import { useTranslation } from "react-i18next";
 // @ts-ignore — replaced at build time by rollup with the content of plugin.json
 import manifest from "@decky/manifest";
 
@@ -20,6 +21,7 @@ function semverGt(a: string, b: string): boolean {
 }
 
 export const UpdateBanner: React.FC = () => {
+  const { t } = useTranslation("common");
   const [latestVersion, setLatestVersion] = useState<string | null>(null);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export const UpdateBanner: React.FC = () => {
           width: "100%",
         }}
       >
-        ↑ v{latestVersion} available — click to download
+        {t("update_available", { version: latestVersion })}
       </DialogButton>
     </div>
   );

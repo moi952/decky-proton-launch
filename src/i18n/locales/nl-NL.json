@@ -57,7 +57,8 @@
     "cancel": "Annuleren",
     "create": "Aanmaken",
     "delete": "Verwijderen",
-    "clean": "Wissen"
+    "clean": "Wissen",
+    "update_available": "↑ v{{version}} beschikbaar — tik om te downloaden"
   },
   "delete_favorite_modal": {
     "title": "Favoriet verwijderen",

@@ -57,7 +57,8 @@
     "cancel": "Cancelar",
     "create": "Crear",
     "delete": "Eliminar",
-    "clean": "Limpiar"
+    "clean": "Limpiar",
+    "update_available": "↑ v{{version}} disponible — pulsar para descargar"
   },
   "delete_favorite_modal": {
     "title": "Eliminar favorito",

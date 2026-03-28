@@ -57,7 +57,8 @@
     "cancel": "キャンセル",
     "create": "作成",
     "delete": "削除",
-    "clean": "クリア"
+    "clean": "クリア",
+    "update_available": "↑ v{{version}} が利用可能 — タップしてダウンロード"
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",
