@@ -35,9 +35,7 @@
     "proton_enable_hdr": "Увімкнути HDR",
     "smooth_motion": "Увімкнути Smooth Motion",
     "steam_deck_disabled": "Вимкнути Steam Deck",
-    "use_ntsync": "NTSync",
-    "use_ntsync_0": "Disabled",
-    "use_ntsync_1": "Enabled"
+    "use_ntsync": "NTSync"
   },
   "common": {
     "selected": "Вибрано",

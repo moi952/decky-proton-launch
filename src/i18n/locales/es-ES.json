@@ -35,9 +35,7 @@
     "proton_enable_hdr": "Activar HDR",
     "smooth_motion": "Activar Smooth Motion",
     "steam_deck_disabled": "Desactivar Steam Deck",
-    "use_ntsync": "NTSync",
-    "use_ntsync_0": "Disabled",
-    "use_ntsync_1": "Enabled"
+    "use_ntsync": "NTSync"
   },
   "common": {
     "selected": "Seleccionado",

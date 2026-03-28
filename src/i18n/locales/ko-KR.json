@@ -35,9 +35,7 @@
     "proton_enable_hdr": "HDR 활성화",
     "smooth_motion": "Smooth Motion 활성화",
     "steam_deck_disabled": "Steam Deck 비활성화",
-    "use_ntsync": "NTSync",
-    "use_ntsync_0": "Disabled",
-    "use_ntsync_1": "Enabled"
+    "use_ntsync": "NTSync"
   },
   "common": {
     "selected": "선택됨",

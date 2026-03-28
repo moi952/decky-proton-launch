@@ -244,53 +244,82 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({ game, onBack }) 
 
                   if (variable.type === "enum" && "values" in variable) {
                     return (
-                      <PanelSectionRow key={variable.env}>
-                        <ToggleField
-                          label={tVars(variable.title)}
-                          checked={isActive}
-                          onChange={() =>
-                            toggleVar(
-                              variable.env,
-                              ("defaultValue" in variable && (variable as any).defaultValue) ||
-                                (variable as any).values?.[0]?.value || "1"
-                            )
-                          }
-                        />
-                        {isActive && (
-                          <Focusable
-                            style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "4px 16px 8px" }}
-                            flow-children="horizontal"
-                          >
-                            {(variable as any).values.map(
-                              (opt: { title: string; value: string }) => (
-                                <DialogButton
-                                  key={opt.value}
-                                  onClick={() => setVarValue(variable.env, opt.value)}
-                                  style={{
-                                    padding: "3px 8px",
-                                    fontSize: 11,
-                                    background: draft[variable.env] === opt.value ? "#4caf50" : "#333",
-                                    minWidth: 0,
-                                  }}
-                                >
-                                  {tVars(opt.title)}
-                                </DialogButton>
+                      <React.Fragment key={variable.env}>
+                        <PanelSectionRow>
+                          <ToggleField
+                            label={tVars(variable.title)}
+                            checked={isActive}
+                            onChange={() =>
+                              toggleVar(
+                                variable.env,
+                                ("defaultValue" in variable && (variable as any).defaultValue) ||
+                                  (variable as any).values?.[0]?.value || "1"
                               )
-                            )}
-                          </Focusable>
+                            }
+                          />
+                        </PanelSectionRow>
+                        {isActive && (
+                          <PanelSectionRow>
+                            <Focusable
+                              style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}
+                              flow-children="horizontal"
+                            >
+                              {(variable as any).values.map(
+                                (opt: { title: string; value: string }) => (
+                                  <DialogButton
+                                    key={opt.value}
+                                    onClick={() => setVarValue(variable.env, opt.value)}
+                                    style={{
+                                      padding: "3px 8px",
+                                      fontSize: 11,
+                                      background: draft[variable.env] === opt.value ? "#4caf50" : "#333",
+                                      minWidth: 0,
+                                    }}
+                                  >
+                                    {tVars(opt.title)}
+                                  </DialogButton>
+                                )
+                              )}
+                            </Focusable>
+                          </PanelSectionRow>
                         )}
-                      </PanelSectionRow>
+                      </React.Fragment>
                     );
                   }
 
                   return (
-                    <PanelSectionRow key={variable.env}>
-                      <ToggleField
-                        label={tVars(variable.title)}
-                        checked={isActive}
-                        onChange={() => toggleVar(variable.env, (variable as any).value ?? "1")}
-                      />
-                    </PanelSectionRow>
+                    <React.Fragment key={variable.env}>
+                      <PanelSectionRow>
+                        <ToggleField
+                          label={tVars(variable.title)}
+                          checked={isActive}
+                          onChange={() => toggleVar(variable.env, (variable as any).value ?? "1")}
+                        />
+                      </PanelSectionRow>
+                      {isActive && (
+                        <PanelSectionRow>
+                          <Focusable
+                            style={{ display: "flex", gap: "4px" }}
+                            flow-children="horizontal"
+                          >
+                            {["0", "1"].map((v) => (
+                              <DialogButton
+                                key={v}
+                                onClick={() => setVarValue(variable.env, v)}
+                                style={{
+                                  padding: "3px 8px",
+                                  fontSize: 11,
+                                  background: draft[variable.env] === v ? "#4caf50" : "#333",
+                                  minWidth: 0,
+                                }}
+                              >
+                                {v}
+                              </DialogButton>
+                            ))}
+                          </Focusable>
+                        </PanelSectionRow>
+                      )}
+                    </React.Fragment>
                   );
                 })}
               </PanelSection>
