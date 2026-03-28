@@ -57,7 +57,8 @@
     "cancel": "Anuluj",
     "create": "Utwórz",
     "delete": "Usuń",
-    "clean": "Wyczyść"
+    "clean": "Wyczyść",
+    "update_available": "↑ v{{version}} dostępna — naciśnij, aby pobrać"
   },
   "delete_favorite_modal": {
     "title": "Usuń ulubione",

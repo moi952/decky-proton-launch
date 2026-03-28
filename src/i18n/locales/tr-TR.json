@@ -57,7 +57,8 @@
     "cancel": "İptal",
     "create": "Oluştur",
     "delete": "Sil",
-    "clean": "Temizle"
+    "clean": "Temizle",
+    "update_available": "↑ v{{version}} mevcut — indirmek için tıkla"
   },
   "delete_favorite_modal": {
     "title": "Favoriyi sil",

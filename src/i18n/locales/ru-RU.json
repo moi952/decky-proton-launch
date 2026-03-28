@@ -57,7 +57,8 @@
     "cancel": "Отмена",
     "create": "Создать",
     "delete": "Удалить",
-    "clean": "Очистить"
+    "clean": "Очистить",
+    "update_available": "↑ v{{version}} доступна — нажмите для загрузки"
   },
   "delete_favorite_modal": {
     "title": "Удалить из избранного",

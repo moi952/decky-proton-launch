@@ -57,7 +57,8 @@
     "cancel": "Annuler",
     "create": "Créer",
     "delete": "Supprimer",
-    "clean": "Nettoyer"
+    "clean": "Nettoyer",
+    "update_available": "↑ v{{version}} disponible — appuyer pour télécharger"
   },
   "delete_favorite_modal": {
     "title": "Supprimer des favoris",

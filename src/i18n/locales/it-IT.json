@@ -57,7 +57,8 @@
     "cancel": "Annulla",
     "create": "Crea",
     "delete": "Elimina",
-    "clean": "Pulisci"
+    "clean": "Pulisci",
+    "update_available": "↑ v{{version}} disponibile — tocca per scaricare"
   },
   "delete_favorite_modal": {
     "title": "Elimina preferito",

@@ -57,7 +57,8 @@
     "cancel": "취소",
     "create": "생성",
     "delete": "삭제",
-    "clean": "지우기"
+    "clean": "지우기",
+    "update_available": "↑ v{{version}} 업데이트 가능 — 탭하여 다운로드"
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",

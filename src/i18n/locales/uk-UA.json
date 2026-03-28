@@ -57,7 +57,8 @@
     "cancel": "Скасувати",
     "create": "Створити",
     "delete": "Видалити",
-    "clean": "Очистити"
+    "clean": "Очистити",
+    "update_available": "↑ v{{version}} доступна — натисніть для завантаження"
   },
   "delete_favorite_modal": {
     "title": "Видалити з обраного",
