@@ -127,35 +127,23 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   // Load more when sentinel becomes visible
   useEffect(() => {
     const el = sentinelRef.current;
-
-    if (!el) {
-      console.log("⏳ sentinel not ready yet");
-      return;
-    }
-
-    console.log("🟢 sentinel found, creating observer");
+    if (!el) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
 
-        console.log("👀 observer fired");
-        console.log("isIntersecting:", entry.isIntersecting);
-
-        if (entry.isIntersecting && !loadingMoreRef.current) {
-          console.log("🚀 LOAD MORE");
-
+        if (
+          entry.isIntersecting &&
+          !loadingMoreRef.current &&
+          visibleCount < unconfiguredFiltered.length
+        ) {
           loadingMoreRef.current = true;
 
-          setVisibleCount((c) => {
-            const next = c + 50;
-            console.log("setVisibleCount:", next);
-            return next;
-          });
+          setVisibleCount((c) => Math.min(c + 50, unconfiguredFiltered.length));
 
           setTimeout(() => {
             loadingMoreRef.current = false;
-            console.log("unlock loading");
           }, 300);
         }
       },
@@ -168,11 +156,8 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
     observer.observe(el);
 
-    return () => {
-      console.log("🔴 disconnect observer");
-      observer.disconnect();
-    };
-  }, [unconfiguredFiltered.length, visibleCount]);
+    return () => observer.disconnect();
+  }, [unconfiguredFiltered.length]);
 
   const needsAction = scriptStatus === "missing" || scriptStatus === "outdated";
 

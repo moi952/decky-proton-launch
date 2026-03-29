@@ -69,7 +69,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
 
   useEffect(() => {
     if (!loading && variablesSectionRef.current) {
-      const first = variablesSectionRef.current.querySelector("button") as HTMLElement | null;
+      const first = variablesSectionRef.current.querySelector(
+        "button",
+      ) as HTMLElement | null;
       first?.focus();
     }
   }, [loading]);

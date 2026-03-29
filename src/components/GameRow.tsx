@@ -26,7 +26,13 @@ interface GameRowProps {
   onClick: () => void;
 }
 
-export const GameRow: React.FC<GameRowProps> = ({ game, hasProfile, nowPlaying, profileStatus, onClick }) => {
+export const GameRow: React.FC<GameRowProps> = ({
+  game,
+  hasProfile,
+  nowPlaying,
+  profileStatus,
+  onClick,
+}) => {
   const [cover, setCover] = useState<string | null>(null);
 
   useEffect(() => {
@@ -63,24 +69,48 @@ export const GameRow: React.FC<GameRowProps> = ({ game, hasProfile, nowPlaying, 
           width: "100%",
         }}
       >
-        <div style={{ position: "relative", width: 80, minHeight: 37, flexShrink: 0, overflow: "hidden" }}>
+        <div
+          style={{
+            position: "relative",
+            width: 80,
+            minHeight: 37,
+            flexShrink: 0,
+            overflow: "hidden",
+          }}
+        >
           {cover ? (
             <img
               src={cover}
               alt=""
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
             />
           ) : (
-            <div style={{ position: "absolute", inset: 0, background: "#2a2a3e" }} />
+            <div
+              style={{ position: "absolute", inset: 0, background: "#2a2a3e" }}
+            />
           )}
           {!game.is_shortcut && (
             <div style={{ position: "absolute", top: 3, left: 3 }}>
-              <BadgeIcon icon={FaSteam} color="rgba(255,255,255,0.4)" size={8} />
+              <BadgeIcon
+                icon={FaSteam}
+                color="rgba(255,255,255,0.4)"
+                size={8}
+              />
             </div>
           )}
           {hasProfile && (
             <div style={{ position: "absolute", bottom: 3, left: 3 }}>
-              <BadgeIcon icon={FaCog} color={profileStatus === "ready" ? "#4caf50" : "#f5a623"} />
+              <BadgeIcon
+                icon={FaCog}
+                color={profileStatus === "ready" ? "#4caf50" : "#f5a623"}
+              />
             </div>
           )}
         </div>

@@ -7,7 +7,11 @@ interface BadgeIconProps {
   size?: number;
 }
 
-export const BadgeIcon: React.FC<BadgeIconProps> = ({ icon: Icon, color, size = 9 }) => (
+export const BadgeIcon: React.FC<BadgeIconProps> = ({
+  icon: Icon,
+  color,
+  size = 9,
+}) => (
   <span
     style={{
       background: "rgba(0,0,0,0.65)",

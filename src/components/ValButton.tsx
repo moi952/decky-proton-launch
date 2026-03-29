@@ -7,7 +7,11 @@ interface ValButtonProps {
   children: React.ReactNode;
 }
 
-export const ValButton: React.FC<ValButtonProps> = ({ selected, onClick, children }) => (
+export const ValButton: React.FC<ValButtonProps> = ({
+  selected,
+  onClick,
+  children,
+}) => (
   <>
     <style>{`
       .plch-val-btn {

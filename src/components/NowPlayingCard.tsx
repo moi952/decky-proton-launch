@@ -8,12 +8,14 @@ interface NowPlayingCardProps {
   onSelect: () => void;
 }
 
-export const NowPlayingCard: React.FC<NowPlayingCardProps> = ({ game, onSelect }) => (
+export const NowPlayingCard: React.FC<NowPlayingCardProps> = ({
+  game,
+  onSelect,
+}) => (
   <PanelSectionCustom>
     <GameRow
       game={game}
       hasProfile={false}
-
       nowPlaying={true}
       onClick={onSelect}
     />
