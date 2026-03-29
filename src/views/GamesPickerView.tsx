@@ -127,40 +127,52 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   // Load more when sentinel becomes visible
   useEffect(() => {
     const el = sentinelRef.current;
-    if (!el) return;
 
-    const getScrollParent = (node: Element | null): Element | null => {
-      if (!node) return null;
-      const { overflow, overflowY } = window.getComputedStyle(node);
-      if (/(scroll|auto)/.test(overflow + overflowY)) return node;
-      return getScrollParent(node.parentElement);
-    };
+    if (!el) {
+      console.log("⏳ sentinel not ready yet");
+      return;
+    }
 
-    const root = getScrollParent(el.parentElement) ?? null;
+    console.log("🟢 sentinel found, creating observer");
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !loadingMoreRef.current) {
+        const entry = entries[0];
+
+        console.log("👀 observer fired");
+        console.log("isIntersecting:", entry.isIntersecting);
+
+        if (entry.isIntersecting && !loadingMoreRef.current) {
+          console.log("🚀 LOAD MORE");
+
           loadingMoreRef.current = true;
 
-          setVisibleCount((c) => c + 50);
+          setVisibleCount((c) => {
+            const next = c + 50;
+            console.log("setVisibleCount:", next);
+            return next;
+          });
 
           setTimeout(() => {
             loadingMoreRef.current = false;
-          }, 100);
+            console.log("unlock loading");
+          }, 300);
         }
       },
       {
         threshold: 0,
-        rootMargin: "200px",
-        root,
+        rootMargin: "0px",
+        root: null,
       },
     );
 
     observer.observe(el);
 
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      console.log("🔴 disconnect observer");
+      observer.disconnect();
+    };
+  }, [unconfiguredFiltered.length, visibleCount]);
 
   const needsAction = scriptStatus === "missing" || scriptStatus === "outdated";
 
