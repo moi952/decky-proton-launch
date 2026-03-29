@@ -128,15 +128,13 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     const el = sentinelRef.current;
     if (!el) return;
 
-    // Decky panels have an internal scroll container — find it so IntersectionObserver
-    // fires correctly (with root:null it fires against the window viewport and the
-    // sentinel is always "in view", causing it to fire only once).
     const getScrollParent = (node: Element | null): Element | null => {
       if (!node) return null;
       const { overflow, overflowY } = window.getComputedStyle(node);
       if (/(scroll|auto)/.test(overflow + overflowY)) return node;
       return getScrollParent(node.parentElement);
     };
+
     const root = getScrollParent(el.parentElement) ?? null;
 
     const observer = new IntersectionObserver(
@@ -145,11 +143,17 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
           setVisibleCount((c) => c + 50);
         }
       },
-      { threshold: 0, rootMargin: "200px", root },
+      {
+        threshold: 0,
+        rootMargin: "200px",
+        root,
+      },
     );
+
     observer.observe(el);
+
     return () => observer.disconnect();
-  }, [visibleCount]);
+  }, []);
 
   const needsAction = scriptStatus === "missing" || scriptStatus === "outdated";
 
