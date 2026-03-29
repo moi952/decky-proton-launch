@@ -141,6 +141,8 @@
     "saving": "guardando...",
     "error_save": "Error al guardar",
     "configured": "configurados",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Actualización del script requerida. Reinstala para aplicar los cambios.",
     "reinstall_script": "Reinstalar script"
   }

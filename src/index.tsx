@@ -96,7 +96,7 @@ const App: React.FC = () => {
 
       {view === "games-picker" && (
         <GamesPickerView
-          runningGameId={runningGame?.appid ?? 0}
+
           onSelectGame={(game) => {
             setSelectedGame(game);
             setView("game-detail");

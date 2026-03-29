@@ -141,6 +141,8 @@
     "saving": "zapisywanie...",
     "error_save": "Błąd zapisu",
     "configured": "skonfigurowane",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Wymagana aktualizacja skryptu. Zainstaluj ponownie, aby zastosować zmiany.",
     "reinstall_script": "Zainstaluj ponownie skrypt"
   }

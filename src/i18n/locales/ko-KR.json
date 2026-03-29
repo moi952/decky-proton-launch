@@ -141,6 +141,8 @@
     "saving": "저장 중...",
     "error_save": "저장 오류",
     "configured": "구성됨",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "스크립트 업데이트가 필요합니다. 변경 사항을 적용하려면 재설치하세요.",
     "reinstall_script": "스크립트 재설치"
   }

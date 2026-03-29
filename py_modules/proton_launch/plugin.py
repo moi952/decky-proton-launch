@@ -10,6 +10,62 @@ from typing import Any, Dict, List, Optional, Tuple
 import decky
 
 
+# ─── Image helpers ─────────────────────────────────────────────────────────────
+
+def _image_is_horizontal(path: Path) -> bool:
+    """Return True if the image is roughly horizontal (width/height > 1.3).
+    Reads only the header bytes — no external dependencies."""
+    try:
+        data = path.read_bytes()
+        ext = path.suffix.lower()
+
+        if ext == ".png":
+            # PNG: magic 8 bytes, IHDR chunk 4+4+4+4+4 = width at offset 16, height at 20
+            if len(data) >= 24 and data[:8] == b"\x89PNG\r\n\x1a\n":
+                w, h = struct.unpack(">II", data[16:24])
+                return h > 0 and w / h > 1.3
+
+        elif ext in (".jpg", ".jpeg"):
+            # JPEG: scan for SOF markers (0xFF 0xC0..0xC3, 0xC5..0xC7, 0xC9..0xCB, 0xCD..0xCF)
+            i = 2  # skip SOI marker
+            while i + 3 < len(data):
+                if data[i] != 0xFF:
+                    break
+                marker = data[i + 1]
+                if marker in (0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB):
+                    if i + 9 < len(data):
+                        h, w = struct.unpack(">HH", data[i + 5:i + 9])
+                        return h > 0 and w / h > 1.3
+                seg_len = struct.unpack(">H", data[i + 2:i + 4])[0]
+                i += 2 + seg_len
+
+        elif ext == ".webp":
+            if len(data) >= 30 and data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+                chunk = data[12:16]
+                if chunk == b"VP8 " and len(data) >= 30:
+                    # Lossy: width/height at bytes 26-29 (14-bit values)
+                    raw_w, raw_h = struct.unpack("<HH", data[26:30])
+                    w = (raw_w & 0x3FFF) + 1
+                    h = (raw_h & 0x3FFF) + 1
+                    return h > 0 and w / h > 1.3
+                elif chunk == b"VP8L" and len(data) >= 25:
+                    # Lossless: signature 0x2F at byte 20, then packed width/height
+                    if data[20] == 0x2F:
+                        val = struct.unpack_from("<I", data, 21)[0]
+                        w = (val & 0x3FFF) + 1
+                        h = ((val >> 14) & 0x3FFF) + 1
+                        return h > 0 and w / h > 1.3
+                elif chunk == b"VP8X" and len(data) >= 30:
+                    # Extended: canvas width-1 at bytes 24-26, height-1 at 27-29 (LE 24-bit)
+                    w = int.from_bytes(data[24:27], "little") + 1
+                    h = int.from_bytes(data[27:30], "little") + 1
+                    return h > 0 and w / h > 1.3
+    except Exception:
+        pass
+    # Unknown or unreadable — reject to avoid showing portrait images
+    return False
+
+
 # ─── Text VDF helpers ──────────────────────────────────────────────────────────
 
 def _parse_vdf_text(content: str) -> Dict[str, Any]:
@@ -95,6 +151,27 @@ def _bvdf_read(data: bytes, pos: int) -> Tuple[List, int]:
 
 def _get_steam_path() -> Path:
     return Path(decky.DECKY_USER_HOME) / ".local" / "share" / "Steam"
+
+
+def _get_steam_roots() -> List[Path]:
+    """Return all candidate Steam root directories (deduped)."""
+    home = Path(decky.DECKY_USER_HOME)
+    candidates = [
+        home / ".local" / "share" / "Steam",
+        home / ".steam" / "steam",
+        home / ".steam" / "root",
+        home / ".steam" / "debian-installation",
+        Path("/usr/share/steam"),
+    ]
+    seen: List[Path] = []
+    for c in candidates:
+        try:
+            resolved = c.resolve()
+            if resolved not in [s.resolve() for s in seen] and c.is_dir():
+                seen.append(c)
+        except Exception:
+            pass
+    return seen
 
 
 def _get_user_dirs() -> List[Path]:
@@ -518,6 +595,72 @@ class Plugin:
         except Exception:
             return []
 
+    async def get_configured_apps_status(self) -> List[Dict[str, Any]]:
+        """Return configured apps with whether ~/proton-launch is in their launch options."""
+        try:
+            app_ids = [
+                int(p.stem)
+                for p in _profiles_dir().glob("*.env")
+                if p.stem.isdigit()
+            ]
+            if not app_ids:
+                return []
+
+            # Build app_id -> has_launch_option map
+            launch_option_map: Dict[int, bool] = {}
+
+            # Steam games: read localconfig.vdf
+            for user_dir in _get_user_dirs():
+                lc = user_dir / "config" / "localconfig.vdf"
+                if not lc.is_file():
+                    continue
+                try:
+                    data = _parse_vdf_text(lc.read_text(encoding="utf-8", errors="replace"))
+                    apps = (
+                        data.get("UserLocalConfigStore", {})
+                            .get("Software", {})
+                            .get("Valve", {})
+                            .get("Steam", {})
+                            .get("apps", {})
+                    )
+                    for app_str, app_data in apps.items():
+                        if app_str.isdigit():
+                            lo = app_data.get("LaunchOptions", "")
+                            launch_option_map[int(app_str)] = LAUNCH_OPTION in lo
+                except Exception as e:
+                    decky.logger.warning(f"[configured_status] localconfig error {lc}: {e}")
+
+            # Non-Steam shortcuts: read shortcuts.vdf (binary VDF)
+            for sc_path in _get_shortcuts_paths():
+                try:
+                    raw = sc_path.read_bytes()
+                    nodes, _ = _bvdf_read(raw, 0)
+                    for tag, key, children in nodes:
+                        if tag == 0x00 and key.lower() == "shortcuts":
+                            for etag, _, efields in children:
+                                if etag != 0x00:
+                                    continue
+                                appid_val = None
+                                lo = ""
+                                for f in efields:
+                                    if f[0] == 0x02 and f[1].lower() == "appid":
+                                        appid_val = f[2] & 0xFFFFFFFF
+                                    elif f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                        lo = f[2]
+                                if appid_val is not None:
+                                    launch_option_map[appid_val] = LAUNCH_OPTION in lo
+                except Exception as e:
+                    decky.logger.warning(f"[configured_status] shortcuts error {sc_path}: {e}")
+
+            result = []
+            for app_id in app_ids:
+                result.append({"appid": app_id, "has_launch_option": launch_option_map.get(app_id, False)})
+
+            return result
+        except Exception as e:
+            decky.logger.error(f"[get_configured_apps_status] {e}")
+            return []
+
     async def get_script_path(self) -> str:
         """Return the absolute path of the launch wrapper script."""
         return str(_script_path())
@@ -629,24 +772,160 @@ class Plugin:
         return {"appid": 0, "name": "", "is_shortcut": False}
 
     async def get_shortcut_cover(self, app_id: int) -> str:
-        """Return a base64 data URL for a non-Steam game cover, or empty string."""
+        """Kept for backward compatibility — delegates to get_game_cover."""
+        return await self.get_game_cover(app_id)
+
+    async def get_game_cover(self, app_id: int) -> str:
+        """Return a base64 data URL for a game's cover image, or empty string.
+        Searches multiple locations in priority order, always preferring horizontal images."""
+        EXTS = ("jpg", "jpeg", "png", "webp")
+
+        def _read(path: Path) -> Optional[str]:
+            if not path.is_file():
+                return None
+            ext = path.suffix.lstrip(".")
+            mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
+            encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+            return f"data:{mime};base64,{encoded}"
+
         try:
+            # Grid folder — user custom artwork (checked FIRST, takes priority over Steam cache)
+            # "" = horizontal (460x215), "_header" = alt horizontal, "_hero" = wide banner
             for user_dir in _get_user_dirs():
                 grid = user_dir / "config" / "grid"
                 if not grid.is_dir():
                     continue
-                for ext in ("jpg", "jpeg", "png", "webp"):
-                    for suffix in ("_header", ""):
-                        candidate = grid / f"{app_id}{suffix}.{ext}"
-                        if candidate.is_file():
-                            data = candidate.read_bytes()
-                            mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
-                            encoded = base64.b64encode(data).decode("ascii")
-                            return f"data:{mime};base64,{encoded}"
+                for suffix in ("", "_header"):
+                    for ext in EXTS:
+                        result = _read(grid / f"{app_id}{suffix}.{ext}")
+                        if result:
+                            return result
+                for ext in EXTS:
+                    path = grid / f"{app_id}_hero.{ext}"
+                    if path.is_file() and _image_is_horizontal(path):
+                        result = _read(path)
+                        if result:
+                            return result
+                # boppreh/steamgrid stores originals in grid/originals/
+                originals = grid / "originals"
+                if originals.is_dir():
+                    for suffix in ("", "_header"):
+                        for ext in EXTS:
+                            result = _read(originals / f"{app_id}{suffix}.{ext}")
+                            if result:
+                                return result
+
+            # librarycache/{appid}/ — Steam default artwork
+            for steam_root in _get_steam_roots():
+                app_cache_dir = steam_root / "appcache" / "librarycache" / str(app_id)
+                if not app_cache_dir.is_dir():
+                    continue
+
+                # Known horizontal filenames directly in librarycache/{appid}/
+                for name in ("header", "library_header"):
+                    for ext in EXTS:
+                        path = app_cache_dir / f"{name}.{ext}"
+                        if path.is_file() and _image_is_horizontal(path):
+                            result = _read(path)
+                            if result:
+                                return result
+
+                # Known horizontal filenames in subdirectories
+                subdirs = sorted(d for d in app_cache_dir.iterdir() if d.is_dir())
+                for name in ("header", "library_header"):
+                    for subdir in subdirs:
+                        for ext in EXTS:
+                            path = subdir / f"{name}.{ext}"
+                            if path.is_file() and _image_is_horizontal(path):
+                                result = _read(path)
+                                if result:
+                                    return result
+
+                # Any other horizontal image in subdirectories (ratio check)
+                for subdir in subdirs:
+                    for img in sorted(subdir.iterdir()):
+                        if img.suffix.lower().lstrip(".") in EXTS and img.is_file():
+                            if _image_is_horizontal(img):
+                                result = _read(img)
+                                if result:
+                                    return result
+
+            # librarycache flat files — older Steam versions
+            for steam_root in _get_steam_roots():
+                librarycache = steam_root / "appcache" / "librarycache"
+                if not librarycache.is_dir():
+                    continue
+                for suffix in ("_header", "_library_hero"):
+                    for ext in EXTS:
+                        path = librarycache / f"{app_id}{suffix}.{ext}"
+                        if path.is_file() and _image_is_horizontal(path):
+                            result = _read(path)
+                            if result:
+                                return result
+                for ext in EXTS:
+                    path = librarycache / f"{app_id}.{ext}"
+                    if path.is_file() and _image_is_horizontal(path):
+                        result = _read(path)
+                        if result:
+                            return result
+
             return ""
         except Exception as e:
-            decky.logger.error(f"[get_shortcut_cover] {app_id}: {e}")
+            decky.logger.error(f"[get_game_cover] {app_id}: {e}")
             return ""
+
+    async def get_cover_debug_info(self, app_id: int) -> Dict[str, Any]:
+        """Return debug info about available cover files for a game."""
+        found = []
+        missing = []
+
+        grid_suffixes = ("", "_header", "p", "_hero", "_logo")
+        cache_suffixes = ("_header", "_library_600x900", "_library_hero", "_logo", "")
+
+        def _add(path: Path, source: str, label: str) -> None:
+            entry = {"path": str(path), "source": source, "label": label}
+            if path.is_file():
+                found.append(entry)
+            else:
+                missing.append(entry)
+
+        # librarycache/{appid}/header.*
+        for steam_root in _get_steam_roots():
+            app_cache_dir = steam_root / "appcache" / "librarycache" / str(app_id)
+            for ext in ("jpg", "jpeg", "png", "webp"):
+                _add(app_cache_dir / f"header.{ext}", f"librarycache/{app_id}", f"header.{ext}")
+
+        # librarycache/{appid}/ subdirectories
+        for steam_root in _get_steam_roots():
+            app_cache_dir = steam_root / "appcache" / "librarycache" / str(app_id)
+            if not app_cache_dir.is_dir():
+                continue
+            for subdir in sorted(d for d in app_cache_dir.iterdir() if d.is_dir()):
+                for ext in ("jpg", "jpeg", "png", "webp"):
+                    p = subdir / f"library_header.{ext}"
+                    _add(p, f"librarycache/{app_id}/{subdir.name}", f"library_header.{ext}")
+                for img in sorted(subdir.iterdir()):
+                    if img.name.startswith("library_header"):
+                        continue
+                    if img.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp") and img.is_file():
+                        horizontal = _image_is_horizontal(img)
+                        found.append({"path": str(img), "source": f"librarycache/{app_id}/{subdir.name}", "label": "✓ horiz" if horizontal else "portrait"})
+
+        # Grid folder
+        for user_dir in _get_user_dirs():
+            grid = user_dir / "config" / "grid"
+            for suffix in grid_suffixes:
+                for ext in ("jpg", "jpeg", "png", "webp"):
+                    _add(grid / f"{app_id}{suffix}.{ext}", "grid", f"{suffix or '(none)'}.{ext}")
+
+        # librarycache flat files
+        for steam_root in _get_steam_roots():
+            librarycache = steam_root / "appcache" / "librarycache"
+            for suffix in cache_suffixes:
+                for ext in ("jpg", "jpeg", "png", "webp"):
+                    _add(librarycache / f"{app_id}{suffix}.{ext}", "librarycache (flat)", f"{app_id}{suffix}.{ext}")
+
+        return {"found": found, "missing": missing}
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────
 

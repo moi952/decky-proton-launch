@@ -141,6 +141,8 @@
     "saving": "сохранение...",
     "error_save": "Ошибка сохранения",
     "configured": "настроено",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Требуется обновление скрипта. Переустановите для применения изменений.",
     "reinstall_script": "Переустановить скрипт"
   }

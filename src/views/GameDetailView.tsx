@@ -44,6 +44,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
   const profileRef = useRef(profile);
+  const variablesSectionRef = useRef<HTMLDivElement>(null);
   profileRef.current = profile;
 
   const reload = useCallback(() => {
@@ -65,6 +66,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   useEffect(() => {
     reload();
   }, [reload]);
+
+  useEffect(() => {
+    if (!loading && variablesSectionRef.current) {
+      const first = variablesSectionRef.current.querySelector("button") as HTMLElement | null;
+      first?.focus();
+    }
+  }, [loading]);
 
   // Auto-save with debounce
   useEffect(() => {
@@ -129,11 +137,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   };
 
   const loadLog = async () => {
-    const content = await call<[number], string>("get_launch_log", game.appid);
+    const [content, status] = await Promise.all([
+      call<[number], string>("get_launch_log", game.appid),
+      game.is_shortcut
+        ? Promise.resolve("(non-Steam shortcut)")
+        : call<[number], string>("get_launch_option_status", game.appid),
+    ]);
     setLog(content);
-    const status = game.is_shortcut
-      ? "(non-Steam shortcut)"
-      : await call<[number], string>("get_launch_option_status", game.appid);
     setLaunchOptionStatus(status);
     setShowLog(true);
   };
@@ -199,6 +209,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               </div>
             </PanelSectionRow>
           )}
+
           <PanelSectionRow>
             <pre
               style={{
@@ -230,7 +241,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           </PanelSectionRow>
         </PanelSection>
       ) : (
-        <>
+        <div ref={variablesSectionRef}>
           {variablesData
             .filter((cat) => isCategoryVisible(cat.category))
             .map((cat) => (
@@ -349,7 +360,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               ))}
             </PanelSection>
           )}
-        </>
+        </div>
       )}
 
       {/* Delete profile action */}

@@ -13,7 +13,7 @@ export const NowPlayingCard: React.FC<NowPlayingCardProps> = ({ game, onSelect }
     <GameRow
       game={game}
       hasProfile={false}
-      isRunning={true}
+
       nowPlaying={true}
       onClick={onSelect}
     />

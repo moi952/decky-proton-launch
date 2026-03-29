@@ -141,6 +141,8 @@
     "saving": "opslaan...",
     "error_save": "Opslagfout",
     "configured": "geconfigureerd",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Scriptupdate vereist. Herinstalleer om wijzigingen toe te passen.",
     "reinstall_script": "Script herinstalleren"
   }
