@@ -64,6 +64,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [showCommand, setShowCommand] = useState(false);
   const [visibleCount, setVisibleCount] = useState(50);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const loadingMoreRef = useRef(false);
 
   const LAUNCH_OPTION = "~/proton-launch %command%";
 
@@ -139,8 +140,14 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !loadingMoreRef.current) {
+          loadingMoreRef.current = true;
+
           setVisibleCount((c) => c + 50);
+
+          setTimeout(() => {
+            loadingMoreRef.current = false;
+          }, 100);
         }
       },
       {
