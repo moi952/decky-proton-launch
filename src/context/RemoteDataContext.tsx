@@ -22,7 +22,10 @@ export type VariableCategory = {
 
 type RemoteData = {
   variables: VariableCategory[];
-  locales: Record<string, { variables: Record<string, string>; categories: Record<string, string> }>;
+  locales: Record<
+    string,
+    { variables: Record<string, string>; categories: Record<string, string> }
+  >;
 };
 
 interface RemoteDataContextValue {
@@ -41,9 +44,21 @@ export const useRemoteData = () => useContext(RemoteDataContext);
 
 const getLangCode = (): string => {
   const supported = [
-    "en-US", "fr-FR", "de-DE", "es-ES", "it-IT", "ja-JP",
-    "ko-KR", "nl-NL", "pl-PL", "pt-BR", "pt-PT", "ru-RU",
-    "tr-TR", "uk-UA", "zh-CN",
+    "en-US",
+    "fr-FR",
+    "de-DE",
+    "es-ES",
+    "it-IT",
+    "ja-JP",
+    "ko-KR",
+    "nl-NL",
+    "pl-PL",
+    "pt-BR",
+    "pt-PT",
+    "ru-RU",
+    "tr-TR",
+    "uk-UA",
+    "zh-CN",
   ];
   const lang = i18n.language || "en-US";
   if (supported.includes(lang)) return lang;
@@ -51,8 +66,17 @@ const getLangCode = (): string => {
   return supported.find((s) => s.startsWith(prefix)) ?? "en-US";
 };
 
-const injectTranslations = (lang: string, localeData: RemoteData["locales"][string]) => {
-  i18n.addResourceBundle(lang, "categories", localeData.categories, true, false);
+const injectTranslations = (
+  lang: string,
+  localeData: RemoteData["locales"][string],
+) => {
+  i18n.addResourceBundle(
+    lang,
+    "categories",
+    localeData.categories,
+    true,
+    false,
+  );
   i18n.addResourceBundle(lang, "variables", localeData.variables, true, true);
 };
 
@@ -72,7 +96,9 @@ const loadData = (
 ) => {
   let hasData = false;
 
-  const cachePromise = call<[], Record<string, any>>("get_variables_cache").then((cached) => {
+  const cachePromise = call<[], Record<string, any>>(
+    "get_variables_cache",
+  ).then((cached) => {
     if (cached && (cached as RemoteData).variables?.length) {
       hasData = true;
       applyData(cached as RemoteData, setVariables);
