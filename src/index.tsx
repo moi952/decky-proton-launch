@@ -48,9 +48,10 @@ const App: React.FC = () => {
   // Detect running game, polling every 5s
   useEffect(() => {
     const poll = async () => {
-      const result = await call<[], { appid: number; name: string; is_shortcut: boolean }>(
-        "get_running_game"
-      );
+      const result = await call<
+        [],
+        { appid: number; name: string; is_shortcut: boolean }
+      >("get_running_game");
       setRunningGame(result.appid > 0 ? (result as SteamGame) : null);
     };
     poll();
@@ -96,7 +97,6 @@ const App: React.FC = () => {
 
       {view === "games-picker" && (
         <GamesPickerView
-          runningGameId={runningGame?.appid ?? 0}
           onSelectGame={(game) => {
             setSelectedGame(game);
             setView("game-detail");

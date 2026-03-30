@@ -37,10 +37,28 @@ export const NavBar: React.FC<NavBarProps> = ({
       </div>
       <div style={{ flex: 1 }} />
       {scriptStatus === "current" && (
-        <span style={{ color: "#4caf50", fontSize: 14, lineHeight: 1, paddingRight: 2 }}>✓</span>
+        <span
+          style={{
+            color: "#4caf50",
+            fontSize: 14,
+            lineHeight: 1,
+            paddingRight: 2,
+          }}
+        >
+          ✓
+        </span>
       )}
       {scriptStatus === "outdated" && (
-        <span style={{ color: "#f5a623", fontSize: 14, lineHeight: 1, paddingRight: 2 }}>⚠</span>
+        <span
+          style={{
+            color: "#f5a623",
+            fontSize: 14,
+            lineHeight: 1,
+            paddingRight: 2,
+          }}
+        >
+          ⚠
+        </span>
       )}
       <ActionButton onClick={onSettings}>
         <FiSettings size={16} />

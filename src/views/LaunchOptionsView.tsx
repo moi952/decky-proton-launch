@@ -34,7 +34,11 @@ const GameDetail: React.FC<GameDetailProps> = ({ game, onBack }) => {
   const reload = useCallback(() => {
     setLoading(true);
     Promise.all([
-      call<[number, boolean], string>("get_launch_options", game.appid, game.is_shortcut),
+      call<[number, boolean], string>(
+        "get_launch_options",
+        game.appid,
+        game.is_shortcut,
+      ),
       call<[number], string[]>("get_managed_keys", game.appid),
     ])
       .then(([opts, keys]) => {
@@ -60,7 +64,7 @@ const GameDetail: React.FC<GameDetailProps> = ({ game, onBack }) => {
         "apply_stack",
         game.appid,
         stack,
-        game.is_shortcut
+        game.is_shortcut,
       );
       if (ok) {
         toaster.toast({ title: game.name, body: t("toast_updated") });
@@ -81,7 +85,7 @@ const GameDetail: React.FC<GameDetailProps> = ({ game, onBack }) => {
       const ok = await call<[number, boolean], boolean>(
         "remove_plugin_options",
         game.appid,
-        game.is_shortcut
+        game.is_shortcut,
       );
       if (ok) {
         toaster.toast({ title: game.name, body: t("toast_removed") });
@@ -102,7 +106,7 @@ const GameDetail: React.FC<GameDetailProps> = ({ game, onBack }) => {
       const ok = await call<[number, boolean], boolean>(
         "clear_launch_options",
         game.appid,
-        game.is_shortcut
+        game.is_shortcut,
       );
       if (ok) {
         toaster.toast({ title: game.name, body: t("toast_cleared") });
@@ -130,7 +134,9 @@ const GameDetail: React.FC<GameDetailProps> = ({ game, onBack }) => {
           <div>
             <div style={{ fontWeight: 600 }}>{game.name}</div>
             {game.is_shortcut && (
-              <div style={{ fontSize: 10, color: "#aaa" }}>{t("non_steam")}</div>
+              <div style={{ fontSize: 10, color: "#aaa" }}>
+                {t("non_steam")}
+              </div>
             )}
           </div>
         </Focusable>
@@ -229,7 +235,9 @@ const CollapsibleSection: React.FC<CollapsibleSectionProps> = ({
           fontSize: 13,
         }}
       >
-        <span>{title} ({count})</span>
+        <span>
+          {title} ({count})
+        </span>
         {expanded ? <FiChevronUp size={14} /> : <FiChevronDown size={14} />}
       </DialogButton>
     </PanelSectionRow>
@@ -316,7 +324,9 @@ export const LaunchOptionsView: React.FC<LaunchOptionsViewProps> = ({
         </PanelSectionRow>
         {loading && (
           <PanelSectionRow>
-            <span style={{ color: "#888", fontSize: 12 }}>{t("loading_games")}</span>
+            <span style={{ color: "#888", fontSize: 12 }}>
+              {t("loading_games")}
+            </span>
           </PanelSectionRow>
         )}
         {!loading && filtered.length === 0 && (

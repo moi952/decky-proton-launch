@@ -139,6 +139,8 @@
     "delete_profile": "Eliminar perfil",
     "profile_deleted": "Perfil eliminado",
     "error_save": "Erro ao guardar",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Atualização do script necessária. Reinstale para aplicar as alterações.",
     "reinstall_script": "Reinstalar script"
   }

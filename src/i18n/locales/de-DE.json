@@ -141,6 +141,8 @@
     "saving": "Speichern...",
     "error_save": "Speicherfehler",
     "configured": "konfiguriert",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Skript-Update erforderlich. Neu installieren, um Änderungen anzuwenden.",
     "reinstall_script": "Skript neu installieren"
   }

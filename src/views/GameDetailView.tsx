@@ -9,7 +9,7 @@ import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
-import { FiArrowLeft, FiTerminal } from "react-icons/fi";
+import { FiArrowLeft, FiExternalLink, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import variablesData from "../data/variables.json";
 import type { SteamGame } from "./GamesPickerView";
@@ -44,6 +44,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
   const profileRef = useRef(profile);
+  const variablesSectionRef = useRef<HTMLDivElement>(null);
   profileRef.current = profile;
 
   const reload = useCallback(() => {
@@ -65,6 +66,15 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   useEffect(() => {
     reload();
   }, [reload]);
+
+  useEffect(() => {
+    if (!loading && variablesSectionRef.current) {
+      const first = variablesSectionRef.current.querySelector(
+        "button",
+      ) as HTMLElement | null;
+      first?.focus();
+    }
+  }, [loading]);
 
   // Auto-save with debounce
   useEffect(() => {
@@ -129,11 +139,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   };
 
   const loadLog = async () => {
-    const content = await call<[number], string>("get_launch_log", game.appid);
+    const [content, status] = await Promise.all([
+      call<[number], string>("get_launch_log", game.appid),
+      game.is_shortcut
+        ? Promise.resolve("(non-Steam shortcut)")
+        : call<[number], string>("get_launch_option_status", game.appid),
+    ]);
     setLog(content);
-    const status = game.is_shortcut
-      ? "(non-Steam shortcut)"
-      : await call<[number], string>("get_launch_option_status", game.appid);
     setLaunchOptionStatus(status);
     setShowLog(true);
   };
@@ -183,6 +195,18 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       {/* Debug log viewer */}
       {showLog && (
         <PanelSection title="Debug">
+          <PanelSectionRow>
+            <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div>
+                <span style={{ color: "#666" }}>AppId: </span>
+                <span style={{ color: "#fff", fontFamily: "monospace" }}>{game.appid}</span>
+                <span style={{ color: "#555", marginLeft: 8 }}>({game.is_shortcut ? "shortcut" : "steam"})</span>
+              </div>
+              <ActionButton onClick={() => window.open(`steam://nav/games/details/${game.appid}`)}>
+                <FiExternalLink size={12} />
+              </ActionButton>
+            </div>
+          </PanelSectionRow>
           {launchOptionStatus !== null && (
             <PanelSectionRow>
               <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4 }}>
@@ -199,6 +223,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               </div>
             </PanelSectionRow>
           )}
+
           <PanelSectionRow>
             <pre
               style={{
@@ -230,7 +255,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           </PanelSectionRow>
         </PanelSection>
       ) : (
-        <>
+        <div ref={variablesSectionRef}>
           {variablesData
             .filter((cat) => isCategoryVisible(cat.category))
             .map((cat) => (
@@ -349,7 +374,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               ))}
             </PanelSection>
           )}
-        </>
+        </div>
       )}
 
       {/* Delete profile action */}

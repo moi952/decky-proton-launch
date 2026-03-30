@@ -4,7 +4,15 @@ const PanelSectionCustom: React.FC<{
   children: React.ReactNode;
   style?: React.CSSProperties;
 }> = ({ children, style }) => (
-  <div style={{ padding: "4px 16px 1em 16px", ...style }}>
+  <div
+    style={{
+      paddingTop: "4px",
+      paddingBottom: "1em",
+      ...style,
+      paddingRight: "16px",
+      paddingLeft: "16px",
+    }}
+  >
     {children}
   </div>
 );

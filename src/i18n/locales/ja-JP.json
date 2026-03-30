@@ -141,6 +141,8 @@
     "saving": "保存中...",
     "error_save": "保存エラー",
     "configured": "設定済み",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "スクリプトの更新が必要です。変更を適用するには再インストールしてください。",
     "reinstall_script": "スクリプトを再インストール"
   }

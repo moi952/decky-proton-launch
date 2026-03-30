@@ -141,6 +141,8 @@
     "saving": "保存中...",
     "error_save": "保存错误",
     "configured": "已配置",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "需要更新脚本。请重新安装以应用更改。",
     "reinstall_script": "重新安装脚本"
   }

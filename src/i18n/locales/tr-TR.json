@@ -139,6 +139,8 @@
     "delete_profile": "Profili sil",
     "profile_deleted": "Profil silindi",
     "error_save": "Kaydetme hatası",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Komut dosyası güncellemesi gerekiyor. Değişiklikleri uygulamak için yeniden yükleyin.",
     "reinstall_script": "Komut dosyasını yeniden yükle"
   }

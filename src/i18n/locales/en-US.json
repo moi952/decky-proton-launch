@@ -141,6 +141,8 @@
     "saving": "saving...",
     "error_save": "Save error",
     "configured": "configured",
+    "legend_ready": "Profil actif · wrapper installé",
+    "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Script update required. Reinstall to apply changes.",
     "reinstall_script": "Reinstall script"
   }

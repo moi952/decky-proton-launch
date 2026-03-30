@@ -19,7 +19,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const [defaultHome, setDefaultHomeState] = useState<DefaultHome>("home");
 
@@ -61,7 +61,13 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <SettingsContext.Provider
-      value={{ hiddenCategories, toggleCategory, isCategoryVisible, defaultHome, setDefaultHome }}
+      value={{
+        hiddenCategories,
+        toggleCategory,
+        isCategoryVisible,
+        defaultHome,
+        setDefaultHome,
+      }}
     >
       {children}
     </SettingsContext.Provider>

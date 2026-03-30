@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { DialogButton } from "@decky/ui";
 import { call } from "@decky/api";
+import { FaCog, FaSteam } from "react-icons/fa";
 import { SteamGame } from "../data/types";
+import { BadgeIcon } from "./BadgeIcon";
+import { getCachedCover, setCachedCover } from "../utils/coverCache";
 
 export const GAME_ROW_STYLES = `
   .plch-game-row:focus {
-    border: 2px solid #dcdedf !important;
+    outline: 2px solid #dcdedf !important;
+    outline-offset: 0px !important;
     background: #2a3a4a !important;
   }
   .plch-val-btn:focus {
@@ -14,28 +18,38 @@ export const GAME_ROW_STYLES = `
   }
 `;
 
-const COVER_URL = (appid: number) =>
-  `https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/header.jpg`;
-
 interface GameRowProps {
   game: SteamGame;
   hasProfile: boolean;
-  isRunning: boolean;
   nowPlaying?: boolean;
+  profileStatus?: "configured" | "ready";
   onClick: () => void;
 }
 
-export const GameRow: React.FC<GameRowProps> = ({ game, hasProfile, isRunning, nowPlaying, onClick }) => {
-  const [shortcutCover, setShortcutCover] = useState<string | null>(null);
+export const GameRow: React.FC<GameRowProps> = ({
+  game,
+  hasProfile,
+  nowPlaying,
+  profileStatus,
+  onClick,
+}) => {
+  const [cover, setCover] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!game.is_shortcut) return;
-    call<[number], string>("get_shortcut_cover", game.appid).then((url) => {
-      if (url) setShortcutCover(url);
+    const cached = getCachedCover(game.appid);
+    if (cached !== undefined) {
+      if (cached) setCover(cached);
+      return;
+    }
+    call<[number], string>("get_game_cover", game.appid).then((url) => {
+      if (url) {
+        setCachedCover(game.appid, url);
+        setCover(url);
+      }
     });
-  }, [game.appid, game.is_shortcut]);
+  }, [game.appid]);
 
-  const border = nowPlaying ? "2px solid #4caf50" : hasProfile ? "2px solid #f5a623" : "2px solid transparent";
+  const border = nowPlaying ? "1px solid #4caf50" : "2px solid transparent";
   const background = nowPlaying ? "#0d1f0d" : "#1a1a2e";
 
   return (
@@ -51,87 +65,63 @@ export const GameRow: React.FC<GameRowProps> = ({ game, hasProfile, isRunning, n
           background,
           display: "flex",
           flexDirection: "row",
-          alignItems: "center",
+          alignItems: "stretch",
           width: "100%",
         }}
       >
-        <div style={{ position: "relative", width: 80, height: 37, flexShrink: 0 }}>
-          {game.is_shortcut && shortcutCover ? (
+        <div
+          style={{
+            position: "relative",
+            width: 80,
+            minHeight: 37,
+            flexShrink: 0,
+            overflow: "hidden",
+          }}
+        >
+          {cover ? (
             <img
-              src={shortcutCover}
+              src={cover}
               alt=""
-              style={{ width: 80, height: 37, objectFit: "cover", display: "block" }}
-            />
-          ) : game.is_shortcut ? (
-            <div
-              style={{
-                width: 80,
-                height: 37,
-                background: "#2a2a3e",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 9,
-                color: "#666",
-              }}
-            >
-              Non-Steam
-            </div>
-          ) : (
-            <img
-              src={COVER_URL(game.appid)}
-              alt=""
-              style={{ width: 80, height: 37, objectFit: "cover", display: "block" }}
-              onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
-            />
-          )}
-          {(hasProfile || isRunning) && (
-            <div
               style={{
                 position: "absolute",
-                bottom: 3,
-                left: 3,
-                display: "flex",
-                gap: "3px",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
               }}
-            >
-              {hasProfile && (
-                <span
-                  style={{
-                    background: "rgba(0,0,0,0.65)",
-                    borderRadius: "3px",
-                    padding: "1px 3px",
-                    fontSize: 10,
-                    lineHeight: 1,
-                    color: "#f5a623",
-                  }}
-                >
-                  ⚙
-                </span>
-              )}
-              {isRunning && (
-                <span
-                  style={{
-                    background: "rgba(0,0,0,0.65)",
-                    borderRadius: "3px",
-                    padding: "1px 3px",
-                    fontSize: 10,
-                    lineHeight: 1,
-                    color: "#4caf50",
-                  }}
-                >
-                  ▶
-                </span>
-              )}
+            />
+          ) : (
+            <div
+              style={{ position: "absolute", inset: 0, background: "#2a2a3e" }}
+            />
+          )}
+          {!game.is_shortcut && (
+            <div style={{ position: "absolute", top: 3, left: 3 }}>
+              <BadgeIcon
+                icon={FaSteam}
+                color="rgba(255,255,255,0.4)"
+                size={8}
+              />
+            </div>
+          )}
+          {hasProfile && (
+            <div style={{ position: "absolute", bottom: 3, left: 3 }}>
+              <BadgeIcon
+                icon={FaCog}
+                color={profileStatus === "ready" ? "#4caf50" : "#f5a623"}
+              />
             </div>
           )}
         </div>
         <div
           style={{
-            padding: "4px 8px",
-            fontSize: 12,
+            padding: "0 8px",
+            fontSize: 11,
             color: "#fff",
             flex: 1,
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <span
