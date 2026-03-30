@@ -11,10 +11,10 @@ import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
 import { FiArrowLeft, FiExternalLink, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
-import variablesData from "../data/variables.json";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
+import { useRemoteData } from "../context/RemoteDataContext";
 
 interface GameDetailViewProps {
   game: SteamGame;
@@ -30,6 +30,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCat } = useTranslation("categories");
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
+  const { variables: variablesData } = useRemoteData();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
   const [draft, setDraft] = useState<Record<string, string>>({});

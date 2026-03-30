@@ -1,44 +1,7 @@
 {
   "categories": {
-    "upscale": "업스케일",
-    "performance": "성능",
-    "compatibility": "호환성",
-    "debug": "디버그",
     "favorites": "즐겨찾기",
-    "custom": "사용자 정의",
-    "intel_commands": "Intel",
-    "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD",
-    "wrappers": "래퍼"
-  },
-  "variables": {
-    "lsfg": "LSFG (~/lsfg)",
-    "fsr4_upgrade": "FSR4 업그레이드",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 업그레이드",
-    "dlss4_upgrade": "DLSS4 업그레이드",
-    "xess_upgrade": "XeSS 업그레이드",
-    "dxvk_async": "DXVK 비동기",
-    "no_esync": "ESYNC 비활성화",
-    "no_fsync": "FSYNC 비활성화",
-    "radv_perftest": "RADV PerfTest",
-    "radv_perftest_aco": "RADV PerfTest ACO",
-    "radv_perftest_gpl": "RADV PerfTest GPL",
-    "proton_log": "Proton 로그",
-    "mangohud": "MangoHud",
-    "fsr_indicator": "FSR 표시기",
-    "dlss_indicator": "DLSS 표시기",
-    "xess_indicator": "XeSS 표시기",
-    "smooth_motion": "Smooth Motion 활성화",
-    "steam_deck": "Steam Deck 모드",
-    "nvidia_gpu_masking": "NVIDIA GPU 마스킹",
-    "wined3d": "WineD3D",
-    "ntsync": "NTSync",
-    "nvapi": "NVAPI",
-    "hdr_wsi": "HDR WSI",
-    "hdr": "HDR",
-    "enable_prefix": "활성화",
-    "disable_prefix": "비활성화",
-    "fgmod": "fgmod (~/fgmod/fgmod)"
+    "custom": "사용자 정의"
   },
   "common": {
     "selected": "선택됨",
@@ -58,7 +21,8 @@
     "create": "생성",
     "delete": "삭제",
     "clean": "지우기",
-    "update_available": "↑ v{{version}} 업데이트 가능 — 탭하여 다운로드"
+    "update_available": "↑ v{{version}} 업데이트 가능 — 탭하여 다운로드",
+    "no_data": "변수를 불러오려면 인터넷 연결이 필요합니다."
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",

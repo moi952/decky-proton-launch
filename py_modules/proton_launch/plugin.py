@@ -1,4 +1,5 @@
 import base64
+import json
 import re
 import os
 import shutil
@@ -873,6 +874,35 @@ class Plugin:
         except Exception as e:
             decky.logger.error(f"[get_game_cover] {app_id}: {e}")
             return ""
+
+    # ── Variables cache (disk-based, replaces localStorage) ─────────────────────
+
+    def _variables_cache_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "variables_cache.json"
+
+    async def get_variables_cache(self) -> Dict[str, Any]:
+        """Return the cached variables+locales data, or {} if no cache exists."""
+        try:
+            path = self._variables_cache_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_variables_cache] {e}")
+        return {}
+
+    async def get_variables_cache_path(self) -> str:
+        return str(self._variables_cache_path())
+
+    async def set_variables_cache(self, data: Dict[str, Any]) -> bool:
+        """Persist variables+locales data to disk."""
+        try:
+            path = self._variables_cache_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_variables_cache] {e}")
+            return False
 
     async def get_cover_debug_info(self, app_id: int) -> Dict[str, Any]:
         """Return debug info about available cover files for a game."""
