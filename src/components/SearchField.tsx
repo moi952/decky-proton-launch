@@ -14,7 +14,9 @@ export const SearchField: React.FC<SearchFieldProps> = ({
 }) => {
   const { t } = useTranslation();
   return (
-    <PanelSectionCustom style={{ paddingBottom: "0", paddingTop: "0" }}>
+    <PanelSectionCustom
+      style={{ paddingBottom: "0", paddingTop: "0", marginBottom: "0" }}
+    >
       <TextField
         value={value}
         onChange={(e) => onChange(e.target.value)}
