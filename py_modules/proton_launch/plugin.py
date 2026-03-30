@@ -382,6 +382,48 @@ class Plugin:
     async def get_launch_option_status(self, app_id: int) -> str:
         return get_status(app_id)
 
+    async def get_wrapper_status(self, app_id: int, is_shortcut: bool) -> bool:
+        """Return True if ~/proton-launch %command% is in this game's launch options."""
+        try:
+            if is_shortcut:
+                for sc_path in get_shortcuts_paths():
+                    try:
+                        raw = sc_path.read_bytes()
+                        nodes, _ = read_binary(raw, 0)
+                        for tag, key, children in nodes:
+                            if tag == 0x00 and key.lower() == "shortcuts":
+                                for etag, _, efields in children:
+                                    if etag != 0x00:
+                                        continue
+                                    appid_val = None
+                                    lo = ""
+                                    for f in efields:
+                                        if f[0] == 0x02 and f[1].lower() == "appid":
+                                            appid_val = f[2] & 0xFFFFFFFF
+                                        elif f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                            lo = f[2]
+                                    if appid_val == app_id:
+                                        return LAUNCH_OPTION in lo
+                    except Exception as e:
+                        decky.logger.warning(f"[get_wrapper_status] shortcuts error {sc_path}: {e}")
+                return False
+            else:
+                return LAUNCH_OPTION in get_status(app_id)
+        except Exception as e:
+            decky.logger.error(f"[get_wrapper_status] {app_id}: {e}")
+            return False
+
+    async def restart_steam(self) -> bool:
+        """Send SIGTERM to Steam so it exits cleanly (gaming mode auto-restarts it)."""
+        try:
+            import subprocess
+            subprocess.Popen(["pkill", "-15", "steam"])
+            decky.logger.info("[restart_steam] SIGTERM sent to steam")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[restart_steam] {e}")
+            return False
+
     # ── Running game ────────────────────────────────────────────────────────────
 
     async def get_running_game(self) -> Dict[str, Any]:

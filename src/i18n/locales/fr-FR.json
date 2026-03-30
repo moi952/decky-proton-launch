@@ -118,6 +118,7 @@
     "restart_steam_title": "Redémarrer Steam",
     "restart_steam_body": "Options de lancement mises à jour. Redémarrez Steam pour que les changements prennent effet.",
     "restart_steam_non_steam_body": "Pour les raccourcis non-Steam, redémarrez Steam pour que les changements prennent effet.",
-    "ok": "Compris"
+    "ok": "Compris",
+    "restart_steam_btn": "Redémarrer Steam"
   }
 }

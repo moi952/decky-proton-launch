@@ -9,12 +9,13 @@ import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
-import { FiArrowLeft, FiExternalLink, FiTerminal } from "react-icons/fi";
+import { FiArrowLeft, FiExternalLink, FiLink, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useRemoteData } from "../context/RemoteDataContext";
+import { toggleWrapper } from "../utils/wrapperAction";
 
 interface GameDetailViewProps {
   game: SteamGame;
@@ -41,6 +42,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const [launchOptionStatus, setLaunchOptionStatus] = useState<string | null>(
     null,
   );
+  const [hasWrapper, setHasWrapper] = useState(false);
 
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
@@ -51,10 +53,18 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const reload = useCallback(() => {
     initializedRef.current = false;
     setLoading(true);
-    call<[number], Record<string, string>>("get_game_profile", game.appid)
-      .then((p) => {
+    Promise.all([
+      call<[number], Record<string, string>>("get_game_profile", game.appid),
+      call<[number, boolean], boolean>(
+        "get_wrapper_status",
+        game.appid,
+        game.is_shortcut,
+      ),
+    ])
+      .then(([p, wrapperSet]) => {
         setProfile(p);
         setDraft(p);
+        setHasWrapper(wrapperSet);
       })
       .finally(() => {
         setLoading(false);
@@ -62,7 +72,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           initializedRef.current = true;
         }, 50);
       });
-  }, [game.appid]);
+  }, [game.appid, game.is_shortcut]);
 
   useEffect(() => {
     reload();
@@ -187,6 +197,19 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               {saving && <span style={{ color: "#666" }}>— {t("saving")}</span>}
             </div>
           </div>
+          <ActionButton
+            onClick={() =>
+              toggleWrapper(game, hasWrapper, t, (nowSet) =>
+                setHasWrapper(nowSet),
+              )
+            }
+            variant={hasWrapper ? "primary" : "primary"}
+          >
+            <FiLink
+              size={14}
+              color={hasWrapper ? "#29b6f6" : "rgba(255,255,255,0.4)"}
+            />
+          </ActionButton>
           <ActionButton onClick={showLog ? () => setShowLog(false) : loadLog}>
             <FiTerminal size={14} />
           </ActionButton>

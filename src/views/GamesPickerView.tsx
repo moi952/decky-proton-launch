@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { SearchField } from "../components/SearchField";
-import { DialogButton, Focusable, ModalRoot, showModal } from "@decky/ui";
+import { Focusable } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameRow } from "../components/GameRow";
@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
 import { SteamGame, ScriptStatus } from "../data/types";
 import { BadgeIcon } from "../components/BadgeIcon";
+import { toggleWrapper } from "../utils/wrapperAction";
 
 export type { SteamGame };
 
@@ -48,39 +49,6 @@ interface ConfiguredAppStatus {
   appid: number;
   has_launch_option: boolean;
 }
-
-interface RestartModalProps {
-  gameName: string;
-  isShortcut: boolean;
-  closeModal: () => void;
-}
-
-const RestartModalContent: React.FC<RestartModalProps> = ({
-  gameName,
-  isShortcut,
-  closeModal,
-}) => {
-  const { t } = useTranslation("game_manager");
-  return (
-    <ModalRoot>
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <div style={{ fontWeight: 600, fontSize: 14 }}>
-          {t("restart_steam_title")}
-        </div>
-        <div style={{ fontSize: 12, color: "#ccc" }}>
-          <span style={{ fontWeight: 500, color: "#fff" }}>{gameName}</span>
-          {" — "}
-          {isShortcut
-            ? t("restart_steam_non_steam_body")
-            : t("restart_steam_body")}
-        </div>
-        <Focusable>
-          <DialogButton onClick={closeModal}>{t("ok")}</DialogButton>
-        </Focusable>
-      </div>
-    </ModalRoot>
-  );
-};
 
 export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   onSelectGame,
@@ -147,43 +115,11 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   };
 
   const handleQuickAdd = useCallback(
-    async (game: SteamGame) => {
+    (game: SteamGame) => {
       const alreadySet = wrapperApps.has(game.appid);
-
-      if (alreadySet) {
-        const ok = await call<[number, boolean], boolean>(
-          "remove_launch_option_only",
-          game.appid,
-          game.is_shortcut,
-        );
-        if (ok) {
-          setWrapperApps((prev) => {
-            const next = new Set(prev);
-            next.delete(game.appid);
-            return next;
-          });
-          // Also update configuredStatus if profile was "ready" → "configured"
-          setConfiguredStatus((prev) => {
-            if (prev.get(game.appid) === "ready") {
-              const next = new Map(prev);
-              next.set(game.appid, "configured");
-              return next;
-            }
-            return prev;
-          });
-          toaster.toast({ title: t("wrapper_removed"), body: game.name });
-        } else {
-          toaster.toast({ title: t("wrapper_error"), body: game.name });
-        }
-      } else {
-        const result = await call<
-          [number, boolean],
-          { success: boolean; needs_restart: boolean }
-        >("add_launch_option", game.appid, game.is_shortcut);
-
-        if (result.success) {
+      toggleWrapper(game, alreadySet, t, (nowSet) => {
+        if (nowSet) {
           setWrapperApps((prev) => new Set([...prev, game.appid]));
-          // If game has a profile, mark it as "ready"
           setConfiguredStatus((prev) => {
             if (prev.has(game.appid)) {
               const next = new Map(prev);
@@ -192,23 +128,22 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
             }
             return prev;
           });
-
-          if (result.needs_restart) {
-            let modal: ReturnType<typeof showModal> | null = null;
-            modal = showModal(
-              <RestartModalContent
-                gameName={game.name}
-                isShortcut={game.is_shortcut}
-                closeModal={() => modal?.Close()}
-              />,
-            );
-          } else {
-            toaster.toast({ title: t("wrapper_added"), body: game.name });
-          }
         } else {
-          toaster.toast({ title: t("wrapper_error"), body: game.name });
+          setWrapperApps((prev) => {
+            const next = new Set(prev);
+            next.delete(game.appid);
+            return next;
+          });
+          setConfiguredStatus((prev) => {
+            if (prev.get(game.appid) === "ready") {
+              const next = new Map(prev);
+              next.set(game.appid, "configured");
+              return next;
+            }
+            return prev;
+          });
         }
-      }
+      });
     },
     [wrapperApps, t],
   );
