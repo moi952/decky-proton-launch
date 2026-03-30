@@ -22,7 +22,10 @@
     "delete": "Supprimer",
     "clean": "Nettoyer",
     "update_available": "↑ v{{version}} disponible — appuyer pour télécharger",
-    "no_data": "Une connexion internet est requise pour charger les variables."
+    "no_data": "Une connexion internet est requise pour charger les variables.",
+    "update_installing": "Mise à jour en cours…",
+    "update_success": "Mis à jour vers v{{version}} — rechargement…",
+    "update_failed": "Échec de la mise à jour"
   },
   "delete_favorite_modal": {
     "title": "Supprimer des favoris",

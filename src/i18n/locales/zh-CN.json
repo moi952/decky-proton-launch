@@ -22,7 +22,10 @@
     "delete": "删除",
     "clean": "清空",
     "update_available": "↑ v{{version}} 可用 — 点击下载",
-    "no_data": "加载变量需要互联网连接。"
+    "no_data": "加载变量需要互联网连接。",
+    "update_installing": "更新中…",
+    "update_success": "已更新至 v{{version}} — 重新加载中…",
+    "update_failed": "更新失败"
   },
   "delete_favorite_modal": {
     "title": "删除收藏",

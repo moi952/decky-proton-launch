@@ -22,7 +22,10 @@
     "delete": "Sil",
     "clean": "Temizle",
     "update_available": "↑ v{{version}} mevcut — indirmek için tıkla",
-    "no_data": "Değişkenleri yüklemek için internet bağlantısı gereklidir."
+    "no_data": "Değişkenleri yüklemek için internet bağlantısı gereklidir.",
+    "update_installing": "Güncelleniyor…",
+    "update_success": "v{{version}} sürümüne güncellendi — yeniden yükleniyor…",
+    "update_failed": "Güncelleme başarısız"
   },
   "delete_favorite_modal": {
     "title": "Favoriyi sil",

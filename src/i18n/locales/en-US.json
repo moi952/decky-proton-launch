@@ -22,7 +22,10 @@
     "delete": "Delete",
     "clean": "Clean",
     "update_available": "↑ v{{version}} available — tap to download",
-    "no_data": "An internet connection is required to load the variables."
+    "no_data": "An internet connection is required to load the variables.",
+    "update_installing": "Updating…",
+    "update_success": "Updated to v{{version}} — reloading…",
+    "update_failed": "Update failed"
   },
   "delete_favorite_modal": {
     "title": "Delete Favorite",

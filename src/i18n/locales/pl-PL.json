@@ -22,7 +22,10 @@
     "delete": "Usuń",
     "clean": "Wyczyść",
     "update_available": "↑ v{{version}} dostępna — naciśnij, aby pobrać",
-    "no_data": "Połączenie z internetem jest wymagane do załadowania zmiennych."
+    "no_data": "Połączenie z internetem jest wymagane do załadowania zmiennych.",
+    "update_installing": "Aktualizowanie…",
+    "update_success": "Zaktualizowano do v{{version}} — ponowne ładowanie…",
+    "update_failed": "Aktualizacja nie powiodła się"
   },
   "delete_favorite_modal": {
     "title": "Usuń ulubione",

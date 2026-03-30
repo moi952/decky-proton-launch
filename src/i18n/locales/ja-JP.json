@@ -22,7 +22,10 @@
     "delete": "削除",
     "clean": "クリア",
     "update_available": "↑ v{{version}} が利用可能 — タップしてダウンロード",
-    "no_data": "変数を読み込むにはインターネット接続が必要です。"
+    "no_data": "変数を読み込むにはインターネット接続が必要です。",
+    "update_installing": "更新中…",
+    "update_success": "v{{version}} に更新しました — 再読み込み中…",
+    "update_failed": "更新に失敗しました"
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",

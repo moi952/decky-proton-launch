@@ -22,7 +22,10 @@
     "delete": "Excluir",
     "clean": "Limpar",
     "update_available": "↑ v{{version}} disponível — toque para baixar",
-    "no_data": "Uma conexão com a internet é necessária para carregar as variáveis."
+    "no_data": "Uma conexão com a internet é necessária para carregar as variáveis.",
+    "update_installing": "Atualizando…",
+    "update_success": "Atualizado para v{{version}} — recarregando…",
+    "update_failed": "Falha na atualização"
   },
   "delete_favorite_modal": {
     "title": "Remover favorito",

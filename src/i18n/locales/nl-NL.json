@@ -22,7 +22,10 @@
     "delete": "Verwijderen",
     "clean": "Wissen",
     "update_available": "↑ v{{version}} beschikbaar — tik om te downloaden",
-    "no_data": "Een internetverbinding is vereist om de variabelen te laden."
+    "no_data": "Een internetverbinding is vereist om de variabelen te laden.",
+    "update_installing": "Bijwerken…",
+    "update_success": "Bijgewerkt naar v{{version}} — herladen…",
+    "update_failed": "Update mislukt"
   },
   "delete_favorite_modal": {
     "title": "Favoriet verwijderen",

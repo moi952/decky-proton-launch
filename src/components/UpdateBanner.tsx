@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DialogButton } from "@decky/ui";
+import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 // @ts-ignore — replaced at build time by rollup with the content of plugin.json
 import manifest from "@decky/manifest";
@@ -8,7 +9,6 @@ const CURRENT_VERSION: string = manifest?.version ?? "0.0.0";
 
 const REPO = "moi952/decky-proton-launch";
 const RELEASES_URL = `https://api.github.com/repos/${REPO}/releases/latest`;
-const RELEASES_PAGE = `https://github.com/${REPO}/releases/latest`;
 
 function semverGt(a: string, b: string): boolean {
   const pa = a.replace(/^v/, "").split(".").map(Number);
@@ -23,6 +23,7 @@ function semverGt(a: string, b: string): boolean {
 export const UpdateBanner: React.FC = () => {
   const { t } = useTranslation("common");
   const [latestVersion, setLatestVersion] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     fetch(RELEASES_URL)
@@ -38,6 +39,30 @@ export const UpdateBanner: React.FC = () => {
 
   if (!latestVersion) return null;
 
+  const handleUpdate = async () => {
+    setUpdating(true);
+    try {
+      const result = await call<[], { success: boolean; version?: string; error?: string }>(
+        "perform_update",
+      );
+      if (result.success) {
+        toaster.toast({
+          title: "Proton Launch",
+          body: t("update_success", { version: result.version }),
+        });
+        setTimeout(() => {
+          (window as any).DeckyPluginLoader?.reloadPlugin?.("decky-proton-launch");
+        }, 1500);
+      } else {
+        toaster.toast({ title: t("update_failed"), body: result.error ?? "unknown error" });
+        setUpdating(false);
+      }
+    } catch (e) {
+      toaster.toast({ title: t("update_failed"), body: String(e) });
+      setUpdating(false);
+    }
+  };
+
   return (
     <div style={{ margin: "0 16px 8px" }}>
       <style>{`
@@ -49,7 +74,7 @@ export const UpdateBanner: React.FC = () => {
       `}</style>
       <DialogButton
         className="plch-update-btn"
-        onClick={() => window.open(RELEASES_PAGE, "_blank")}
+        onClick={updating ? () => {} : handleUpdate}
         style={{
           padding: "6px 10px",
           background: "#1a2a1a",
@@ -61,7 +86,7 @@ export const UpdateBanner: React.FC = () => {
           width: "100%",
         }}
       >
-        {t("update_available", { version: latestVersion })}
+        {updating ? "Updating…" : t("update_available", { version: latestVersion })}
       </DialogButton>
     </div>
   );
