@@ -1,44 +1,7 @@
 {
   "categories": {
-    "upscale": "Upscale",
-    "performance": "Desempenho",
-    "compatibility": "Compatibilidade",
-    "debug": "Debug",
     "favorites": "Favoritos",
-    "custom": "Personalizado",
-    "intel_commands": "Intel",
-    "nvidia_commands": "NVIDIA",
-    "amd_commands": "AMD",
-    "wrappers": "Wrappers"
-  },
-  "variables": {
-    "lsfg": "LSFG (~/lsfg)",
-    "fsr4_upgrade": "FSR4 Upgrade",
-    "fsr4_rdna3_upgrade": "FSR4 RDNA3 Upgrade",
-    "dlss4_upgrade": "DLSS4 Upgrade",
-    "xess_upgrade": "XeSS Upgrade",
-    "dxvk_async": "DXVK Async",
-    "no_esync": "Desativar ESYNC",
-    "no_fsync": "Desativar FSYNC",
-    "radv_perftest": "RADV PerfTest",
-    "radv_perftest_aco": "RADV PerfTest ACO",
-    "radv_perftest_gpl": "RADV PerfTest GPL",
-    "proton_log": "Proton Log",
-    "mangohud": "MangoHud",
-    "fsr_indicator": "Indicador FSR",
-    "dlss_indicator": "Indicador DLSS",
-    "xess_indicator": "Indicador XeSS",
-    "smooth_motion": "Ativar Smooth Motion",
-    "steam_deck": "Modo Steam Deck",
-    "nvidia_gpu_masking": "Mascaramento GPU NVIDIA",
-    "wined3d": "WineD3D",
-    "ntsync": "NTSync",
-    "nvapi": "NVAPI",
-    "hdr_wsi": "HDR WSI",
-    "hdr": "HDR",
-    "enable_prefix": "Ativar",
-    "disable_prefix": "Desativar",
-    "fgmod": "fgmod (~/fgmod/fgmod)"
+    "custom": "Personalizado"
   },
   "common": {
     "selected": "Selecionado",
@@ -58,7 +21,8 @@
     "create": "Criar",
     "delete": "Eliminar",
     "clean": "Limpar",
-    "update_available": "↑ v{{version}} disponível — toque para transferir"
+    "update_available": "↑ v{{version}} disponível — toque para transferir",
+    "no_data": "É necessária uma ligação à internet para carregar as variáveis."
   },
   "delete_favorite_modal": {
     "title": "Remover favorito",

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import variablesData from "../data/variables.json";
 import { CategorySection } from "../components/CategorySection";
 import { BottomBar } from "../components/BottomBar";
 import { CustomVariableSection } from "../components/CustomVariableSection";
@@ -7,10 +6,12 @@ import { FavoriteSection } from "../components/FavoriteSection";
 import { Variable } from "../data/types";
 import { SearchField } from "../components/SearchField";
 import { useSettings } from "../context/SettingsContext";
+import { useRemoteData } from "../context/RemoteDataContext";
 
 const HomeView: React.FC = () => {
   const [search, setSearch] = useState("");
   const { isCategoryVisible } = useSettings();
+  const { variables: variablesData } = useRemoteData();
 
   return (
     <div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   definePlugin,
   addEventListener,
@@ -15,6 +16,7 @@ import { SettingsView } from "./views/SettingsView";
 import { GamesPickerView } from "./views/GamesPickerView";
 import { GameDetailView } from "./views/GameDetailView";
 import { useSettings } from "./context/SettingsContext";
+import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
 import { NowPlayingCard } from "./components/NowPlayingCard";
 import { UpdateBanner } from "./components/UpdateBanner";
@@ -33,6 +35,8 @@ const getInitialView = (): View => {
 
 const App: React.FC = () => {
   const { defaultHome } = useSettings();
+  const { noData } = useRemoteData();
+  const { t } = useTranslation();
   const [view, setView] = useState<View>(getInitialView);
   const [selectedGame, setSelectedGame] = useState<SteamGame | null>(null);
   const [runningGame, setRunningGame] = useState<SteamGame | null>(null);
@@ -82,6 +86,11 @@ const App: React.FC = () => {
         onSettings={() => setView("settings")}
       />
       <UpdateBanner />
+      {noData && (
+        <div style={{ margin: "4px 16px 0", padding: "6px 10px", background: "#3a0000", border: "1px solid #c00", borderRadius: "6px", fontSize: 11, color: "#ff6b6b" }}>
+          {t("no_data")}
+        </div>
+      )}
 
       {runningGame && (
         <NowPlayingCard

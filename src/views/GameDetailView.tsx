@@ -11,10 +11,10 @@ import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
 import { FiArrowLeft, FiExternalLink, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
-import variablesData from "../data/variables.json";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
+import { useRemoteData } from "../context/RemoteDataContext";
 
 interface GameDetailViewProps {
   game: SteamGame;
@@ -30,6 +30,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCat } = useTranslation("categories");
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
+  const { variables: variablesData } = useRemoteData();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -196,13 +197,30 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       {showLog && (
         <PanelSection title="Debug">
           <PanelSectionRow>
-            <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: "#aaa",
+                marginBottom: 4,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <div>
                 <span style={{ color: "#666" }}>AppId: </span>
-                <span style={{ color: "#fff", fontFamily: "monospace" }}>{game.appid}</span>
-                <span style={{ color: "#555", marginLeft: 8 }}>({game.is_shortcut ? "shortcut" : "steam"})</span>
+                <span style={{ color: "#fff", fontFamily: "monospace" }}>
+                  {game.appid}
+                </span>
+                <span style={{ color: "#555", marginLeft: 8 }}>
+                  ({game.is_shortcut ? "shortcut" : "steam"})
+                </span>
               </div>
-              <ActionButton onClick={() => window.open(`steam://nav/games/details/${game.appid}`)}>
+              <ActionButton
+                onClick={() =>
+                  window.open(`steam://nav/games/details/${game.appid}`)
+                }
+              >
                 <FiExternalLink size={12} />
               </ActionButton>
             </div>
@@ -384,6 +402,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             <ActionButton
               variant="danger"
               onClick={saving ? () => {} : deleteProfile}
+              width="100%"
             >
               {t("delete_profile")}
             </ActionButton>
