@@ -27,7 +27,7 @@ type RemoteData = {
 
 interface RemoteDataContextValue {
   variables: VariableCategory[];
-  noData: boolean; // true when cache empty AND fetch failed/empty
+  noData: boolean;
   refresh: () => void;
 }
 

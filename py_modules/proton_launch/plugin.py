@@ -12,6 +12,7 @@ from .image import is_horizontal
 from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_shortcuts_paths, get_shortcut_name
 from .profile import profiles_dir, script_path, profile_path, chown_to_user, write_profile, read_profile
 from .launch_option import LAUNCH_OPTION, set_launch_option, remove_launch_option, get_status
+from .updater import perform_update as _perform_update
 
 
 class Plugin:
@@ -510,6 +511,11 @@ class Plugin:
         except Exception as e:
             decky.logger.error(f"[clear_variables_cache] {e}")
             return False
+
+    # ── Self-update ─────────────────────────────────────────────────────────────
+
+    async def perform_update(self) -> Dict[str, Any]:
+        return await _perform_update()
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────
 
