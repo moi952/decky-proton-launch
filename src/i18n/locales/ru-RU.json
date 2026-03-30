@@ -105,9 +105,20 @@
     "saving": "сохранение...",
     "error_save": "Ошибка сохранения",
     "configured": "настроено",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Профиль активен · wrapper установлен",
+    "legend_configured": "Профиль активен · wrapper отсутствует",
     "script_outdated": "Требуется обновление скрипта. Переустановите для применения изменений.",
-    "reinstall_script": "Переустановить скрипт"
+    "reinstall_script": "Переустановить скрипт",
+    "add_wrapper": "Добавить wrapper",
+    "remove_wrapper": "Удалить wrapper",
+    "wrapper_added": "Wrapper добавлен",
+    "wrapper_removed": "Wrapper удалён",
+    "wrapper_error": "Ошибка обновления wrapper",
+    "legend_wrapper": "Без профиля · wrapper активен",
+    "restart_steam_title": "Перезапустить Steam",
+    "restart_steam_body": "Параметры запуска обновлены. Перезапустите Steam для применения изменений.",
+    "restart_steam_non_steam_body": "Перезапустите Steam для применения изменений.",
+    "ok": "Понятно",
+    "restart_steam_btn": "Перезапустить Steam"
   }
 }

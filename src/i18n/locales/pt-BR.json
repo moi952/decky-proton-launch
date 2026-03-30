@@ -105,9 +105,20 @@
     "saving": "salvando...",
     "error_save": "Erro ao salvar",
     "configured": "configurados",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Perfil ativo · wrapper instalado",
+    "legend_configured": "Perfil ativo · wrapper ausente",
     "script_outdated": "Atualização do script necessária. Reinstale para aplicar as alterações.",
-    "reinstall_script": "Reinstalar script"
+    "reinstall_script": "Reinstalar script",
+    "add_wrapper": "Adicionar wrapper",
+    "remove_wrapper": "Remover wrapper",
+    "wrapper_added": "Wrapper adicionado",
+    "wrapper_removed": "Wrapper removido",
+    "wrapper_error": "Erro ao atualizar wrapper",
+    "legend_wrapper": "Sem perfil · wrapper ativo",
+    "restart_steam_title": "Reiniciar Steam",
+    "restart_steam_body": "Opções de lançamento atualizadas. Reinicie o Steam para aplicar as alterações.",
+    "restart_steam_non_steam_body": "Reinicie o Steam para que as alterações entrem em vigor.",
+    "ok": "Entendido",
+    "restart_steam_btn": "Reiniciar Steam"
   }
 }

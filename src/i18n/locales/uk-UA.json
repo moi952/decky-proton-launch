@@ -105,9 +105,20 @@
     "saving": "збереження...",
     "error_save": "Помилка збереження",
     "configured": "налаштовано",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Профіль активний · wrapper встановлено",
+    "legend_configured": "Профіль активний · wrapper відсутній",
     "script_outdated": "Потрібне оновлення скрипту. Перевстановіть для застосування змін.",
-    "reinstall_script": "Перевстановити скрипт"
+    "reinstall_script": "Перевстановити скрипт",
+    "add_wrapper": "Додати wrapper",
+    "remove_wrapper": "Видалити wrapper",
+    "wrapper_added": "Wrapper додано",
+    "wrapper_removed": "Wrapper видалено",
+    "wrapper_error": "Помилка оновлення wrapper",
+    "legend_wrapper": "Без профілю · wrapper активний",
+    "restart_steam_title": "Перезапустити Steam",
+    "restart_steam_body": "Параметри запуску оновлено. Перезапустіть Steam для застосування змін.",
+    "restart_steam_non_steam_body": "Перезапустіть Steam для застосування змін.",
+    "ok": "Зрозуміло",
+    "restart_steam_btn": "Перезапустити Steam"
   }
 }

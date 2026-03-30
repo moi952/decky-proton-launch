@@ -9,7 +9,7 @@ import { FaCircleNotch, FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
 import { SteamGame, ScriptStatus } from "../data/types";
-import { BadgeIcon } from "../components/BadgeIcon";
+
 import { toggleWrapper } from "../utils/wrapperAction";
 
 export type { SteamGame };
@@ -333,7 +333,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                   lineHeight: "1.3",
                 }}
               >
-                <BadgeIcon icon={FiLink} color="#29b6f6" size={7} />
+                <FiLink size={7} color="#29b6f6" />
                 <span>{t("legend_wrapper")}</span>
               </div>
             </div>

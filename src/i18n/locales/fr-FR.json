@@ -114,7 +114,7 @@
     "wrapper_added": "Wrapper ajouté",
     "wrapper_removed": "Wrapper retiré",
     "wrapper_error": "Impossible de mettre à jour le wrapper",
-    "legend_wrapper": "Wrapper actif · sans profil",
+    "legend_wrapper": "Sans profil · wrapper actif",
     "restart_steam_title": "Redémarrer Steam",
     "restart_steam_body": "Options de lancement mises à jour. Redémarrez Steam pour que les changements prennent effet.",
     "restart_steam_non_steam_body": "Pour les raccourcis non-Steam, redémarrez Steam pour que les changements prennent effet.",

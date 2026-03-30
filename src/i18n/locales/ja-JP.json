@@ -105,9 +105,20 @@
     "saving": "保存中...",
     "error_save": "保存エラー",
     "configured": "設定済み",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "プロファイル有効 · wrapper インストール済",
+    "legend_configured": "プロファイル有効 · wrapper 未インストール",
     "script_outdated": "スクリプトの更新が必要です。変更を適用するには再インストールしてください。",
-    "reinstall_script": "スクリプトを再インストール"
+    "reinstall_script": "スクリプトを再インストール",
+    "add_wrapper": "Wrapperを追加",
+    "remove_wrapper": "Wrapperを削除",
+    "wrapper_added": "Wrapperを追加しました",
+    "wrapper_removed": "Wrapperを削除しました",
+    "wrapper_error": "Wrapperの更新に失敗しました",
+    "legend_wrapper": "プロファイルなし · wrapper有効",
+    "restart_steam_title": "Steamを再起動",
+    "restart_steam_body": "起動オプションを更新しました。変更を反映するにはSteamを再起動してください。",
+    "restart_steam_non_steam_body": "変更を反映するにはSteamを再起動してください。",
+    "ok": "わかりました",
+    "restart_steam_btn": "Steamを再起動"
   }
 }

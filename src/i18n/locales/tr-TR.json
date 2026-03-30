@@ -103,9 +103,20 @@
     "delete_profile": "Profili sil",
     "profile_deleted": "Profil silindi",
     "error_save": "Kaydetme hatası",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Aktif profil · wrapper kurulu",
+    "legend_configured": "Aktif profil · wrapper yok",
     "script_outdated": "Komut dosyası güncellemesi gerekiyor. Değişiklikleri uygulamak için yeniden yükleyin.",
-    "reinstall_script": "Komut dosyasını yeniden yükle"
+    "reinstall_script": "Komut dosyasını yeniden yükle",
+    "add_wrapper": "Wrapper ekle",
+    "remove_wrapper": "Wrapper kaldır",
+    "wrapper_added": "Wrapper eklendi",
+    "wrapper_removed": "Wrapper kaldırıldı",
+    "wrapper_error": "Wrapper güncellenemedi",
+    "legend_wrapper": "Profil yok · wrapper aktif",
+    "restart_steam_title": "Steam'i yeniden başlat",
+    "restart_steam_body": "Başlatma seçenekleri güncellendi. Değişiklikleri uygulamak için Steam'i yeniden başlatın.",
+    "restart_steam_non_steam_body": "Değişikliklerin geçerli olması için Steam'i yeniden başlatın.",
+    "ok": "Tamam",
+    "restart_steam_btn": "Steam'i yeniden başlat"
   }
 }

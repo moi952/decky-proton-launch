@@ -413,17 +413,6 @@ class Plugin:
             decky.logger.error(f"[get_wrapper_status] {app_id}: {e}")
             return False
 
-    async def restart_steam(self) -> bool:
-        """Send SIGTERM to Steam so it exits cleanly (gaming mode auto-restarts it)."""
-        try:
-            import subprocess
-            subprocess.Popen(["pkill", "-15", "steam"])
-            decky.logger.info("[restart_steam] SIGTERM sent to steam")
-            return True
-        except Exception as e:
-            decky.logger.error(f"[restart_steam] {e}")
-            return False
-
     # ── Running game ────────────────────────────────────────────────────────────
 
     async def get_running_game(self) -> Dict[str, Any]:

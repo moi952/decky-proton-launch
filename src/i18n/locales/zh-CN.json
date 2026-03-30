@@ -105,9 +105,20 @@
     "saving": "保存中...",
     "error_save": "保存错误",
     "configured": "已配置",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "配置文件激活 · wrapper 已安装",
+    "legend_configured": "配置文件激活 · wrapper 未安装",
     "script_outdated": "需要更新脚本。请重新安装以应用更改。",
-    "reinstall_script": "重新安装脚本"
+    "reinstall_script": "重新安装脚本",
+    "add_wrapper": "添加 Wrapper",
+    "remove_wrapper": "移除 Wrapper",
+    "wrapper_added": "Wrapper 已添加",
+    "wrapper_removed": "Wrapper 已移除",
+    "wrapper_error": "更新 Wrapper 失败",
+    "legend_wrapper": "无配置文件 · wrapper 已激活",
+    "restart_steam_title": "重启 Steam",
+    "restart_steam_body": "启动选项已更新。请重启 Steam 以应用更改。",
+    "restart_steam_non_steam_body": "请重启 Steam 以应用更改。",
+    "ok": "知道了",
+    "restart_steam_btn": "重启 Steam"
   }
 }
