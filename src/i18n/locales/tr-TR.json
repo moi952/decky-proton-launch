@@ -117,6 +117,9 @@
     "restart_steam_body": "Başlatma seçenekleri güncellendi. Değişiklikleri uygulamak için Steam'i yeniden başlatın.",
     "restart_steam_non_steam_body": "Değişikliklerin geçerli olması için Steam'i yeniden başlatın.",
     "ok": "Tamam",
-    "restart_steam_btn": "Steam'i yeniden başlat"
+    "restart_steam_btn": "Steam'i yeniden başlat",
+    "delete_wrapper_title": "Wrapper'ı kaldır",
+    "delete_wrapper_description": "{{game_name}} için wrapper kaldırılsın mı?",
+    "delete_wrapper_confirm": "Kaldır"
   }
 }

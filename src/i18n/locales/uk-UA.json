@@ -119,6 +119,9 @@
     "restart_steam_body": "Параметри запуску оновлено. Перезапустіть Steam для застосування змін.",
     "restart_steam_non_steam_body": "Перезапустіть Steam для застосування змін.",
     "ok": "Зрозуміло",
-    "restart_steam_btn": "Перезапустити Steam"
+    "restart_steam_btn": "Перезапустити Steam",
+    "delete_wrapper_title": "Видалити wrapper",
+    "delete_wrapper_description": "Видалити wrapper з {{game_name}}?",
+    "delete_wrapper_confirm": "Видалити"
   }
 }

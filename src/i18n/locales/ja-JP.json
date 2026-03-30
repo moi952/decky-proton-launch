@@ -119,6 +119,9 @@
     "restart_steam_body": "起動オプションを更新しました。変更を反映するにはSteamを再起動してください。",
     "restart_steam_non_steam_body": "変更を反映するにはSteamを再起動してください。",
     "ok": "わかりました",
-    "restart_steam_btn": "Steamを再起動"
+    "restart_steam_btn": "Steamを再起動",
+    "delete_wrapper_title": "Wrapperを削除",
+    "delete_wrapper_description": "{{game_name}}のWrapperを削除しますか？",
+    "delete_wrapper_confirm": "削除"
   }
 }

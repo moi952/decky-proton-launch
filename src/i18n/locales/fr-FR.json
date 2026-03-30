@@ -119,6 +119,9 @@
     "restart_steam_body": "Options de lancement mises à jour. Redémarrez Steam pour que les changements prennent effet.",
     "restart_steam_non_steam_body": "Pour les raccourcis non-Steam, redémarrez Steam pour que les changements prennent effet.",
     "ok": "Compris",
-    "restart_steam_btn": "Redémarrer Steam"
+    "restart_steam_btn": "Redémarrer Steam",
+    "delete_wrapper_title": "Supprimer le wrapper",
+    "delete_wrapper_description": "Retirer le wrapper de {{game_name}} ?",
+    "delete_wrapper_confirm": "Supprimer"
   }
 }

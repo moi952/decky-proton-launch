@@ -119,6 +119,9 @@
     "restart_steam_body": "Startopties bijgewerkt. Herstart Steam om de wijzigingen toe te passen.",
     "restart_steam_non_steam_body": "Herstart Steam om de wijzigingen toe te passen.",
     "ok": "Begrepen",
-    "restart_steam_btn": "Steam herstarten"
+    "restart_steam_btn": "Steam herstarten",
+    "delete_wrapper_title": "Wrapper verwijderen",
+    "delete_wrapper_description": "Wrapper voor {{game_name}} verwijderen?",
+    "delete_wrapper_confirm": "Verwijderen"
   }
 }

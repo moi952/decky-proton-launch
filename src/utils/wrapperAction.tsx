@@ -1,8 +1,9 @@
 import React from "react";
-import { ConfirmModal, showModal } from "@decky/ui";
+import { ConfirmModal, Focusable, ModalRoot, showModal } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { SteamGame } from "../data/types";
+import { ActionButton } from "../components/ActionButton";
 
 declare const SteamClient: any;
 
@@ -26,10 +27,14 @@ async function getAppLaunchOptions(appId: number): Promise<string> {
 
 // ── Restart modal (non-Steam shortcuts only) ──────────────────────────────────
 
-const RestartModalContent: React.FC<{ game: SteamGame }> = ({ game }) => {
+const RestartModalContent: React.FC<{
+  game: SteamGame;
+  closeModal?: () => void;
+}> = ({ game, closeModal }) => {
   const { t } = useTranslation("game_manager");
   return (
     <ConfirmModal
+      closeModal={closeModal}
       strTitle={t("restart_steam_title")}
       strDescription={`${game.name} — ${t("restart_steam_non_steam_body")}`}
       strOKButtonText={t("restart_steam_btn")}
@@ -43,6 +48,80 @@ export function openRestartModal(game: SteamGame): void {
   showModal(<RestartModalContent game={game} />);
 }
 
+// ── Delete wrapper confirmation modal ─────────────────────────────────────────
+
+const DeleteWrapperModal: React.FC<{
+  game: SteamGame;
+  onConfirm: () => void;
+  closeModal?: () => void;
+}> = ({ game, onConfirm, closeModal }) => {
+  const { t } = useTranslation("game_manager");
+  const { t: tCommon } = useTranslation("common");
+  return (
+    <ModalRoot closeModal={closeModal}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ fontWeight: 600, fontSize: 14 }}>
+          {t("delete_wrapper_title")}
+        </div>
+        <div style={{ fontSize: 12, color: "#ccc" }}>
+          {t("delete_wrapper_description", { game_name: game.name })}
+        </div>
+        <Focusable
+          flow-children="horizontal"
+          style={{ display: "flex", gap: "8px" }}
+        >
+          <ActionButton onClick={() => closeModal?.()} width="100%">
+            {tCommon("cancel")}
+          </ActionButton>
+          <ActionButton
+            variant="danger"
+            onClick={() => {
+              closeModal?.();
+              onConfirm();
+            }}
+            width="100%"
+          >
+            {t("delete_wrapper_confirm")}
+          </ActionButton>
+        </Focusable>
+      </div>
+    </ModalRoot>
+  );
+};
+
+// ── Wrapper remove (called after confirmation) ────────────────────────────────
+
+async function doRemoveWrapper(
+  game: SteamGame,
+  t: (key: string) => string,
+  onSuccess: (nowSet: boolean) => void,
+): Promise<void> {
+  try {
+    if (!game.is_shortcut) {
+      const current = await getAppLaunchOptions(game.appid);
+      const newOptions = current.replace(LAUNCH_OPTION, "").trim();
+      await SteamClient.Apps.SetAppLaunchOptions(game.appid, newOptions);
+      onSuccess(false);
+      toaster.toast({ title: t("wrapper_removed"), body: game.name });
+    } else {
+      const ok = await call<[number, boolean], boolean>(
+        "remove_launch_option_only",
+        game.appid,
+        true,
+      );
+      if (ok) {
+        onSuccess(false);
+        toaster.toast({ title: t("wrapper_removed"), body: game.name });
+        openRestartModal(game);
+      } else {
+        toaster.toast({ title: t("wrapper_error"), body: game.name });
+      }
+    }
+  } catch {
+    toaster.toast({ title: t("wrapper_error"), body: game.name });
+  }
+}
+
 // ── Wrapper toggle ────────────────────────────────────────────────────────────
 
 export async function toggleWrapper(
@@ -51,58 +130,41 @@ export async function toggleWrapper(
   t: (key: string) => string,
   onSuccess: (nowSet: boolean) => void,
 ): Promise<void> {
+  if (isCurrentlySet) {
+    showModal(
+      <DeleteWrapperModal
+        game={game}
+        onConfirm={() => doRemoveWrapper(game, t, onSuccess)}
+      />,
+    );
+    return;
+  }
+
   try {
     if (!game.is_shortcut) {
-      // ── Steam game: SteamClient API, change is immediate, no restart needed ──
       const current = await getAppLaunchOptions(game.appid);
       let newOptions: string;
-
-      if (isCurrentlySet) {
-        newOptions = current.replace(LAUNCH_OPTION, "").trim();
+      if (current.includes("%command%")) {
+        newOptions = current.replace("%command%", LAUNCH_OPTION);
+      } else if (current.trim()) {
+        newOptions = `${LAUNCH_OPTION} ${current.trim()}`;
       } else {
-        if (current.includes("%command%")) {
-          newOptions = current.replace("%command%", LAUNCH_OPTION);
-        } else if (current.trim()) {
-          newOptions = `${LAUNCH_OPTION} ${current.trim()}`;
-        } else {
-          newOptions = LAUNCH_OPTION;
-        }
+        newOptions = LAUNCH_OPTION;
       }
-
       await SteamClient.Apps.SetAppLaunchOptions(game.appid, newOptions);
-      onSuccess(!isCurrentlySet);
-      toaster.toast({
-        title: isCurrentlySet ? t("wrapper_removed") : t("wrapper_added"),
-        body: game.name,
-      });
+      onSuccess(true);
+      toaster.toast({ title: t("wrapper_added"), body: game.name });
     } else {
-      // ── Non-Steam shortcut: Python backend + restart required ─────────────────
-      if (isCurrentlySet) {
-        const ok = await call<[number, boolean], boolean>(
-          "remove_launch_option_only",
-          game.appid,
-          true,
-        );
-        if (ok) {
-          onSuccess(false);
-          toaster.toast({ title: t("wrapper_removed"), body: game.name });
-          openRestartModal(game);
-        } else {
-          toaster.toast({ title: t("wrapper_error"), body: game.name });
-        }
+      const result = await call<
+        [number, boolean],
+        { success: boolean; needs_restart: boolean }
+      >("add_launch_option", game.appid, true);
+      if (result.success) {
+        onSuccess(true);
+        toaster.toast({ title: t("wrapper_added"), body: game.name });
+        openRestartModal(game);
       } else {
-        const result = await call<
-          [number, boolean],
-          { success: boolean; needs_restart: boolean }
-        >("add_launch_option", game.appid, true);
-
-        if (result.success) {
-          onSuccess(true);
-          toaster.toast({ title: t("wrapper_added"), body: game.name });
-          openRestartModal(game);
-        } else {
-          toaster.toast({ title: t("wrapper_error"), body: game.name });
-        }
+        toaster.toast({ title: t("wrapper_error"), body: game.name });
       }
     }
   } catch {

@@ -119,6 +119,9 @@
     "restart_steam_body": "Opciones de lanzamiento actualizadas. Reinicia Steam para aplicar los cambios.",
     "restart_steam_non_steam_body": "Reinicia Steam para que los cambios surtan efecto.",
     "ok": "Entendido",
-    "restart_steam_btn": "Reiniciar Steam"
+    "restart_steam_btn": "Reiniciar Steam",
+    "delete_wrapper_title": "Quitar wrapper",
+    "delete_wrapper_description": "¿Quitar el wrapper de {{game_name}}?",
+    "delete_wrapper_confirm": "Quitar"
   }
 }

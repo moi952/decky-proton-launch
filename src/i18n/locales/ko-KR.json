@@ -119,6 +119,9 @@
     "restart_steam_body": "실행 옵션이 업데이트되었습니다. 변경 사항을 적용하려면 Steam을 재시작하세요.",
     "restart_steam_non_steam_body": "변경 사항을 적용하려면 Steam을 재시작하세요.",
     "ok": "확인",
-    "restart_steam_btn": "Steam 재시작"
+    "restart_steam_btn": "Steam 재시작",
+    "delete_wrapper_title": "Wrapper 제거",
+    "delete_wrapper_description": "{{game_name}}에서 Wrapper를 제거하시겠습니까?",
+    "delete_wrapper_confirm": "제거"
   }
 }

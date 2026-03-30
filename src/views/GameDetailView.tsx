@@ -49,7 +49,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
   const profileRef = useRef(profile);
-  const variablesSectionRef = useRef<HTMLDivElement>(null);
+  const wrapperSectionRef = useRef<HTMLDivElement>(null);
   profileRef.current = profile;
 
   const reload = useCallback(() => {
@@ -81,8 +81,8 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   }, [reload]);
 
   useEffect(() => {
-    if (!loading && variablesSectionRef.current) {
-      const first = variablesSectionRef.current.querySelector(
+    if (!loading && wrapperSectionRef.current) {
+      const first = wrapperSectionRef.current.querySelector(
         "button",
       ) as HTMLElement | null;
       first?.focus();
@@ -212,6 +212,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       </PanelSection>
 
       {/* Wrapper + product page actions */}
+      <div ref={wrapperSectionRef}>
       <PanelSection>
         <Focusable
           style={{ display: "flex", gap: "8px" }}
@@ -239,6 +240,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           </ActionButton>
         </Focusable>
       </PanelSection>
+      </div>
 
       {/* Debug log viewer */}
       {showLog && (
@@ -302,7 +304,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           </PanelSectionRow>
         </PanelSection>
       ) : (
-        <div ref={variablesSectionRef}>
+        <div>
           {variablesData
             .filter((cat) => isCategoryVisible(cat.category))
             .map((cat) => (

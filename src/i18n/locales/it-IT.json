@@ -119,6 +119,9 @@
     "restart_steam_body": "Opzioni di avvio aggiornate. Riavvia Steam per applicare le modifiche.",
     "restart_steam_non_steam_body": "Riavvia Steam per applicare le modifiche.",
     "ok": "Capito",
-    "restart_steam_btn": "Riavvia Steam"
+    "restart_steam_btn": "Riavvia Steam",
+    "delete_wrapper_title": "Rimuovi wrapper",
+    "delete_wrapper_description": "Rimuovere il wrapper da {{game_name}}?",
+    "delete_wrapper_confirm": "Rimuovi"
   }
 }

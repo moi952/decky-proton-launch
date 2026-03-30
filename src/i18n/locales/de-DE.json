@@ -119,6 +119,9 @@
     "restart_steam_body": "Startoptionen aktualisiert. Starte Steam neu, damit die Änderungen wirksam werden.",
     "restart_steam_non_steam_body": "Starte Steam neu, damit die Änderungen wirksam werden.",
     "ok": "Verstanden",
-    "restart_steam_btn": "Steam neu starten"
+    "restart_steam_btn": "Steam neu starten",
+    "delete_wrapper_title": "Wrapper entfernen",
+    "delete_wrapper_description": "Wrapper für {{game_name}} entfernen?",
+    "delete_wrapper_confirm": "Entfernen"
   }
 }
