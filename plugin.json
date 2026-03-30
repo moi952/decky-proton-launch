@@ -1,18 +1,11 @@
 {
   "name": "Decky proton launch",
   "author": "moi952",
-  "version": "0.8.0",
-  "flags": [
-    "debug",
-    "_root"
-  ],
+  "version": "0.1.0",
+  "flags": ["debug", "_root"],
   "api_version": 1,
   "publish": {
-    "tags": [
-      "proton",
-      "launch",
-      "command"
-    ],
+    "tags": ["proton", "launch", "command"],
     "description": "Manage Proton launch options easily on Steam",
     "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/favorite_shortcuts.JPG"
   }
