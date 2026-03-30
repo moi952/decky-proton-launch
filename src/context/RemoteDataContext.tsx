@@ -28,11 +28,13 @@ type RemoteData = {
 interface RemoteDataContextValue {
   variables: VariableCategory[];
   noData: boolean; // true when cache empty AND fetch failed/empty
+  refresh: () => void;
 }
 
 const RemoteDataContext = createContext<RemoteDataContextValue>({
   variables: [],
   noData: false,
+  refresh: () => {},
 });
 
 export const useRemoteData = () => useContext(RemoteDataContext);
@@ -64,6 +66,38 @@ const applyData = (
   if (localeData) injectTranslations(lang, localeData);
 };
 
+const loadData = (
+  setVariables: (v: VariableCategory[]) => void,
+  setNoData: (v: boolean) => void,
+) => {
+  let hasData = false;
+
+  const cachePromise = call<[], Record<string, any>>("get_variables_cache").then((cached) => {
+    if (cached && (cached as RemoteData).variables?.length) {
+      hasData = true;
+      applyData(cached as RemoteData, setVariables);
+    }
+  });
+
+  cachePromise.finally(() => {
+    fetch(DATA_URL)
+      .then((r) => r.json())
+      .then((data: RemoteData) => {
+        if (!data?.variables?.length) {
+          if (!hasData) setNoData(true);
+          return;
+        }
+        hasData = true;
+        setNoData(false);
+        applyData(data, setVariables);
+        call<[Record<string, any>], boolean>("set_variables_cache", data);
+      })
+      .catch(() => {
+        if (!hasData) setNoData(true);
+      });
+  });
+};
+
 export const RemoteDataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -71,38 +105,18 @@ export const RemoteDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [noData, setNoData] = useState(false);
 
   useEffect(() => {
-    let hasData = false;
-
-    // 1. Load from disk cache immediately
-    const cachePromise = call<[], Record<string, any>>("get_variables_cache").then((cached) => {
-      if (cached && (cached as RemoteData).variables?.length) {
-        hasData = true;
-        applyData(cached as RemoteData, setVariables);
-      }
-    });
-
-    // 2. Fetch remote in background — wait for cache first to avoid flicker
-    cachePromise.finally(() => {
-      fetch(DATA_URL)
-        .then((r) => r.json())
-        .then((data: RemoteData) => {
-          if (!data?.variables?.length) {
-            if (!hasData) setNoData(true);
-            return;
-          }
-          hasData = true;
-          setNoData(false);
-          applyData(data, setVariables);
-          call<[Record<string, any>], boolean>("set_variables_cache", data);
-        })
-        .catch(() => {
-          if (!hasData) setNoData(true);
-        });
-    });
+    loadData(setVariables, setNoData);
   }, []);
 
+  const refresh = () => {
+    call<[], boolean>("clear_variables_cache").catch(() => {});
+    setVariables([]);
+    setNoData(false);
+    loadData(setVariables, setNoData);
+  };
+
   return (
-    <RemoteDataContext.Provider value={{ variables, noData }}>
+    <RemoteDataContext.Provider value={{ variables, noData, refresh }}>
       {children}
     </RemoteDataContext.Provider>
   );

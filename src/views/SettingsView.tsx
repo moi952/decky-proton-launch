@@ -9,7 +9,7 @@ import {
 import { call } from "@decky/api";
 import { useSettings } from "../context/SettingsContext";
 import { useTranslation } from "react-i18next";
-import { FiArrowLeft } from "react-icons/fi";
+import { FiArrowLeft, FiRefreshCw } from "react-icons/fi";
 import { ActionButton } from "../components/ActionButton";
 import { useRemoteData } from "../context/RemoteDataContext";
 
@@ -22,7 +22,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
-  const { variables: variablesData } = useRemoteData();
+  const { variables: variablesData, refresh } = useRemoteData();
   const [cachePath, setCachePath] = React.useState<string>("");
 
   React.useEffect(() => {
@@ -74,7 +74,21 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
       {cachePath && (
         <PanelSection title="Data">
           <PanelSectionRow>
-            <div style={{ fontSize: 9, color: "#555", fontFamily: "monospace", wordBreak: "break-all", lineHeight: "1.4" }}>
+            <ActionButton onClick={refresh} width="100%">
+              <FiRefreshCw size={14} style={{ marginRight: 6 }} />
+              Force refresh
+            </ActionButton>
+          </PanelSectionRow>
+          <PanelSectionRow>
+            <div
+              style={{
+                fontSize: 9,
+                color: "#555",
+                fontFamily: "monospace",
+                wordBreak: "break-all",
+                lineHeight: "1.4",
+              }}
+            >
               {cachePath}
             </div>
           </PanelSectionRow>

@@ -197,13 +197,30 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       {showLog && (
         <PanelSection title="Debug">
           <PanelSectionRow>
-            <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: "#aaa",
+                marginBottom: 4,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <div>
                 <span style={{ color: "#666" }}>AppId: </span>
-                <span style={{ color: "#fff", fontFamily: "monospace" }}>{game.appid}</span>
-                <span style={{ color: "#555", marginLeft: 8 }}>({game.is_shortcut ? "shortcut" : "steam"})</span>
+                <span style={{ color: "#fff", fontFamily: "monospace" }}>
+                  {game.appid}
+                </span>
+                <span style={{ color: "#555", marginLeft: 8 }}>
+                  ({game.is_shortcut ? "shortcut" : "steam"})
+                </span>
               </div>
-              <ActionButton onClick={() => window.open(`steam://nav/games/details/${game.appid}`)}>
+              <ActionButton
+                onClick={() =>
+                  window.open(`steam://nav/games/details/${game.appid}`)
+                }
+              >
                 <FiExternalLink size={12} />
               </ActionButton>
             </div>
@@ -385,6 +402,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             <ActionButton
               variant="danger"
               onClick={saving ? () => {} : deleteProfile}
+              width="100%"
             >
               {t("delete_profile")}
             </ActionButton>
