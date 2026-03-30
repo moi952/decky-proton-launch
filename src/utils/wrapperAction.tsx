@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogButton, Focusable, ModalRoot, showModal } from "@decky/ui";
+import { ConfirmModal, showModal } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { SteamGame } from "../data/types";
@@ -26,64 +26,21 @@ async function getAppLaunchOptions(appId: number): Promise<string> {
 
 // ── Restart modal (non-Steam shortcuts only) ──────────────────────────────────
 
-interface RestartModalProps {
-  game: SteamGame;
-  closeModal: () => void;
-}
-
-const RestartModalContent: React.FC<RestartModalProps> = ({
-  game,
-  closeModal,
-}) => {
+const RestartModalContent: React.FC<{ game: SteamGame }> = ({ game }) => {
   const { t } = useTranslation("game_manager");
-
-  const handleRestart = () => {
-    closeModal();
-    SteamClient.User.StartRestart(false);
-  };
-
   return (
-    <>
-      <style>{`
-        .plch-restart-btn { background-color: #1a9fff !important; color: #fff !important; }
-        .plch-restart-btn:focus, .plch-restart-btn:hover { color: #1a9fff !important; background-color: #fff !important; }
-      `}</style>
-      <ModalRoot>
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <div style={{ fontWeight: 600, fontSize: 14 }}>
-            {t("restart_steam_title")}
-          </div>
-          <div style={{ fontSize: 12, color: "#ccc" }}>
-            <span style={{ fontWeight: 500, color: "#fff" }}>{game.name}</span>
-            {" — "}
-            {t("restart_steam_non_steam_body")}
-          </div>
-          <Focusable
-            flow-children="horizontal"
-            style={{ display: "flex", gap: "8px" }}
-          >
-            <DialogButton onClick={closeModal} style={{ flex: 1 }}>
-              {t("ok")}
-            </DialogButton>
-            <DialogButton
-              className="plch-restart-btn"
-              onClick={handleRestart}
-              style={{ flex: 1 }}
-            >
-              {t("restart_steam_btn")}
-            </DialogButton>
-          </Focusable>
-        </div>
-      </ModalRoot>
-    </>
+    <ConfirmModal
+      strTitle={t("restart_steam_title")}
+      strDescription={`${game.name} — ${t("restart_steam_non_steam_body")}`}
+      strOKButtonText={t("restart_steam_btn")}
+      strCancelButtonText={t("ok")}
+      onOK={() => SteamClient.User.StartRestart(false)}
+    />
   );
 };
 
 export function openRestartModal(game: SteamGame): void {
-  let modal: ReturnType<typeof showModal> | null = null;
-  modal = showModal(
-    <RestartModalContent game={game} closeModal={() => modal?.Close()} />,
-  );
+  showModal(<RestartModalContent game={game} />);
 }
 
 // ── Wrapper toggle ────────────────────────────────────────────────────────────

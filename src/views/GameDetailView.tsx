@@ -10,12 +10,14 @@ import { ActionButton } from "../components/ActionButton";
 import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
 import { FiArrowLeft, FiExternalLink, FiLink, FiTerminal } from "react-icons/fi";
+import { FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { toggleWrapper } from "../utils/wrapperAction";
+import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
 
 interface GameDetailViewProps {
   game: SteamGame;
@@ -118,6 +120,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   }, [draft]);
 
   const hasProfile = Object.keys(profile).length > 0;
+  const status = getGameStatus(hasProfile, hasWrapper);
 
   const toggleVar = (envKey: string, defaultValue: string) => {
     setDraft((prev) => {
@@ -187,31 +190,52 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             <div
               style={{
                 fontSize: 10,
-                color: hasProfile ? "#f5a623" : "#888",
+                color: STATUS_COLOR[status],
                 display: "flex",
                 alignItems: "center",
                 gap: 4,
               }}
             >
-              {hasProfile ? `⚙ ${t("profile_active")}` : t("profile_none")}
+              {status === "wrapper_only" ? (
+                <FiLink size={8} />
+              ) : status !== "none" ? (
+                <FaCog size={8} />
+              ) : null}
+              <span>{t(STATUS_LABEL_KEY[status])}</span>
               {saving && <span style={{ color: "#666" }}>— {t("saving")}</span>}
             </div>
           </div>
+          <ActionButton onClick={showLog ? () => setShowLog(false) : loadLog}>
+            <FiTerminal size={14} />
+          </ActionButton>
+        </Focusable>
+      </PanelSection>
+
+      {/* Wrapper + product page actions */}
+      <PanelSection>
+        <Focusable
+          style={{ display: "flex", gap: "8px" }}
+          flow-children="horizontal"
+        >
           <ActionButton
+            width="100%"
             onClick={() =>
               toggleWrapper(game, hasWrapper, t, (nowSet) =>
                 setHasWrapper(nowSet),
               )
             }
-            variant={hasWrapper ? "primary" : "primary"}
           >
-            <FiLink
-              size={14}
-              color={hasWrapper ? "#29b6f6" : "rgba(255,255,255,0.4)"}
-            />
+            <FiLink size={12} />
+            <span style={{ marginLeft: 4 }}>
+              {hasWrapper ? t("remove_wrapper") : t("add_wrapper")}
+            </span>
           </ActionButton>
-          <ActionButton onClick={showLog ? () => setShowLog(false) : loadLog}>
-            <FiTerminal size={14} />
+          <ActionButton
+            onClick={() =>
+              window.open(`steam://nav/games/details/${game.appid}`)
+            }
+          >
+            <FiExternalLink size={14} />
           </ActionButton>
         </Focusable>
       </PanelSection>
@@ -220,32 +244,14 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       {showLog && (
         <PanelSection title="Debug">
           <PanelSectionRow>
-            <div
-              style={{
-                fontSize: 10,
-                color: "#aaa",
-                marginBottom: 4,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <div>
-                <span style={{ color: "#666" }}>AppId: </span>
-                <span style={{ color: "#fff", fontFamily: "monospace" }}>
-                  {game.appid}
-                </span>
-                <span style={{ color: "#555", marginLeft: 8 }}>
-                  ({game.is_shortcut ? "shortcut" : "steam"})
-                </span>
-              </div>
-              <ActionButton
-                onClick={() =>
-                  window.open(`steam://nav/games/details/${game.appid}`)
-                }
-              >
-                <FiExternalLink size={12} />
-              </ActionButton>
+            <div style={{ fontSize: 10, color: "#aaa", marginBottom: 4 }}>
+              <span style={{ color: "#666" }}>AppId: </span>
+              <span style={{ color: "#fff", fontFamily: "monospace" }}>
+                {game.appid}
+              </span>
+              <span style={{ color: "#555", marginLeft: 8 }}>
+                ({game.is_shortcut ? "shortcut" : "steam"})
+              </span>
             </div>
           </PanelSectionRow>
           {launchOptionStatus !== null && (
