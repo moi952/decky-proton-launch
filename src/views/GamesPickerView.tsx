@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { SearchField } from "../components/SearchField";
-import { Focusable } from "@decky/ui";
+import { DialogButton, Focusable, ModalRoot, showModal } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameRow } from "../components/GameRow";
-import { FiCopy, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiCopy, FiEye, FiEyeOff, FiLink } from "react-icons/fi";
 import { FaCircleNotch, FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
 import { SteamGame, ScriptStatus } from "../data/types";
+import { BadgeIcon } from "../components/BadgeIcon";
 
 export type { SteamGame };
 
@@ -48,6 +49,39 @@ interface ConfiguredAppStatus {
   has_launch_option: boolean;
 }
 
+interface RestartModalProps {
+  gameName: string;
+  isShortcut: boolean;
+  closeModal: () => void;
+}
+
+const RestartModalContent: React.FC<RestartModalProps> = ({
+  gameName,
+  isShortcut,
+  closeModal,
+}) => {
+  const { t } = useTranslation("game_manager");
+  return (
+    <ModalRoot>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ fontWeight: 600, fontSize: 14 }}>
+          {t("restart_steam_title")}
+        </div>
+        <div style={{ fontSize: 12, color: "#ccc" }}>
+          <span style={{ fontWeight: 500, color: "#fff" }}>{gameName}</span>
+          {" — "}
+          {isShortcut
+            ? t("restart_steam_non_steam_body")
+            : t("restart_steam_body")}
+        </div>
+        <Focusable>
+          <DialogButton onClick={closeModal}>{t("ok")}</DialogButton>
+        </Focusable>
+      </div>
+    </ModalRoot>
+  );
+};
+
 export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   onSelectGame,
   onScriptInstalled,
@@ -58,6 +92,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [configuredStatus, setConfiguredStatus] = useState<
     Map<number, "configured" | "ready">
   >(new Map());
+  const [wrapperApps, setWrapperApps] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
@@ -74,8 +109,9 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       call<[], SteamGame[]>("get_games"),
       call<[], ConfiguredAppStatus[]>("get_configured_apps_status"),
       call<[], ScriptStatus>("is_script_installed"),
+      call<[], number[]>("get_wrapper_app_ids"),
     ])
-      .then(([g, appStatuses, status]) => {
+      .then(([g, appStatuses, status, wrapperIds]) => {
         setGames(g);
         const map = new Map<number, "configured" | "ready">();
         for (const s of appStatuses) {
@@ -83,6 +119,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         }
         setConfiguredStatus(map);
         setScriptStatus(status);
+        setWrapperApps(new Set(wrapperIds));
       })
       .finally(() => setLoading(false));
   }, []);
@@ -108,6 +145,73 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     copyToClipboard(LAUNCH_OPTION);
     toaster.toast({ title: t("copied"), body: LAUNCH_OPTION });
   };
+
+  const handleQuickAdd = useCallback(
+    async (game: SteamGame) => {
+      const alreadySet = wrapperApps.has(game.appid);
+
+      if (alreadySet) {
+        const ok = await call<[number, boolean], boolean>(
+          "remove_launch_option_only",
+          game.appid,
+          game.is_shortcut,
+        );
+        if (ok) {
+          setWrapperApps((prev) => {
+            const next = new Set(prev);
+            next.delete(game.appid);
+            return next;
+          });
+          // Also update configuredStatus if profile was "ready" → "configured"
+          setConfiguredStatus((prev) => {
+            if (prev.get(game.appid) === "ready") {
+              const next = new Map(prev);
+              next.set(game.appid, "configured");
+              return next;
+            }
+            return prev;
+          });
+          toaster.toast({ title: t("wrapper_removed"), body: game.name });
+        } else {
+          toaster.toast({ title: t("wrapper_error"), body: game.name });
+        }
+      } else {
+        const result = await call<
+          [number, boolean],
+          { success: boolean; needs_restart: boolean }
+        >("add_launch_option", game.appid, game.is_shortcut);
+
+        if (result.success) {
+          setWrapperApps((prev) => new Set([...prev, game.appid]));
+          // If game has a profile, mark it as "ready"
+          setConfiguredStatus((prev) => {
+            if (prev.has(game.appid)) {
+              const next = new Map(prev);
+              next.set(game.appid, "ready");
+              return next;
+            }
+            return prev;
+          });
+
+          if (result.needs_restart) {
+            let modal: ReturnType<typeof showModal> | null = null;
+            modal = showModal(
+              <RestartModalContent
+                gameName={game.name}
+                isShortcut={game.is_shortcut}
+                closeModal={() => modal?.Close()}
+              />,
+            );
+          } else {
+            toaster.toast({ title: t("wrapper_added"), body: game.name });
+          }
+        } else {
+          toaster.toast({ title: t("wrapper_error"), body: game.name });
+        }
+      }
+    },
+    [wrapperApps, t],
+  );
 
   const q = search.toLowerCase();
   const filtered = games.filter((g) => g.name.toLowerCase().includes(q));
@@ -284,6 +388,19 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                 <FaCog size={7} color="#f5a623" />
                 <span>{t("legend_configured")}</span>
               </div>
+              <div
+                style={{
+                  fontSize: 9,
+                  color: "#666",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  lineHeight: "1.3",
+                }}
+              >
+                <BadgeIcon icon={FiLink} color="#29b6f6" size={7} />
+                <span>{t("legend_wrapper")}</span>
+              </div>
             </div>
             <Focusable flow-children="vertical">
               {(q ? configuredFiltered : configuredGames).map((game) => (
@@ -292,7 +409,14 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                   game={game}
                   hasProfile
                   profileStatus={configuredStatus.get(game.appid)}
+                  hasWrapper={wrapperApps.has(game.appid)}
                   onClick={() => onSelectGame(game)}
+                  onQuickAdd={() => handleQuickAdd(game)}
+                  quickAddLabel={
+                    wrapperApps.has(game.appid)
+                      ? t("remove_wrapper")
+                      : t("add_wrapper")
+                  }
                 />
               ))}
             </Focusable>
@@ -308,7 +432,14 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                 key={game.appid}
                 game={game}
                 hasProfile={false}
+                hasWrapper={wrapperApps.has(game.appid)}
                 onClick={() => onSelectGame(game)}
+                onQuickAdd={() => handleQuickAdd(game)}
+                quickAddLabel={
+                  wrapperApps.has(game.appid)
+                    ? t("remove_wrapper")
+                    : t("add_wrapper")
+                }
               />
             ))}
           </Focusable>

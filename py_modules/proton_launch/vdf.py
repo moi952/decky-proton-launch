@@ -49,6 +49,25 @@ def serialize_text(data: Any, indent: int = 0) -> str:
     return "\n".join(lines)
 
 
+def write_binary(nodes: list) -> bytes:
+    """Serialize a list of binary VDF nodes back to bytes (mirrors read_binary)."""
+    result = bytearray()
+    for item in nodes:
+        tag, key, value = item[0], item[1], item[2]
+        result.append(tag)
+        result.extend(key.encode("utf-8") + b"\x00")
+        if tag == 0x00:  # dict/section — value is a list of child nodes
+            result.extend(write_binary(value))
+        elif tag == 0x01:  # string
+            result.extend(str(value).encode("utf-8") + b"\x00")
+        elif tag == 0x02:  # int32
+            result.extend(struct.pack("<i", int(value)))
+        elif tag == 0x07:  # uint64
+            result.extend(struct.pack("<Q", int(value)))
+    result.append(0x08)  # end marker
+    return bytes(result)
+
+
 def read_binary(data: bytes, pos: int) -> Tuple[List, int]:
     nodes = []
     length = len(data)

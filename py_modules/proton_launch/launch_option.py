@@ -5,8 +5,8 @@ from typing import Optional
 
 import decky
 
-from .vdf import parse_text, serialize_text
-from .steam import get_user_dirs
+from .vdf import parse_text, serialize_text, read_binary, write_binary
+from .steam import get_user_dirs, get_shortcuts_paths
 from .profile import chown_to_user
 
 
@@ -65,7 +65,11 @@ def set_launch_option(app_id: int) -> bool:
             return True
 
         if current.strip():
-            apps[app_str]["LaunchOptions"] = f"{LAUNCH_OPTION} {current}"
+            if "%command%" in current:
+                # Insert wrapper just before %command% so existing options are preserved
+                apps[app_str]["LaunchOptions"] = current.replace("%command%", LAUNCH_OPTION, 1)
+            else:
+                apps[app_str]["LaunchOptions"] = f"{LAUNCH_OPTION} {current}"
         else:
             apps[app_str]["LaunchOptions"] = LAUNCH_OPTION
 
@@ -108,6 +112,113 @@ def remove_launch_option(app_id: int) -> bool:
     except Exception as e:
         decky.logger.error(f"[launch_option] remove error for {app_id}: {e}\n{traceback.format_exc()}")
         return False
+
+
+def set_launch_option_shortcut(app_id: int) -> bool:
+    """Write ~/proton-launch %command% to shortcuts.vdf for this non-Steam app."""
+    for sc_path in get_shortcuts_paths():
+        try:
+            raw = sc_path.read_bytes()
+            nodes, _ = read_binary(raw, 0)
+            modified = False
+
+            new_top = []
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    new_children = []
+                    for etag, ekey, efields in children:
+                        if etag != 0x00:
+                            new_children.append((etag, ekey, efields))
+                            continue
+                        appid_val = None
+                        for f in efields:
+                            if f[0] == 0x02 and f[1].lower() == "appid":
+                                appid_val = f[2] & 0xFFFFFFFF
+                        if appid_val == app_id:
+                            new_fields = []
+                            found_lo = False
+                            for f in efields:
+                                if f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                    found_lo = True
+                                    current = f[2]
+                                    if LAUNCH_OPTION in current:
+                                        new_fields.append(f)
+                                    elif current.strip():
+                                        if "%command%" in current:
+                                            new_val = current.replace("%command%", LAUNCH_OPTION, 1)
+                                        else:
+                                            new_val = f"{LAUNCH_OPTION} {current}"
+                                        new_fields.append((0x01, f[1], new_val))
+                                    else:
+                                        new_fields.append((0x01, f[1], LAUNCH_OPTION))
+                                else:
+                                    new_fields.append(f)
+                            if not found_lo:
+                                new_fields.append((0x01, "LaunchOptions", LAUNCH_OPTION))
+                            new_children.append((etag, ekey, new_fields))
+                            modified = True
+                        else:
+                            new_children.append((etag, ekey, efields))
+                    new_top.append((tag, key, new_children))
+                else:
+                    new_top.append((tag, key, children))
+
+            if modified:
+                shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
+                sc_path.write_bytes(write_binary(new_top))
+                chown_to_user(sc_path)
+                decky.logger.info(f"[launch_option] shortcut set for app {app_id} in {sc_path}")
+                return True
+        except Exception as e:
+            decky.logger.error(f"[launch_option] shortcut set error for {app_id} in {sc_path}: {e}\n{traceback.format_exc()}")
+    return False
+
+
+def remove_launch_option_shortcut(app_id: int) -> bool:
+    """Remove ~/proton-launch %command% from shortcuts.vdf for this non-Steam app."""
+    for sc_path in get_shortcuts_paths():
+        try:
+            raw = sc_path.read_bytes()
+            nodes, _ = read_binary(raw, 0)
+            modified = False
+
+            new_top = []
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    new_children = []
+                    for etag, ekey, efields in children:
+                        if etag != 0x00:
+                            new_children.append((etag, ekey, efields))
+                            continue
+                        appid_val = None
+                        for f in efields:
+                            if f[0] == 0x02 and f[1].lower() == "appid":
+                                appid_val = f[2] & 0xFFFFFFFF
+                        if appid_val == app_id:
+                            new_fields = []
+                            for f in efields:
+                                if f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                    new_val = f[2].replace(LAUNCH_OPTION, "").strip()
+                                    new_fields.append((0x01, f[1], new_val))
+                                    modified = True
+                                else:
+                                    new_fields.append(f)
+                            new_children.append((etag, ekey, new_fields))
+                        else:
+                            new_children.append((etag, ekey, efields))
+                    new_top.append((tag, key, new_children))
+                else:
+                    new_top.append((tag, key, children))
+
+            if modified:
+                shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
+                sc_path.write_bytes(write_binary(new_top))
+                chown_to_user(sc_path)
+                decky.logger.info(f"[launch_option] shortcut removed for app {app_id} in {sc_path}")
+                return True
+        except Exception as e:
+            decky.logger.error(f"[launch_option] shortcut remove error for {app_id}: {e}\n{traceback.format_exc()}")
+    return False
 
 
 def get_status(app_id: int) -> str:
