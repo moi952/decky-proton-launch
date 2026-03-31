@@ -10,6 +10,7 @@ import {
 import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
+import { BackHandler } from "./components/BackHandler";
 import { copy } from "./utils/functions";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
@@ -29,9 +30,10 @@ type View = "home" | "settings" | "games-picker" | "game-detail";
 const getInitialView = (): View => {
   try {
     const v = localStorage.getItem("deck-proton-launch-default-home");
+    if (v === "home") return "home";
     if (v === "game-manager") return "games-picker";
   } catch {}
-  return "home";
+  return "games-picker";
 };
 
 const App: React.FC = () => {
@@ -64,20 +66,29 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (view === "settings") return <SettingsView onBack={goHome} />;
+  if (view === "settings")
+    return (
+      <BackHandler onBack={goHome}>
+        <SettingsView onBack={goHome} />
+      </BackHandler>
+    );
 
   if (view === "game-detail" && selectedGame)
     return (
-      <GameDetailView
-        game={selectedGame}
-        onBack={() => setView("games-picker")}
-      />
+      <BackHandler onBack={() => setView("games-picker")}>
+        <GameDetailView
+          game={selectedGame}
+          onBack={() => setView("games-picker")}
+        />
+      </BackHandler>
     );
 
   const mainView = view as "home" | "games-picker";
+  const isGamesPickerHome = defaultHome === "game-manager";
+  const isOnHome = isGamesPickerHome ? view === "games-picker" : view === "home";
 
   return (
-    <div>
+    <BackHandler onBack={isOnHome ? undefined : goHome}>
       <style>{GAME_ROW_STYLES}</style>
       <NavBar
         view={mainView}
@@ -115,7 +126,7 @@ const App: React.FC = () => {
           onScriptInstalled={() => setScriptStatus("current")}
         />
       )}
-    </div>
+    </BackHandler>
   );
 };
 
