@@ -1,7 +1,7 @@
 import React from "react";
-import { DialogButton, Focusable, ModalRoot } from "@decky/ui";
 import { useFavorites } from "../context/FavoritesContext";
 import { ActionButton } from "./ActionButton";
+import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useTranslation } from "react-i18next";
 import { FiTrash } from "react-icons/fi";
 import { openDeleteFavoriteModal } from "../utils/modals";
@@ -16,29 +16,16 @@ export const DeleteFavoriteModalContent: React.FC<
 > = ({ title, onClose }) => {
   const { removeFavorite } = useFavorites();
   const { t } = useTranslation("delete_favorite_modal");
-  const { t: tCommon } = useTranslation();
+  const { t: tCommon } = useTranslation("common");
 
   return (
-    <ModalRoot>
-      <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-        <div style={{ fontWeight: 600 }}>{t("title")}</div>
-        <div>{t("description", { favorite_name: title })}</div>
-        <Focusable
-          style={{ display: "flex", justifyContent: "flex-end", gap: "8px" }}
-          flow-children="horizontal"
-        >
-          <DialogButton onClick={onClose}>{tCommon("cancel")}</DialogButton>
-          <DialogButton
-            onClick={() => {
-              removeFavorite(title);
-              onClose();
-            }}
-          >
-            {tCommon("delete")}
-          </DialogButton>
-        </Focusable>
-      </div>
-    </ModalRoot>
+    <ConfirmDeleteModal
+      title={t("title")}
+      description={t("description", { favorite_name: title })}
+      confirmLabel={tCommon("delete")}
+      onConfirm={() => removeFavorite(title)}
+      onClose={onClose}
+    />
   );
 };
 

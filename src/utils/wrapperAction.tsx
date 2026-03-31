@@ -1,6 +1,6 @@
 import React from "react";
-import { ConfirmModal, DialogBodyText, DialogControlsSection, DialogHeader, Focusable, ModalRoot, showModal } from "@decky/ui";
-import { ActionButton } from "../components/ActionButton";
+import { ConfirmModal, showModal } from "@decky/ui";
+import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { SteamGame } from "../data/types";
@@ -56,34 +56,21 @@ const DeleteWrapperModal: React.FC<{
   closeModal?: () => void;
 }> = ({ game, onConfirm, closeModal }) => {
   const { t } = useTranslation("game_manager");
-  const { t: tCommon } = useTranslation("common");
   return (
-    <ModalRoot closeModal={closeModal}>
-      <DialogHeader>{t("delete_wrapper_title")}</DialogHeader>
-      <DialogBodyText>
-        {t("delete_wrapper_description", { game_name: game.name })}
-      </DialogBodyText>
-      <DialogControlsSection>
-        <Focusable flow-children="horizontal" style={{ display: "flex", gap: "8px" }}>
-          <ActionButton width="50%" onClick={() => closeModal?.()}>
-            {tCommon("cancel")}
-          </ActionButton>
-          <ActionButton
-            variant="danger"
-            width="50%"
-            onClick={() => { onConfirm(); closeModal?.(); }}
-          >
-            {t("delete_wrapper_confirm")}
-          </ActionButton>
-        </Focusable>
-      </DialogControlsSection>
-    </ModalRoot>
+    <ConfirmDeleteModal
+      title={t("delete_wrapper_title")}
+      description={t("delete_wrapper_description", { game_name: game.name })}
+      confirmLabel={t("delete_wrapper_confirm")}
+      onConfirm={onConfirm}
+      onClose={() => closeModal?.()}
+      closeModal={closeModal}
+    />
   );
 };
 
 // ── Wrapper remove (called after confirmation) ────────────────────────────────
 
-async function doRemoveWrapper(
+export async function doRemoveWrapper(
   game: SteamGame,
   t: (key: string) => string,
   onSuccess: (nowSet: boolean) => void,

@@ -18,7 +18,7 @@ import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useRemoteData } from "../context/RemoteDataContext";
-import { toggleWrapper } from "../utils/wrapperAction";
+import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
 import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
 import { useFavorites } from "../context/FavoritesContext";
 
@@ -35,6 +35,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tVars } = useTranslation("variables");
   const { t: tCat } = useTranslation("categories");
   const { t: tCommon } = useTranslation("common");
+  const { t: tFavModal } = useTranslation("delete_favorite_modal");
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
   const { variables: variablesData } = useRemoteData();
@@ -50,6 +51,8 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
     null,
   );
   const [hasWrapper, setHasWrapper] = useState(false);
+  const [pendingDeleteFav, setPendingDeleteFav] = useState<string | null>(null);
+  const [confirmRemoveWrapper, setConfirmRemoveWrapper] = useState(false);
 
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
@@ -234,11 +237,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
         >
           <ActionButton
             width="100%"
-            onClick={() =>
-              toggleWrapper(game, hasWrapper, t, (nowSet) =>
-                setHasWrapper(nowSet),
-              )
-            }
+            onClick={() => {
+              if (hasWrapper) {
+                setConfirmRemoveWrapper(true);
+              } else {
+                toggleWrapper(game, false, t, (nowSet) => setHasWrapper(nowSet));
+              }
+            }}
           >
             <FiLink size={12} />
             <span style={{ marginLeft: 4 }}>
@@ -253,6 +258,28 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             <FiExternalLink size={14} />
           </ActionButton>
         </Focusable>
+        {confirmRemoveWrapper && (
+          <Focusable
+            style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}
+            flow-children="horizontal"
+          >
+            <span style={{ fontSize: 11, flex: 1, color: "#aaa" }}>
+              {t("delete_wrapper_description", { game_name: game.name })}
+            </span>
+            <ActionButton onClick={() => setConfirmRemoveWrapper(false)}>
+              {tCommon("cancel")}
+            </ActionButton>
+            <ActionButton
+              variant="danger"
+              onClick={() => {
+                setConfirmRemoveWrapper(false);
+                doRemoveWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
+              }}
+            >
+              {t("delete_wrapper_confirm")}
+            </ActionButton>
+          </Focusable>
+        )}
       </PanelSection>
       </div>
 
@@ -323,11 +350,36 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             <PanelSection title={tCat("favorites")}>
               {favorites
                 .filter((f) => f.env)
-                .map((fav) => (
+                .map((fav) =>
+                  pendingDeleteFav === fav.name ? (
+                    <PanelSectionRow key={fav.name}>
+                      <Focusable
+                        style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                        flow-children="horizontal"
+                      >
+                        <span style={{ fontSize: 11, flex: 1, color: "#aaa" }}>
+                          {tFavModal("description", { favorite_name: fav.name })}
+                        </span>
+                        <ActionButton onClick={() => setPendingDeleteFav(null)}>
+                          {tCommon("cancel")}
+                        </ActionButton>
+                        <ActionButton
+                          variant="danger"
+                          onClick={() => {
+                            removeFavorite(fav.name);
+                            setPendingDeleteFav(null);
+                          }}
+                        >
+                          {tCommon("delete")}
+                        </ActionButton>
+                      </Focusable>
+                    </PanelSectionRow>
+                  ) : (
                   <Focusable
                     key={fav.name}
                     onButtonDown={(evt: GamepadEvent) => {
-                      if (evt.detail.button === GamepadButton.SECONDARY) removeFavorite(fav.name);
+                      if (evt.detail.button === GamepadButton.SECONDARY)
+                        setPendingDeleteFav(fav.name);
                     }}
                     onSecondaryActionDescription={tCommon("remove_from_favorite")}
                   >
