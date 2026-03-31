@@ -32,10 +32,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t } = useTranslation("game_manager");
   const { t: tVars } = useTranslation("variables");
   const { t: tCat } = useTranslation("categories");
+  const { t: tCommon } = useTranslation("common");
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
   const { variables: variablesData } = useRemoteData();
-  const { favorites } = useFavorites();
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -138,6 +139,15 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
 
   const setVarValue = (envKey: string, value: string) => {
     setDraft((prev) => ({ ...prev, [envKey]: value }));
+  };
+
+  const toggleFavorite = (env: string, name: string, value: string) => {
+    const existing = favorites.find((f) => f.env === env);
+    if (existing) {
+      removeFavorite(existing.name);
+    } else {
+      addFavorite({ name, env, value });
+    }
   };
 
   const deleteProfile = async () => {
@@ -317,6 +327,10 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                       label={fav.name}
                       checked={draft[fav.env!] !== undefined}
                       onChange={() => toggleVar(fav.env!, fav.value)}
+                      {...({
+                        onSecondaryButton: () => removeFavorite(fav.name),
+                        onSecondaryActionDescription: tCommon("remove_from_favorite"),
+                      } as any)}
                     />
                   </PanelSectionRow>
                 ))}
@@ -330,21 +344,23 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                   const isActive = draft[variable.env] !== undefined;
 
                   if (variable.type === "enum" && "values" in variable) {
+                    const defaultEnumVal =
+                      ("defaultValue" in variable && (variable as any).defaultValue) ||
+                      (variable as any).values?.[0]?.value ||
+                      "1";
                     return (
                       <React.Fragment key={variable.env}>
                         <PanelSectionRow>
                           <ToggleField
                             label={tVars(variable.title)}
                             checked={isActive}
-                            onChange={() =>
-                              toggleVar(
-                                variable.env,
-                                ("defaultValue" in variable &&
-                                  (variable as any).defaultValue) ||
-                                  (variable as any).values?.[0]?.value ||
-                                  "1",
-                              )
-                            }
+                            onChange={() => toggleVar(variable.env, defaultEnumVal)}
+                            {...({
+                              onSecondaryButton: () => toggleFavorite(variable.env, tVars(variable.title), defaultEnumVal),
+                              onSecondaryActionDescription: favorites.some((f) => f.env === variable.env)
+                                ? tCommon("remove_from_favorite")
+                                : tCommon("add_to_favorite"),
+                            } as any)}
                           />
                         </PanelSectionRow>
                         {isActive && (
@@ -393,6 +409,12 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                             label={label}
                             checked={isActive}
                             onChange={() => toggleVar(variable.env, defaultVal)}
+                            {...({
+                              onSecondaryButton: () => toggleFavorite(variable.env, tVars(variable.title), defaultVal),
+                              onSecondaryActionDescription: favorites.some((f) => f.env === variable.env)
+                                ? tCommon("remove_from_favorite")
+                                : tCommon("add_to_favorite"),
+                            } as any)}
                           />
                         </PanelSectionRow>
                         {isActive && !isSimple && (
@@ -435,6 +457,12 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                     label={cv.name}
                     checked={draft[cv.env] !== undefined}
                     onChange={() => toggleVar(cv.env, cv.value)}
+                    {...({
+                      onSecondaryButton: () => toggleFavorite(cv.env, cv.name, cv.value),
+                      onSecondaryActionDescription: favorites.some((f) => f.env === cv.env)
+                        ? tCommon("remove_from_favorite")
+                        : tCommon("add_to_favorite"),
+                    } as any)}
                   />
                 </PanelSectionRow>
               ))}

@@ -122,6 +122,8 @@
     "restart_steam_btn": "重启 Steam",
     "delete_wrapper_title": "移除 Wrapper",
     "delete_wrapper_description": "从 {{game_name}} 移除 Wrapper？",
-    "delete_wrapper_confirm": "移除"
+    "delete_wrapper_confirm": "移除",
+    "show_command": "显示命令",
+    "hide_command": "隐藏命令"
   }
 }

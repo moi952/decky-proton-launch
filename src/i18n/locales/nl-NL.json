@@ -122,6 +122,8 @@
     "restart_steam_btn": "Steam herstarten",
     "delete_wrapper_title": "Wrapper verwijderen",
     "delete_wrapper_description": "Wrapper voor {{game_name}} verwijderen?",
-    "delete_wrapper_confirm": "Verwijderen"
+    "delete_wrapper_confirm": "Verwijderen",
+    "show_command": "Commando weergeven",
+    "hide_command": "Commando verbergen"
   }
 }

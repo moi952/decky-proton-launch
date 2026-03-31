@@ -120,6 +120,8 @@
     "restart_steam_btn": "Reiniciar Steam",
     "delete_wrapper_title": "Remover wrapper",
     "delete_wrapper_description": "Remover o wrapper de {{game_name}}?",
-    "delete_wrapper_confirm": "Remover"
+    "delete_wrapper_confirm": "Remover",
+    "show_command": "Mostrar comando",
+    "hide_command": "Ocultar comando"
   }
 }

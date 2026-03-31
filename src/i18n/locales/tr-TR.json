@@ -120,6 +120,8 @@
     "restart_steam_btn": "Steam'i yeniden başlat",
     "delete_wrapper_title": "Wrapper'ı kaldır",
     "delete_wrapper_description": "{{game_name}} için wrapper kaldırılsın mı?",
-    "delete_wrapper_confirm": "Kaldır"
+    "delete_wrapper_confirm": "Kaldır",
+    "show_command": "Komutu göster",
+    "hide_command": "Komutu gizle"
   }
 }

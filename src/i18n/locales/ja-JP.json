@@ -122,6 +122,8 @@
     "restart_steam_btn": "Steamを再起動",
     "delete_wrapper_title": "Wrapperを削除",
     "delete_wrapper_description": "{{game_name}}のWrapperを削除しますか？",
-    "delete_wrapper_confirm": "削除"
+    "delete_wrapper_confirm": "削除",
+    "show_command": "コマンドを表示",
+    "hide_command": "コマンドを非表示"
   }
 }

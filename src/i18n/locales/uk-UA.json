@@ -122,6 +122,8 @@
     "restart_steam_btn": "Перезапустити Steam",
     "delete_wrapper_title": "Видалити wrapper",
     "delete_wrapper_description": "Видалити wrapper з {{game_name}}?",
-    "delete_wrapper_confirm": "Видалити"
+    "delete_wrapper_confirm": "Видалити",
+    "show_command": "Показати команду",
+    "hide_command": "Сховати команду"
   }
 }

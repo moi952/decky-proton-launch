@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Focusable } from "@decky/ui";
 import { FiSettings, FiList, FiPlay, FiCopy } from "react-icons/fi";
 import { ActionButton } from "./ActionButton";
 import PanelSectionCustom from "./PanelSectionCustom";
 import { ScriptStatus } from "../data/types";
 import { useTranslation } from "react-i18next";
+
+const LAUNCH_OPTION = "~/proton-launch %command%";
 
 interface NavBarProps {
   view: "home" | "games-picker";
@@ -24,6 +26,7 @@ export const NavBar: React.FC<NavBarProps> = ({
   onCopyWrapper,
 }) => {
   const { t } = useTranslation("game_manager");
+  const [showCommand, setShowCommand] = useState(false);
 
   return (
     <PanelSectionCustom>
@@ -66,13 +69,36 @@ export const NavBar: React.FC<NavBarProps> = ({
             ⚠
           </span>
         )}
-        <ActionButton onClick={onCopyWrapper} onOKActionDescription={t("copy")}>
+        <ActionButton
+          onClick={onCopyWrapper}
+          onOKActionDescription={t("copy")}
+          onSecondaryButton={() => setShowCommand((v) => !v)}
+          onSecondaryActionDescription={
+            showCommand ? t("hide_command") : t("show_command")
+          }
+        >
           <FiCopy size={16} />
         </ActionButton>
         <ActionButton onClick={onSettings}>
           <FiSettings size={16} />
         </ActionButton>
       </Focusable>
+      {showCommand && (
+        <div
+          style={{
+            fontFamily: "monospace",
+            fontSize: 10,
+            background: "#111",
+            padding: "6px 8px",
+            borderRadius: "4px",
+            color: "#ccc",
+            wordBreak: "break-all",
+            marginTop: "6px",
+          }}
+        >
+          {LAUNCH_OPTION}
+        </div>
+      )}
     </PanelSectionCustom>
   );
 };

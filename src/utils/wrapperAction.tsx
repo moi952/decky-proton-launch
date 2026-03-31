@@ -62,9 +62,10 @@ const DeleteWrapperModal: React.FC<{
       bDestructiveWarning={true}
       strTitle={t("delete_wrapper_title")}
       strDescription={t("delete_wrapper_description", { game_name: game.name })}
-      strOKButtonText={t("delete_wrapper_confirm")}
-      strCancelButtonText={tCommon("cancel")}
-      onOK={onConfirm}
+      strOKButtonText={tCommon("cancel")}
+      strCancelButtonText={t("delete_wrapper_confirm")}
+      onOK={() => closeModal?.()}
+      onCancel={() => { onConfirm(); closeModal?.(); }}
     />
   );
 };

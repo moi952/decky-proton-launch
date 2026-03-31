@@ -122,6 +122,8 @@
     "restart_steam_btn": "Steam 재시작",
     "delete_wrapper_title": "Wrapper 제거",
     "delete_wrapper_description": "{{game_name}}에서 Wrapper를 제거하시겠습니까?",
-    "delete_wrapper_confirm": "제거"
+    "delete_wrapper_confirm": "제거",
+    "show_command": "명령어 보기",
+    "hide_command": "명령어 숨기기"
   }
 }

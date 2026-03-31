@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { SearchField } from "../components/SearchField";
 import { Focusable } from "@decky/ui";
-import { call, toaster } from "@decky/api";
+import { call } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameRow } from "../components/GameRow";
-import { FiCopy, FiEye, FiEyeOff, FiLink } from "react-icons/fi";
+import { FiLink } from "react-icons/fi";
 import { FaCircleNotch, FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
@@ -19,31 +19,6 @@ interface GamesPickerViewProps {
   onScriptInstalled: () => void;
 }
 
-const copyToClipboard = (text: string) => {
-  try {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-    } else {
-      fallbackCopy(text);
-    }
-  } catch {
-    fallbackCopy(text);
-  }
-};
-
-const fallbackCopy = (text: string) => {
-  const el = document.createElement("textarea");
-  el.value = text;
-  el.style.position = "fixed";
-  el.style.opacity = "0";
-  document.body.appendChild(el);
-  el.focus();
-  el.select();
-  try {
-    document.execCommand("copy");
-  } catch {}
-  document.body.removeChild(el);
-};
 
 interface ConfiguredAppStatus {
   appid: number;
@@ -64,12 +39,9 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [loading, setLoading] = useState(true);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
-  const [showCommand, setShowCommand] = useState(false);
   const [visibleCount, setVisibleCount] = useState(50);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingMoreRef = useRef(false);
-
-  const LAUNCH_OPTION = "~/proton-launch %command%";
 
   const reload = useCallback(() => {
     setLoading(true);
@@ -108,11 +80,6 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   useEffect(() => {
     reload();
   }, [reload]);
-
-  const handleCopy = () => {
-    copyToClipboard(LAUNCH_OPTION);
-    toaster.toast({ title: t("copied"), body: LAUNCH_OPTION });
-  };
 
   const handleQuickAdd = useCallback(
     (game: SteamGame) => {
@@ -202,37 +169,6 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
   return (
     <div>
-      {/* Launch command */}
-      <PanelSectionCustom>
-        {showCommand && (
-          <div
-            style={{
-              fontFamily: "monospace",
-              fontSize: 10,
-              background: "#111",
-              padding: "6px 8px",
-              borderRadius: "4px",
-              color: "#ccc",
-              wordBreak: "break-all",
-              marginBottom: "6px",
-            }}
-          >
-            {LAUNCH_OPTION}
-          </div>
-        )}
-        <ActionButton
-          onClick={handleCopy}
-          width="100%"
-          onSecondaryButton={() => setShowCommand((v) => !v)}
-          onSecondaryActionDescription={
-            showCommand ? <FiEyeOff size={14} /> : <FiEye size={14} />
-          }
-        >
-          <FiCopy size={14} />
-          <span style={{ marginLeft: 4 }}>{t("copy")}</span>
-        </ActionButton>
-      </PanelSectionCustom>
-
       {/* Script installation banner */}
       {needsAction && (
         <PanelSectionCustom>
