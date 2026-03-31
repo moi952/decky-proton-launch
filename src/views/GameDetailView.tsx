@@ -9,6 +9,7 @@ import {
 import type { GamepadEvent } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
+import { InlineConfirm } from "../components/InlineConfirm";
 import { GameCover } from "../components/GameCover";
 import { ValButton } from "../components/ValButton";
 import { FiArrowLeft, FiExternalLink, FiLink, FiTerminal } from "react-icons/fi";
@@ -259,26 +260,17 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           </ActionButton>
         </Focusable>
         {confirmRemoveWrapper && (
-          <Focusable
-            style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "8px" }}
-            flow-children="horizontal"
-          >
-            <span style={{ fontSize: 11, flex: 1, color: "#aaa" }}>
-              {t("delete_wrapper_description", { game_name: game.name })}
-            </span>
-            <ActionButton onClick={() => setConfirmRemoveWrapper(false)}>
-              {tCommon("cancel")}
-            </ActionButton>
-            <ActionButton
-              variant="danger"
-              onClick={() => {
+          <div style={{ marginTop: "8px" }}>
+            <InlineConfirm
+              description={t("delete_wrapper_description", { game_name: game.name })}
+              confirmLabel={t("delete_wrapper_confirm")}
+              onCancel={() => setConfirmRemoveWrapper(false)}
+              onConfirm={() => {
                 setConfirmRemoveWrapper(false);
                 doRemoveWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
               }}
-            >
-              {t("delete_wrapper_confirm")}
-            </ActionButton>
-          </Focusable>
+            />
+          </div>
         )}
       </PanelSection>
       </div>
@@ -353,26 +345,14 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 .map((fav) =>
                   pendingDeleteFav === fav.name ? (
                     <PanelSectionRow key={fav.name}>
-                      <Focusable
-                        style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                        flow-children="horizontal"
-                      >
-                        <span style={{ fontSize: 11, flex: 1, color: "#aaa" }}>
-                          {tFavModal("description", { favorite_name: fav.name })}
-                        </span>
-                        <ActionButton onClick={() => setPendingDeleteFav(null)}>
-                          {tCommon("cancel")}
-                        </ActionButton>
-                        <ActionButton
-                          variant="danger"
-                          onClick={() => {
-                            removeFavorite(fav.name);
-                            setPendingDeleteFav(null);
-                          }}
-                        >
-                          {tCommon("delete")}
-                        </ActionButton>
-                      </Focusable>
+                      <InlineConfirm
+                        description={tFavModal("description", { favorite_name: fav.name })}
+                        onCancel={() => setPendingDeleteFav(null)}
+                        onConfirm={() => {
+                          removeFavorite(fav.name);
+                          setPendingDeleteFav(null);
+                        }}
+                      />
                     </PanelSectionRow>
                   ) : (
                   <Focusable

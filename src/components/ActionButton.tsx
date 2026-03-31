@@ -66,7 +66,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
         }
         .dpl-action-danger:focus,
         .dpl-action-danger:hover {
-            background-color: transparent !important;
+            background-color: #fff !important;
             color: #ef4444 !important;
         }
       `}</style>

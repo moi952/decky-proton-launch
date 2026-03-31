@@ -29,7 +29,7 @@ export const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
         }
         .dpl-danger-btn:focus,
         .dpl-danger-btn:hover {
-          background: transparent !important;
+          background: #fff !important;
           color: #ef4444 !important;
         }
       `}</style>
