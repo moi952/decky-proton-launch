@@ -21,7 +21,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(
     new Set(),
   );
-  const [defaultHome, setDefaultHomeState] = useState<DefaultHome>("home");
+  const [defaultHome, setDefaultHomeState] = useState<DefaultHome>("game-manager");
 
   useEffect(() => {
     try {
