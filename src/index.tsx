@@ -10,6 +10,7 @@ import {
 import { FaRocket } from "react-icons/fa";
 import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
+import { copy } from "./utils/functions";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
 import { SettingsView } from "./views/SettingsView";
@@ -84,6 +85,7 @@ const App: React.FC = () => {
         onHome={() => setView("home")}
         onGamesManager={() => setView("games-picker")}
         onSettings={() => setView("settings")}
+        onCopyWrapper={() => copy("~/proton-launch %command%")}
       />
       <UpdateBanner />
       {noData && (

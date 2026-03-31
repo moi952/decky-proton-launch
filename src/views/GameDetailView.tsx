@@ -18,6 +18,7 @@ import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { toggleWrapper } from "../utils/wrapperAction";
 import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
+import { useFavorites } from "../context/FavoritesContext";
 
 interface GameDetailViewProps {
   game: SteamGame;
@@ -34,6 +35,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
   const { variables: variablesData } = useRemoteData();
+  const { favorites } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
   const [draft, setDraft] = useState<Record<string, string>>({});
@@ -305,6 +307,21 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
         </PanelSection>
       ) : (
         <div>
+          {favorites.filter((f) => f.env).length > 0 && (
+            <PanelSection title={tCat("favorites")}>
+              {favorites
+                .filter((f) => f.env)
+                .map((fav) => (
+                  <PanelSectionRow key={fav.name}>
+                    <ToggleField
+                      label={fav.name}
+                      checked={draft[fav.env!] !== undefined}
+                      onChange={() => toggleVar(fav.env!, fav.value)}
+                    />
+                  </PanelSectionRow>
+                ))}
+            </PanelSection>
+          )}
           {variablesData
             .filter((cat) => isCategoryVisible(cat.category))
             .map((cat) => (
