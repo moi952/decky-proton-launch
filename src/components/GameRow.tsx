@@ -57,7 +57,6 @@ export const GameRow: React.FC<GameRowProps> = ({
   }, [game.appid]);
 
   const border = nowPlaying ? "1px solid #4caf50" : "2px solid transparent";
-  const background = nowPlaying ? "#0d1f0d" : "#1a1a2e";
 
   // Wrapper-only badge: shown when wrapper is set but there is no profile
   const showWrapperBadge = hasWrapper && !hasProfile;
@@ -71,9 +70,8 @@ export const GameRow: React.FC<GameRowProps> = ({
       style={{
         padding: 0,
         overflow: "hidden",
-        borderRadius: "6px",
         border,
-        background,
+        ...(nowPlaying ? { background: "#0d1f0d" } : {}),
         display: "flex",
         flexDirection: "row",
         alignItems: "stretch",

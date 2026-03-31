@@ -58,19 +58,21 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
 
   return (
     <>
-      <style>{`
-      .dialog-button.danger {
-          background-color: #ef4444 !important;
-          color: #fff;
-      }
-      .dialog-button.danger:focus,
-      .dialog-button.danger:hover {
-          color: #ef4444 !important;
-          background-color: #fff !important;
-      }
-    `}</style>
+      {variant === "danger" && (
+        <style>{`
+        .dpl-action-danger {
+            background-color: #ef4444 !important;
+            color: #fff !important;
+        }
+        .dpl-action-danger:focus,
+        .dpl-action-danger:hover {
+            background-color: transparent !important;
+            color: #ef4444 !important;
+        }
+      `}</style>
+      )}
       <DialogButton
-        className={`dialog-button ${variant === "danger" ? "danger" : "primary"}`}
+        className={variant === "danger" ? "dpl-action-danger" : undefined}
         style={{
           ...style,
           display: "inline-flex",
