@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Focusable,
+  GamepadButton,
   PanelSection,
   PanelSectionRow,
   ToggleField,
 } from "@decky/ui";
+import type { GamepadEvent } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameCover } from "../components/GameCover";
@@ -322,17 +324,21 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               {favorites
                 .filter((f) => f.env)
                 .map((fav) => (
-                  <PanelSectionRow key={fav.name}>
-                    <ToggleField
-                      label={fav.name}
-                      checked={draft[fav.env!] !== undefined}
-                      onChange={() => toggleVar(fav.env!, fav.value)}
-                      {...({
-                        onSecondaryButton: () => removeFavorite(fav.name),
-                        onSecondaryActionDescription: tCommon("remove_from_favorite"),
-                      } as any)}
-                    />
-                  </PanelSectionRow>
+                  <Focusable
+                    key={fav.name}
+                    onButtonDown={(evt: GamepadEvent) => {
+                      if (evt.detail.button === GamepadButton.SECONDARY) removeFavorite(fav.name);
+                    }}
+                    onSecondaryActionDescription={tCommon("remove_from_favorite")}
+                  >
+                    <PanelSectionRow>
+                      <ToggleField
+                        label={fav.name}
+                        checked={draft[fav.env!] !== undefined}
+                        onChange={() => toggleVar(fav.env!, fav.value)}
+                      />
+                    </PanelSectionRow>
+                  </Focusable>
                 ))}
             </PanelSection>
           )}
@@ -350,19 +356,25 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                       "1";
                     return (
                       <React.Fragment key={variable.env}>
-                        <PanelSectionRow>
-                          <ToggleField
-                            label={tVars(variable.title)}
-                            checked={isActive}
-                            onChange={() => toggleVar(variable.env, defaultEnumVal)}
-                            {...({
-                              onSecondaryButton: () => toggleFavorite(variable.env, tVars(variable.title), defaultEnumVal),
-                              onSecondaryActionDescription: favorites.some((f) => f.env === variable.env)
-                                ? tCommon("remove_from_favorite")
-                                : tCommon("add_to_favorite"),
-                            } as any)}
-                          />
-                        </PanelSectionRow>
+                        <Focusable
+                          onButtonDown={(evt: GamepadEvent) => {
+                            if (evt.detail.button === GamepadButton.SECONDARY)
+                              toggleFavorite(variable.env, tVars(variable.title), defaultEnumVal);
+                          }}
+                          onSecondaryActionDescription={
+                            favorites.some((f) => f.env === variable.env)
+                              ? tCommon("remove_from_favorite")
+                              : tCommon("add_to_favorite")
+                          }
+                        >
+                          <PanelSectionRow>
+                            <ToggleField
+                              label={tVars(variable.title)}
+                              checked={isActive}
+                              onChange={() => toggleVar(variable.env, defaultEnumVal)}
+                            />
+                          </PanelSectionRow>
+                        </Focusable>
                         {isActive && (
                           <Focusable
                             style={{
@@ -404,19 +416,25 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                       : `${tVars(currentVal === "1" ? "enable_prefix" : "disable_prefix")} ${tVars(variable.title)}`;
                     return (
                       <React.Fragment key={variable.env}>
-                        <PanelSectionRow>
-                          <ToggleField
-                            label={label}
-                            checked={isActive}
-                            onChange={() => toggleVar(variable.env, defaultVal)}
-                            {...({
-                              onSecondaryButton: () => toggleFavorite(variable.env, tVars(variable.title), defaultVal),
-                              onSecondaryActionDescription: favorites.some((f) => f.env === variable.env)
-                                ? tCommon("remove_from_favorite")
-                                : tCommon("add_to_favorite"),
-                            } as any)}
-                          />
-                        </PanelSectionRow>
+                        <Focusable
+                          onButtonDown={(evt: GamepadEvent) => {
+                            if (evt.detail.button === GamepadButton.SECONDARY)
+                              toggleFavorite(variable.env, tVars(variable.title), defaultVal);
+                          }}
+                          onSecondaryActionDescription={
+                            favorites.some((f) => f.env === variable.env)
+                              ? tCommon("remove_from_favorite")
+                              : tCommon("add_to_favorite")
+                          }
+                        >
+                          <PanelSectionRow>
+                            <ToggleField
+                              label={label}
+                              checked={isActive}
+                              onChange={() => toggleVar(variable.env, defaultVal)}
+                            />
+                          </PanelSectionRow>
+                        </Focusable>
                         {isActive && !isSimple && (
                           <Focusable
                             style={{
@@ -452,19 +470,26 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
               {customVariables.map((cv) => (
-                <PanelSectionRow key={cv.id}>
-                  <ToggleField
-                    label={cv.name}
-                    checked={draft[cv.env] !== undefined}
-                    onChange={() => toggleVar(cv.env, cv.value)}
-                    {...({
-                      onSecondaryButton: () => toggleFavorite(cv.env, cv.name, cv.value),
-                      onSecondaryActionDescription: favorites.some((f) => f.env === cv.env)
-                        ? tCommon("remove_from_favorite")
-                        : tCommon("add_to_favorite"),
-                    } as any)}
-                  />
-                </PanelSectionRow>
+                <Focusable
+                  key={cv.id}
+                  onButtonDown={(evt: GamepadEvent) => {
+                    if (evt.detail.button === GamepadButton.SECONDARY)
+                      toggleFavorite(cv.env, cv.name, cv.value);
+                  }}
+                  onSecondaryActionDescription={
+                    favorites.some((f) => f.env === cv.env)
+                      ? tCommon("remove_from_favorite")
+                      : tCommon("add_to_favorite")
+                  }
+                >
+                  <PanelSectionRow>
+                    <ToggleField
+                      label={cv.name}
+                      checked={draft[cv.env] !== undefined}
+                      onChange={() => toggleVar(cv.env, cv.value)}
+                    />
+                  </PanelSectionRow>
+                </Focusable>
               ))}
             </PanelSection>
           )}

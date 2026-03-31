@@ -1,5 +1,6 @@
 import React from "react";
-import { ConfirmModal, showModal } from "@decky/ui";
+import { ConfirmModal, DialogBodyText, DialogControlsSection, DialogHeader, Focusable, ModalRoot, showModal } from "@decky/ui";
+import { ActionButton } from "../components/ActionButton";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { SteamGame } from "../data/types";
@@ -57,16 +58,26 @@ const DeleteWrapperModal: React.FC<{
   const { t } = useTranslation("game_manager");
   const { t: tCommon } = useTranslation("common");
   return (
-    <ConfirmModal
-      closeModal={closeModal}
-      bDestructiveWarning={true}
-      strTitle={t("delete_wrapper_title")}
-      strDescription={t("delete_wrapper_description", { game_name: game.name })}
-      strOKButtonText={tCommon("cancel")}
-      strCancelButtonText={t("delete_wrapper_confirm")}
-      onOK={() => closeModal?.()}
-      onCancel={() => { onConfirm(); closeModal?.(); }}
-    />
+    <ModalRoot closeModal={closeModal}>
+      <DialogHeader>{t("delete_wrapper_title")}</DialogHeader>
+      <DialogBodyText>
+        {t("delete_wrapper_description", { game_name: game.name })}
+      </DialogBodyText>
+      <DialogControlsSection>
+        <Focusable flow-children="horizontal" style={{ display: "flex", gap: "8px" }}>
+          <ActionButton width="50%" onClick={() => closeModal?.()}>
+            {tCommon("cancel")}
+          </ActionButton>
+          <ActionButton
+            variant="danger"
+            width="50%"
+            onClick={() => { onConfirm(); closeModal?.(); }}
+          >
+            {t("delete_wrapper_confirm")}
+          </ActionButton>
+        </Focusable>
+      </DialogControlsSection>
+    </ModalRoot>
   );
 };
 
