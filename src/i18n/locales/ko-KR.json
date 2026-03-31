@@ -105,9 +105,25 @@
     "saving": "저장 중...",
     "error_save": "저장 오류",
     "configured": "구성됨",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "프로필 활성 · wrapper 설치됨",
+    "legend_configured": "프로필 활성 · wrapper 없음",
     "script_outdated": "스크립트 업데이트가 필요합니다. 변경 사항을 적용하려면 재설치하세요.",
-    "reinstall_script": "스크립트 재설치"
+    "reinstall_script": "스크립트 재설치",
+    "add_wrapper": "Wrapper 추가",
+    "remove_wrapper": "Wrapper 제거",
+    "wrapper_added": "Wrapper가 추가되었습니다",
+    "wrapper_removed": "Wrapper가 제거되었습니다",
+    "wrapper_error": "Wrapper 업데이트에 실패했습니다",
+    "legend_wrapper": "프로필 없음 · wrapper 활성",
+    "restart_steam_title": "Steam 재시작",
+    "restart_steam_body": "실행 옵션이 업데이트되었습니다. 변경 사항을 적용하려면 Steam을 재시작하세요.",
+    "restart_steam_non_steam_body": "변경 사항을 적용하려면 Steam을 재시작하세요.",
+    "ok": "확인",
+    "restart_steam_btn": "Steam 재시작",
+    "delete_wrapper_title": "Wrapper 제거",
+    "delete_wrapper_description": "{{game_name}}에서 Wrapper를 제거하시겠습니까?",
+    "delete_wrapper_confirm": "제거",
+    "show_command": "명령어 보기",
+    "hide_command": "명령어 숨기기"
   }
 }

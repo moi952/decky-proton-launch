@@ -105,9 +105,25 @@
     "saving": "Speichern...",
     "error_save": "Speicherfehler",
     "configured": "konfiguriert",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Aktives Profil · Wrapper installiert",
+    "legend_configured": "Aktives Profil · Wrapper fehlt",
     "script_outdated": "Skript-Update erforderlich. Neu installieren, um Änderungen anzuwenden.",
-    "reinstall_script": "Skript neu installieren"
+    "reinstall_script": "Skript neu installieren",
+    "add_wrapper": "Wrapper hinzufügen",
+    "remove_wrapper": "Wrapper entfernen",
+    "wrapper_added": "Wrapper hinzugefügt",
+    "wrapper_removed": "Wrapper entfernt",
+    "wrapper_error": "Wrapper-Fehler",
+    "legend_wrapper": "Kein Profil · Wrapper aktiv",
+    "restart_steam_title": "Steam neu starten",
+    "restart_steam_body": "Startoptionen aktualisiert. Starte Steam neu, damit die Änderungen wirksam werden.",
+    "restart_steam_non_steam_body": "Starte Steam neu, damit die Änderungen wirksam werden.",
+    "ok": "Verstanden",
+    "restart_steam_btn": "Steam neu starten",
+    "delete_wrapper_title": "Wrapper entfernen",
+    "delete_wrapper_description": "Wrapper für {{game_name}} entfernen?",
+    "delete_wrapper_confirm": "Entfernen",
+    "show_command": "Befehl anzeigen",
+    "hide_command": "Befehl ausblenden"
   }
 }

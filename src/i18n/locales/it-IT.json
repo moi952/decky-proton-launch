@@ -105,9 +105,25 @@
     "saving": "salvataggio...",
     "error_save": "Errore di salvataggio",
     "configured": "configurati",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Profilo attivo · wrapper installato",
+    "legend_configured": "Profilo attivo · wrapper assente",
     "script_outdated": "Aggiornamento script richiesto. Reinstalla per applicare le modifiche.",
-    "reinstall_script": "Reinstalla script"
+    "reinstall_script": "Reinstalla script",
+    "add_wrapper": "Aggiungi wrapper",
+    "remove_wrapper": "Rimuovi wrapper",
+    "wrapper_added": "Wrapper aggiunto",
+    "wrapper_removed": "Wrapper rimosso",
+    "wrapper_error": "Errore aggiornamento wrapper",
+    "legend_wrapper": "Nessun profilo · wrapper attivo",
+    "restart_steam_title": "Riavvia Steam",
+    "restart_steam_body": "Opzioni di avvio aggiornate. Riavvia Steam per applicare le modifiche.",
+    "restart_steam_non_steam_body": "Riavvia Steam per applicare le modifiche.",
+    "ok": "Capito",
+    "restart_steam_btn": "Riavvia Steam",
+    "delete_wrapper_title": "Rimuovi wrapper",
+    "delete_wrapper_description": "Rimuovere il wrapper da {{game_name}}?",
+    "delete_wrapper_confirm": "Rimuovi",
+    "show_command": "Mostra comando",
+    "hide_command": "Nascondi comando"
   }
 }

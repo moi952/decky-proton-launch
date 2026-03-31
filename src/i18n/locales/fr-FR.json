@@ -108,6 +108,22 @@
     "legend_ready": "Profil actif · wrapper installé",
     "legend_configured": "Profil actif · wrapper absent",
     "script_outdated": "Mise à jour du script requise. Réinstallez pour appliquer les changements.",
-    "reinstall_script": "Réinstaller le script"
+    "reinstall_script": "Réinstaller le script",
+    "add_wrapper": "Ajouter le wrapper",
+    "remove_wrapper": "Retirer le wrapper",
+    "wrapper_added": "Wrapper ajouté",
+    "wrapper_removed": "Wrapper retiré",
+    "wrapper_error": "Impossible de mettre à jour le wrapper",
+    "legend_wrapper": "Sans profil · wrapper actif",
+    "restart_steam_title": "Redémarrer Steam",
+    "restart_steam_body": "Options de lancement mises à jour. Redémarrez Steam pour que les changements prennent effet.",
+    "restart_steam_non_steam_body": "Pour les raccourcis non-Steam, redémarrez Steam pour que les changements prennent effet.",
+    "ok": "Compris",
+    "restart_steam_btn": "Redémarrer Steam",
+    "delete_wrapper_title": "Supprimer le wrapper",
+    "delete_wrapper_description": "Retirer le wrapper de {{game_name}} ?",
+    "delete_wrapper_confirm": "Supprimer",
+    "show_command": "Afficher la commande",
+    "hide_command": "Masquer la commande"
   }
 }

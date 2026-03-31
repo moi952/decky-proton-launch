@@ -11,7 +11,11 @@ from .vdf import parse_text, read_binary
 from .image import is_horizontal
 from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_shortcuts_paths, get_shortcut_name
 from .profile import profiles_dir, script_path, profile_path, chown_to_user, write_profile, read_profile
-from .launch_option import LAUNCH_OPTION, set_launch_option, remove_launch_option, get_status
+from .launch_option import (
+    LAUNCH_OPTION,
+    set_launch_option, remove_launch_option, get_status,
+    set_launch_option_shortcut, remove_launch_option_shortcut,
+)
 
 
 class Plugin:
@@ -175,6 +179,82 @@ class Plugin:
             decky.logger.error(f"[delete_game_profile] {app_id}: {e}")
             return False
 
+    # ── Quick wrapper management (no profile required) ──────────────────────────
+
+    async def add_launch_option(self, app_id: int, is_shortcut: bool) -> Dict[str, Any]:
+        """Add ~/proton-launch %command% directly to a game's launch options.
+        Returns {success: bool, needs_restart: bool}."""
+        try:
+            if is_shortcut:
+                ok = set_launch_option_shortcut(app_id)
+            else:
+                ok = set_launch_option(app_id)
+            return {"success": ok, "needs_restart": ok}
+        except Exception as e:
+            decky.logger.error(f"[add_launch_option] {app_id}: {e}")
+            return {"success": False, "needs_restart": False}
+
+    async def remove_launch_option_only(self, app_id: int, is_shortcut: bool) -> bool:
+        """Remove ~/proton-launch %command% from a game's launch options (keeps profile)."""
+        try:
+            if is_shortcut:
+                return remove_launch_option_shortcut(app_id)
+            else:
+                return remove_launch_option(app_id)
+        except Exception as e:
+            decky.logger.error(f"[remove_launch_option_only] {app_id}: {e}")
+            return False
+
+    async def get_wrapper_app_ids(self) -> List[int]:
+        """Return all app_ids that have ~/proton-launch %command% in launch options."""
+        try:
+            result: List[int] = []
+
+            for user_dir in get_user_dirs():
+                lc = user_dir / "config" / "localconfig.vdf"
+                if not lc.is_file():
+                    continue
+                try:
+                    data = parse_text(lc.read_text(encoding="utf-8", errors="replace"))
+                    apps = (
+                        data.get("UserLocalConfigStore", {})
+                            .get("Software", {})
+                            .get("Valve", {})
+                            .get("Steam", {})
+                            .get("apps", {})
+                    )
+                    for app_str, app_data in apps.items():
+                        if app_str.isdigit() and LAUNCH_OPTION in app_data.get("LaunchOptions", ""):
+                            result.append(int(app_str))
+                except Exception as e:
+                    decky.logger.warning(f"[get_wrapper_app_ids] localconfig error {lc}: {e}")
+
+            for sc_path in get_shortcuts_paths():
+                try:
+                    raw = sc_path.read_bytes()
+                    nodes, _ = read_binary(raw, 0)
+                    for tag, key, children in nodes:
+                        if tag == 0x00 and key.lower() == "shortcuts":
+                            for etag, _, efields in children:
+                                if etag != 0x00:
+                                    continue
+                                appid_val = None
+                                lo = ""
+                                for f in efields:
+                                    if f[0] == 0x02 and f[1].lower() == "appid":
+                                        appid_val = f[2] & 0xFFFFFFFF
+                                    elif f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                        lo = f[2]
+                                if appid_val is not None and LAUNCH_OPTION in lo:
+                                    result.append(appid_val)
+                except Exception as e:
+                    decky.logger.warning(f"[get_wrapper_app_ids] shortcuts error {sc_path}: {e}")
+
+            return result
+        except Exception as e:
+            decky.logger.error(f"[get_wrapper_app_ids] {e}")
+            return []
+
     async def get_configured_apps(self) -> List[int]:
         try:
             return [
@@ -301,6 +381,37 @@ class Plugin:
 
     async def get_launch_option_status(self, app_id: int) -> str:
         return get_status(app_id)
+
+    async def get_wrapper_status(self, app_id: int, is_shortcut: bool) -> bool:
+        """Return True if ~/proton-launch %command% is in this game's launch options."""
+        try:
+            if is_shortcut:
+                for sc_path in get_shortcuts_paths():
+                    try:
+                        raw = sc_path.read_bytes()
+                        nodes, _ = read_binary(raw, 0)
+                        for tag, key, children in nodes:
+                            if tag == 0x00 and key.lower() == "shortcuts":
+                                for etag, _, efields in children:
+                                    if etag != 0x00:
+                                        continue
+                                    appid_val = None
+                                    lo = ""
+                                    for f in efields:
+                                        if f[0] == 0x02 and f[1].lower() == "appid":
+                                            appid_val = f[2] & 0xFFFFFFFF
+                                        elif f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                            lo = f[2]
+                                    if appid_val == app_id:
+                                        return LAUNCH_OPTION in lo
+                    except Exception as e:
+                        decky.logger.warning(f"[get_wrapper_status] shortcuts error {sc_path}: {e}")
+                return False
+            else:
+                return LAUNCH_OPTION in get_status(app_id)
+        except Exception as e:
+            decky.logger.error(f"[get_wrapper_status] {app_id}: {e}")
+            return False
 
     # ── Running game ────────────────────────────────────────────────────────────
 

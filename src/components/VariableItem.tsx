@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { PanelSectionRow, DialogButton, Focusable } from "@decky/ui";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { ActionButton } from "./ActionButton";
+import { InlineConfirm } from "./InlineConfirm";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
-import { ButtonDeleteFavoriteModal } from "./ButtonDeleteFavoriteModal";
 import { ButtonDeleteCustomVariableModal } from "./ButtonDeleteCustomVariableModal";
 import { useTranslation } from "react-i18next";
-import { FiPlus, FiCopy, FiStar, FiSliders } from "react-icons/fi";
+import { FiPlus, FiCopy, FiStar, FiSliders, FiTrash } from "react-icons/fi";
 import { Variable } from "../data/types";
 import { useVariableActions } from "../hook/useVariableActions";
+import { useFavorites } from "../context/FavoritesContext";
 import {
   openFavoriteModal,
-  openDeleteFavoriteModal,
   openDeleteCustomVariableModal,
 } from "../utils/modals";
 import GamepadLabel from "./GamepadLabel";
@@ -36,9 +36,12 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   customId,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState(false);
   const { t } = useTranslation();
   const { t: tVariables } = useTranslation("variables");
   const { t: tButtons } = useTranslation("buttons");
+  const { t: tFavModal } = useTranslation("delete_favorite_modal");
+  const { removeFavorite } = useFavorites();
 
   const getInitialValue = () => {
     if (variable?.type === "enum") return variable.defaultValue;
@@ -55,7 +58,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
 
   const handleFavoriteModal = () => {
     if (isFavorite) {
-      openDeleteFavoriteModal(title);
+      setPendingDelete(true);
     } else if (isCustom && customId) {
       openDeleteCustomVariableModal(customId, title);
     } else {
@@ -130,7 +133,12 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   };
 
   const renderActionButton = () => {
-    if (isFavorite) return <ButtonDeleteFavoriteModal title={title} />;
+    if (isFavorite)
+      return (
+        <ActionButton size="small" variant="danger" onClick={() => setPendingDelete(true)}>
+          <FiTrash />
+        </ActionButton>
+      );
     if (isCustom && customId)
       return <ButtonDeleteCustomVariableModal id={customId} name={title} />;
     return (
@@ -173,7 +181,21 @@ export const VariableItem: React.FC<VariableItemProps> = ({
         )}
       </DialogButton>
 
-      {expanded && (
+      {pendingDelete && (
+        <PanelSectionRow>
+          <InlineConfirm
+            description={tFavModal("description", { favorite_name: title })}
+            size="small"
+            onCancel={() => setPendingDelete(false)}
+            onConfirm={() => {
+              removeFavorite(title);
+              setPendingDelete(false);
+            }}
+          />
+        </PanelSectionRow>
+      )}
+
+      {expanded && !pendingDelete && (
         <PanelSectionRow>
           <div
             style={{

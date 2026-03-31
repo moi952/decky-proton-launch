@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { SearchField } from "../components/SearchField";
 import { Focusable } from "@decky/ui";
-import { call, toaster } from "@decky/api";
+import { call } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameRow } from "../components/GameRow";
-import { FiCopy, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiLink } from "react-icons/fi";
 import { FaCircleNotch, FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
 import { SteamGame, ScriptStatus } from "../data/types";
+
+import { toggleWrapper } from "../utils/wrapperAction";
 
 export type { SteamGame };
 
@@ -17,31 +19,6 @@ interface GamesPickerViewProps {
   onScriptInstalled: () => void;
 }
 
-const copyToClipboard = (text: string) => {
-  try {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-    } else {
-      fallbackCopy(text);
-    }
-  } catch {
-    fallbackCopy(text);
-  }
-};
-
-const fallbackCopy = (text: string) => {
-  const el = document.createElement("textarea");
-  el.value = text;
-  el.style.position = "fixed";
-  el.style.opacity = "0";
-  document.body.appendChild(el);
-  el.focus();
-  el.select();
-  try {
-    document.execCommand("copy");
-  } catch {}
-  document.body.removeChild(el);
-};
 
 interface ConfiguredAppStatus {
   appid: number;
@@ -58,15 +35,13 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [configuredStatus, setConfiguredStatus] = useState<
     Map<number, "configured" | "ready">
   >(new Map());
+  const [wrapperApps, setWrapperApps] = useState<Set<number>>(new Set());
   const [loading, setLoading] = useState(true);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
-  const [showCommand, setShowCommand] = useState(false);
   const [visibleCount, setVisibleCount] = useState(50);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingMoreRef = useRef(false);
-
-  const LAUNCH_OPTION = "~/proton-launch %command%";
 
   const reload = useCallback(() => {
     setLoading(true);
@@ -74,8 +49,9 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       call<[], SteamGame[]>("get_games"),
       call<[], ConfiguredAppStatus[]>("get_configured_apps_status"),
       call<[], ScriptStatus>("is_script_installed"),
+      call<[], number[]>("get_wrapper_app_ids"),
     ])
-      .then(([g, appStatuses, status]) => {
+      .then(([g, appStatuses, status, wrapperIds]) => {
         setGames(g);
         const map = new Map<number, "configured" | "ready">();
         for (const s of appStatuses) {
@@ -83,6 +59,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         }
         setConfiguredStatus(map);
         setScriptStatus(status);
+        setWrapperApps(new Set(wrapperIds));
       })
       .finally(() => setLoading(false));
   }, []);
@@ -104,10 +81,39 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     reload();
   }, [reload]);
 
-  const handleCopy = () => {
-    copyToClipboard(LAUNCH_OPTION);
-    toaster.toast({ title: t("copied"), body: LAUNCH_OPTION });
-  };
+  const handleQuickAdd = useCallback(
+    (game: SteamGame) => {
+      const alreadySet = wrapperApps.has(game.appid);
+      toggleWrapper(game, alreadySet, t, (nowSet) => {
+        if (nowSet) {
+          setWrapperApps((prev) => new Set([...prev, game.appid]));
+          setConfiguredStatus((prev) => {
+            if (prev.has(game.appid)) {
+              const next = new Map(prev);
+              next.set(game.appid, "ready");
+              return next;
+            }
+            return prev;
+          });
+        } else {
+          setWrapperApps((prev) => {
+            const next = new Set(prev);
+            next.delete(game.appid);
+            return next;
+          });
+          setConfiguredStatus((prev) => {
+            if (prev.get(game.appid) === "ready") {
+              const next = new Map(prev);
+              next.set(game.appid, "configured");
+              return next;
+            }
+            return prev;
+          });
+        }
+      });
+    },
+    [wrapperApps, t],
+  );
 
   const q = search.toLowerCase();
   const filtered = games.filter((g) => g.name.toLowerCase().includes(q));
@@ -163,37 +169,6 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
   return (
     <div>
-      {/* Launch command */}
-      <PanelSectionCustom>
-        {showCommand && (
-          <div
-            style={{
-              fontFamily: "monospace",
-              fontSize: 10,
-              background: "#111",
-              padding: "6px 8px",
-              borderRadius: "4px",
-              color: "#ccc",
-              wordBreak: "break-all",
-              marginBottom: "6px",
-            }}
-          >
-            {LAUNCH_OPTION}
-          </div>
-        )}
-        <ActionButton
-          onClick={handleCopy}
-          width="100%"
-          onSecondaryButton={() => setShowCommand((v) => !v)}
-          onSecondaryActionDescription={
-            showCommand ? <FiEyeOff size={14} /> : <FiEye size={14} />
-          }
-        >
-          <FiCopy size={14} />
-          <span style={{ marginLeft: 4 }}>{t("copy")}</span>
-        </ActionButton>
-      </PanelSectionCustom>
-
       {/* Script installation banner */}
       {needsAction && (
         <PanelSectionCustom>
@@ -284,6 +259,19 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                 <FaCog size={7} color="#f5a623" />
                 <span>{t("legend_configured")}</span>
               </div>
+              <div
+                style={{
+                  fontSize: 9,
+                  color: "#666",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 4,
+                  lineHeight: "1.3",
+                }}
+              >
+                <FiLink size={7} color="#29b6f6" />
+                <span>{t("legend_wrapper")}</span>
+              </div>
             </div>
             <Focusable flow-children="vertical">
               {(q ? configuredFiltered : configuredGames).map((game) => (
@@ -292,7 +280,14 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                   game={game}
                   hasProfile
                   profileStatus={configuredStatus.get(game.appid)}
+                  hasWrapper={wrapperApps.has(game.appid)}
                   onClick={() => onSelectGame(game)}
+                  onQuickAdd={() => handleQuickAdd(game)}
+                  quickAddLabel={
+                    wrapperApps.has(game.appid)
+                      ? t("remove_wrapper")
+                      : t("add_wrapper")
+                  }
                 />
               ))}
             </Focusable>
@@ -308,7 +303,14 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                 key={game.appid}
                 game={game}
                 hasProfile={false}
+                hasWrapper={wrapperApps.has(game.appid)}
                 onClick={() => onSelectGame(game)}
+                onQuickAdd={() => handleQuickAdd(game)}
+                quickAddLabel={
+                  wrapperApps.has(game.appid)
+                    ? t("remove_wrapper")
+                    : t("add_wrapper")
+                }
               />
             ))}
           </Focusable>

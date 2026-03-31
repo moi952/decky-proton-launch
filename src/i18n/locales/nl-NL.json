@@ -105,9 +105,25 @@
     "saving": "opslaan...",
     "error_save": "Opslagfout",
     "configured": "geconfigureerd",
-    "legend_ready": "Profil actif · wrapper installé",
-    "legend_configured": "Profil actif · wrapper absent",
+    "legend_ready": "Actief profiel · wrapper geïnstalleerd",
+    "legend_configured": "Actief profiel · wrapper afwezig",
     "script_outdated": "Scriptupdate vereist. Herinstalleer om wijzigingen toe te passen.",
-    "reinstall_script": "Script herinstalleren"
+    "reinstall_script": "Script herinstalleren",
+    "add_wrapper": "Wrapper toevoegen",
+    "remove_wrapper": "Wrapper verwijderen",
+    "wrapper_added": "Wrapper toegevoegd",
+    "wrapper_removed": "Wrapper verwijderd",
+    "wrapper_error": "Fout bij bijwerken wrapper",
+    "legend_wrapper": "Geen profiel · wrapper actief",
+    "restart_steam_title": "Steam herstarten",
+    "restart_steam_body": "Startopties bijgewerkt. Herstart Steam om de wijzigingen toe te passen.",
+    "restart_steam_non_steam_body": "Herstart Steam om de wijzigingen toe te passen.",
+    "ok": "Begrepen",
+    "restart_steam_btn": "Steam herstarten",
+    "delete_wrapper_title": "Wrapper verwijderen",
+    "delete_wrapper_description": "Wrapper voor {{game_name}} verwijderen?",
+    "delete_wrapper_confirm": "Verwijderen",
+    "show_command": "Commando weergeven",
+    "hide_command": "Commando verbergen"
   }
 }
