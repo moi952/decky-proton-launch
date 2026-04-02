@@ -13,7 +13,7 @@
       "launch",
       "command"
     ],
-    "description": "Manage Proton launch options easily on Steam",
-    "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/favorite_shortcuts.JPG"
+    "description": "Easily manage Proton launch options for your Steam games directly from Gaming Mode. Add wrappers, create custom commands, and quickly apply launch options without editing them manually. Perfect for tools like MangoHud, GameScope, or custom Proton configurations. Designed for convenience, flexibility, and fast iteration when tweaking game launch settings.",
+    "image": "https://raw.githubusercontent.com/moi952/decky-proton-launch/main/assets/options_states.jpeg"
   }
 }
