@@ -1,5 +1,9 @@
 # decky-proton-launch
 
+![GitHub Downloads](https://img.shields.io/github/downloads/moi952/decky-proton-launch/total)
+![Downloads latest](https://img.shields.io/github/downloads/moi952/decky-proton-launch/latest/total)
+![Stars](https://img.shields.io/github/stars/moi952/decky-proton-launch)
+
 **Manage Proton launch options easily on your Steam Deck via Decky Loader.**
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
@@ -9,10 +13,12 @@ Decky Proton Launch provides a simple, intuitive interface to enable commonly us
 ## Screenshots
 
 ### Variable list & selection
+
 ![Favorite shortcuts](./assets/favorite_shortcuts.JPG)
 ![Multiple choice](./assets/multiple_choice.JPG)
 
 ### Per-game configuration
+
 Click on any game to open its profile and configure launch options individually. Changes apply on next game launch.
 
 ![Game detail page](./assets/game_page_detail.JPG)
@@ -22,16 +28,19 @@ When an option is enabled, you can instantly switch its value between **Enable**
 ![Option states](./assets/options_states.jpeg)
 
 ### Running game detection
+
 The plugin automatically detects the currently running game and shows it at the top — click it to jump directly to its settings.
 
 ![Running game](./assets/played_game.JPG)
 
 ### Settings
+
 The settings view lets you choose the default home tab (variable list or game manager) and toggle the visibility of each variable category to keep only what's relevant to you.
 
 ![Settings](./assets/settings.jpeg)
 
 ### Update notifications
+
 When a new version is available, a banner appears at the top with a direct link to download it.
 
 ![Update button](./assets/update_button.JPG)
