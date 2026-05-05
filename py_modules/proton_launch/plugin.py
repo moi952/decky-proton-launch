@@ -10,7 +10,7 @@ import decky
 from .vdf import parse_text, read_binary
 from .image import is_horizontal
 from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_shortcuts_paths, get_shortcut_name
-from .profile import profiles_dir, script_path, profile_path, chown_to_user, write_profile, read_profile
+from .profile import profiles_dir, script_path, profile_path, write_profile, read_profile
 from .launch_option import (
     LAUNCH_OPTION,
     set_launch_option, remove_launch_option, get_status,
@@ -99,8 +99,6 @@ class Plugin:
         try:
             pd = profiles_dir()
             pd.mkdir(parents=True, exist_ok=True)
-            chown_to_user(pd)
-            chown_to_user(pd.parent)
 
             sp = script_path()
             sp.write_text(
@@ -142,7 +140,6 @@ class Plugin:
                 encoding="utf-8",
             )
             os.chmod(sp, 0o755)
-            chown_to_user(sp)
             decky.logger.info(f"[install_script] written to {sp}")
             return True
         except Exception as e:
@@ -157,7 +154,6 @@ class Plugin:
     async def set_game_profile(self, app_id: int, env_vars: Dict[str, str], game_name: str) -> bool:
         try:
             write_profile(app_id, env_vars, game_name)
-            chown_to_user(profile_path(app_id))
             decky.logger.info(f"[set_game_profile] {app_id} — {len(env_vars)} vars")
             if not app_id >> 25:
                 set_launch_option(app_id)

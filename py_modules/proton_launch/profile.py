@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from typing import Dict
 
@@ -15,15 +14,6 @@ def script_path() -> Path:
 
 def profile_path(app_id: int) -> Path:
     return profiles_dir() / f"{app_id}.env"
-
-
-def chown_to_user(path: Path) -> None:
-    """Set ownership to the actual Steam Deck user (owner of DECKY_USER_HOME)."""
-    try:
-        home_stat = Path(decky.DECKY_USER_HOME).stat()
-        os.chown(path, home_stat.st_uid, home_stat.st_gid)
-    except Exception as e:
-        decky.logger.warning(f"[chown] {path}: {e}")
 
 
 def sanitize_comment(text: str) -> str:

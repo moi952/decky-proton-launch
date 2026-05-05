@@ -7,7 +7,6 @@ import decky
 
 from .vdf import parse_text, serialize_text, read_binary, write_binary
 from .steam import get_user_dirs, get_shortcuts_paths
-from .profile import chown_to_user
 
 
 LAUNCH_OPTION = "~/proton-launch %command%"
@@ -75,7 +74,6 @@ def set_launch_option(app_id: int) -> bool:
 
         shutil.copy2(lc, lc.with_suffix(".vdf.bak"))
         lc.write_text(serialize_text(data), encoding="utf-8")
-        chown_to_user(lc)
         decky.logger.info(f"[launch_option] set for app {app_id} in {lc}")
         return True
     except Exception as e:
@@ -106,7 +104,6 @@ def remove_launch_option(app_id: int) -> bool:
 
         shutil.copy2(lc, lc.with_suffix(".vdf.bak"))
         lc.write_text(serialize_text(data), encoding="utf-8")
-        chown_to_user(lc)
         decky.logger.info(f"[launch_option] removed for app {app_id} in {lc}")
         return True
     except Exception as e:
@@ -166,7 +163,6 @@ def set_launch_option_shortcut(app_id: int) -> bool:
             if modified:
                 shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
                 sc_path.write_bytes(write_binary(new_top))
-                chown_to_user(sc_path)
                 decky.logger.info(f"[launch_option] shortcut set for app {app_id} in {sc_path}")
                 return True
         except Exception as e:
@@ -213,7 +209,6 @@ def remove_launch_option_shortcut(app_id: int) -> bool:
             if modified:
                 shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
                 sc_path.write_bytes(write_binary(new_top))
-                chown_to_user(sc_path)
                 decky.logger.info(f"[launch_option] shortcut removed for app {app_id} in {sc_path}")
                 return True
         except Exception as e:
