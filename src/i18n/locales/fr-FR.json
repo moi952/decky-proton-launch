@@ -59,7 +59,8 @@
     "settings_categories": "Catégories visibles",
     "default_home": "Accueil par défaut",
     "default_home_game_manager": "Ouvrir sur le gestionnaire de jeux",
-    "default_home_vars": "Liste des variables"
+    "default_home_vars": "Liste des variables",
+    "default_home_global_commands": "Commandes globales"
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "Retirer le wrapper de {{game_name}} ?",
     "delete_wrapper_confirm": "Supprimer",
     "show_command": "Afficher la commande",
-    "hide_command": "Masquer la commande"
+    "hide_command": "Masquer la commande",
+    "global_active_hint": "Activée par les commandes globales",
+    "global_disabled_hint": "Désactivée pour ce jeu — toujours active globalement",
+    "global_commands": "Commandes globales"
+  },
+  "global_commands_view": {
+    "title": "Commandes globales",
+    "description": "Ces commandes s'appliquent à tous les jeux disposant du wrapper. Ouvrez la fiche d'un jeu pour en désactiver une uniquement pour celui-ci.",
+    "loading": "Chargement...",
+    "saving": "enregistrement...",
+    "error_save": "Erreur d'enregistrement"
   }
 }

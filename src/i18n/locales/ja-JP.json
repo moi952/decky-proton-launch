@@ -59,7 +59,8 @@
     "settings_categories": "表示するカテゴリー",
     "default_home": "デフォルトホーム",
     "default_home_game_manager": "ゲームマネージャーを開く",
-    "default_home_vars": "変数リスト"
+    "default_home_vars": "変数リスト",
+    "default_home_global_commands": "Global commands"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "{{game_name}}のWrapperを削除しますか？",
     "delete_wrapper_confirm": "削除",
     "show_command": "コマンドを表示",
-    "hide_command": "コマンドを非表示"
+    "hide_command": "コマンドを非表示",
+    "global_active_hint": "Enabled by global commands",
+    "global_disabled_hint": "Disabled for this game — still active globally",
+    "global_commands": "Global commands"
+  },
+  "global_commands_view": {
+    "title": "Global commands",
+    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
+    "loading": "Loading...",
+    "saving": "saving...",
+    "error_save": "Save error"
   }
 }

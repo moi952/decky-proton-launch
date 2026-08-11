@@ -59,7 +59,8 @@
     "settings_categories": "Visible categories",
     "default_home": "Default home",
     "default_home_game_manager": "Open on game manager",
-    "default_home_vars": "Variable list"
+    "default_home_vars": "Variable list",
+    "default_home_global_commands": "Global commands"
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "Remove the wrapper from {{game_name}}?",
     "delete_wrapper_confirm": "Remove",
     "show_command": "Show command",
-    "hide_command": "Hide command"
+    "hide_command": "Hide command",
+    "global_active_hint": "Enabled by global commands",
+    "global_disabled_hint": "Disabled for this game — still active globally",
+    "global_commands": "Global commands"
+  },
+  "global_commands_view": {
+    "title": "Global commands",
+    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
+    "loading": "Loading...",
+    "saving": "saving...",
+    "error_save": "Save error"
   }
 }

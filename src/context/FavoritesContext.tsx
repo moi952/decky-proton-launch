@@ -1,12 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { call } from "@decky/api";
 
 export interface Favorite {
   name: string;
   value: string;
   env?: string;
 }
-
-const STORAGE_KEY = "deck-proton-launch-favorites";
 
 interface FavoritesContextValue {
   favorites: Favorite[];
@@ -22,27 +21,24 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setFavorites(JSON.parse(stored));
-    } catch {}
+    call<[], Favorite[]>("get_favorites")
+      .then((data) => setFavorites(data ?? []))
+      .catch(() => {});
   }, []);
 
-  const save = (favs: Favorite[]) => {
+  const persist = (favs: Favorite[]) => {
     setFavorites(favs);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(favs));
-    } catch {}
+    call<[Favorite[]], boolean>("set_favorites", favs).catch(() => {});
   };
 
   const addFavorite = (fav: Favorite) => {
     if (favorites.some((f) => f.name === fav.name)) return false;
-    save([...favorites, fav]);
+    persist([...favorites, fav]);
     return true;
   };
 
   const removeFavorite = (name: string) => {
-    save(favorites.filter((f) => f.name !== name));
+    persist(favorites.filter((f) => f.name !== name));
   };
 
   return (

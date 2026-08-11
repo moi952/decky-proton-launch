@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { call } from "@decky/api";
 
 export interface CustomVariable {
   id: string;
@@ -6,8 +7,6 @@ export interface CustomVariable {
   env: string;
   value: string;
 }
-
-const STORAGE_KEY = "deck-proton-launch-custom-variables";
 
 interface CustomVariablesContextValue {
   customVariables: CustomVariable[];
@@ -25,22 +24,21 @@ export const CustomVariablesProvider: React.FC<{
   const [customVariables, setCustomVariables] = useState<CustomVariable[]>([]);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setCustomVariables(JSON.parse(stored));
-    } catch {}
+    call<[], CustomVariable[]>("get_custom_variables")
+      .then((data) => setCustomVariables(data ?? []))
+      .catch(() => {});
   }, []);
 
-  const save = (vars: CustomVariable[]) => {
+  const persist = (vars: CustomVariable[]) => {
     setCustomVariables(vars);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(vars));
-    } catch {}
+    call<[CustomVariable[]], boolean>("set_custom_variables", vars).catch(
+      () => {},
+    );
   };
 
   const addCustomVariable = (variable: Omit<CustomVariable, "id">) => {
     if (customVariables.some((v) => v.name === variable.name)) return false;
-    save([...customVariables, { ...variable, id: crypto.randomUUID() }]);
+    persist([...customVariables, { ...variable, id: crypto.randomUUID() }]);
     return true;
   };
 
@@ -48,11 +46,11 @@ export const CustomVariablesProvider: React.FC<{
     id: string,
     updated: Omit<CustomVariable, "id">,
   ) => {
-    save(customVariables.map((v) => (v.id === id ? { ...updated, id } : v)));
+    persist(customVariables.map((v) => (v.id === id ? { ...updated, id } : v)));
   };
 
   const removeCustomVariable = (id: string) => {
-    save(customVariables.filter((v) => v.id !== id));
+    persist(customVariables.filter((v) => v.id !== id));
   };
 
   return (
