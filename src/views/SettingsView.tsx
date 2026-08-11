@@ -52,8 +52,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
                 data: "game-manager",
                 label: tSettings("default_home_game_manager"),
               },
+              {
+                data: "global-commands",
+                label: tSettings("default_home_global_commands"),
+              },
             ]}
             selectedOption={defaultHome}
+            layout="below"
+            renderButtonValue={(value) => (
+              <span
+                style={{
+                  display: "block",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {value}
+              </span>
+            )}
+            {...({ childrenContainerWidth: "max" } as any)}
             onChange={(opt) => setDefaultHome(opt.data)}
           />
         </PanelSectionRow>

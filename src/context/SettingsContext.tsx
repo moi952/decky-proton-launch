@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { call } from "@decky/api";
 
-const STORAGE_KEY = "deck-proton-launch-settings";
-const HOME_KEY = "deck-proton-launch-default-home";
+export type DefaultHome = "home" | "game-manager" | "global-commands";
 
-export type DefaultHome = "home" | "game-manager";
+interface UiSettings {
+  hiddenCategories?: string[];
+  defaultHome?: DefaultHome;
+}
 
 interface SettingsContextValue {
   hiddenCategories: Set<string>;
@@ -11,6 +14,7 @@ interface SettingsContextValue {
   isCategoryVisible: (category: string) => boolean;
   defaultHome: DefaultHome;
   setDefaultHome: (v: DefaultHome) => void;
+  settingsLoaded: boolean;
 }
 
 const SettingsContext = createContext<SettingsContextValue | null>(null);
@@ -21,22 +25,31 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [hiddenCategories, setHiddenCategories] = useState<Set<string>>(
     new Set(),
   );
-  const [defaultHome, setDefaultHomeState] = useState<DefaultHome>("game-manager");
+  const [defaultHome, setDefaultHomeState] =
+    useState<DefaultHome>("game-manager");
+  const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setHiddenCategories(new Set(JSON.parse(stored)));
-      const storedHome = localStorage.getItem(HOME_KEY) as DefaultHome | null;
-      if (storedHome) setDefaultHomeState(storedHome);
-    } catch {}
+    call<[], UiSettings>("get_ui_settings")
+      .then((data) => {
+        if (data.hiddenCategories) {
+          setHiddenCategories(new Set(data.hiddenCategories));
+        }
+        if (data.defaultHome) setDefaultHomeState(data.defaultHome);
+      })
+      .catch(() => {})
+      .finally(() => setSettingsLoaded(true));
   }, []);
 
-  const save = (next: Set<string>) => {
-    setHiddenCategories(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify([...next]));
-    } catch {}
+  const persist = (next: {
+    hiddenCategories?: Set<string>;
+    defaultHome?: DefaultHome;
+  }) => {
+    const payload: UiSettings = {
+      hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
+      defaultHome: next.defaultHome ?? defaultHome,
+    };
+    call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
 
   const toggleCategory = (category: string) => {
@@ -46,7 +59,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       next.add(category);
     }
-    save(next);
+    setHiddenCategories(next);
+    persist({ hiddenCategories: next });
   };
 
   const isCategoryVisible = (category: string) =>
@@ -54,9 +68,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const setDefaultHome = (v: DefaultHome) => {
     setDefaultHomeState(v);
-    try {
-      localStorage.setItem(HOME_KEY, v);
-    } catch {}
+    persist({ defaultHome: v });
   };
 
   return (
@@ -67,6 +79,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         isCategoryVisible,
         defaultHome,
         setDefaultHome,
+        settingsLoaded,
       }}
     >
       {children}

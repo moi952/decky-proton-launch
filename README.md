@@ -33,9 +33,13 @@ The plugin automatically detects the currently running game and shows it at the 
 
 ![Running game](./assets/played_game.JPG)
 
+### Global commands
+
+Set commands once from the globe icon in the top bar and they apply to every game that has the wrapper installed — no need to configure each game individually. Open any game's page to disable a specific globally-enabled command just for that game, without touching the global setting.
+
 ### Settings
 
-The settings view lets you choose the default home tab (variable list or game manager) and toggle the visibility of each variable category to keep only what's relevant to you.
+The settings view lets you choose the default home tab (variable list, game manager, or global commands) and toggle the visibility of each variable category to keep only what's relevant to you.
 
 ![Settings](./assets/settings.jpeg)
 
@@ -50,7 +54,9 @@ When a new version is available, a banner appears at the top with a direct link 
 ## Features
 
 - **Predefined Proton variables**: FSR4, DLSS4, XeSS, DXVK Async, ESYNC/FSYNC, MangoHud, and more
+- **Global commands**: enable commands once for every game with the wrapper, with per-game override to disable one individually
 - **Per-game profiles**: configure and save launch options per game
+- **Favorites with full controls**: pinned commands keep their enable/disable toggle and enum value picker, right at the top
 - **Running game detection**: instantly jump to the settings of the game you're playing
 - **Wrapper script**: copy the `~/proton-launch %command%` wrapper or install it with one click
 - **Category visibility**: show or hide variable categories from the settings view

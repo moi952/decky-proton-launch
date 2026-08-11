@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Focusable } from "@decky/ui";
-import { FiSettings, FiList, FiPlay, FiCopy } from "react-icons/fi";
+import { FiSettings, FiList, FiPlay, FiCopy, FiGlobe } from "react-icons/fi";
 import { ActionButton } from "./ActionButton";
 import PanelSectionCustom from "./PanelSectionCustom";
 import { ScriptStatus } from "../data/types";
@@ -13,6 +13,7 @@ interface NavBarProps {
   scriptStatus: ScriptStatus;
   onHome: () => void;
   onGamesManager: () => void;
+  onGlobalCommands: () => void;
   onSettings: () => void;
   onCopyWrapper: () => void;
 }
@@ -22,6 +23,7 @@ export const NavBar: React.FC<NavBarProps> = ({
   scriptStatus,
   onHome,
   onGamesManager,
+  onGlobalCommands,
   onSettings,
   onCopyWrapper,
 }) => {
@@ -44,6 +46,12 @@ export const NavBar: React.FC<NavBarProps> = ({
             <FiPlay size={16} />
           </ActionButton>
         </div>
+        <ActionButton
+          onClick={onGlobalCommands}
+          onOKActionDescription={t("global_commands")}
+        >
+          <FiGlobe size={16} />
+        </ActionButton>
         <div style={{ flex: 1 }} />
         {scriptStatus === "current" && (
           <span

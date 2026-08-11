@@ -59,7 +59,8 @@
     "settings_categories": "Zichtbare categorieën",
     "default_home": "Standaard startpagina",
     "default_home_game_manager": "Openen in spelbeheer",
-    "default_home_vars": "Variabelenlijst"
+    "default_home_vars": "Variabelenlijst",
+    "default_home_global_commands": "Global commands"
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "Wrapper voor {{game_name}} verwijderen?",
     "delete_wrapper_confirm": "Verwijderen",
     "show_command": "Commando weergeven",
-    "hide_command": "Commando verbergen"
+    "hide_command": "Commando verbergen",
+    "global_active_hint": "Enabled by global commands",
+    "global_disabled_hint": "Disabled for this game — still active globally",
+    "global_commands": "Global commands"
+  },
+  "global_commands_view": {
+    "title": "Global commands",
+    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
+    "loading": "Loading...",
+    "saving": "saving...",
+    "error_save": "Save error"
   }
 }

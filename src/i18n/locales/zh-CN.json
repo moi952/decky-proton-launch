@@ -59,7 +59,8 @@
     "settings_categories": "显示的分类",
     "default_home": "默认主页",
     "default_home_game_manager": "在游戏管理器中打开",
-    "default_home_vars": "变量列表"
+    "default_home_vars": "变量列表",
+    "default_home_global_commands": "Global commands"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "从 {{game_name}} 移除 Wrapper？",
     "delete_wrapper_confirm": "移除",
     "show_command": "显示命令",
-    "hide_command": "隐藏命令"
+    "hide_command": "隐藏命令",
+    "global_active_hint": "Enabled by global commands",
+    "global_disabled_hint": "Disabled for this game — still active globally",
+    "global_commands": "Global commands"
+  },
+  "global_commands_view": {
+    "title": "Global commands",
+    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
+    "loading": "Loading...",
+    "saving": "saving...",
+    "error_save": "Save error"
   }
 }

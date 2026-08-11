@@ -59,7 +59,8 @@
     "settings_categories": "표시할 카테고리",
     "default_home": "기본 홈",
     "default_home_game_manager": "게임 관리자 열기",
-    "default_home_vars": "변수 목록"
+    "default_home_vars": "변수 목록",
+    "default_home_global_commands": "Global commands"
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -124,6 +125,16 @@
     "delete_wrapper_description": "{{game_name}}에서 Wrapper를 제거하시겠습니까?",
     "delete_wrapper_confirm": "제거",
     "show_command": "명령어 보기",
-    "hide_command": "명령어 숨기기"
+    "hide_command": "명령어 숨기기",
+    "global_active_hint": "Enabled by global commands",
+    "global_disabled_hint": "Disabled for this game — still active globally",
+    "global_commands": "Global commands"
+  },
+  "global_commands_view": {
+    "title": "Global commands",
+    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
+    "loading": "Loading...",
+    "saving": "saving...",
+    "error_save": "Save error"
   }
 }

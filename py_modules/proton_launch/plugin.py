@@ -10,7 +10,10 @@ import decky
 from .vdf import parse_text, read_binary
 from .image import is_horizontal
 from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_shortcuts_paths, get_shortcut_name
-from .profile import profiles_dir, script_path, profile_path, write_profile, read_profile
+from .profile import (
+    profiles_dir, script_path, profile_path, write_profile, read_profile,
+    read_profile_full, write_global_profile, read_global_profile,
+)
 from .launch_option import (
     LAUNCH_OPTION,
     set_launch_option, remove_launch_option, get_status,
@@ -78,7 +81,7 @@ class Plugin:
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v4"
+    SCRIPT_VERSION = "v5"
 
     async def is_script_installed(self) -> str:
         """Return 'current', 'outdated', or 'missing'."""
@@ -112,6 +115,12 @@ class Plugin:
                 "APPID=\"${SteamAppId:-${STEAM_APPID:-${STEAM_COMPAT_APP_ID:-}}}\"\n"
                 "echo \"[proton-launch] resolved APPID=${APPID}\" >> \"${LOG}\"\n"
                 "PROFILE=\"${HOME}/.config/decky-proton-launch/profiles/${APPID}.env\"\n"
+                "GLOBAL_PROFILE=\"${HOME}/.config/decky-proton-launch/profiles/_global.env\"\n"
+                "if [ -f \"${GLOBAL_PROFILE}\" ]; then\n"
+                "    echo \"[proton-launch] APPLYING global commands\" >> \"${LOG}\"\n"
+                "    grep '^export ' \"${GLOBAL_PROFILE}\" >> \"${LOG}\"\n"
+                "    source \"${GLOBAL_PROFILE}\"\n"
+                "fi\n"
                 "echo \"[proton-launch] looking for profile: ${PROFILE}\" >> \"${LOG}\"\n"
                 "if [ -n \"${APPID}\" ] && [ -f \"${PROFILE}\" ]; then\n"
                 "    echo \"[proton-launch] APPLYING profile for appid=${APPID}\" >> \"${LOG}\"\n"
@@ -148,13 +157,23 @@ class Plugin:
 
     # ── Profile management ──────────────────────────────────────────────────────
 
-    async def get_game_profile(self, app_id: int) -> Dict[str, str]:
-        return read_profile(app_id)
+    async def get_game_profile(self, app_id: int) -> Dict[str, Any]:
+        env_vars, disabled_globals = read_profile_full(app_id)
+        return {"vars": env_vars, "disabled_globals": disabled_globals}
 
-    async def set_game_profile(self, app_id: int, env_vars: Dict[str, str], game_name: str) -> bool:
+    async def set_game_profile(
+        self,
+        app_id: int,
+        env_vars: Dict[str, str],
+        game_name: str,
+        disabled_globals: Optional[List[str]] = None,
+    ) -> bool:
         try:
-            write_profile(app_id, env_vars, game_name)
-            decky.logger.info(f"[set_game_profile] {app_id} — {len(env_vars)} vars")
+            write_profile(app_id, env_vars, game_name, disabled_globals or [])
+            decky.logger.info(
+                f"[set_game_profile] {app_id} — {len(env_vars)} vars, "
+                f"{len(disabled_globals or [])} disabled globals"
+            )
             if not app_id >> 25:
                 set_launch_option(app_id)
             return True
@@ -173,6 +192,20 @@ class Plugin:
             return True
         except Exception as e:
             decky.logger.error(f"[delete_game_profile] {app_id}: {e}")
+            return False
+
+    # ── Global commands (applied to every game with the wrapper) ───────────────
+
+    async def get_global_profile(self) -> Dict[str, str]:
+        return read_global_profile()
+
+    async def set_global_profile(self, env_vars: Dict[str, str]) -> bool:
+        try:
+            write_global_profile(env_vars)
+            decky.logger.info(f"[set_global_profile] {len(env_vars)} vars")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_global_profile] {e}")
             return False
 
     # ── Quick wrapper management (no profile required) ──────────────────────────
@@ -616,6 +649,75 @@ class Plugin:
             return True
         except Exception as e:
             decky.logger.error(f"[clear_variables_cache] {e}")
+            return False
+
+    # ── Frontend settings & favorites (backend-persisted — browser localStorage
+    # isn't reliable across Decky/Steam sessions on this plugin's frontend) ────
+
+    def _settings_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "ui_settings.json"
+
+    def _favorites_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "favorites.json"
+
+    async def get_ui_settings(self) -> Dict[str, Any]:
+        try:
+            path = self._settings_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_ui_settings] {e}")
+        return {}
+
+    async def set_ui_settings(self, data: Dict[str, Any]) -> bool:
+        try:
+            path = self._settings_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_ui_settings] {e}")
+            return False
+
+    async def get_favorites(self) -> List[Dict[str, Any]]:
+        try:
+            path = self._favorites_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_favorites] {e}")
+        return []
+
+    async def set_favorites(self, data: List[Dict[str, Any]]) -> bool:
+        try:
+            path = self._favorites_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_favorites] {e}")
+            return False
+
+    def _custom_variables_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "custom_variables.json"
+
+    async def get_custom_variables(self) -> List[Dict[str, Any]]:
+        try:
+            path = self._custom_variables_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_custom_variables] {e}")
+        return []
+
+    async def set_custom_variables(self, data: List[Dict[str, Any]]) -> bool:
+        try:
+            path = self._custom_variables_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_custom_variables] {e}")
             return False
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────
