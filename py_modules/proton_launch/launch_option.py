@@ -9,7 +9,11 @@ from .vdf import parse_text, serialize_text, read_binary, write_binary
 from .steam import get_user_dirs, get_shortcuts_paths
 
 
-LAUNCH_OPTION = "~/proton-launch %command%"
+WRAPPER_PATH = "~/.config/decky-proton-launch/proton-launch"
+LAUNCH_OPTION = f"{WRAPPER_PATH} %command%"
+
+# Pre-#24 path — see profile.legacy_script_path().
+LEGACY_WRAPPER_PATH = "~/proton-launch"
 
 
 def find_localconfig(app_id: int) -> Optional[Path]:
@@ -214,6 +218,128 @@ def remove_launch_option_shortcut(app_id: int) -> bool:
         except Exception as e:
             decky.logger.error(f"[launch_option] shortcut remove error for {app_id}: {e}\n{traceback.format_exc()}")
     return False
+
+
+def legacy_apps_with_wrapper() -> list:
+    """Steam (non-shortcut) app_ids whose on-disk LaunchOptions still mention
+    the pre-#24 ~/proton-launch path.
+
+    Read-only, on purpose: localconfig.vdf is Steam's own live state while
+    Steam is running, so a direct write here can get silently clobbered by
+    Steam flushing its in-memory copy back afterward (confirmed — that's
+    exactly what happened before this split). This just builds a candidate
+    list; the frontend does the actual rewrite live via SteamClient, which
+    can't be raced like that.
+    """
+    result = []
+    for user_dir in get_user_dirs():
+        lc = user_dir / "config" / "localconfig.vdf"
+        if not lc.is_file():
+            continue
+        try:
+            data = parse_text(lc.read_text(encoding="utf-8", errors="replace"))
+            apps = (
+                data.get("UserLocalConfigStore", {})
+                    .get("Software", {})
+                    .get("Valve", {})
+                    .get("Steam", {})
+                    .get("apps", {})
+            )
+            for app_str, app_data in apps.items():
+                if app_str.isdigit() and LEGACY_WRAPPER_PATH in app_data.get("LaunchOptions", ""):
+                    result.append(int(app_str))
+        except Exception as e:
+            decky.logger.warning(f"[migration] localconfig scan error {lc}: {e}")
+    return result
+
+
+def _shortcuts_reference_legacy_wrapper() -> bool:
+    for sc_path in get_shortcuts_paths():
+        try:
+            raw = sc_path.read_bytes()
+            nodes, _ = read_binary(raw, 0)
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    for etag, _, efields in children:
+                        if etag != 0x00:
+                            continue
+                        for f in efields:
+                            if (
+                                f[0] == 0x01
+                                and f[1].lower() == "launchoptions"
+                                and LEGACY_WRAPPER_PATH in f[2]
+                            ):
+                                return True
+        except Exception as e:
+            decky.logger.warning(f"[migration] shortcuts check error {sc_path}: {e}")
+            return True
+    return False
+
+
+def legacy_wrapper_still_referenced() -> bool:
+    """Full check across both storages — used before deleting the legacy
+    ~/proton-launch script."""
+    if legacy_apps_with_wrapper():
+        return True
+    return _shortcuts_reference_legacy_wrapper()
+
+
+def migrate_legacy_shortcut_options() -> bool:
+    """Rewrite shortcuts.vdf entries still pointing at the pre-#24 path.
+
+    Unlike localconfig.vdf, non-Steam shortcuts aren't kept live in Steam's
+    memory during a session, so a direct file rewrite sticks (confirmed).
+    Returns True once no shortcut references the legacy path anymore.
+    """
+    had_error = False
+
+    for sc_path in get_shortcuts_paths():
+        try:
+            raw = sc_path.read_bytes()
+            nodes, _ = read_binary(raw, 0)
+            modified = False
+
+            new_top = []
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    new_children = []
+                    for etag, ekey, efields in children:
+                        if etag != 0x00:
+                            new_children.append((etag, ekey, efields))
+                            continue
+                        new_fields = []
+                        for f in efields:
+                            if (
+                                f[0] == 0x01
+                                and f[1].lower() == "launchoptions"
+                                and LEGACY_WRAPPER_PATH in f[2]
+                            ):
+                                new_fields.append(
+                                    (0x01, f[1], f[2].replace(LEGACY_WRAPPER_PATH, WRAPPER_PATH))
+                                )
+                                modified = True
+                            else:
+                                new_fields.append(f)
+                        new_children.append((etag, ekey, new_fields))
+                    new_top.append((tag, key, new_children))
+                else:
+                    new_top.append((tag, key, children))
+
+            if modified:
+                shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
+                sc_path.write_bytes(write_binary(new_top))
+                decky.logger.info(f"[migration] rewrote shortcut launch options in {sc_path}")
+        except Exception as e:
+            decky.logger.error(f"[migration] shortcuts error {sc_path}: {e}\n{traceback.format_exc()}")
+            had_error = True
+
+    if had_error:
+        return False
+    return not _shortcuts_reference_legacy_wrapper()
+
+    if had_error:
+        return False
+    return not legacy_wrapper_still_referenced()
 
 
 def get_status(app_id: int) -> str:

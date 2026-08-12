@@ -11,13 +11,15 @@ from .vdf import parse_text, read_binary
 from .image import is_horizontal
 from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_shortcuts_paths, get_shortcut_name
 from .profile import (
-    profiles_dir, script_path, profile_path, write_profile, read_profile,
-    read_profile_full, write_global_profile, read_global_profile,
+    profiles_dir, script_path, legacy_script_path, profile_path, write_profile,
+    read_profile, read_profile_full, write_global_profile, read_global_profile,
 )
 from .launch_option import (
     LAUNCH_OPTION,
     set_launch_option, remove_launch_option, get_status,
     set_launch_option_shortcut, remove_launch_option_shortcut,
+    migrate_legacy_shortcut_options, legacy_apps_with_wrapper,
+    legacy_wrapper_still_referenced,
 )
 
 
@@ -104,10 +106,11 @@ class Plugin:
             pd.mkdir(parents=True, exist_ok=True)
 
             sp = script_path()
+            sp.parent.mkdir(parents=True, exist_ok=True)
             sp.write_text(
                 "#!/bin/bash\n"
                 f"# decky-proton-launch {Plugin.SCRIPT_VERSION} — launch wrapper\n"
-                "# Add '~/proton-launch %command%' to your game launch options\n"
+                f"# Add '{LAUNCH_OPTION}' to your game launch options\n"
                 "LOG=/tmp/proton-launch.log\n"
                 "echo \"\" >> \"${LOG}\"\n"
                 "echo \"=== $(date) ==\" >> \"${LOG}\"\n"
@@ -731,4 +734,46 @@ class Plugin:
         decky.logger.info("decky-proton-launch unloaded")
 
     async def _migration(self):
-        decky.logger.info("decky-proton-launch migrations (nothing to migrate)")
+        decky.logger.info("decky-proton-launch migrations")
+        try:
+            if not legacy_script_path().is_file():
+                return
+            decky.logger.info(
+                f"[migration] legacy {legacy_script_path()} found — "
+                f"relocating wrapper to {script_path()}"
+            )
+            await self.install_script()
+            # Shortcuts can be rewritten directly on disk (proven to stick).
+            # Regular Steam games can't — localconfig.vdf is Steam's own live
+            # state while it's running, so the frontend has to do those via
+            # SteamClient. finalize_wrapper_migration() deletes the legacy
+            # script once both sides confirm nothing references it anymore.
+            migrate_legacy_shortcut_options()
+        except Exception:
+            decky.logger.error(f"[migration] exception:\n{traceback.format_exc()}")
+
+    async def get_legacy_wrapper_apps(self) -> List[int]:
+        """Steam (non-shortcut) app_ids the frontend still needs to migrate
+        live via SteamClient. Empty once nothing needs migrating."""
+        if not legacy_script_path().is_file():
+            return []
+        return legacy_apps_with_wrapper()
+
+    async def finalize_wrapper_migration(self) -> bool:
+        """Called by the frontend once it has rewritten every Steam game's
+        launch options live. Deletes the legacy ~/proton-launch only once
+        nothing references it anymore (Steam apps or shortcuts)."""
+        try:
+            if not legacy_script_path().is_file():
+                return True
+            if legacy_wrapper_still_referenced():
+                decky.logger.warning(
+                    "[migration] legacy launch options remain — keeping ~/proton-launch"
+                )
+                return False
+            legacy_script_path().unlink()
+            decky.logger.info(f"[migration] removed legacy {legacy_script_path()}")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[migration] finalize error: {e}\n{traceback.format_exc()}")
+            return False

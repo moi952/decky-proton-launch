@@ -6,7 +6,7 @@ import PanelSectionCustom from "./PanelSectionCustom";
 import { ScriptStatus } from "../data/types";
 import { useTranslation } from "react-i18next";
 
-const LAUNCH_OPTION = "~/proton-launch %command%";
+const LAUNCH_OPTION = "~/.config/decky-proton-launch/proton-launch %command%";
 
 interface NavBarProps {
   view: "home" | "games-picker";
