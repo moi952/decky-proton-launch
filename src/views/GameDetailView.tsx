@@ -375,7 +375,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 <span style={{ color: "#666" }}>LaunchOptions: </span>
                 <span
                   style={{
-                    color: launchOptionStatus.includes("~/proton-launch")
+                    color: launchOptionStatus.includes(
+                      "~/.config/decky-proton-launch/proton-launch",
+                    )
                       ? "#4caf50"
                       : "#f90",
                   }}

@@ -12,6 +12,7 @@ import { loadTranslations } from "./i18n";
 import { staticClasses } from "@decky/ui";
 import { BackHandler } from "./components/BackHandler";
 import { copy } from "./utils/functions";
+import { migrateLegacyWrapper } from "./utils/migrateLegacyWrapper";
 import { AppProvider } from "./context/AppProvider";
 import HomeView from "./views/HomeView";
 import { SettingsView } from "./views/SettingsView";
@@ -62,6 +63,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     call<[], ScriptStatus>("is_script_installed").then(setScriptStatus);
+  }, []);
+
+  useEffect(() => {
+    migrateLegacyWrapper();
   }, []);
 
   // Detect running game, polling every 5s
@@ -115,7 +120,9 @@ const App: React.FC = () => {
         onGamesManager={() => setView("games-picker")}
         onGlobalCommands={() => setView("global-commands")}
         onSettings={() => setView("settings")}
-        onCopyWrapper={() => copy("~/proton-launch %command%")}
+        onCopyWrapper={() =>
+          copy("~/.config/decky-proton-launch/proton-launch %command%")
+        }
       />
       <UpdateBanner />
       {noData && (

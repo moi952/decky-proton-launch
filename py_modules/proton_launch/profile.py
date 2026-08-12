@@ -4,11 +4,22 @@ from typing import Dict, List, Tuple
 import decky
 
 
+def plugin_config_dir() -> Path:
+    return Path(decky.DECKY_USER_HOME) / ".config" / "decky-proton-launch"
+
+
 def profiles_dir() -> Path:
-    return Path(decky.DECKY_USER_HOME) / ".config" / "decky-proton-launch" / "profiles"
+    return plugin_config_dir() / "profiles"
 
 
 def script_path() -> Path:
+    return plugin_config_dir() / "proton-launch"
+
+
+# Pre-#24 location — the wrapper used to be written straight into $HOME.
+# Kept only for migration (see Plugin._migration): detect it, relocate it,
+# then remove it once no launch option still points at it.
+def legacy_script_path() -> Path:
     return Path(decky.DECKY_USER_HOME) / "proton-launch"
 
 

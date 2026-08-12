@@ -7,7 +7,7 @@ import { SteamGame } from "../data/types";
 
 declare const SteamClient: any;
 
-const LAUNCH_OPTION = "~/proton-launch %command%";
+const LAUNCH_OPTION = "~/.config/decky-proton-launch/proton-launch %command%";
 
 // ── SteamClient helper ────────────────────────────────────────────────────────
 
