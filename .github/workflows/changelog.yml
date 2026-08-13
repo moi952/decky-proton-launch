@@ -2,6 +2,12 @@ name: Generate Changelog
 
 on:
     workflow_call:
+        inputs:
+            target_ref:
+                description: "Existing tag to generate the changelog for (defaults to HEAD, i.e. the upcoming release)"
+                required: false
+                type: string
+                default: ""
         outputs:
             changelog:
                 description: "Generated changelog as markdown"
@@ -24,15 +30,29 @@ jobs:
 
             - name: Parse commits and generate changelog
               id: parse
+              env:
+                  TARGET_REF: ${{ inputs.target_ref }}
               run: |
-                  LAST_TAG=$(git tag --sort=-creatordate | head -n1 || echo "")
-
-                  if [ -n "$LAST_TAG" ]; then
-                    TAG_SHA=$(git rev-list -n 1 "$LAST_TAG")
-                    HEAD_SHA=$(git rev-parse HEAD)
-                    [ "$TAG_SHA" = "$HEAD_SHA" ] && RANGE="" || RANGE="${TAG_SHA}..HEAD"
+                  if [ -n "$TARGET_REF" ]; then
+                    # Regenerating an existing release: find the tag right
+                    # before it (by creation date) and diff between the two.
+                    END_SHA=$(git rev-list -n 1 "$TARGET_REF")
+                    PREV_TAG=$(git tag --sort=-creatordate | grep -A1 -x -F "$TARGET_REF" | tail -n1)
+                    [ "$PREV_TAG" = "$TARGET_REF" ] && PREV_TAG=""
+                    if [ -n "$PREV_TAG" ]; then
+                      RANGE="$(git rev-list -n 1 "$PREV_TAG")..${END_SHA}"
+                    else
+                      RANGE="$END_SHA"
+                    fi
                   else
-                    RANGE="HEAD"
+                    LAST_TAG=$(git tag --sort=-creatordate | head -n1 || echo "")
+                    if [ -n "$LAST_TAG" ]; then
+                      TAG_SHA=$(git rev-list -n 1 "$LAST_TAG")
+                      HEAD_SHA=$(git rev-parse HEAD)
+                      [ "$TAG_SHA" = "$HEAD_SHA" ] && RANGE="" || RANGE="${TAG_SHA}..HEAD"
+                    else
+                      RANGE="HEAD"
+                    fi
                   fi
 
                   if [ -z "$RANGE" ]; then
@@ -40,28 +60,45 @@ jobs:
                     exit 0
                   fi
 
-                  git log "$RANGE" --pretty=format:"%an|||%s" > /tmp/commits.txt
+                  # %b (body) carries the bullet points from multi-line commit
+                  # messages — %s alone is just the subject line. NUL-terminate
+                  # each record (%x00) so a multi-line body doesn't get split
+                  # apart by the read loop below.
+                  git log "$RANGE" --pretty=format:"%an|||%s|||%b%x00" > /tmp/commits.txt
 
                   FEATURES=()
                   FIXES=()
                   CHORES=()
                   OTHERS=()
 
-                  while IFS= read -r line || [ -n "$line" ]; do
-                    author="${line%%|||*}"
-                    message="${line#*|||}"
+                  while IFS= read -r -d '' record || [ -n "$record" ]; do
+                    # git always joins multi-commit format: output with "\n"
+                    # between entries, on top of our own %x00 terminator —
+                    # strip that stray leading newline before parsing fields.
+                    record="${record#$'\n'}"
+                    author="${record%%|||*}"
+                    rest="${record#*|||}"
+                    message="${rest%%|||*}"
+                    body="${rest#*|||}"
                     [ -z "$message" ] && continue
 
                     clean=$(echo "$message" | sed -E 's/^(feat|fix|chore|docs|style|refactor|perf|test|build|ci|revert)(\([^)]*\))?!?:[[:space:]]*//')
 
+                    entry="- $clean ($author)"
+                    if [ -n "$(printf '%s' "$body" | tr -d '[:space:]')" ]; then
+                      while IFS= read -r bline; do
+                        [ -n "$bline" ] && entry+=$'\n'"  $bline"
+                      done <<< "$body"
+                    fi
+
                     if echo "$message" | grep -qiE '^feat(\([^)]*\))?!?:'; then
-                      FEATURES+=("- $clean ($author)")
+                      FEATURES+=("$entry")
                     elif echo "$message" | grep -qiE '^fix(\([^)]*\))?!?:'; then
-                      FIXES+=("- $clean ($author)")
+                      FIXES+=("$entry")
                     elif echo "$message" | grep -qiE '^(chore|docs|style|refactor|perf|test|build|ci)(\([^)]*\))?!?:'; then
-                      [ "$message" != chore\(release\)* ] && CHORES+=("- $clean ($author)")
+                      [ "$message" != chore\(release\)* ] && CHORES+=("$entry")
                     else
-                      OTHERS+=("- $message ($author)")
+                      OTHERS+=("$entry")
                     fi
                   done < /tmp/commits.txt
 
