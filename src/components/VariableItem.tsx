@@ -46,6 +46,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
   const getInitialValue = () => {
     if (variable?.type === "enum") return variable.defaultValue;
     if (variable?.type === "bool") return variable.value;
+    if (variable?.type === "exec") return "1";
     return valueProp ?? "";
   };
 

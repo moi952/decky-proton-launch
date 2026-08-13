@@ -77,7 +77,7 @@ export const VariableToggleRow: React.FC<VariableToggleRowProps> = ({
     );
   }
 
-  const isSimple = (variable as any).simple === true;
+  const isSimple = variable.type === "exec" || (variable as any).simple === true;
   const label = isSimple
     ? tVars(variable.title)
     : `${tVars(currentValue === "1" ? "enable_prefix" : "disable_prefix")} ${tVars(variable.title)}`;

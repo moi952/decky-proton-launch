@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "お気に入り",
-    "custom": "カスタム"
+    "custom": "カスタム",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "選択",
@@ -60,7 +61,9 @@
     "default_home": "デフォルトホーム",
     "default_home_game_manager": "ゲームマネージャーを開く",
     "default_home_vars": "変数リスト",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "了解",
+    "v0_11_0": {
+      "title": "バージョン0.11.0の新機能",
+      "items": [
+        "新しい「グローバルコマンド」ページ：ラッパーを使うすべてのゲームに一括でコマンドを有効化、上部バーからアクセス可能",
+        "グローバルで有効なコマンドを、特定のゲームのページから個別に無効化できます",
+        "ラッパー（lsfg、fgmodなど）は引き続き同じ仕組みで動作し、独自のカスタムラッパーも追加できます",
+        "お気に入りは単純なオン/オフではなく、すべての操作(有効/無効、列挙値)を表示するようになりました",
+        "お気に入り、設定、カスタム項目の保存がより確実になりました",
+        "ラッパースクリプトがホームフォルダを圧迫しなくなりました"
+      ]
+    }
   }
 }

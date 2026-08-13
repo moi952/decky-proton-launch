@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Ulubione",
-    "custom": "Niestandardowe"
+    "custom": "Niestandardowe",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Wybrane",
@@ -60,7 +61,9 @@
     "default_home": "Domyślna strona główna",
     "default_home_game_manager": "Otwórz w menedżerze gier",
     "default_home_vars": "Lista zmiennych",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Rozumiem",
+    "v0_11_0": {
+      "title": "Nowości w wersji 0.11.0",
+      "items": [
+        "Nowa strona Globalne polecenia: włącz polecenia dla wszystkich gier z wrapperem naraz, z górnego paska",
+        "Wyłącz globalnie aktywne polecenie tylko dla jednej gry, z poziomu strony tej gry",
+        "Wrappery (lsfg, fgmod...) działają tak samo, a teraz możesz dodać własny, niestandardowy wrapper",
+        "Ulubione pokazują teraz pełne opcje (włącz/wyłącz, wartości enum) zamiast prostego przełącznika",
+        "Ulubione, ustawienia i elementy niestandardowe są teraz zapisywane bardziej niezawodnie",
+        "Skrypt wrappera nie zaśmieca już katalogu domowego"
+      ]
+    }
   }
 }

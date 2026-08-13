@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Favoritos",
-    "custom": "Personalizado"
+    "custom": "Personalizado",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Selecionado",
@@ -60,7 +61,9 @@
     "default_home": "Início padrão",
     "default_home_game_manager": "Abrir no gerenciador de jogos",
     "default_home_vars": "Lista de variáveis",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Opções de inicialização",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Entendi",
+    "v0_11_0": {
+      "title": "Novidades da versão 0.11.0",
+      "items": [
+        "Nova página Comandos globais: ative comandos para todos os jogos com o wrapper de uma vez, direto na barra superior",
+        "Desative um comando ativo globalmente apenas para um jogo, a partir da página desse jogo",
+        "Os wrappers (lsfg, fgmod...) continuam funcionando do mesmo jeito, e agora você pode adicionar seu próprio wrapper personalizado",
+        "Os favoritos agora mostram todos os controles (ativar/desativar, valores enum) em vez de um simples botão",
+        "Favoritos, configurações e itens personalizados agora são salvos de forma mais confiável",
+        "O script do wrapper não ocupa mais espaço na sua pasta pessoal"
+      ]
+    }
   }
 }

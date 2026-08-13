@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Обране",
-    "custom": "Користувацьке"
+    "custom": "Користувацьке",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Вибрано",
@@ -60,7 +61,9 @@
     "default_home": "Домашня за замовчуванням",
     "default_home_game_manager": "Відкрити в менеджері ігор",
     "default_home_vars": "Список змінних",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Параметри запуску",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Зрозуміло",
+    "v0_11_0": {
+      "title": "Що нового у версії 0.11.0",
+      "items": [
+        "Нова сторінка «Глобальні команди»: ввімкайте команди одразу для всіх ігор з обгорткою, прямо з верхньої панелі",
+        "Вимикайте глобально активну команду лише для однієї гри, зі сторінки цієї гри",
+        "Обгортки (lsfg, fgmod...) працюють так само, і тепер можна додати власну обгортку",
+        "Обране тепер показує всі елементи керування (увімкнути/вимкнути, значення enum) замість простого перемикача",
+        "Обране, налаштування та користувацькі елементи тепер зберігаються надійніше",
+        "Скрипт-обгортка більше не засмічує домашню теку"
+      ]
+    }
   }
 }

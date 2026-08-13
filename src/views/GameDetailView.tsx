@@ -18,10 +18,15 @@ import { useTranslation } from "react-i18next";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
+import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
 import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
 import { useFavorites } from "../context/FavoritesContext";
+import {
+  openDeleteCustomVariableModal,
+  openGenericDeleteModal,
+} from "../utils/modals";
 import { Variable } from "../data/types";
 
 const getVariableDefault = (variable: Variable): string => {
@@ -49,8 +54,10 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCat } = useTranslation("categories");
   const { t: tCommon } = useTranslation("common");
   const { t: tFavModal } = useTranslation("delete_favorite_modal");
+  const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { isCategoryVisible } = useSettings();
   const { customVariables } = useCustomVariables();
+  const { customWrappers, removeCustomWrapper } = useCustomWrappers();
   const { variables: variablesData } = useRemoteData();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
   const allVariables: Variable[] = variablesData.flatMap(
@@ -487,6 +494,67 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 })}
             </PanelSection>
           )}
+          {customVariables.length > 0 && (
+            <PanelSection title={tCat("custom")}>
+              {customVariables.map((cv) => (
+                <Focusable
+                  key={cv.id}
+                  onOptionsButton={() =>
+                    openDeleteCustomVariableModal(cv.id, cv.name)
+                  }
+                  onOptionsActionDescription={tCommon("delete")}
+                >
+                  <PanelSectionRow>
+                    <ToggleField
+                      label={cv.name}
+                      checked={draft[cv.env] !== undefined}
+                      onChange={() => toggleVar(cv.env, cv.value)}
+                    />
+                  </PanelSectionRow>
+                </Focusable>
+              ))}
+            </PanelSection>
+          )}
+
+          {customWrappers.length > 0 && (
+            <PanelSection title={tCat("custom_wrappers")}>
+              {customWrappers.map((w) => {
+                const isGlobal = isGlobalVar(w.env);
+                const globalHint = isGlobal
+                  ? t(
+                      isVarActive(w.env)
+                        ? "global_active_hint"
+                        : "global_disabled_hint",
+                    )
+                  : undefined;
+                return (
+                  <Focusable
+                    key={w.id}
+                    onOptionsButton={() =>
+                      openGenericDeleteModal({
+                        title: tDeleteWrapper("title"),
+                        description: tDeleteWrapper("description", {
+                          wrapper_name: w.name,
+                        }),
+                        onConfirm: () => removeCustomWrapper(w.id),
+                      })
+                    }
+                    onOptionsActionDescription={tCommon("delete")}
+                  >
+                    <VariableToggleRow
+                      variable={{ title: w.name, env: w.env, type: "exec", exec: w.exec }}
+                      isActive={isVarActive(w.env)}
+                      currentValue={getVarValue(w.env, "1")}
+                      description={globalHint}
+                      onToggle={() => toggleVar(w.env, "1")}
+                      onValueChange={(v) => setVarValue(w.env, v)}
+                    />
+                  </Focusable>
+                );
+              })}
+            </PanelSection>
+          )}
+
           {variablesData
             .filter((cat) => isCategoryVisible(cat.category))
             .map((cat) => (
@@ -528,33 +596,6 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 })}
               </PanelSection>
             ))}
-
-          {customVariables.length > 0 && (
-            <PanelSection title={tCat("custom")}>
-              {customVariables.map((cv) => (
-                <Focusable
-                  key={cv.id}
-                  onButtonDown={(evt: GamepadEvent) => {
-                    if (evt.detail.button === GamepadButton.SECONDARY)
-                      toggleFavorite(cv.env, cv.name, cv.value);
-                  }}
-                  onSecondaryActionDescription={
-                    favorites.some((f) => f.env === cv.env)
-                      ? tCommon("remove_from_favorite")
-                      : tCommon("add_to_favorite")
-                  }
-                >
-                  <PanelSectionRow>
-                    <ToggleField
-                      label={cv.name}
-                      checked={draft[cv.env] !== undefined}
-                      onChange={() => toggleVar(cv.env, cv.value)}
-                    />
-                  </PanelSectionRow>
-                </Focusable>
-              ))}
-            </PanelSection>
-          )}
         </div>
       )}
 

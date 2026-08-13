@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Favorites",
-    "custom": "Custom"
+    "custom": "Custom",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Selected",
@@ -60,7 +61,9 @@
     "default_home": "Default home",
     "default_home_game_manager": "Open on game manager",
     "default_home_vars": "Variable list",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Got it",
+    "v0_11_0": {
+      "title": "What's new in 0.11.0",
+      "items": [
+        "New Global Commands page: enable commands for every game with the wrapper at once, right from the top bar",
+        "Disable a globally-enabled command for just one game, from that game's own page",
+        "Wrappers (lsfg, fgmod...) now work the same way, and you can add your own custom wrapper",
+        "Favorites now show full controls (enable/disable, enum values) instead of a plain toggle",
+        "Favorites, settings and custom items are now stored more reliably",
+        "The wrapper script no longer clutters your home folder"
+      ]
+    }
   }
 }

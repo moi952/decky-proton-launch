@@ -47,13 +47,13 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   let style = {
     padding: "4px 8px",
     fontSize: 12,
-    height: 28,
+    minHeight: 28,
   };
 
   if (size === "medium") {
-    style = { padding: "6px 12px", fontSize: 14, height: 32 };
+    style = { padding: "6px 12px", fontSize: 14, minHeight: 32 };
   } else if (size === "large") {
-    style = { padding: "8px 16px", fontSize: 16, height: 36 };
+    style = { padding: "8px 16px", fontSize: 16, minHeight: 36 };
   }
 
   return (

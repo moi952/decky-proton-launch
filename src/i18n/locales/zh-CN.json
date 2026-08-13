@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "收藏",
-    "custom": "自定义"
+    "custom": "自定义",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "已选择",
@@ -60,7 +61,9 @@
     "default_home": "默认主页",
     "default_home_game_manager": "在游戏管理器中打开",
     "default_home_vars": "变量列表",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "知道了",
+    "v0_11_0": {
+      "title": "0.11.0 版本更新内容",
+      "items": [
+        "全新“全局命令”页面：从顶部栏一次性为所有使用 wrapper 的游戏启用命令",
+        "可仅针对单个游戏，从该游戏自己的页面禁用已全局启用的命令",
+        "wrapper（lsfg、fgmod 等）的工作方式不变，现在还可以添加你自己的自定义 wrapper",
+        "收藏夹现在显示完整的控制项（启用/禁用、枚举值），而不仅仅是一个简单开关",
+        "收藏夹、设置和自定义项目的保存现在更加可靠",
+        "wrapper 脚本不再占用你的主目录空间"
+      ]
+    }
   }
 }

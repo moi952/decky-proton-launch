@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "즐겨찾기",
-    "custom": "사용자 정의"
+    "custom": "사용자 정의",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "선택됨",
@@ -60,7 +61,9 @@
     "default_home": "기본 홈",
     "default_home_game_manager": "게임 관리자 열기",
     "default_home_vars": "변수 목록",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "확인",
+    "v0_11_0": {
+      "title": "0.11.0 버전의 새로운 기능",
+      "items": [
+        "새로운 '전역 명령' 페이지: 상단 바에서 래퍼가 설정된 모든 게임의 명령을 한 번에 활성화",
+        "게임 페이지에서 전역으로 활성화된 명령을 해당 게임에서만 비활성화 가능",
+        "래퍼(lsfg, fgmod 등)는 동일하게 작동하며, 이제 나만의 커스텀 래퍼도 추가할 수 있습니다",
+        "즐겨찾기가 단순 온/오프 대신 모든 컨트롤(활성화/비활성화, 열거값)을 표시합니다",
+        "즐겨찾기, 설정, 커스텀 항목이 더 안정적으로 저장됩니다",
+        "래퍼 스크립트가 더 이상 홈 폴더를 차지하지 않습니다"
+      ]
+    }
   }
 }

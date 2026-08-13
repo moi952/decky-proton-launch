@@ -29,4 +29,15 @@ export interface SimpleVariable {
   type?: never;
 }
 
-export type Variable = BoolVariable | EnumVariable | SimpleVariable;
+// A wrapper chain target (e.g. lsfg, fgmod) — data-driven, see
+// wrappers_exec in decky-proton-launch-data. Renders as a plain toggle,
+// same as a "simple" bool; `exec` is only read by the backend to generate
+// install_script()'s chaining logic.
+export interface ExecVariable {
+  title: string;
+  env: string;
+  type: "exec";
+  exec: string;
+}
+
+export type Variable = BoolVariable | EnumVariable | SimpleVariable | ExecVariable;

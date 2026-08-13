@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Избранное",
-    "custom": "Пользовательское"
+    "custom": "Пользовательское",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Выбрано",
@@ -60,7 +61,9 @@
     "default_home": "Главная по умолчанию",
     "default_home_game_manager": "Открывать в менеджере игр",
     "default_home_vars": "Список переменных",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Параметры запуска",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Понятно",
+    "v0_11_0": {
+      "title": "Что нового в версии 0.11.0",
+      "items": [
+        "Новая страница «Глобальные команды»: включайте команды сразу для всех игр с обёрткой, прямо с верхней панели",
+        "Отключайте глобально включённую команду только для одной игры, со страницы этой игры",
+        "Обёртки (lsfg, fgmod...) работают так же, и теперь можно добавить собственную обёртку",
+        "Избранное теперь показывает все элементы управления (включить/выключить, значения enum), а не просто переключатель",
+        "Избранное, настройки и пользовательские элементы теперь сохраняются надёжнее",
+        "Скрипт-обёртка больше не засоряет домашнюю папку"
+      ]
+    }
   }
 }

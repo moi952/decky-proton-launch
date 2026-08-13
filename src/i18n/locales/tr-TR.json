@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Favoriler",
-    "custom": "Özel"
+    "custom": "Özel",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Seçili",
@@ -60,7 +61,9 @@
     "default_home": "Varsayılan ana sayfa",
     "default_home_game_manager": "Oyun yöneticisinde aç",
     "default_home_vars": "Değişken listesi",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -134,5 +137,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Anladım",
+    "v0_11_0": {
+      "title": "0.11.0 sürümündeki yenilikler",
+      "items": [
+        "Yeni Genel Komutlar sayfası: sarmalayıcıya sahip tüm oyunlar için komutları tek seferde, üst çubuktan etkinleştirin",
+        "Genel olarak etkin bir komutu yalnızca tek bir oyun için, o oyunun kendi sayfasından devre dışı bırakın",
+        "Sarmalayıcılar (lsfg, fgmod...) aynı şekilde çalışmaya devam eder ve artık kendi özel sarmalayıcınızı ekleyebilirsiniz",
+        "Favoriler artık basit bir anahtar yerine tüm kontrolleri (etkinleştir/devre dışı bırak, enum değerleri) gösteriyor",
+        "Favoriler, ayarlar ve özel ögeler artık daha güvenilir şekilde saklanıyor",
+        "Sarmalayıcı betik artık ana dizininizde yer kaplamıyor"
+      ]
+    }
   }
 }

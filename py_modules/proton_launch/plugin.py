@@ -83,7 +83,65 @@ class Plugin:
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v5"
+    SCRIPT_VERSION = "v7"
+
+    def _wrapper_chains(self) -> List[Dict[str, str]]:
+        """(env, exec) pairs to chain to — from "wrappers_exec" in the cached
+        remote data (lets a new wrapper be added purely from data, no plugin
+        release needed), plus any user-defined custom wrapper."""
+        chains: List[Dict[str, str]] = []
+
+        try:
+            path = self._variables_cache_path()
+            if path.is_file():
+                data = json.loads(path.read_text(encoding="utf-8"))
+                for cat in data.get("variables", []):
+                    if cat.get("category") == "wrappers_exec":
+                        chains += [
+                            {"env": v["env"], "exec": v["exec"]}
+                            for v in cat.get("variables", [])
+                            if v.get("type") == "exec" and v.get("env") and v.get("exec")
+                        ]
+        except Exception as e:
+            decky.logger.warning(f"[wrapper_chains] remote data read error: {e}")
+
+        try:
+            path = self._custom_wrappers_path()
+            if path.is_file():
+                custom = json.loads(path.read_text(encoding="utf-8"))
+                chains += [
+                    {"env": w["env"], "exec": w["exec"]}
+                    for w in custom
+                    if w.get("env") and w.get("exec")
+                ]
+        except Exception as e:
+            decky.logger.warning(f"[wrapper_chains] custom wrapper read error: {e}")
+
+        return chains
+
+    def _wrapper_chains_path(self) -> Path:
+        return profiles_dir().parent / "wrapper_chains.conf"
+
+    def _write_wrapper_chains_file(self) -> None:
+        """Write the (env, exec) chain list the script reads at every launch.
+        Called whenever the underlying data can change (remote data refresh,
+        custom wrapper add/remove) — the script's own code never needs to
+        change for this, so no "reinstall" is ever required for a wrapper."""
+        try:
+            home = decky.DECKY_USER_HOME
+            lines = []
+            for c in self._wrapper_chains():
+                exec_path = c["exec"]
+                if exec_path == "~":
+                    exec_path = home
+                elif exec_path.startswith("~/"):
+                    exec_path = f"{home}/{exec_path[2:]}"
+                lines.append(f"{c['env']}={exec_path}")
+            path = self._wrapper_chains_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("\n".join(lines) + ("\n" if lines else ""), encoding="utf-8")
+        except Exception as e:
+            decky.logger.error(f"[wrapper_chains] write error: {e}")
 
     async def is_script_installed(self) -> str:
         """Return 'current', 'outdated', or 'missing'."""
@@ -104,6 +162,7 @@ class Plugin:
         try:
             pd = profiles_dir()
             pd.mkdir(parents=True, exist_ok=True)
+            self._write_wrapper_chains_file()
 
             sp = script_path()
             sp.parent.mkdir(parents=True, exist_ok=True)
@@ -138,15 +197,17 @@ class Plugin:
                 "    export \"$1\"\n"
                 "    shift\n"
                 "done\n"
-                "# Chain ~/lsfg wrapper if enabled in profile\n"
-                "if [ \"${__LSFG}\" = \"1\" ] && [ -x \"${HOME}/lsfg\" ]; then\n"
-                "    echo \"[proton-launch] chaining ~/lsfg\" >> \"${LOG}\"\n"
-                "    exec \"${HOME}/lsfg\" \"$@\"\n"
-                "fi\n"
-                "# Chain ~/fgmod/fgmod wrapper if enabled in profile\n"
-                "if [ \"${__FGMOD}\" = \"1\" ] && [ -x \"${HOME}/fgmod/fgmod\" ]; then\n"
-                "    echo \"[proton-launch] chaining ~/fgmod/fgmod\" >> \"${LOG}\"\n"
-                "    exec \"${HOME}/fgmod/fgmod\" \"$@\"\n"
+                "# Chain to a wrapper (lsfg, fgmod, custom...) if its toggle is on —\n"
+                "# read at every launch from a small file, never baked into this script.\n"
+                "CHAINS=\"${HOME}/.config/decky-proton-launch/wrapper_chains.conf\"\n"
+                "if [ -f \"${CHAINS}\" ]; then\n"
+                "    while IFS='=' read -r WRAPPER_ENV WRAPPER_EXEC || [ -n \"${WRAPPER_ENV}\" ]; do\n"
+                "        [ -z \"${WRAPPER_ENV}\" ] && continue\n"
+                "        if [ \"${!WRAPPER_ENV}\" = \"1\" ] && [ -x \"${WRAPPER_EXEC}\" ]; then\n"
+                "            echo \"[proton-launch] chaining ${WRAPPER_EXEC}\" >> \"${LOG}\"\n"
+                "            exec \"${WRAPPER_EXEC}\" \"$@\"\n"
+                "        fi\n"
+                "    done < \"${CHAINS}\"\n"
                 "fi\n"
                 "exec \"$@\"\n",
                 encoding="utf-8",
@@ -639,6 +700,7 @@ class Plugin:
             path = self._variables_cache_path()
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            self._write_wrapper_chains_file()
             return True
         except Exception as e:
             decky.logger.error(f"[set_variables_cache] {e}")
@@ -721,6 +783,51 @@ class Plugin:
             return True
         except Exception as e:
             decky.logger.error(f"[set_custom_variables] {e}")
+            return False
+
+    def _custom_wrappers_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "custom_wrappers.json"
+
+    async def get_custom_wrappers(self) -> List[Dict[str, Any]]:
+        try:
+            path = self._custom_wrappers_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_custom_wrappers] {e}")
+        return []
+
+    async def set_custom_wrappers(self, data: List[Dict[str, Any]]) -> bool:
+        try:
+            path = self._custom_wrappers_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            self._write_wrapper_chains_file()
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_custom_wrappers] {e}")
+            return False
+
+    def _whats_new_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "whats_new_seen.json"
+
+    async def get_whats_new_seen_version(self) -> str:
+        try:
+            path = self._whats_new_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8")).get("version", "")
+        except Exception as e:
+            decky.logger.error(f"[get_whats_new_seen_version] {e}")
+        return ""
+
+    async def set_whats_new_seen_version(self, version: str) -> bool:
+        try:
+            path = self._whats_new_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps({"version": version}), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_whats_new_seen_version] {e}")
             return False
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────

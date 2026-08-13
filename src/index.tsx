@@ -24,6 +24,7 @@ import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
 import { NowPlayingCard } from "./components/NowPlayingCard";
 import { UpdateBanner } from "./components/UpdateBanner";
+import { WhatsNewBanner } from "./components/WhatsNewBanner";
 import { GAME_ROW_STYLES } from "./components/GameRow";
 import { SteamGame, ScriptStatus } from "./data/types";
 
@@ -93,6 +94,7 @@ const App: React.FC = () => {
   if (view === "global-commands")
     return (
       <BackHandler onBack={goHome}>
+        {defaultHome === "global-commands" && <WhatsNewBanner />}
         <GlobalCommandsView onBack={goHome} />
       </BackHandler>
     );
@@ -125,6 +127,7 @@ const App: React.FC = () => {
         }
       />
       <UpdateBanner />
+      {isOnHome && <WhatsNewBanner />}
       {noData && (
         <div style={{ margin: "4px 16px 0", padding: "6px 10px", background: "#3a0000", border: "1px solid #c00", borderRadius: "6px", fontSize: 11, color: "#ff6b6b" }}>
           {t("no_data")}

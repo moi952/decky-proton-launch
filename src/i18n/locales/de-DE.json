@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Favoriten",
-    "custom": "Benutzerdefiniert"
+    "custom": "Benutzerdefiniert",
+    "custom_wrappers": "Custom wrappers"
   },
   "common": {
     "selected": "Ausgewählt",
@@ -60,7 +61,9 @@
     "default_home": "Standard-Startseite",
     "default_home_game_manager": "Im Spiele-Manager öffnen",
     "default_home_vars": "Variablenliste",
-    "default_home_global_commands": "Global commands"
+    "default_home_global_commands": "Global commands",
+    "force_refresh": "Force refresh",
+    "data_title": "Data"
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -136,5 +139,31 @@
     "loading": "Loading...",
     "saving": "saving...",
     "error_save": "Save error"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Add Custom Wrapper",
+    "title": "Add Custom Wrapper",
+    "field_name": "Name",
+    "field_exec": "Executable path",
+    "fields_required": "All fields are required",
+    "already_exists": "A wrapper with this name already exists"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Delete Custom Wrapper",
+    "description": "Delete \"{{wrapper_name}}\"?"
+  },
+  "whats_new": {
+    "dismiss": "Verstanden",
+    "v0_11_0": {
+      "title": "Neuigkeiten in Version 0.11.0",
+      "items": [
+        "Neue Seite „Globale Befehle“: Aktiviere Befehle für alle Spiele mit dem Wrapper auf einmal, direkt über die obere Leiste",
+        "Deaktiviere einen global aktivierten Befehl nur für ein einzelnes Spiel, direkt auf dessen eigener Seite",
+        "Wrapper (lsfg, fgmod...) funktionieren weiterhin genauso, und du kannst jetzt eigene benutzerdefinierte Wrapper hinzufügen",
+        "Favoriten zeigen jetzt alle Steuerelemente (Aktivieren/Deaktivieren, Enum-Werte) statt eines einfachen Schalters",
+        "Favoriten, Einstellungen und benutzerdefinierte Elemente werden jetzt zuverlässiger gespeichert",
+        "Das Wrapper-Skript belegt nicht mehr deinen Home-Ordner"
+      ]
+    }
   }
 }

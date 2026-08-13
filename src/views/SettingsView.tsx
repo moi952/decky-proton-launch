@@ -90,11 +90,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
       </PanelSection>
 
       {cachePath && (
-        <PanelSection title="Data">
+        <PanelSection title={tSettings("data_title")}>
           <PanelSectionRow>
             <ActionButton onClick={refresh} width="100%">
               <FiRefreshCw size={14} style={{ marginRight: 6 }} />
-              Force refresh
+              {tSettings("force_refresh")}
             </ActionButton>
           </PanelSectionRow>
           <PanelSectionRow>

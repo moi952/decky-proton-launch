@@ -1,7 +1,8 @@
 {
   "categories": {
     "favorites": "Favoris",
-    "custom": "Personnalisé"
+    "custom": "Personnalisé",
+    "custom_wrappers": "Wrappers personnalisés"
   },
   "common": {
     "selected": "Sélection",
@@ -60,7 +61,9 @@
     "default_home": "Accueil par défaut",
     "default_home_game_manager": "Ouvrir sur le gestionnaire de jeux",
     "default_home_vars": "Liste des variables",
-    "default_home_global_commands": "Commandes globales"
+    "default_home_global_commands": "Commandes globales",
+    "force_refresh": "Forcer l'actualisation",
+    "data_title": "Données"
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -136,5 +139,31 @@
     "loading": "Chargement...",
     "saving": "enregistrement...",
     "error_save": "Erreur d'enregistrement"
+  },
+  "add_custom_wrapper_modal": {
+    "button_label": "Ajouter un wrapper personnalisé",
+    "title": "Ajouter un wrapper personnalisé",
+    "field_name": "Nom",
+    "field_exec": "Chemin de l'exécutable",
+    "fields_required": "Tous les champs sont obligatoires",
+    "already_exists": "Un wrapper avec ce nom existe déjà"
+  },
+  "delete_custom_wrapper_modal": {
+    "title": "Supprimer le wrapper personnalisé",
+    "description": "Supprimer « {{wrapper_name}} » ?"
+  },
+  "whats_new": {
+    "dismiss": "Compris",
+    "v0_11_0": {
+      "title": "Nouveautés de la version 0.11.0",
+      "items": [
+        "Nouvelle page Commandes globales : active des commandes pour tous les jeux avec le wrapper en un clic, depuis la barre du haut",
+        "Désactive une commande active globalement pour un seul jeu, depuis la fiche de ce jeu",
+        "Les wrappers (lsfg, fgmod...) fonctionnent pareil, et tu peux maintenant ajouter les tiens",
+        "Les favoris affichent maintenant tous les contrôles (activer/désactiver, valeurs enum) au lieu d'un simple interrupteur",
+        "Favoris, réglages et éléments personnalisés sont stockés de manière plus fiable",
+        "Le script wrapper n'encombre plus ton dossier personnel"
+      ]
+    }
   }
 }

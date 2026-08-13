@@ -56,12 +56,16 @@ const injectTranslations = (lang: string, localeData: RemoteData["locales"][stri
   i18n.addResourceBundle(lang, "variables", localeData.variables, true, true);
 };
 
+// "wrappers" is legacy — kept in the data for old plugin versions, replaced
+// here by "wrappers_exec". Hidden from display only, cache below keeps it.
+const HIDDEN_CATEGORIES = new Set(["wrappers"]);
+
 const applyData = (
   data: RemoteData,
   setVariables: (v: VariableCategory[]) => void,
 ) => {
   const lang = getLangCode();
-  setVariables(data.variables ?? []);
+  setVariables((data.variables ?? []).filter((c) => !HIDDEN_CATEGORIES.has(c.category)));
   const localeData = data.locales?.[lang];
   if (localeData) injectTranslations(lang, localeData);
 };
