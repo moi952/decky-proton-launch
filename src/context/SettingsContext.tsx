@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { call } from "@decky/api";
+import { readLegacyArray, readLegacyString } from "../utils/legacyStorage";
 
 export type DefaultHome = "home" | "game-manager" | "global-commands";
 
@@ -7,6 +8,10 @@ interface UiSettings {
   hiddenCategories?: string[];
   defaultHome?: DefaultHome;
 }
+
+// Pre-0.10 localStorage keys, migrated below.
+const LEGACY_CATEGORIES_KEY = "deck-proton-launch-settings";
+const LEGACY_HOME_KEY = "deck-proton-launch-default-home";
 
 interface SettingsContextValue {
   hiddenCategories: Set<string>;
@@ -30,14 +35,40 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
-    call<[], UiSettings>("get_ui_settings")
-      .then((data) => {
-        if (data.hiddenCategories) {
-          setHiddenCategories(new Set(data.hiddenCategories));
+    // Recover per-field from legacy storage; runs on backend fetch failure too.
+    const applyAndRecover = (data: UiSettings) => {
+      let categories = data.hiddenCategories;
+      let home = data.defaultHome;
+      let recovered = false;
+
+      if (!categories) {
+        const legacy = readLegacyArray<string>(LEGACY_CATEGORIES_KEY);
+        if (legacy) {
+          categories = legacy;
+          recovered = true;
         }
-        if (data.defaultHome) setDefaultHomeState(data.defaultHome);
-      })
-      .catch(() => {})
+      }
+      if (!home) {
+        const legacy = readLegacyString(LEGACY_HOME_KEY) as DefaultHome | null;
+        if (legacy) {
+          home = legacy;
+          recovered = true;
+        }
+      }
+
+      if (categories) setHiddenCategories(new Set(categories));
+      if (home) setDefaultHomeState(home);
+      if (recovered) {
+        call<[UiSettings], boolean>("set_ui_settings", {
+          hiddenCategories: categories ?? [],
+          defaultHome: home,
+        }).catch(() => {});
+      }
+    };
+
+    call<[], UiSettings>("get_ui_settings")
+      .then(applyAndRecover)
+      .catch(() => applyAndRecover({}))
       .finally(() => setSettingsLoaded(true));
   }, []);
 

@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Begrepen",
+    "v0_11_1": {
+      "title": "Nieuw in versie 0.11.1",
+      "items": [
+        "Een bug opgelost waarbij een update je aangepaste variabelen, favorieten of instellingen kon laten verdwijnen — oude gegevens worden nu automatisch hersteld",
+        "Aangepaste variabelen worden nu ook getoond op de pagina Globale opdrachten"
+      ]
+    },
     "v0_11_0": {
       "title": "Nieuw in versie 0.11.0",
       "items": [

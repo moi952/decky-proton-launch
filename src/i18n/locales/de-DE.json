@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Verstanden",
+    "v0_11_1": {
+      "title": "Neuigkeiten in Version 0.11.1",
+      "items": [
+        "Ein Fehler wurde behoben, bei dem ein Update deine benutzerdefinierten Variablen, Favoriten oder Einstellungen löschen konnte — alte Daten werden jetzt automatisch wiederhergestellt",
+        "Benutzerdefinierte Variablen werden jetzt auch auf der Seite „Globale Befehle“ angezeigt"
+      ]
+    },
     "v0_11_0": {
       "title": "Neuigkeiten in Version 0.11.0",
       "items": [

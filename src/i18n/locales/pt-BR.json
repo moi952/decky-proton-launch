@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Entendi",
+    "v0_11_1": {
+      "title": "Novidades da versão 0.11.1",
+      "items": [
+        "Corrigido um bug que podia apagar suas variáveis personalizadas, favoritos ou configurações ao atualizar — os dados antigos agora são recuperados automaticamente",
+        "As variáveis personalizadas agora também aparecem na página Comandos globais"
+      ]
+    },
     "v0_11_0": {
       "title": "Novidades da versão 0.11.0",
       "items": [

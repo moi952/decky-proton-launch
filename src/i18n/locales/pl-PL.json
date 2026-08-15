@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Rozumiem",
+    "v0_11_1": {
+      "title": "Nowości w wersji 0.11.1",
+      "items": [
+        "Naprawiono błąd, przez który aktualizacja mogła powodować utratę niestandardowych zmiennych, ulubionych lub ustawień — stare dane są teraz automatycznie odzyskiwane",
+        "Niestandardowe zmienne pojawiają się teraz również na stronie Globalne polecenia"
+      ]
+    },
     "v0_11_0": {
       "title": "Nowości w wersji 0.11.0",
       "items": [

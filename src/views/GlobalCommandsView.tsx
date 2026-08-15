@@ -4,6 +4,7 @@ import {
   GamepadButton,
   PanelSection,
   PanelSectionRow,
+  ToggleField,
 } from "@decky/ui";
 import type { GamepadEvent } from "@decky/ui";
 import { call, toaster } from "@decky/api";
@@ -17,7 +18,9 @@ import { ButtonAddCustomVariableModal } from "../components/ButtonAddCustomVaria
 import { useSettings } from "../context/SettingsContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { useCustomWrappers } from "../context/CustomWrappersContext";
+import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useFavorites } from "../context/FavoritesContext";
+import { openDeleteCustomVariableModal } from "../utils/modals";
 import { Variable } from "../data/types";
 
 interface GlobalCommandsViewProps {
@@ -35,6 +38,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { isCategoryVisible } = useSettings();
   const { variables: variablesData } = useRemoteData();
   const { customWrappers, removeCustomWrapper } = useCustomWrappers();
+  const { customVariables } = useCustomVariables();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
@@ -171,6 +175,28 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
         </PanelSection>
       ) : (
         <React.Fragment>
+          {customVariables.length > 0 && (
+            <PanelSection title={tCat("custom")}>
+              {customVariables.map((cv) => (
+                <Focusable
+                  key={cv.id}
+                  onOptionsButton={() =>
+                    openDeleteCustomVariableModal(cv.id, cv.name)
+                  }
+                  onOptionsActionDescription={tCommon("delete")}
+                >
+                  <PanelSectionRow>
+                    <ToggleField
+                      label={cv.name}
+                      checked={draft[cv.env] !== undefined}
+                      onChange={() => toggleVar(cv.env, cv.value)}
+                    />
+                  </PanelSectionRow>
+                </Focusable>
+              ))}
+            </PanelSection>
+          )}
+
           {customWrappers.length > 0 && (
             <PanelSection title={tCat("custom_wrappers")}>
               {customWrappers.map((w) => {

@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Compris",
+    "v0_11_1": {
+      "title": "Nouveautés de la version 0.11.1",
+      "items": [
+        "Correction d'un bug qui pouvait faire perdre tes variables personnalisées, favoris ou réglages lors d'une mise à jour — les anciennes données sont désormais récupérées automatiquement",
+        "Les variables personnalisées apparaissent maintenant aussi dans la page Commandes globales"
+      ]
+    },
     "v0_11_0": {
       "title": "Nouveautés de la version 0.11.0",
       "items": [

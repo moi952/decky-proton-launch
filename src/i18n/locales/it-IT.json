@@ -154,6 +154,13 @@
   },
   "whats_new": {
     "dismiss": "Capito",
+    "v0_11_1": {
+      "title": "Novità della versione 0.11.1",
+      "items": [
+        "Risolto un bug per cui un aggiornamento poteva far perdere le tue variabili personalizzate, i preferiti o le impostazioni — i dati precedenti vengono ora recuperati automaticamente",
+        "Le variabili personalizzate ora vengono mostrate anche nella pagina Comandi globali"
+      ]
+    },
     "v0_11_0": {
       "title": "Novità della versione 0.11.0",
       "items": [
