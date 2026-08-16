@@ -11,6 +11,7 @@ interface ActionButtonProps {
   size?: "small" | "medium" | "large";
   variant?: "primary" | "danger";
   width?: string | number;
+  disabled?: boolean;
 
   // X BUTTON
   onSecondaryButton?: (evt: GamepadEvt) => void;
@@ -35,6 +36,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   size = "small",
   variant = "primary",
   width,
+  disabled,
   onSecondaryButton,
   onSecondaryActionDescription,
   onOptionsButton,
@@ -82,6 +84,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
           minWidth: "unset",
         }}
         onClick={onClick}
+        disabled={disabled}
         onSecondaryButton={onSecondaryButton}
         onSecondaryActionDescription={onSecondaryActionDescription}
         onOptionsButton={onOptionsButton}

@@ -63,7 +63,15 @@
     "default_home_vars": "Değişken listesi",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Güncelleme geçmişi",
+    "reset_title": "Sıfırlama",
+    "clean_custom_wrappers": "Özel sarmalayıcıları temizle",
+    "clean_custom_variables": "Özel komutları temizle",
+    "clean_custom_wrappers_confirm_title": "Özel sarmalayıcıları temizle",
+    "clean_custom_wrappers_confirm_description": "Tüm özel sarmalayıcılar silinsin mi? Bu işlem geri alınamaz.",
+    "clean_custom_variables_confirm_title": "Özel komutları temizle",
+    "clean_custom_variables_confirm_description": "Tüm özel komutlar silinsin mi? Bu işlem geri alınamaz."
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -152,6 +160,15 @@
   },
   "whats_new": {
     "dismiss": "Anladım",
+    "v0_11_2": {
+      "title": "0.11.2 sürümündeki yenilikler",
+      "items": [
+        "Özel komutlar ve favoriler artık silinebiliyor",
+        "Ayarlar'a özel sarmalayıcıları veya komutları temizlemek için, her biri onaylı yeni butonlar eklendi",
+        "Kaldırma işlemi artık üretilen dosyaları (betik, sarmalayıcı önbelleği) temizliyor ama tüm verilerinizi koruyor — yeniden yükleme temiz başlıyor",
+        "Artık geçmiş güncellemelere göz atabilirsiniz — ana ekran banner'ından veya Ayarlar'daki yeni geçmiş bölümünden"
+      ]
+    },
     "v0_11_1": {
       "title": "0.11.1 sürümündeki yenilikler",
       "items": [
@@ -169,6 +186,8 @@
         "Favoriler, ayarlar ve özel ögeler artık daha güvenilir şekilde saklanıyor",
         "Sarmalayıcı betik artık ana dizininizde yer kaplamıyor"
       ]
-    }
+    },
+    "older": "Daha eski",
+    "newer": "Daha yeni"
   }
 }

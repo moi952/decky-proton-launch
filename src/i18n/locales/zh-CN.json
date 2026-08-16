@@ -63,7 +63,15 @@
     "default_home_vars": "变量列表",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "更新历史",
+    "reset_title": "重置",
+    "clean_custom_wrappers": "清除自定义 wrapper",
+    "clean_custom_variables": "清除自定义命令",
+    "clean_custom_wrappers_confirm_title": "清除自定义 wrapper",
+    "clean_custom_wrappers_confirm_description": "删除所有自定义 wrapper？此操作无法撤销。",
+    "clean_custom_variables_confirm_title": "清除自定义命令",
+    "clean_custom_variables_confirm_description": "删除所有自定义命令？此操作无法撤销。"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "知道了",
+    "v0_11_2": {
+      "title": "0.11.2 版本更新内容",
+      "items": [
+        "现在可以删除自定义命令和收藏夹了",
+        "在设置中新增按钮，用于清除自定义 wrapper 或自定义命令，均带确认提示",
+        "卸载现在会清理生成的文件（脚本、wrapper 缓存），但会保留你的所有数据——重新安装将从干净的状态开始",
+        "现在可以浏览以往的更新内容——通过主页横幅或设置中新增的历史记录部分"
+      ]
+    },
     "v0_11_1": {
       "title": "0.11.1 版本更新内容",
       "items": [
@@ -171,6 +188,8 @@
         "收藏夹、设置和自定义项目的保存现在更加可靠",
         "wrapper 脚本不再占用你的主目录空间"
       ]
-    }
+    },
+    "older": "更早",
+    "newer": "更新"
   }
 }

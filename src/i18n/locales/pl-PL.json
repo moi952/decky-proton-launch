@@ -63,7 +63,15 @@
     "default_home_vars": "Lista zmiennych",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Historia aktualizacji",
+    "reset_title": "Resetowanie",
+    "clean_custom_wrappers": "Wyczyść niestandardowe wrappery",
+    "clean_custom_variables": "Wyczyść niestandardowe polecenia",
+    "clean_custom_wrappers_confirm_title": "Wyczyść niestandardowe wrappery",
+    "clean_custom_wrappers_confirm_description": "Usunąć wszystkie niestandardowe wrappery? Tej operacji nie można cofnąć.",
+    "clean_custom_variables_confirm_title": "Wyczyść niestandardowe polecenia",
+    "clean_custom_variables_confirm_description": "Usunąć wszystkie niestandardowe polecenia? Tej operacji nie można cofnąć."
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Rozumiem",
+    "v0_11_2": {
+      "title": "Nowości w wersji 0.11.2",
+      "items": [
+        "Niestandardowe polecenia i ulubione można teraz usuwać",
+        "Nowe przyciski w Ustawieniach do czyszczenia niestandardowych wrapperów lub poleceń, każdy z potwierdzeniem",
+        "Odinstalowanie czyści teraz wygenerowane pliki (skrypt, pamięć podręczna wrapperów), zachowując wszystkie Twoje dane — ponowna instalacja zaczyna się więc na czysto",
+        "Możesz teraz przeglądać poprzednie aktualizacje — z banera na stronie głównej lub nowej sekcji historii w Ustawieniach"
+      ]
+    },
     "v0_11_1": {
       "title": "Nowości w wersji 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Ulubione, ustawienia i elementy niestandardowe są teraz zapisywane bardziej niezawodnie",
         "Skrypt wrappera nie zaśmieca już katalogu domowego"
       ]
-    }
+    },
+    "older": "Starsze",
+    "newer": "Nowsze"
   }
 }

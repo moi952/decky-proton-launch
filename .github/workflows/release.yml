@@ -52,11 +52,29 @@ jobs:
           echo "${{ needs.generate-changelog.outputs.changelog }}" | base64 -d > artifact/release_notes.md
           cat artifact/release_notes.md
 
+      - name: Read current version
+        id: pre_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
       - name: Bump version and create git tag
         run: |
           set -e
           pnpm version ${{ github.event.inputs.bump }} -m "chore(release): v%s"
-          git push origin HEAD --follow-tags
+
+      - name: Sync What's New entry to the real version
+        run: |
+          set -e
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          node scripts/sync-whats-new-version.js "${{ steps.pre_version.outputs.version }}" "$NEW_VERSION"
+          git add src/i18n/locales/*.json
+          if ! git diff --cached --quiet; then
+            git tag -d "v$NEW_VERSION"
+            git commit --amend --no-edit
+            git tag "v$NEW_VERSION"
+          fi
+
+      - name: Push commit and tag
+        run: git push origin HEAD --follow-tags
 
       - name: Build plugin
         run: |

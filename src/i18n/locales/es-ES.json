@@ -63,7 +63,15 @@
     "default_home_vars": "Lista de variables",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Historial de actualizaciones",
+    "reset_title": "Restablecer",
+    "clean_custom_wrappers": "Limpiar wrappers personalizados",
+    "clean_custom_variables": "Limpiar comandos personalizados",
+    "clean_custom_wrappers_confirm_title": "Limpiar wrappers personalizados",
+    "clean_custom_wrappers_confirm_description": "¿Eliminar todos los wrappers personalizados? Esta acción no se puede deshacer.",
+    "clean_custom_variables_confirm_title": "Limpiar comandos personalizados",
+    "clean_custom_variables_confirm_description": "¿Eliminar todos los comandos personalizados? Esta acción no se puede deshacer."
   },
   "launch_options_view": {
     "title": "Opciones de lanzamiento",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Entendido",
+    "v0_11_2": {
+      "title": "Novedades de la versión 0.11.2",
+      "items": [
+        "Los comandos personalizados y favoritos ahora se pueden eliminar",
+        "Nuevos botones en Ajustes para limpiar wrappers o comandos personalizados, cada uno con confirmación",
+        "Al desinstalar ahora se eliminan los archivos generados (script, caché de wrappers) pero se conservan todos tus datos, así que reinstalar empieza limpio",
+        "Ahora puedes ver actualizaciones anteriores — desde el banner de inicio o una nueva sección de historial en Ajustes"
+      ]
+    },
     "v0_11_1": {
       "title": "Novedades de la versión 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Los favoritos, ajustes y elementos personalizados ahora se guardan de forma más fiable",
         "El script del wrapper ya no ocupa espacio en tu carpeta personal"
       ]
-    }
+    },
+    "older": "Anterior",
+    "newer": "Más reciente"
   }
 }

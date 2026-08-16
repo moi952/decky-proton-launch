@@ -63,7 +63,15 @@
     "default_home_vars": "変数リスト",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "更新履歴",
+    "reset_title": "リセット",
+    "clean_custom_wrappers": "カスタムラッパーを消去",
+    "clean_custom_variables": "カスタムコマンドを消去",
+    "clean_custom_wrappers_confirm_title": "カスタムラッパーを消去",
+    "clean_custom_wrappers_confirm_description": "すべてのカスタムラッパーを削除しますか？この操作は元に戻せません。",
+    "clean_custom_variables_confirm_title": "カスタムコマンドを消去",
+    "clean_custom_variables_confirm_description": "すべてのカスタムコマンドを削除しますか？この操作は元に戻せません。"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "了解",
+    "v0_11_2": {
+      "title": "バージョン0.11.2の新機能",
+      "items": [
+        "カスタムコマンドやお気に入りを削除できるようになりました",
+        "設定にカスタムラッパーやカスタムコマンドを消去するボタンを追加（それぞれ確認あり）",
+        "アンインストール時に生成されたファイル（スクリプト、ラッパーキャッシュ）を削除するようになりました。データはすべて保持されるため、再インストールはクリーンな状態から始まります",
+        "過去のアップデート内容を閲覧できるようになりました — ホーム画面のバナー、または設定内の新しい履歴セクションから"
+      ]
+    },
     "v0_11_1": {
       "title": "バージョン0.11.1の新機能",
       "items": [
@@ -171,6 +188,8 @@
         "お気に入り、設定、カスタム項目の保存がより確実になりました",
         "ラッパースクリプトがホームフォルダを圧迫しなくなりました"
       ]
-    }
+    },
+    "older": "前へ",
+    "newer": "次へ"
   }
 }

@@ -63,7 +63,15 @@
     "default_home_vars": "Lista variabili",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Cronologia aggiornamenti",
+    "reset_title": "Ripristino",
+    "clean_custom_wrappers": "Pulisci wrapper personalizzati",
+    "clean_custom_variables": "Pulisci comandi personalizzati",
+    "clean_custom_wrappers_confirm_title": "Pulisci wrapper personalizzati",
+    "clean_custom_wrappers_confirm_description": "Eliminare tutti i wrapper personalizzati? Azione irreversibile.",
+    "clean_custom_variables_confirm_title": "Pulisci comandi personalizzati",
+    "clean_custom_variables_confirm_description": "Eliminare tutti i comandi personalizzati? Azione irreversibile."
   },
   "launch_options_view": {
     "title": "Opzioni di avvio",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Capito",
+    "v0_11_2": {
+      "title": "Novità della versione 0.11.2",
+      "items": [
+        "I comandi personalizzati e i preferiti ora possono essere eliminati",
+        "Nuovi pulsanti nelle Impostazioni per pulire wrapper o comandi personalizzati, ciascuno con conferma",
+        "La disinstallazione ora rimuove i file generati (script, cache dei wrapper) mantenendo tutti i tuoi dati, così la reinstallazione riparte pulita",
+        "Ora puoi sfogliare gli aggiornamenti precedenti — dal banner della home o da una nuova sezione cronologia nelle Impostazioni"
+      ]
+    },
     "v0_11_1": {
       "title": "Novità della versione 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Preferiti, impostazioni ed elementi personalizzati sono ora salvati in modo più affidabile",
         "Lo script del wrapper non occupa più spazio nella cartella home"
       ]
-    }
+    },
+    "older": "Precedente",
+    "newer": "Più recente"
   }
 }

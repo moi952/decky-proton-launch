@@ -63,7 +63,15 @@
     "default_home_vars": "Variable list",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Update history",
+    "reset_title": "Reset",
+    "clean_custom_wrappers": "Clean custom wrappers",
+    "clean_custom_variables": "Clean custom commands",
+    "clean_custom_wrappers_confirm_title": "Clean Custom Wrappers",
+    "clean_custom_wrappers_confirm_description": "Delete all custom wrappers? This can't be undone.",
+    "clean_custom_variables_confirm_title": "Clean Custom Commands",
+    "clean_custom_variables_confirm_description": "Delete all custom commands? This can't be undone."
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Got it",
+    "v0_11_2": {
+      "title": "What's new in 0.11.2",
+      "items": [
+        "Custom commands and favorites can now be deleted",
+        "Added buttons in Settings to clean up custom wrappers or custom commands, each with a confirmation step",
+        "Uninstalling now cleans up generated files (script, wrapper cache) while keeping all your data, so reinstalling starts fresh",
+        "You can now browse past What's New updates — from the home banner or a new history section in Settings"
+      ]
+    },
     "v0_11_1": {
       "title": "What's new in 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Favorites, settings and custom items are now stored more reliably",
         "The wrapper script no longer clutters your home folder"
       ]
-    }
+    },
+    "older": "Older",
+    "newer": "Newer"
   }
 }

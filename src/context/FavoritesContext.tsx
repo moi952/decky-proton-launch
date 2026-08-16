@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { call } from "@decky/api";
-import { readLegacyArray } from "../utils/legacyStorage";
+import { readLegacyArray, pruneLegacyArray } from "../utils/legacyStorage";
 
 export interface Favorite {
   name: string;
@@ -25,17 +25,28 @@ export const FavoritesProvider: React.FC<{ children: React.ReactNode }> = ({
   const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
-    // Merge legacy entries missing by name; runs on backend fetch failure too.
+    // Merge legacy entries missing by name, then prune the ones now
+    // confirmed in the backend — otherwise a deleted item that's still in
+    // legacy storage gets re-added on every remount.
     const mergeLegacy = (current: Favorite[]) => {
       const legacy = readLegacyArray<Favorite>(LEGACY_KEY) ?? [];
+      if (legacy.length === 0) {
+        setFavorites(current);
+        return;
+      }
+
       const existingNames = new Set(current.map((f) => f.name));
       const missing = legacy.filter((f) => !existingNames.has(f.name));
-      setFavorites([...current, ...missing]);
-      if (missing.length > 0) {
-        call<[Favorite[]], boolean>("set_favorites", [
-          ...current,
-          ...missing,
-        ]).catch(() => {});
+      const merged = [...current, ...missing];
+      setFavorites(merged);
+
+      const legacyNames = legacy.map((f) => f.name);
+      if (missing.length === 0) {
+        pruneLegacyArray(LEGACY_KEY, legacyNames);
+      } else {
+        call<[Favorite[]], boolean>("set_favorites", merged)
+          .then(() => pruneLegacyArray(LEGACY_KEY, legacyNames))
+          .catch(() => {});
       }
     };
 

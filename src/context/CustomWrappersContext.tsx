@@ -12,6 +12,7 @@ interface CustomWrappersContextValue {
   customWrappers: CustomWrapper[];
   addCustomWrapper: (wrapper: Omit<CustomWrapper, "id" | "env">) => boolean;
   removeCustomWrapper: (id: string) => void;
+  clearCustomWrappers: () => void;
 }
 
 const CustomWrappersContext = createContext<CustomWrappersContextValue | null>(
@@ -51,9 +52,18 @@ export const CustomWrappersProvider: React.FC<{
     persist(customWrappers.filter((w) => w.id !== id));
   };
 
+  const clearCustomWrappers = () => {
+    persist([]);
+  };
+
   return (
     <CustomWrappersContext.Provider
-      value={{ customWrappers, addCustomWrapper, removeCustomWrapper }}
+      value={{
+        customWrappers,
+        addCustomWrapper,
+        removeCustomWrapper,
+        clearCustomWrappers,
+      }}
     >
       {children}
     </CustomWrappersContext.Provider>

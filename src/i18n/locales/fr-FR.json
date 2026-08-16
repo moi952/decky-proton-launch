@@ -63,7 +63,15 @@
     "default_home_vars": "Liste des variables",
     "default_home_global_commands": "Commandes globales",
     "force_refresh": "Forcer l'actualisation",
-    "data_title": "Données"
+    "data_title": "Données",
+    "whats_new_history": "Historique des mises à jour",
+    "reset_title": "Réinitialisation",
+    "clean_custom_wrappers": "Nettoyer les wrappers personnalisés",
+    "clean_custom_variables": "Nettoyer les commandes personnalisées",
+    "clean_custom_wrappers_confirm_title": "Nettoyer les wrappers personnalisés",
+    "clean_custom_wrappers_confirm_description": "Supprimer tous les wrappers personnalisés ? Cette action est irréversible.",
+    "clean_custom_variables_confirm_title": "Nettoyer les commandes personnalisées",
+    "clean_custom_variables_confirm_description": "Supprimer toutes les commandes personnalisées ? Cette action est irréversible."
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Compris",
+    "v0_11_2": {
+      "title": "Nouveautés de la version 0.11.2",
+      "items": [
+        "Les commandes personnalisées et favoris peuvent maintenant être supprimés",
+        "Ajout de boutons dans les Réglages pour nettoyer les wrappers ou les commandes personnalisés, chacun avec une confirmation",
+        "La désinstallation nettoie maintenant les fichiers générés (script, cache des wrappers) tout en gardant toutes tes données, pour repartir sur une base propre à la réinstallation",
+        "Tu peux maintenant parcourir les anciennes mises à jour — depuis la bannière d'accueil ou une nouvelle section Historique dans les Réglages"
+      ]
+    },
     "v0_11_1": {
       "title": "Nouveautés de la version 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Favoris, réglages et éléments personnalisés sont stockés de manière plus fiable",
         "Le script wrapper n'encombre plus ton dossier personnel"
       ]
-    }
+    },
+    "older": "Plus ancien",
+    "newer": "Plus récent"
   }
 }

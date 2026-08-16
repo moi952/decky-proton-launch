@@ -63,7 +63,15 @@
     "default_home_vars": "Variablenliste",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Update-Verlauf",
+    "reset_title": "Zurücksetzen",
+    "clean_custom_wrappers": "Benutzerdefinierte Wrapper leeren",
+    "clean_custom_variables": "Benutzerdefinierte Befehle leeren",
+    "clean_custom_wrappers_confirm_title": "Benutzerdefinierte Wrapper leeren",
+    "clean_custom_wrappers_confirm_description": "Alle benutzerdefinierten Wrapper löschen? Dies kann nicht rückgängig gemacht werden.",
+    "clean_custom_variables_confirm_title": "Benutzerdefinierte Befehle leeren",
+    "clean_custom_variables_confirm_description": "Alle benutzerdefinierten Befehle löschen? Dies kann nicht rückgängig gemacht werden."
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Verstanden",
+    "v0_11_2": {
+      "title": "Neuigkeiten in Version 0.11.2",
+      "items": [
+        "Benutzerdefinierte Befehle und Favoriten können jetzt gelöscht werden",
+        "Neue Schaltflächen in den Einstellungen, um benutzerdefinierte Wrapper oder Befehle zu leeren, jeweils mit Bestätigung",
+        "Beim Deinstallieren werden jetzt generierte Dateien (Skript, Wrapper-Cache) entfernt, deine Daten bleiben aber erhalten — die Neuinstallation startet damit sauber",
+        "Du kannst jetzt frühere Updates durchblättern — über das Start-Banner oder einen neuen Verlaufsbereich in den Einstellungen"
+      ]
+    },
     "v0_11_1": {
       "title": "Neuigkeiten in Version 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Favoriten, Einstellungen und benutzerdefinierte Elemente werden jetzt zuverlässiger gespeichert",
         "Das Wrapper-Skript belegt nicht mehr deinen Home-Ordner"
       ]
-    }
+    },
+    "older": "Älter",
+    "newer": "Neuer"
   }
 }

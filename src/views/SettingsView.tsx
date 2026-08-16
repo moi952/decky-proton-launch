@@ -12,6 +12,11 @@ import { useTranslation } from "react-i18next";
 import { FiArrowLeft, FiRefreshCw } from "react-icons/fi";
 import { ActionButton } from "../components/ActionButton";
 import { useRemoteData } from "../context/RemoteDataContext";
+import { openGenericDeleteModal } from "../utils/modals";
+import { useCustomWrappers } from "../context/CustomWrappersContext";
+import { useCustomVariables } from "../context/CustomVariablesContext";
+import { CollapsibleSection } from "../components/CollapsibleSection";
+import { WhatsNewCard } from "../components/WhatsNewCard";
 
 interface SettingsViewProps {
   onBack: () => void;
@@ -23,7 +28,10 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
   const { variables: variablesData, refresh } = useRemoteData();
+  const { clearCustomWrappers } = useCustomWrappers();
+  const { clearCustomVariables } = useCustomVariables();
   const [cachePath, setCachePath] = React.useState<string>("");
+  const [showWhatsNewHistory, setShowWhatsNewHistory] = React.useState(false);
 
   React.useEffect(() => {
     call<[], string>("get_variables_cache_path").then(setCachePath);
@@ -41,6 +49,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
           </ActionButton>
           <span style={{ fontWeight: 600 }}>{tSettings("settings")}</span>
         </Focusable>
+      </PanelSection>
+
+      <PanelSection>
+        <PanelSectionRow>
+          <CollapsibleSection
+            label={tSettings("whats_new_history")}
+            expanded={showWhatsNewHistory}
+            onToggle={() => setShowWhatsNewHistory((v) => !v)}
+          >
+            <WhatsNewCard />
+          </CollapsibleSection>
+        </PanelSectionRow>
       </PanelSection>
 
       <PanelSection title={tSettings("default_home")}>
@@ -89,29 +109,72 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
         ))}
       </PanelSection>
 
-      {cachePath && (
-        <PanelSection title={tSettings("data_title")}>
-          <PanelSectionRow>
-            <ActionButton onClick={refresh} width="100%">
-              <FiRefreshCw size={14} style={{ marginRight: 6 }} />
-              {tSettings("force_refresh")}
-            </ActionButton>
-          </PanelSectionRow>
-          <PanelSectionRow>
-            <div
-              style={{
-                fontSize: 9,
-                color: "#555",
-                fontFamily: "monospace",
-                wordBreak: "break-all",
-                lineHeight: "1.4",
-              }}
+      <PanelSection title={tSettings("data_title")}>
+        {cachePath && (
+          <React.Fragment>
+            <PanelSectionRow>
+              <ActionButton onClick={refresh} width="100%">
+                <FiRefreshCw size={14} style={{ marginRight: 6 }} />
+                {tSettings("force_refresh")}
+              </ActionButton>
+            </PanelSectionRow>
+            <PanelSectionRow>
+              <div
+                style={{
+                  fontSize: 9,
+                  color: "#555",
+                  fontFamily: "monospace",
+                  wordBreak: "break-all",
+                  lineHeight: "1.4",
+                  marginTop: 8,
+                  marginBottom: 8,
+                }}
+              >
+                {cachePath}
+              </div>
+            </PanelSectionRow>
+          </React.Fragment>
+        )}
+      </PanelSection>
+
+      <PanelSection title={tSettings("reset_title")}>
+        <PanelSectionRow>
+          <div style={{ marginBottom: 8 }}>
+            <ActionButton
+              variant="danger"
+              width="100%"
+              onClick={() =>
+                openGenericDeleteModal({
+                  title: tSettings("clean_custom_wrappers_confirm_title"),
+                  description: tSettings(
+                    "clean_custom_wrappers_confirm_description",
+                  ),
+                  onConfirm: clearCustomWrappers,
+                })
+              }
             >
-              {cachePath}
-            </div>
-          </PanelSectionRow>
-        </PanelSection>
-      )}
+              {tSettings("clean_custom_wrappers")}
+            </ActionButton>
+          </div>
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <ActionButton
+            variant="danger"
+            width="100%"
+            onClick={() =>
+              openGenericDeleteModal({
+                title: tSettings("clean_custom_variables_confirm_title"),
+                description: tSettings(
+                  "clean_custom_variables_confirm_description",
+                ),
+                onConfirm: clearCustomVariables,
+              })
+            }
+          >
+            {tSettings("clean_custom_variables")}
+          </ActionButton>
+        </PanelSectionRow>
+      </PanelSection>
     </div>
   );
 };

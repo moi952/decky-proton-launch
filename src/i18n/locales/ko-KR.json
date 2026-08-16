@@ -63,7 +63,15 @@
     "default_home_vars": "변수 목록",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "업데이트 기록",
+    "reset_title": "초기화",
+    "clean_custom_wrappers": "커스텀 래퍼 초기화",
+    "clean_custom_variables": "커스텀 명령 초기화",
+    "clean_custom_wrappers_confirm_title": "커스텀 래퍼 초기화",
+    "clean_custom_wrappers_confirm_description": "모든 커스텀 래퍼를 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
+    "clean_custom_variables_confirm_title": "커스텀 명령 초기화",
+    "clean_custom_variables_confirm_description": "모든 커스텀 명령을 삭제할까요? 이 작업은 되돌릴 수 없습니다."
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "확인",
+    "v0_11_2": {
+      "title": "0.11.2 버전의 새로운 기능",
+      "items": [
+        "이제 커스텀 명령과 즐겨찾기를 삭제할 수 있습니다",
+        "설정에 커스텀 래퍼 또는 커스텀 명령을 초기화하는 버튼 추가, 각각 확인 절차 포함",
+        "제거 시 생성된 파일(스크립트, 래퍼 캐시)을 정리하지만 모든 데이터는 유지되어, 재설치 시 깨끗한 상태로 시작합니다",
+        "이제 이전 업데이트 내역을 살펴볼 수 있습니다 — 홈 배너 또는 설정의 새 기록 섹션에서"
+      ]
+    },
     "v0_11_1": {
       "title": "0.11.1 버전의 새로운 기능",
       "items": [
@@ -171,6 +188,8 @@
         "즐겨찾기, 설정, 커스텀 항목이 더 안정적으로 저장됩니다",
         "래퍼 스크립트가 더 이상 홈 폴더를 차지하지 않습니다"
       ]
-    }
+    },
+    "older": "이전",
+    "newer": "최신"
   }
 }

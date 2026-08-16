@@ -63,7 +63,15 @@
     "default_home_vars": "Variabelenlijst",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
-    "data_title": "Data"
+    "data_title": "Data",
+    "whats_new_history": "Updategeschiedenis",
+    "reset_title": "Reset",
+    "clean_custom_wrappers": "Aangepaste wrappers wissen",
+    "clean_custom_variables": "Aangepaste opdrachten wissen",
+    "clean_custom_wrappers_confirm_title": "Aangepaste wrappers wissen",
+    "clean_custom_wrappers_confirm_description": "Alle aangepaste wrappers verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    "clean_custom_variables_confirm_title": "Aangepaste opdrachten wissen",
+    "clean_custom_variables_confirm_description": "Alle aangepaste opdrachten verwijderen? Dit kan niet ongedaan worden gemaakt."
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -154,6 +162,15 @@
   },
   "whats_new": {
     "dismiss": "Begrepen",
+    "v0_11_2": {
+      "title": "Nieuw in versie 0.11.2",
+      "items": [
+        "Aangepaste opdrachten en favorieten kunnen nu worden verwijderd",
+        "Nieuwe knoppen in Instellingen om aangepaste wrappers of opdrachten te wissen, telkens met bevestiging",
+        "Bij verwijderen worden nu gegenereerde bestanden (script, wrapper-cache) opgeruimd, maar al je gegevens blijven behouden — herinstalleren start dus schoon",
+        "Je kunt nu eerdere updates doorbladeren — via de startbanner of een nieuwe geschiedenissectie in Instellingen"
+      ]
+    },
     "v0_11_1": {
       "title": "Nieuw in versie 0.11.1",
       "items": [
@@ -171,6 +188,8 @@
         "Favorieten, instellingen en aangepaste items worden nu betrouwbaarder opgeslagen",
         "Het wrapper-script neemt geen ruimte meer in je thuismap in"
       ]
-    }
+    },
+    "older": "Ouder",
+    "newer": "Nieuwer"
   }
 }

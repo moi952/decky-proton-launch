@@ -840,6 +840,23 @@ class Plugin:
     async def _unload(self):
         decky.logger.info("decky-proton-launch unloaded")
 
+    async def _uninstall(self):
+        """Called after _unload on an actual uninstall (not a plain update).
+        Wipes purely-regenerable derived files — the launch script, the
+        wrapper chain list, the cached remote catalog — so a reinstall
+        starts from a guaranteed-clean state instead of whatever was left
+        behind. Never touches the user's actual data (profiles, favorites,
+        custom variables/wrappers, settings): all of that survives a
+        reinstall untouched."""
+        decky.logger.info("decky-proton-launch uninstalling")
+        for path in (script_path(), self._wrapper_chains_path(), self._variables_cache_path()):
+            try:
+                if path.is_file():
+                    path.unlink()
+                    decky.logger.info(f"[_uninstall] removed {path}")
+            except Exception as e:
+                decky.logger.error(f"[_uninstall] failed to remove {path}: {e}")
+
     async def _migration(self):
         decky.logger.info("decky-proton-launch migrations")
         try:
