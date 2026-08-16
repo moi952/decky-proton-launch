@@ -8,7 +8,9 @@ import {
   call,
 } from "@decky/api";
 import { FaRocket } from "react-icons/fa";
+import i18n from "i18next";
 import { loadTranslations } from "./i18n";
+import type { PluginUpdateInfo } from "./utils/githubReleases";
 import { staticClasses } from "@decky/ui";
 import { BackHandler } from "./components/BackHandler";
 import { copy } from "./utils/functions";
@@ -23,7 +25,9 @@ import { useSettings, DefaultHome } from "./context/SettingsContext";
 import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
 import { NowPlayingCard } from "./components/NowPlayingCard";
-import { UpdateBanner } from "./components/UpdateBanner";
+import { PluginUpdateBanner } from "./components/PluginUpdate";
+import { usePluginUpdate } from "./context/PluginUpdateContext";
+import { markPluginUpdateExpanded } from "./utils/pluginUpdateFocus";
 import { WhatsNewBanner } from "./components/WhatsNewBanner";
 import { GAME_ROW_STYLES } from "./components/GameRow";
 import { SteamGame, ScriptStatus } from "./data/types";
@@ -35,32 +39,66 @@ type View =
   | "game-detail"
   | "global-commands";
 
-const resolveHomeView = (defaultHome: DefaultHome): View => {
+const resolveHomeView = (
+  defaultHome: DefaultHome,
+  hideVariablesPage: boolean,
+): View => {
   if (defaultHome === "game-manager") return "games-picker";
   if (defaultHome === "global-commands") return "global-commands";
-  return "home";
+  return hideVariablesPage ? "games-picker" : "home";
 };
 
+// Picking any DropdownItem option makes Decky/Steam tear down and recreate
+// the whole plugin panel (same finding as decky-nvidia-update's
+// VersionDropdown), resetting every useState here. Persisting the last view
+// outside React and restoring it within a short window afterward survives
+// that; a genuinely later reopen still starts fresh.
+const NAV_RESTORE_WINDOW_MS = 5000;
+let lastView: View = "games-picker";
+let lastViewAt = 0;
+
 const App: React.FC = () => {
-  const { defaultHome, settingsLoaded } = useSettings();
+  const { defaultHome, hideVariablesPage, settingsLoaded } = useSettings();
   const { noData } = useRemoteData();
+  const { info: pluginUpdateInfo } = usePluginUpdate();
   const { t } = useTranslation();
-  const [view, setView] = useState<View>("games-picker");
+  // game-detail can't be restored this way (selectedGame would be lost
+  // along with it) — fall back to games-picker for that one case.
+  const isRestoringView = useRef(
+    Date.now() - lastViewAt < NAV_RESTORE_WINDOW_MS && lastView !== "game-detail",
+  ).current;
+  const [view, setView] = useState<View>(
+    isRestoringView ? lastView : "games-picker",
+  );
   const [selectedGame, setSelectedGame] = useState<SteamGame | null>(null);
   const [runningGame, setRunningGame] = useState<SteamGame | null>(null);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus>("missing");
 
-  const goHome = () => setView(resolveHomeView(defaultHome));
+  // Keeps lastViewAt fresh the whole time this view is showing, not just
+  // the instant it changed.
+  useEffect(() => {
+    if (view === "game-detail") return;
+    lastView = view;
+    lastViewAt = Date.now();
+    const heartbeat = setInterval(() => {
+      lastView = view;
+      lastViewAt = Date.now();
+    }, 1000);
+    return () => clearInterval(heartbeat);
+  }, [view]);
 
-  // defaultHome loads asynchronously from the backend — apply it once to
-  // the initial screen, without disturbing any navigation done meanwhile.
-  const appliedInitialHome = useRef(false);
+  const goHome = () =>
+    setView(resolveHomeView(defaultHome, hideVariablesPage));
+
+  // defaultHome loads asynchronously — apply it once, unless we're
+  // restoring a view (see above), which this would otherwise stomp.
+  const appliedInitialHome = useRef(isRestoringView);
   useEffect(() => {
     if (settingsLoaded && !appliedInitialHome.current) {
       appliedInitialHome.current = true;
-      setView(resolveHomeView(defaultHome));
+      setView(resolveHomeView(defaultHome, hideVariablesPage));
     }
-  }, [settingsLoaded, defaultHome]);
+  }, [settingsLoaded, defaultHome, hideVariablesPage]);
 
   useEffect(() => {
     call<[], ScriptStatus>("is_script_installed").then(setScriptStatus);
@@ -110,7 +148,8 @@ const App: React.FC = () => {
     );
 
   const mainView = view as "home" | "games-picker";
-  const isOnHome = mainView === resolveHomeView(defaultHome);
+  const isOnHome =
+    mainView === resolveHomeView(defaultHome, hideVariablesPage);
 
   return (
     <BackHandler onBack={isOnHome ? undefined : goHome}>
@@ -118,6 +157,7 @@ const App: React.FC = () => {
       <NavBar
         view={mainView}
         scriptStatus={scriptStatus}
+        showHome={!hideVariablesPage}
         onHome={() => setView("home")}
         onGamesManager={() => setView("games-picker")}
         onGlobalCommands={() => setView("global-commands")}
@@ -126,7 +166,13 @@ const App: React.FC = () => {
           copy("~/.config/decky-proton-launch/proton-launch %command%")
         }
       />
-      <UpdateBanner />
+      <PluginUpdateBanner
+        info={pluginUpdateInfo}
+        onClick={() => {
+          markPluginUpdateExpanded();
+          setView("settings");
+        }}
+      />
       {isOnHome && <WhatsNewBanner />}
       {noData && (
         <div style={{ margin: "4px 16px 0", padding: "6px 10px", background: "#3a0000", border: "1px solid #c00", borderRadius: "6px", fontSize: 11, color: "#ff6b6b" }}>
@@ -166,6 +212,19 @@ export default definePlugin(() => {
     toaster.toast({ title: "Event received", body: JSON.stringify(args) });
   });
 
+  // Fired by Plugin._main() on the Python side (see plugin_updater.py) as
+  // soon as Decky loads this plugin — not gated behind the user ever
+  // opening its panel, unlike the frontend's own on-mount check.
+  const updateListener = addEventListener(
+    "plugin_update_available",
+    (info: PluginUpdateInfo) => {
+      toaster.toast({
+        title: i18n.t("plugin_update:section_label"),
+        body: i18n.t("plugin_update:banner", { version: info?.latest_version }),
+      });
+    },
+  );
+
   return {
     name: "decky-proton-launch",
     titleView: <div className={staticClasses.Title}>Proton Launch</div>,
@@ -177,6 +236,7 @@ export default definePlugin(() => {
     icon: <FaRocket />,
     onDismount() {
       removeEventListener("timer_event", listener);
+      removeEventListener("plugin_update_available", updateListener);
     },
   };
 });

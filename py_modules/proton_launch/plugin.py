@@ -21,9 +21,10 @@ from .launch_option import (
     migrate_legacy_shortcut_options, legacy_apps_with_wrapper,
     legacy_wrapper_still_referenced,
 )
+from .plugin_updater import PluginUpdaterMixin
 
 
-class Plugin:
+class Plugin(PluginUpdaterMixin):
 
     async def ping(self) -> str:
         decky.logger.info("[ping] pong")
@@ -836,6 +837,15 @@ class Plugin:
         decky.logger.info("decky-proton-launch loaded")
         decky.logger.info(f"[_main] DECKY_USER_HOME={decky.DECKY_USER_HOME}")
         decky.logger.info(f"[_main] script installed={script_path().is_file()}")
+        try:
+            update_info = await self.check_plugin_update_on_load()
+            if update_info:
+                decky.logger.info(
+                    f"[_main] update available: {update_info['latest_version']}"
+                )
+                await decky.emit("plugin_update_available", update_info)
+        except Exception:
+            decky.logger.error(f"[_main] update check failed:\n{traceback.format_exc()}")
 
     async def _unload(self):
         decky.logger.info("decky-proton-launch unloaded")

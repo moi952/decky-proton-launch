@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Обране",
     "custom": "Користувацьке",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Користувацькі обгортки"
   },
   "common": {
     "selected": "Вибрано",
@@ -22,8 +22,9 @@
     "create": "Створити",
     "delete": "Видалити",
     "clean": "Очистити",
-    "update_available": "↑ v{{version}} доступна — натисніть для завантаження",
-    "no_data": "Для завантаження змінних потрібне підключення до інтернету."
+    "no_data": "Для завантаження змінних потрібне підключення до інтернету.",
+    "save": "Зберегти",
+    "edit": "Редагувати"
   },
   "delete_favorite_modal": {
     "title": "Видалити з обраного",
@@ -40,7 +41,8 @@
     "field_env": "Змінна середовища",
     "field_value": "Значення",
     "fields_required": "Усі поля обов'язкові",
-    "already_exists": "Змінна з цією назвою вже існує"
+    "already_exists": "Змінна з цією назвою вже існує",
+    "edit_title": "Редагувати користувацьку змінну"
   },
   "delete_custom_variable_modal": {
     "title": "Видалити користувацьку змінну",
@@ -61,9 +63,9 @@
     "default_home": "Домашня за замовчуванням",
     "default_home_game_manager": "Відкрити в менеджері ігор",
     "default_home_vars": "Список змінних",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Глобальні команди",
+    "force_refresh": "Примусове оновлення",
+    "data_title": "Дані",
     "whats_new_history": "Історія оновлень",
     "reset_title": "Скидання",
     "clean_custom_wrappers": "Очистити користувацькі обгортки",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Очистити користувацькі обгортки",
     "clean_custom_wrappers_confirm_description": "Видалити всі користувацькі обгортки? Цю дію не можна скасувати.",
     "clean_custom_variables_confirm_title": "Очистити користувацькі команди",
-    "clean_custom_variables_confirm_description": "Видалити всі користувацькі команди? Цю дію не можна скасувати."
+    "clean_custom_variables_confirm_description": "Видалити всі користувацькі команди? Цю дію не можна скасувати.",
+    "hide_variables_page": "Приховати сторінку «Список змінних»"
   },
   "launch_options_view": {
     "title": "Параметри запуску",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "Видалити",
     "show_command": "Показати команду",
     "hide_command": "Сховати команду",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Увімкнено глобальними командами",
+    "global_disabled_hint": "Вимкнено для цієї гри — усе ще активно глобально",
+    "global_commands": "Глобальні команди"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Глобальні команди",
+    "description": "Ці команди застосовуються до кожної гри, у якій встановлено обгортку. Відкрий сторінку гри, щоб вимкнути команду лише для неї.",
+    "loading": "Завантаження...",
+    "saving": "збереження...",
+    "error_save": "Помилка збереження"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Додати користувацьку обгортку",
+    "title": "Додати користувацьку обгортку",
+    "field_name": "Назва",
+    "field_exec": "Шлях до виконуваного файлу",
+    "fields_required": "Усі поля обов'язкові",
+    "already_exists": "Обгортка з такою назвою вже існує",
+    "edit_title": "Редагувати користувацьку обгортку"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Видалити користувацьку обгортку",
+    "description": "Видалити «{{wrapper_name}}»?"
   },
   "whats_new": {
     "dismiss": "Зрозуміло",
+    "v0_12_0": {
+      "title": "Що нового у версії 0.12.0",
+      "items": [
+        "Сповіщення про доступне оновлення плагіна",
+        "Встановлення в один клік із Налаштувань — можна встановити й будь-яку минулу версію, не лише останню",
+        "Можливість приховати сторінку «Список змінних» у Налаштуваннях, якщо вона не використовується",
+        "Користувацькі команди та обгортки тепер можна редагувати, а не видаляти й створювати заново",
+        "Плагін тепер автоматично перезавантажується після оновлення чи перевстановлення — більше не потрібно вручну перезавантажувати його в налаштуваннях Decky"
+      ]
+    },
     "v0_11_2": {
       "title": "Що нового у версії 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Раніше",
     "newer": "Новіше"
+  },
+  "plugin_update": {
+    "banner": "Доступне оновлення плагіна: {{version}}",
+    "section_label": "Оновлення плагіна",
+    "current": "Поточна версія: {{version}}",
+    "latest": "Остання версія: {{version}}",
+    "up_to_date": "Плагін актуальний",
+    "check_failed": "Зараз не вдалося перевірити оновлення",
+    "view_release": "Переглянути реліз",
+    "check_button": "Перевірити оновлення",
+    "checking": "Перевірка…",
+    "install_button": "Встановити {{version}}",
+    "installing": "Встановлення…",
+    "downloading": "Завантаження…",
+    "install_failed_title": "Не вдалося оновити плагін",
+    "no_backend": "Інсталятор Decky зараз недоступний.",
+    "install_timeout": "Немає відповіді від Decky Loader — встановлення могло зависнути. Спробуйте ще раз.",
+    "choose_version_label": "Встановити конкретну версію",
+    "no_releases": "Релізів не знайдено",
+    "already_installed": "Уже встановлено ({{version}})"
   }
 }

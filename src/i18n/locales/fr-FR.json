@@ -22,8 +22,9 @@
     "create": "Créer",
     "delete": "Supprimer",
     "clean": "Nettoyer",
-    "update_available": "↑ v{{version}} disponible — appuyer pour télécharger",
-    "no_data": "Une connexion internet est requise pour charger les variables."
+    "no_data": "Une connexion internet est requise pour charger les variables.",
+    "save": "Enregistrer",
+    "edit": "Modifier"
   },
   "delete_favorite_modal": {
     "title": "Supprimer des favoris",
@@ -40,7 +41,8 @@
     "field_env": "Variable d'environnement",
     "field_value": "Valeur",
     "fields_required": "Tous les champs sont obligatoires",
-    "already_exists": "Une variable portant ce nom existe déjà"
+    "already_exists": "Une variable portant ce nom existe déjà",
+    "edit_title": "Modifier la variable personnalisée"
   },
   "delete_custom_variable_modal": {
     "title": "Supprimer la variable personnalisée",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Nettoyer les wrappers personnalisés",
     "clean_custom_wrappers_confirm_description": "Supprimer tous les wrappers personnalisés ? Cette action est irréversible.",
     "clean_custom_variables_confirm_title": "Nettoyer les commandes personnalisées",
-    "clean_custom_variables_confirm_description": "Supprimer toutes les commandes personnalisées ? Cette action est irréversible."
+    "clean_custom_variables_confirm_description": "Supprimer toutes les commandes personnalisées ? Cette action est irréversible.",
+    "hide_variables_page": "Masquer la page Liste des variables"
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -154,7 +157,8 @@
     "field_name": "Nom",
     "field_exec": "Chemin de l'exécutable",
     "fields_required": "Tous les champs sont obligatoires",
-    "already_exists": "Un wrapper avec ce nom existe déjà"
+    "already_exists": "Un wrapper avec ce nom existe déjà",
+    "edit_title": "Modifier le wrapper personnalisé"
   },
   "delete_custom_wrapper_modal": {
     "title": "Supprimer le wrapper personnalisé",
@@ -162,6 +166,16 @@
   },
   "whats_new": {
     "dismiss": "Compris",
+    "v0_12_0": {
+      "title": "Nouveautés de la version 0.12.0",
+      "items": [
+        "Notification quand une mise à jour du plugin est disponible",
+        "Installation en un clic depuis les Réglages — possibilité d'installer aussi n'importe quelle version passée, pas seulement la dernière",
+        "Possibilité de masquer la page Liste des variables depuis les Réglages si elle n'est pas utilisée",
+        "Modification possible des commandes et wrappers personnalisés, au lieu de devoir les supprimer et les recréer",
+        "Le plugin se recharge maintenant automatiquement après une mise à jour ou une réinstallation — plus besoin de le recharger manuellement depuis les réglages de Decky"
+      ]
+    },
     "v0_11_2": {
       "title": "Nouveautés de la version 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Plus ancien",
     "newer": "Plus récent"
+  },
+  "plugin_update": {
+    "banner": "Mise à jour du plugin disponible : {{version}}",
+    "section_label": "Mise à jour du plugin",
+    "current": "Version actuelle : {{version}}",
+    "latest": "Dernière version : {{version}}",
+    "up_to_date": "Le plugin est à jour",
+    "check_failed": "Impossible de vérifier les mises à jour pour le moment",
+    "view_release": "Voir la version",
+    "check_button": "Vérifier les mises à jour",
+    "checking": "Vérification…",
+    "install_button": "Installer {{version}}",
+    "installing": "Installation…",
+    "downloading": "Téléchargement…",
+    "install_failed_title": "Échec de la mise à jour du plugin",
+    "no_backend": "L'installateur de Decky n'est pas accessible pour le moment.",
+    "install_timeout": "Pas de réponse de Decky Loader — l'installation a peut-être bloqué. Réessaie.",
+    "choose_version_label": "Installer une version spécifique",
+    "no_releases": "Aucune version trouvée",
+    "already_installed": "Déjà installée ({{version}})"
   }
 }

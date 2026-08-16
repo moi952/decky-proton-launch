@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "お気に入り",
     "custom": "カスタム",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "カスタムラッパー"
   },
   "common": {
     "selected": "選択",
@@ -22,8 +22,9 @@
     "create": "作成",
     "delete": "削除",
     "clean": "クリア",
-    "update_available": "↑ v{{version}} が利用可能 — タップしてダウンロード",
-    "no_data": "変数を読み込むにはインターネット接続が必要です。"
+    "no_data": "変数を読み込むにはインターネット接続が必要です。",
+    "save": "保存",
+    "edit": "編集"
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",
@@ -40,7 +41,8 @@
     "field_env": "環境変数",
     "field_value": "値",
     "fields_required": "すべての項目を入力してください",
-    "already_exists": "同じ名前の変数がすでに存在します"
+    "already_exists": "同じ名前の変数がすでに存在します",
+    "edit_title": "カスタム変数を編集"
   },
   "delete_custom_variable_modal": {
     "title": "カスタム変数を削除",
@@ -61,9 +63,9 @@
     "default_home": "デフォルトホーム",
     "default_home_game_manager": "ゲームマネージャーを開く",
     "default_home_vars": "変数リスト",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "グローバルコマンド",
+    "force_refresh": "強制的に更新",
+    "data_title": "データ",
     "whats_new_history": "更新履歴",
     "reset_title": "リセット",
     "clean_custom_wrappers": "カスタムラッパーを消去",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "カスタムラッパーを消去",
     "clean_custom_wrappers_confirm_description": "すべてのカスタムラッパーを削除しますか？この操作は元に戻せません。",
     "clean_custom_variables_confirm_title": "カスタムコマンドを消去",
-    "clean_custom_variables_confirm_description": "すべてのカスタムコマンドを削除しますか？この操作は元に戻せません。"
+    "clean_custom_variables_confirm_description": "すべてのカスタムコマンドを削除しますか？この操作は元に戻せません。",
+    "hide_variables_page": "「変数一覧」ページを非表示にする"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "削除",
     "show_command": "コマンドを表示",
     "hide_command": "コマンドを非表示",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "グローバルコマンドで有効",
+    "global_disabled_hint": "このゲームでは無効 — グローバルでは引き続き有効",
+    "global_commands": "グローバルコマンド"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "グローバルコマンド",
+    "description": "これらのコマンドは、ラッパーがインストールされているすべてのゲームに適用されます。特定のゲームだけで無効にするには、そのゲームのページを開いてください。",
+    "loading": "読み込み中...",
+    "saving": "保存中...",
+    "error_save": "保存エラー"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "カスタムラッパーを追加",
+    "title": "カスタムラッパーを追加",
+    "field_name": "名前",
+    "field_exec": "実行ファイルのパス",
+    "fields_required": "すべての項目が必須です",
+    "already_exists": "この名前のラッパーは既に存在します",
+    "edit_title": "カスタムラッパーを編集"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "カスタムラッパーを削除",
+    "description": "「{{wrapper_name}}」を削除しますか？"
   },
   "whats_new": {
     "dismiss": "了解",
+    "v0_12_0": {
+      "title": "バージョン0.12.0の新機能",
+      "items": [
+        "プラグインの更新が利用可能になると通知されます",
+        "設定からワンクリックでインストール可能 — 最新版だけでなく過去のバージョンもインストールできます",
+        "使用しない場合は設定から「変数一覧」ページを非表示にできます",
+        "カスタムコマンドやカスタムラッパーを削除して作り直す代わりに編集できるようになりました",
+        "更新や再インストール後にプラグインが自動的に再読み込みされるようになりました — Deckyの設定から手動で再読み込みする必要はもうありません"
+      ]
+    },
     "v0_11_2": {
       "title": "バージョン0.11.2の新機能",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "前へ",
     "newer": "次へ"
+  },
+  "plugin_update": {
+    "banner": "プラグインの更新があります: {{version}}",
+    "section_label": "プラグインの更新",
+    "current": "現在のバージョン: {{version}}",
+    "latest": "最新バージョン: {{version}}",
+    "up_to_date": "プラグインは最新です",
+    "check_failed": "現在、更新を確認できません",
+    "view_release": "リリースを見る",
+    "check_button": "更新を確認",
+    "checking": "確認中…",
+    "install_button": "{{version}} をインストール",
+    "installing": "インストール中…",
+    "downloading": "ダウンロード中…",
+    "install_failed_title": "プラグインの更新に失敗しました",
+    "no_backend": "Decky のインストーラーに接続できません。",
+    "install_timeout": "Decky Loader からの応答がありません — インストールが停止した可能性があります。もう一度お試しください。",
+    "choose_version_label": "特定のバージョンをインストール",
+    "no_releases": "リリースが見つかりません",
+    "already_installed": "インストール済み（{{version}}）"
   }
 }

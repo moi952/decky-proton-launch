@@ -11,6 +11,7 @@ const LAUNCH_OPTION = "~/.config/decky-proton-launch/proton-launch %command%";
 interface NavBarProps {
   view: "home" | "games-picker";
   scriptStatus: ScriptStatus;
+  showHome: boolean;
   onHome: () => void;
   onGamesManager: () => void;
   onGlobalCommands: () => void;
@@ -21,6 +22,7 @@ interface NavBarProps {
 export const NavBar: React.FC<NavBarProps> = ({
   view,
   scriptStatus,
+  showHome,
   onHome,
   onGamesManager,
   onGlobalCommands,
@@ -36,11 +38,13 @@ export const NavBar: React.FC<NavBarProps> = ({
         style={{ display: "flex", alignItems: "center", gap: "8px" }}
         flow-children="horizontal"
       >
-        <div style={{ opacity: view === "home" ? 1 : 0.4 }}>
-          <ActionButton onClick={onHome}>
-            <FiList size={16} />
-          </ActionButton>
-        </div>
+        {showHome && (
+          <div style={{ opacity: view === "home" ? 1 : 0.4 }}>
+            <ActionButton onClick={onHome}>
+              <FiList size={16} />
+            </ActionButton>
+          </div>
+        )}
         <div style={{ opacity: view === "games-picker" ? 1 : 0.4 }}>
           <ActionButton onClick={onGamesManager}>
             <FiPlay size={16} />

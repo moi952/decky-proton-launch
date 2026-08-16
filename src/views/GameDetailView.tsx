@@ -24,8 +24,8 @@ import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
 import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
 import { useFavorites } from "../context/FavoritesContext";
 import {
-  openDeleteCustomVariableModal,
-  openGenericDeleteModal,
+  openEditCustomVariableModal,
+  openEditCustomWrapperModal,
 } from "../utils/modals";
 import { Variable } from "../data/types";
 
@@ -55,8 +55,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCommon } = useTranslation("common");
   const { t: tFavModal } = useTranslation("delete_favorite_modal");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
+  const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible } = useSettings();
-  const { customVariables } = useCustomVariables();
+  const { customVariables, removeCustomVariable } = useCustomVariables();
   const { customWrappers, removeCustomWrapper } = useCustomWrappers();
   const { variables: variablesData } = useRemoteData();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
@@ -81,6 +82,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const [hasWrapper, setHasWrapper] = useState(false);
   const [pendingDeleteFav, setPendingDeleteFav] = useState<string | null>(null);
   const [confirmRemoveWrapper, setConfirmRemoveWrapper] = useState(false);
+  const [pendingDeleteVariable, setPendingDeleteVariable] = useState<
+    string | null
+  >(null);
+  const [pendingDeleteCustomWrapper, setPendingDeleteCustomWrapper] =
+    useState<string | null>(null);
 
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
@@ -496,29 +502,66 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           )}
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
-              {customVariables.map((cv) => (
-                <Focusable
-                  key={cv.id}
-                  onOptionsButton={() =>
-                    openDeleteCustomVariableModal(cv.id, cv.name)
-                  }
-                  onOptionsActionDescription={tCommon("delete")}
-                >
-                  <PanelSectionRow>
-                    <ToggleField
-                      label={cv.name}
-                      checked={draft[cv.env] !== undefined}
-                      onChange={() => toggleVar(cv.env, cv.value)}
-                    />
-                  </PanelSectionRow>
-                </Focusable>
-              ))}
+              {customVariables.map((cv) => {
+                if (pendingDeleteVariable === cv.id) {
+                  return (
+                    <PanelSectionRow key={cv.id}>
+                      <InlineConfirm
+                        description={tDeleteVariable("description", {
+                          variable_name: cv.name,
+                        })}
+                        onCancel={() => setPendingDeleteVariable(null)}
+                        onConfirm={() => {
+                          removeCustomVariable(cv.id);
+                          setPendingDeleteVariable(null);
+                        }}
+                      />
+                    </PanelSectionRow>
+                  );
+                }
+                return (
+                  <Focusable
+                    key={cv.id}
+                    onButtonDown={(evt: GamepadEvent) => {
+                      if (evt.detail.button === GamepadButton.SECONDARY)
+                        openEditCustomVariableModal(cv);
+                    }}
+                    onSecondaryActionDescription={tCommon("edit")}
+                    onOptionsButton={() => setPendingDeleteVariable(cv.id)}
+                    onOptionsActionDescription={tCommon("delete")}
+                  >
+                    <PanelSectionRow>
+                      <ToggleField
+                        label={cv.name}
+                        checked={draft[cv.env] !== undefined}
+                        onChange={() => toggleVar(cv.env, cv.value)}
+                      />
+                    </PanelSectionRow>
+                  </Focusable>
+                );
+              })}
             </PanelSection>
           )}
 
           {customWrappers.length > 0 && (
             <PanelSection title={tCat("custom_wrappers")}>
               {customWrappers.map((w) => {
+                if (pendingDeleteCustomWrapper === w.id) {
+                  return (
+                    <PanelSectionRow key={w.id}>
+                      <InlineConfirm
+                        description={tDeleteWrapper("description", {
+                          wrapper_name: w.name,
+                        })}
+                        onCancel={() => setPendingDeleteCustomWrapper(null)}
+                        onConfirm={() => {
+                          removeCustomWrapper(w.id);
+                          setPendingDeleteCustomWrapper(null);
+                        }}
+                      />
+                    </PanelSectionRow>
+                  );
+                }
                 const isGlobal = isGlobalVar(w.env);
                 const globalHint = isGlobal
                   ? t(
@@ -530,15 +573,12 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 return (
                   <Focusable
                     key={w.id}
-                    onOptionsButton={() =>
-                      openGenericDeleteModal({
-                        title: tDeleteWrapper("title"),
-                        description: tDeleteWrapper("description", {
-                          wrapper_name: w.name,
-                        }),
-                        onConfirm: () => removeCustomWrapper(w.id),
-                      })
-                    }
+                    onButtonDown={(evt: GamepadEvent) => {
+                      if (evt.detail.button === GamepadButton.SECONDARY)
+                        openEditCustomWrapperModal(w);
+                    }}
+                    onSecondaryActionDescription={tCommon("edit")}
+                    onOptionsButton={() => setPendingDeleteCustomWrapper(w.id)}
                     onOptionsActionDescription={tCommon("delete")}
                   >
                     <VariableToggleRow

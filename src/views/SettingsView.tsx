@@ -17,14 +17,26 @@ import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { CollapsibleSection } from "../components/CollapsibleSection";
 import { WhatsNewCard } from "../components/WhatsNewCard";
+import { PluginUpdateSection } from "../components/PluginUpdate";
+import { usePluginUpdate } from "../context/PluginUpdateContext";
+import {
+  markPluginUpdateExpanded,
+  isPluginUpdateExpansionFresh,
+} from "../utils/pluginUpdateFocus";
 
 interface SettingsViewProps {
   onBack: () => void;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
-  const { isCategoryVisible, toggleCategory, defaultHome, setDefaultHome } =
-    useSettings();
+  const {
+    isCategoryVisible,
+    toggleCategory,
+    defaultHome,
+    setDefaultHome,
+    hideVariablesPage,
+    setHideVariablesPage,
+  } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
   const { variables: variablesData, refresh } = useRemoteData();
@@ -32,6 +44,59 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
   const { clearCustomVariables } = useCustomVariables();
   const [cachePath, setCachePath] = React.useState<string>("");
   const [showWhatsNewHistory, setShowWhatsNewHistory] = React.useState(false);
+  const [showPluginUpdate, setShowPluginUpdateState] = React.useState(
+    isPluginUpdateExpansionFresh,
+  );
+  const setShowPluginUpdate = (v: boolean) => {
+    if (v) markPluginUpdateExpanded();
+    setShowPluginUpdateState(v);
+  };
+  // Keeps the restore window alive the whole time it's expanded, not just
+  // at the moment it was toggled.
+  React.useEffect(() => {
+    if (!showPluginUpdate) return;
+    const heartbeat = setInterval(markPluginUpdateExpanded, 1000);
+    return () => clearInterval(heartbeat);
+  }, [showPluginUpdate]);
+  // True only when this mount restored an already-expanded section, never
+  // on a normal fresh visit.
+  const wasRestoredExpanded = React.useRef(showPluginUpdate).current;
+  const pluginUpdateSectionRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!wasRestoredExpanded) return;
+    // Targets the last enabled focusable element (the Install button, last
+    // in DOM order — see PluginUpdate.tsx). Disabled elements are excluded
+    // since it starts disabled until releases finish loading; retried on a
+    // few delays to catch it once that happens.
+    const focusAndScrollToLast = () => {
+      const container = pluginUpdateSectionRef.current;
+      if (!container) return;
+      const focusables = container.querySelectorAll<HTMLElement>(
+        'button:not([disabled]):not([aria-disabled="true"]), [tabindex]:not([disabled]):not([aria-disabled="true"]), a[href]',
+      );
+      const target = focusables[focusables.length - 1];
+      if (!target) return;
+      target.focus();
+      // Delayed a couple of frames so it runs after Steam's own
+      // focus-driven scroll adjustment, not before it (it overrides ours).
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ block: "center" });
+        });
+      });
+    };
+
+    focusAndScrollToLast();
+    const retries = [300, 700, 1200].map((delay) =>
+      setTimeout(focusAndScrollToLast, delay),
+    );
+    return () => retries.forEach(clearTimeout);
+  }, [wasRestoredExpanded]);
+  const {
+    info: pluginUpdateInfo,
+    checking: checkingPluginUpdate,
+    checkNow: checkPluginUpdateNow,
+  } = usePluginUpdate();
 
   React.useEffect(() => {
     call<[], string>("get_variables_cache_path").then(setCachePath);
@@ -65,9 +130,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
 
       <PanelSection title={tSettings("default_home")}>
         <PanelSectionRow>
+          <ToggleField
+            label={tSettings("hide_variables_page")}
+            checked={hideVariablesPage}
+            onChange={setHideVariablesPage}
+          />
+        </PanelSectionRow>
+        <PanelSectionRow>
           <DropdownItem
             rgOptions={[
-              { data: "home", label: tSettings("default_home_vars") },
+              ...(hideVariablesPage
+                ? []
+                : [{ data: "home", label: tSettings("default_home_vars") }]),
               {
                 data: "game-manager",
                 label: tSettings("default_home_game_manager"),
@@ -107,6 +181,20 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
             />
           </PanelSectionRow>
         ))}
+      </PanelSection>
+
+      <PanelSection>
+        <PanelSectionRow>
+          <div ref={pluginUpdateSectionRef}>
+            <PluginUpdateSection
+              info={pluginUpdateInfo}
+              checking={checkingPluginUpdate}
+              expanded={showPluginUpdate}
+              onToggle={() => setShowPluginUpdate(!showPluginUpdate)}
+              onCheckNow={checkPluginUpdateNow}
+            />
+          </div>
+        </PanelSectionRow>
       </PanelSection>
 
       <PanelSection title={tSettings("data_title")}>

@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Ulubione",
     "custom": "Niestandardowe",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Niestandardowe wrappery"
   },
   "common": {
     "selected": "Wybrane",
@@ -22,8 +22,9 @@
     "create": "Utwórz",
     "delete": "Usuń",
     "clean": "Wyczyść",
-    "update_available": "↑ v{{version}} dostępna — naciśnij, aby pobrać",
-    "no_data": "Połączenie z internetem jest wymagane do załadowania zmiennych."
+    "no_data": "Połączenie z internetem jest wymagane do załadowania zmiennych.",
+    "save": "Zapisz",
+    "edit": "Edytuj"
   },
   "delete_favorite_modal": {
     "title": "Usuń ulubione",
@@ -40,7 +41,8 @@
     "field_env": "Zmienna środowiskowa",
     "field_value": "Wartość",
     "fields_required": "Wszystkie pola są wymagane",
-    "already_exists": "Zmienna o tej nazwie już istnieje"
+    "already_exists": "Zmienna o tej nazwie już istnieje",
+    "edit_title": "Edytuj niestandardową zmienną"
   },
   "delete_custom_variable_modal": {
     "title": "Usuń zmienną niestandardową",
@@ -61,9 +63,9 @@
     "default_home": "Domyślna strona główna",
     "default_home_game_manager": "Otwórz w menedżerze gier",
     "default_home_vars": "Lista zmiennych",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Globalne polecenia",
+    "force_refresh": "Wymuś odświeżenie",
+    "data_title": "Dane",
     "whats_new_history": "Historia aktualizacji",
     "reset_title": "Resetowanie",
     "clean_custom_wrappers": "Wyczyść niestandardowe wrappery",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Wyczyść niestandardowe wrappery",
     "clean_custom_wrappers_confirm_description": "Usunąć wszystkie niestandardowe wrappery? Tej operacji nie można cofnąć.",
     "clean_custom_variables_confirm_title": "Wyczyść niestandardowe polecenia",
-    "clean_custom_variables_confirm_description": "Usunąć wszystkie niestandardowe polecenia? Tej operacji nie można cofnąć."
+    "clean_custom_variables_confirm_description": "Usunąć wszystkie niestandardowe polecenia? Tej operacji nie można cofnąć.",
+    "hide_variables_page": "Ukryj stronę Lista zmiennych"
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "Usuń",
     "show_command": "Pokaż polecenie",
     "hide_command": "Ukryj polecenie",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Włączone przez polecenia globalne",
+    "global_disabled_hint": "Wyłączone dla tej gry — nadal aktywne globalnie",
+    "global_commands": "Globalne polecenia"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Globalne polecenia",
+    "description": "Te polecenia są stosowane do każdej gry, w której zainstalowano wrapper. Otwórz stronę gry, aby wyłączyć jedno polecenie tylko dla niej.",
+    "loading": "Ładowanie...",
+    "saving": "zapisywanie...",
+    "error_save": "Błąd zapisu"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Dodaj niestandardowy wrapper",
+    "title": "Dodaj niestandardowy wrapper",
+    "field_name": "Nazwa",
+    "field_exec": "Ścieżka do pliku wykonywalnego",
+    "fields_required": "Wszystkie pola są wymagane",
+    "already_exists": "Wrapper o tej nazwie już istnieje",
+    "edit_title": "Edytuj niestandardowy wrapper"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Usuń niestandardowy wrapper",
+    "description": "Usunąć „{{wrapper_name}}”?"
   },
   "whats_new": {
     "dismiss": "Rozumiem",
+    "v0_12_0": {
+      "title": "Nowości w wersji 0.12.0",
+      "items": [
+        "Powiadomienie, gdy dostępna jest aktualizacja wtyczki",
+        "Instalacja jednym kliknięciem z Ustawień — można też zainstalować dowolną wcześniejszą wersję, nie tylko najnowszą",
+        "Możliwość ukrycia strony Lista zmiennych w Ustawieniach, jeśli nie jest używana",
+        "Niestandardowe polecenia i wrappery można teraz edytować zamiast je usuwać i tworzyć od nowa",
+        "Wtyczka automatycznie się teraz przeładowuje po aktualizacji lub ponownej instalacji — nie trzeba już robić tego ręcznie w ustawieniach Decky"
+      ]
+    },
     "v0_11_2": {
       "title": "Nowości w wersji 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Starsze",
     "newer": "Nowsze"
+  },
+  "plugin_update": {
+    "banner": "Dostępna aktualizacja wtyczki: {{version}}",
+    "section_label": "Aktualizacja wtyczki",
+    "current": "Bieżąca wersja: {{version}}",
+    "latest": "Najnowsza wersja: {{version}}",
+    "up_to_date": "Wtyczka jest aktualna",
+    "check_failed": "Nie można teraz sprawdzić aktualizacji",
+    "view_release": "Zobacz wydanie",
+    "check_button": "Sprawdź aktualizacje",
+    "checking": "Sprawdzanie…",
+    "install_button": "Zainstaluj {{version}}",
+    "installing": "Instalowanie…",
+    "downloading": "Pobieranie…",
+    "install_failed_title": "Aktualizacja wtyczki nie powiodła się",
+    "no_backend": "Instalator Decky jest teraz niedostępny.",
+    "install_timeout": "Brak odpowiedzi od Decky Loader — instalacja mogła się zawiesić. Spróbuj ponownie.",
+    "choose_version_label": "Zainstaluj konkretną wersję",
+    "no_releases": "Nie znaleziono wydań",
+    "already_installed": "Już zainstalowana ({{version}})"
   }
 }

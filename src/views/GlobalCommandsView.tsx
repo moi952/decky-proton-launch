@@ -20,7 +20,10 @@ import { useRemoteData } from "../context/RemoteDataContext";
 import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useFavorites } from "../context/FavoritesContext";
-import { openDeleteCustomVariableModal } from "../utils/modals";
+import {
+  openEditCustomVariableModal,
+  openEditCustomWrapperModal,
+} from "../utils/modals";
 import { Variable } from "../data/types";
 
 interface GlobalCommandsViewProps {
@@ -35,10 +38,11 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { t: tVars } = useTranslation("variables");
   const { t: tCommon } = useTranslation("common");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
+  const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible } = useSettings();
   const { variables: variablesData } = useRemoteData();
   const { customWrappers, removeCustomWrapper } = useCustomWrappers();
-  const { customVariables } = useCustomVariables();
+  const { customVariables, removeCustomVariable } = useCustomVariables();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
@@ -46,6 +50,9 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [pendingDeleteWrapper, setPendingDeleteWrapper] = useState<
+    string | null
+  >(null);
+  const [pendingDeleteVariable, setPendingDeleteVariable] = useState<
     string | null
   >(null);
 
@@ -177,23 +184,44 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
         <React.Fragment>
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
-              {customVariables.map((cv) => (
-                <Focusable
-                  key={cv.id}
-                  onOptionsButton={() =>
-                    openDeleteCustomVariableModal(cv.id, cv.name)
-                  }
-                  onOptionsActionDescription={tCommon("delete")}
-                >
-                  <PanelSectionRow>
-                    <ToggleField
-                      label={cv.name}
-                      checked={draft[cv.env] !== undefined}
-                      onChange={() => toggleVar(cv.env, cv.value)}
-                    />
-                  </PanelSectionRow>
-                </Focusable>
-              ))}
+              {customVariables.map((cv) => {
+                if (pendingDeleteVariable === cv.id) {
+                  return (
+                    <PanelSectionRow key={cv.id}>
+                      <InlineConfirm
+                        description={tDeleteVariable("description", {
+                          variable_name: cv.name,
+                        })}
+                        onCancel={() => setPendingDeleteVariable(null)}
+                        onConfirm={() => {
+                          removeCustomVariable(cv.id);
+                          setPendingDeleteVariable(null);
+                        }}
+                      />
+                    </PanelSectionRow>
+                  );
+                }
+                return (
+                  <Focusable
+                    key={cv.id}
+                    onButtonDown={(evt: GamepadEvent) => {
+                      if (evt.detail.button === GamepadButton.SECONDARY)
+                        openEditCustomVariableModal(cv);
+                    }}
+                    onSecondaryActionDescription={tCommon("edit")}
+                    onOptionsButton={() => setPendingDeleteVariable(cv.id)}
+                    onOptionsActionDescription={tCommon("delete")}
+                  >
+                    <PanelSectionRow>
+                      <ToggleField
+                        label={cv.name}
+                        checked={draft[cv.env] !== undefined}
+                        onChange={() => toggleVar(cv.env, cv.value)}
+                      />
+                    </PanelSectionRow>
+                  </Focusable>
+                );
+              })}
             </PanelSection>
           )}
 
@@ -220,6 +248,11 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                 return (
                   <Focusable
                     key={w.id}
+                    onButtonDown={(evt: GamepadEvent) => {
+                      if (evt.detail.button === GamepadButton.SECONDARY)
+                        openEditCustomWrapperModal(w);
+                    }}
+                    onSecondaryActionDescription={tCommon("edit")}
                     onOptionsButton={() => setPendingDeleteWrapper(w.id)}
                     onOptionsActionDescription={tCommon("delete")}
                   >

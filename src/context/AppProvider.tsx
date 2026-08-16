@@ -6,6 +6,7 @@ import { CustomWrappersProvider } from "./CustomWrappersContext";
 import { SettingsProvider } from "./SettingsContext";
 import { RemoteDataProvider } from "./RemoteDataContext";
 import { WhatsNewProvider } from "./WhatsNewContext";
+import { PluginUpdateProvider } from "./PluginUpdateContext";
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -16,7 +17,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         <CustomVariablesProvider>
           <CustomWrappersProvider>
             <SettingsProvider>
-              <WhatsNewProvider>{children}</WhatsNewProvider>
+              <WhatsNewProvider>
+                <PluginUpdateProvider>{children}</PluginUpdateProvider>
+              </WhatsNewProvider>
             </SettingsProvider>
           </CustomWrappersProvider>
         </CustomVariablesProvider>

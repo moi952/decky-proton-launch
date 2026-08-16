@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "收藏",
     "custom": "自定义",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "自定义 wrapper"
   },
   "common": {
     "selected": "已选择",
@@ -22,8 +22,9 @@
     "create": "创建",
     "delete": "删除",
     "clean": "清空",
-    "update_available": "↑ v{{version}} 可用 — 点击下载",
-    "no_data": "加载变量需要互联网连接。"
+    "no_data": "加载变量需要互联网连接。",
+    "save": "保存",
+    "edit": "编辑"
   },
   "delete_favorite_modal": {
     "title": "删除收藏",
@@ -40,7 +41,8 @@
     "field_env": "环境变量",
     "field_value": "值",
     "fields_required": "所有字段为必填项",
-    "already_exists": "该名称的变量已存在"
+    "already_exists": "该名称的变量已存在",
+    "edit_title": "编辑自定义变量"
   },
   "delete_custom_variable_modal": {
     "title": "删除自定义变量",
@@ -61,9 +63,9 @@
     "default_home": "默认主页",
     "default_home_game_manager": "在游戏管理器中打开",
     "default_home_vars": "变量列表",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "全局命令",
+    "force_refresh": "强制刷新",
+    "data_title": "数据",
     "whats_new_history": "更新历史",
     "reset_title": "重置",
     "clean_custom_wrappers": "清除自定义 wrapper",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "清除自定义 wrapper",
     "clean_custom_wrappers_confirm_description": "删除所有自定义 wrapper？此操作无法撤销。",
     "clean_custom_variables_confirm_title": "清除自定义命令",
-    "clean_custom_variables_confirm_description": "删除所有自定义命令？此操作无法撤销。"
+    "clean_custom_variables_confirm_description": "删除所有自定义命令？此操作无法撤销。",
+    "hide_variables_page": "隐藏“变量列表”页面"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "移除",
     "show_command": "显示命令",
     "hide_command": "隐藏命令",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "由全局命令启用",
+    "global_disabled_hint": "此游戏已禁用——全局仍然有效",
+    "global_commands": "全局命令"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "全局命令",
+    "description": "这些命令会应用到所有已安装 wrapper 的游戏。打开某个游戏的页面即可仅为该游戏禁用某条命令。",
+    "loading": "加载中...",
+    "saving": "保存中...",
+    "error_save": "保存出错"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "添加自定义 wrapper",
+    "title": "添加自定义 wrapper",
+    "field_name": "名称",
+    "field_exec": "可执行文件路径",
+    "fields_required": "所有字段均为必填项",
+    "already_exists": "已存在同名的 wrapper",
+    "edit_title": "编辑自定义 wrapper"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "删除自定义 wrapper",
+    "description": "删除“{{wrapper_name}}”？"
   },
   "whats_new": {
     "dismiss": "知道了",
+    "v0_12_0": {
+      "title": "0.12.0 版本更新内容",
+      "items": [
+        "插件有更新时会收到通知",
+        "可在设置中一键安装——也可以安装任意历史版本，不仅限于最新版",
+        "如果不使用，可以在设置中隐藏“变量列表”页面",
+        "现在可以编辑自定义命令和自定义 wrapper，无需删除后重新创建",
+        "插件现在会在更新或重新安装后自动重新加载——不再需要在 Decky 设置中手动刷新"
+      ]
+    },
     "v0_11_2": {
       "title": "0.11.2 版本更新内容",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "更早",
     "newer": "更新"
+  },
+  "plugin_update": {
+    "banner": "有可用的插件更新：{{version}}",
+    "section_label": "插件更新",
+    "current": "当前版本：{{version}}",
+    "latest": "最新版本：{{version}}",
+    "up_to_date": "插件已是最新版本",
+    "check_failed": "目前无法检查更新",
+    "view_release": "查看发行版",
+    "check_button": "检查更新",
+    "checking": "检查中…",
+    "install_button": "安装 {{version}}",
+    "installing": "安装中…",
+    "downloading": "下载中…",
+    "install_failed_title": "插件更新失败",
+    "no_backend": "目前无法连接到 Decky 的安装程序。",
+    "install_timeout": "Decky Loader 无响应——安装可能已卡住。请重试。",
+    "choose_version_label": "安装指定版本",
+    "no_releases": "未找到发行版",
+    "already_installed": "已安装（{{version}}）"
   }
 }

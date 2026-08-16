@@ -7,6 +7,7 @@ export type DefaultHome = "home" | "game-manager" | "global-commands";
 interface UiSettings {
   hiddenCategories?: string[];
   defaultHome?: DefaultHome;
+  hideVariablesPage?: boolean;
 }
 
 // Pre-0.10 localStorage keys, migrated below.
@@ -19,6 +20,8 @@ interface SettingsContextValue {
   isCategoryVisible: (category: string) => boolean;
   defaultHome: DefaultHome;
   setDefaultHome: (v: DefaultHome) => void;
+  hideVariablesPage: boolean;
+  setHideVariablesPage: (v: boolean) => void;
   settingsLoaded: boolean;
 }
 
@@ -32,6 +35,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   );
   const [defaultHome, setDefaultHomeState] =
     useState<DefaultHome>("game-manager");
+  const [hideVariablesPage, setHideVariablesPageState] = useState(false);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -58,10 +62,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (categories) setHiddenCategories(new Set(categories));
       if (home) setDefaultHomeState(home);
+      setHideVariablesPageState(data.hideVariablesPage ?? false);
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
           defaultHome: home,
+          hideVariablesPage: data.hideVariablesPage ?? false,
         }).catch(() => {});
       }
     };
@@ -75,10 +81,12 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const persist = (next: {
     hiddenCategories?: Set<string>;
     defaultHome?: DefaultHome;
+    hideVariablesPage?: boolean;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
       defaultHome: next.defaultHome ?? defaultHome,
+      hideVariablesPage: next.hideVariablesPage ?? hideVariablesPage,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -102,6 +110,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     persist({ defaultHome: v });
   };
 
+  const setHideVariablesPage = (v: boolean) => {
+    setHideVariablesPageState(v);
+    persist({ hideVariablesPage: v });
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -110,6 +123,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         isCategoryVisible,
         defaultHome,
         setDefaultHome,
+        hideVariablesPage,
+        setHideVariablesPage,
         settingsLoaded,
       }}
     >

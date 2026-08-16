@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Favoriler",
     "custom": "Özel",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Özel sarmalayıcılar"
   },
   "common": {
     "selected": "Seçili",
@@ -22,8 +22,9 @@
     "create": "Oluştur",
     "delete": "Sil",
     "clean": "Temizle",
-    "update_available": "↑ v{{version}} mevcut — indirmek için tıkla",
-    "no_data": "Değişkenleri yüklemek için internet bağlantısı gereklidir."
+    "no_data": "Değişkenleri yüklemek için internet bağlantısı gereklidir.",
+    "save": "Kaydet",
+    "edit": "Düzenle"
   },
   "delete_favorite_modal": {
     "title": "Favoriyi sil",
@@ -40,7 +41,8 @@
     "field_env": "Çevresel Değişken",
     "field_value": "Değer",
     "fields_required": "Tüm alanlar gerekli",
-    "already_exists": "Bu isimde bir değişken zaten var"
+    "already_exists": "Bu isimde bir değişken zaten var",
+    "edit_title": "Özel değişkeni düzenle"
   },
   "delete_custom_variable_modal": {
     "title": "Özel değişkeni sil",
@@ -61,9 +63,9 @@
     "default_home": "Varsayılan ana sayfa",
     "default_home_game_manager": "Oyun yöneticisinde aç",
     "default_home_vars": "Değişken listesi",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Genel komutlar",
+    "force_refresh": "Yenilemeyi zorla",
+    "data_title": "Veri",
     "whats_new_history": "Güncelleme geçmişi",
     "reset_title": "Sıfırlama",
     "clean_custom_wrappers": "Özel sarmalayıcıları temizle",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Özel sarmalayıcıları temizle",
     "clean_custom_wrappers_confirm_description": "Tüm özel sarmalayıcılar silinsin mi? Bu işlem geri alınamaz.",
     "clean_custom_variables_confirm_title": "Özel komutları temizle",
-    "clean_custom_variables_confirm_description": "Tüm özel komutlar silinsin mi? Bu işlem geri alınamaz."
+    "clean_custom_variables_confirm_description": "Tüm özel komutlar silinsin mi? Bu işlem geri alınamaz.",
+    "hide_variables_page": "Değişken listesi sayfasını gizle"
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -135,31 +138,42 @@
     "delete_wrapper_confirm": "Kaldır",
     "show_command": "Komutu göster",
     "hide_command": "Komutu gizle",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Genel komutlarla etkinleştirildi",
+    "global_disabled_hint": "Bu oyun için devre dışı — genelde hâlâ etkin",
+    "global_commands": "Genel komutlar"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Genel komutlar",
+    "description": "Bu komutlar, sarmalayıcının yüklü olduğu her oyuna uygulanır. Bir komutu yalnızca belirli bir oyun için devre dışı bırakmak için o oyunun sayfasını aç.",
+    "loading": "Yükleniyor...",
+    "saving": "kaydediliyor...",
+    "error_save": "Kaydetme hatası"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Özel sarmalayıcı ekle",
+    "title": "Özel sarmalayıcı ekle",
+    "field_name": "Ad",
+    "field_exec": "Yürütülebilir dosya yolu",
+    "fields_required": "Tüm alanlar zorunludur",
+    "already_exists": "Bu adla bir sarmalayıcı zaten var",
+    "edit_title": "Özel sarmalayıcıyı düzenle"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Özel sarmalayıcıyı sil",
+    "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
     "dismiss": "Anladım",
+    "v0_12_0": {
+      "title": "0.12.0 sürümündeki yenilikler",
+      "items": [
+        "Eklenti güncellemesi olduğunda bildirim",
+        "Ayarlar'dan tek tıkla kurulum — en son sürüm dışında geçmiş sürümler de yüklenebilir",
+        "Kullanılmıyorsa Ayarlar'dan Değişken listesi sayfasını gizleme imkânı",
+        "Özel komutlar ve sarmalayıcılar artık silip yeniden oluşturmak yerine düzenlenebiliyor",
+        "Eklenti artık güncelleme veya yeniden yüklemeden sonra kendini otomatik olarak yeniden yüklüyor — Decky ayarlarından elle yeniden yüklemeye gerek yok"
+      ]
+    },
     "v0_11_2": {
       "title": "0.11.2 sürümündeki yenilikler",
       "items": [
@@ -189,5 +203,25 @@
     },
     "older": "Daha eski",
     "newer": "Daha yeni"
+  },
+  "plugin_update": {
+    "banner": "Eklenti güncellemesi mevcut: {{version}}",
+    "section_label": "Eklenti güncellemesi",
+    "current": "Mevcut sürüm: {{version}}",
+    "latest": "En son sürüm: {{version}}",
+    "up_to_date": "Eklenti güncel",
+    "check_failed": "Şu anda güncellemeler kontrol edilemiyor",
+    "view_release": "Sürümü görüntüle",
+    "check_button": "Güncellemeleri kontrol et",
+    "checking": "Kontrol ediliyor…",
+    "install_button": "{{version}} yükle",
+    "installing": "Yükleniyor…",
+    "downloading": "İndiriliyor…",
+    "install_failed_title": "Eklenti güncellemesi başarısız oldu",
+    "no_backend": "Decky'nin yükleyicisine şu anda ulaşılamıyor.",
+    "install_timeout": "Decky Loader'dan yanıt yok — kurulum takılmış olabilir. Tekrar deneyin.",
+    "choose_version_label": "Belirli bir sürüm yükle",
+    "no_releases": "Sürüm bulunamadı",
+    "already_installed": "Zaten yüklü ({{version}})"
   }
 }

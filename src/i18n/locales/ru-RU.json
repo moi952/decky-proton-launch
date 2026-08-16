@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Избранное",
     "custom": "Пользовательское",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Пользовательские обёртки"
   },
   "common": {
     "selected": "Выбрано",
@@ -22,8 +22,9 @@
     "create": "Создать",
     "delete": "Удалить",
     "clean": "Очистить",
-    "update_available": "↑ v{{version}} доступна — нажмите для загрузки",
-    "no_data": "Для загрузки переменных требуется подключение к интернету."
+    "no_data": "Для загрузки переменных требуется подключение к интернету.",
+    "save": "Сохранить",
+    "edit": "Изменить"
   },
   "delete_favorite_modal": {
     "title": "Удалить из избранного",
@@ -40,7 +41,8 @@
     "field_env": "Переменная окружения",
     "field_value": "Значение",
     "fields_required": "Все поля обязательны",
-    "already_exists": "Переменная с таким именем уже существует"
+    "already_exists": "Переменная с таким именем уже существует",
+    "edit_title": "Изменить пользовательскую переменную"
   },
   "delete_custom_variable_modal": {
     "title": "Удалить пользовательскую переменную",
@@ -61,9 +63,9 @@
     "default_home": "Главная по умолчанию",
     "default_home_game_manager": "Открывать в менеджере игр",
     "default_home_vars": "Список переменных",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Глобальные команды",
+    "force_refresh": "Принудительное обновление",
+    "data_title": "Данные",
     "whats_new_history": "История обновлений",
     "reset_title": "Сброс",
     "clean_custom_wrappers": "Очистить пользовательские обёртки",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Очистить пользовательские обёртки",
     "clean_custom_wrappers_confirm_description": "Удалить все пользовательские обёртки? Это действие нельзя отменить.",
     "clean_custom_variables_confirm_title": "Очистить пользовательские команды",
-    "clean_custom_variables_confirm_description": "Удалить все пользовательские команды? Это действие нельзя отменить."
+    "clean_custom_variables_confirm_description": "Удалить все пользовательские команды? Это действие нельзя отменить.",
+    "hide_variables_page": "Скрыть страницу «Список переменных»"
   },
   "launch_options_view": {
     "title": "Параметры запуска",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "Удалить",
     "show_command": "Показать команду",
     "hide_command": "Скрыть команду",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Включено глобальными командами",
+    "global_disabled_hint": "Отключено для этой игры — всё ещё активно глобально",
+    "global_commands": "Глобальные команды"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Глобальные команды",
+    "description": "Эти команды применяются ко всем играм, где установлена обёртка. Откройте страницу игры, чтобы отключить команду только для неё.",
+    "loading": "Загрузка...",
+    "saving": "сохранение...",
+    "error_save": "Ошибка сохранения"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Добавить пользовательскую обёртку",
+    "title": "Добавить пользовательскую обёртку",
+    "field_name": "Имя",
+    "field_exec": "Путь к исполняемому файлу",
+    "fields_required": "Все поля обязательны",
+    "already_exists": "Обёртка с таким именем уже существует",
+    "edit_title": "Изменить пользовательскую обёртку"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Удалить пользовательскую обёртку",
+    "description": "Удалить «{{wrapper_name}}»?"
   },
   "whats_new": {
     "dismiss": "Понятно",
+    "v0_12_0": {
+      "title": "Что нового в версии 0.12.0",
+      "items": [
+        "Уведомление о доступном обновлении плагина",
+        "Установка в один клик из Настроек — можно установить и любую прошлую версию, не только последнюю",
+        "Возможность скрыть страницу «Список переменных» в Настройках, если она не используется",
+        "Пользовательские команды и обёртки теперь можно редактировать, а не удалять и создавать заново",
+        "Плагин теперь автоматически перезагружается после обновления или переустановки — больше не нужно вручную перезагружать его в настройках Decky"
+      ]
+    },
     "v0_11_2": {
       "title": "Что нового в версии 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Раньше",
     "newer": "Новее"
+  },
+  "plugin_update": {
+    "banner": "Доступно обновление плагина: {{version}}",
+    "section_label": "Обновление плагина",
+    "current": "Текущая версия: {{version}}",
+    "latest": "Последняя версия: {{version}}",
+    "up_to_date": "Плагин актуален",
+    "check_failed": "Сейчас не удалось проверить обновления",
+    "view_release": "Просмотреть релиз",
+    "check_button": "Проверить обновления",
+    "checking": "Проверка…",
+    "install_button": "Установить {{version}}",
+    "installing": "Установка…",
+    "downloading": "Загрузка…",
+    "install_failed_title": "Не удалось обновить плагин",
+    "no_backend": "Установщик Decky сейчас недоступен.",
+    "install_timeout": "Нет ответа от Decky Loader — установка могла зависнуть. Попробуйте снова.",
+    "choose_version_label": "Установить конкретную версию",
+    "no_releases": "Релизы не найдены",
+    "already_installed": "Уже установлена ({{version}})"
   }
 }

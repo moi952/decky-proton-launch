@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Favoriten",
     "custom": "Benutzerdefiniert",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Benutzerdefinierte Wrapper"
   },
   "common": {
     "selected": "Ausgewählt",
@@ -22,8 +22,9 @@
     "create": "Erstellen",
     "delete": "Löschen",
     "clean": "Leeren",
-    "update_available": "↑ v{{version}} verfügbar — zum Herunterladen tippen",
-    "no_data": "Eine Internetverbindung ist erforderlich, um die Variablen zu laden."
+    "no_data": "Eine Internetverbindung ist erforderlich, um die Variablen zu laden.",
+    "save": "Speichern",
+    "edit": "Bearbeiten"
   },
   "delete_favorite_modal": {
     "title": "Favorit löschen",
@@ -40,7 +41,8 @@
     "field_env": "Umgebungsvariable",
     "field_value": "Wert",
     "fields_required": "Alle Felder sind erforderlich",
-    "already_exists": "Eine Variable mit diesem Namen existiert bereits"
+    "already_exists": "Eine Variable mit diesem Namen existiert bereits",
+    "edit_title": "Benutzerdefinierte Variable bearbeiten"
   },
   "delete_custom_variable_modal": {
     "title": "Benutzerdefinierte Variable löschen",
@@ -61,9 +63,9 @@
     "default_home": "Standard-Startseite",
     "default_home_game_manager": "Im Spiele-Manager öffnen",
     "default_home_vars": "Variablenliste",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Globale Befehle",
+    "force_refresh": "Aktualisierung erzwingen",
+    "data_title": "Daten",
     "whats_new_history": "Update-Verlauf",
     "reset_title": "Zurücksetzen",
     "clean_custom_wrappers": "Benutzerdefinierte Wrapper leeren",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Benutzerdefinierte Wrapper leeren",
     "clean_custom_wrappers_confirm_description": "Alle benutzerdefinierten Wrapper löschen? Dies kann nicht rückgängig gemacht werden.",
     "clean_custom_variables_confirm_title": "Benutzerdefinierte Befehle leeren",
-    "clean_custom_variables_confirm_description": "Alle benutzerdefinierten Befehle löschen? Dies kann nicht rückgängig gemacht werden."
+    "clean_custom_variables_confirm_description": "Alle benutzerdefinierten Befehle löschen? Dies kann nicht rückgängig gemacht werden.",
+    "hide_variables_page": "Seite „Variablenliste“ ausblenden"
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "Entfernen",
     "show_command": "Befehl anzeigen",
     "hide_command": "Befehl ausblenden",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Durch globale Befehle aktiviert",
+    "global_disabled_hint": "Für dieses Spiel deaktiviert — global weiterhin aktiv",
+    "global_commands": "Globale Befehle"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Globale Befehle",
+    "description": "Diese Befehle werden auf jedes Spiel angewendet, das den Wrapper installiert hat. Öffne die Seite eines Spiels, um einen Befehl nur für dieses Spiel zu deaktivieren.",
+    "loading": "Wird geladen...",
+    "saving": "Wird gespeichert...",
+    "error_save": "Fehler beim Speichern"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
+    "button_label": "Benutzerdefinierten Wrapper hinzufügen",
+    "title": "Benutzerdefinierten Wrapper hinzufügen",
     "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "field_exec": "Pfad zur ausführbaren Datei",
+    "fields_required": "Alle Felder sind erforderlich",
+    "already_exists": "Ein Wrapper mit diesem Namen existiert bereits",
+    "edit_title": "Benutzerdefinierten Wrapper bearbeiten"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Benutzerdefinierten Wrapper löschen",
+    "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
     "dismiss": "Verstanden",
+    "v0_12_0": {
+      "title": "Neuigkeiten in Version 0.12.0",
+      "items": [
+        "Benachrichtigung, wenn ein Plugin-Update verfügbar ist",
+        "Installation mit einem Klick aus den Einstellungen — es kann auch jede frühere Version installiert werden, nicht nur die neueste",
+        "Möglichkeit, die Seite „Variablenliste“ in den Einstellungen auszublenden, wenn sie nicht genutzt wird",
+        "Benutzerdefinierte Befehle und Wrapper können jetzt bearbeitet werden, statt sie löschen und neu anlegen zu müssen",
+        "Das Plugin lädt sich nach einem Update oder einer Neuinstallation jetzt automatisch neu — kein manuelles Neuladen über die Decky-Einstellungen mehr nötig"
+      ]
+    },
     "v0_11_2": {
       "title": "Neuigkeiten in Version 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Älter",
     "newer": "Neuer"
+  },
+  "plugin_update": {
+    "banner": "Plugin-Update verfügbar: {{version}}",
+    "section_label": "Plugin-Update",
+    "current": "Aktuelle Version: {{version}}",
+    "latest": "Neueste Version: {{version}}",
+    "up_to_date": "Plugin ist aktuell",
+    "check_failed": "Konnte gerade nicht nach Updates suchen",
+    "view_release": "Release ansehen",
+    "check_button": "Nach Updates suchen",
+    "checking": "Wird geprüft…",
+    "install_button": "{{version}} installieren",
+    "installing": "Wird installiert…",
+    "downloading": "Wird heruntergeladen…",
+    "install_failed_title": "Plugin-Update fehlgeschlagen",
+    "no_backend": "Deckys Installer ist gerade nicht erreichbar.",
+    "install_timeout": "Keine Antwort von Decky Loader — die Installation könnte hängen geblieben sein. Versuche es erneut.",
+    "choose_version_label": "Bestimmte Version installieren",
+    "no_releases": "Keine Releases gefunden",
+    "already_installed": "Bereits installiert ({{version}})"
   }
 }

@@ -4,6 +4,10 @@ import { FavoriteModalContent } from "../components/ButtonFavoriteModal";
 import { DeleteFavoriteModalContent } from "../components/ButtonDeleteFavoriteModal";
 import { DeleteCustomVariableModalContent } from "../components/ButtonDeleteCustomVariableModal";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
+import { CustomVariableModalContent } from "../components/ButtonAddCustomVariableModal";
+import { CustomWrapperModalContent } from "../components/ButtonAddCustomWrapperModal";
+import { CustomVariable } from "../context/CustomVariablesContext";
+import { CustomWrapper } from "../context/CustomWrappersContext";
 
 export const openFavoriteModal = (params: {
   variableName: string;
@@ -50,6 +54,30 @@ export const openGenericDeleteModal = (params: {
       onConfirm={params.onConfirm}
       onClose={() => modal?.Close()}
     />,
+  );
+};
+
+export const openEditCustomVariableModal = (variable: CustomVariable) => {
+  let modal: ReturnType<typeof showModal> | null = null;
+  modal = showModal(
+    <AppProvider>
+      <CustomVariableModalContent
+        existing={variable}
+        onClose={() => modal?.Close()}
+      />
+    </AppProvider>,
+  );
+};
+
+export const openEditCustomWrapperModal = (wrapper: CustomWrapper) => {
+  let modal: ReturnType<typeof showModal> | null = null;
+  modal = showModal(
+    <AppProvider>
+      <CustomWrapperModalContent
+        existing={wrapper}
+        onClose={() => modal?.Close()}
+      />
+    </AppProvider>,
   );
 };
 

@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Favoritos",
     "custom": "Personalizado",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Wrappers personalizados"
   },
   "common": {
     "selected": "Selecionado",
@@ -22,8 +22,9 @@
     "create": "Criar",
     "delete": "Eliminar",
     "clean": "Limpar",
-    "update_available": "↑ v{{version}} disponível — toque para transferir",
-    "no_data": "É necessária uma ligação à internet para carregar as variáveis."
+    "no_data": "É necessária uma ligação à internet para carregar as variáveis.",
+    "save": "Guardar",
+    "edit": "Editar"
   },
   "delete_favorite_modal": {
     "title": "Remover favorito",
@@ -40,7 +41,8 @@
     "field_env": "Variável de ambiente",
     "field_value": "Valor",
     "fields_required": "Todos os campos são obrigatórios",
-    "already_exists": "Já existe uma variável com este nome"
+    "already_exists": "Já existe uma variável com este nome",
+    "edit_title": "Editar variável personalizada"
   },
   "delete_custom_variable_modal": {
     "title": "Remover variável personalizada",
@@ -61,9 +63,9 @@
     "default_home": "Início padrão",
     "default_home_game_manager": "Abrir no gestor de jogos",
     "default_home_vars": "Lista de variáveis",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Comandos globais",
+    "force_refresh": "Forçar atualização",
+    "data_title": "Dados",
     "whats_new_history": "Histórico de atualizações",
     "reset_title": "Repor",
     "clean_custom_wrappers": "Limpar wrappers personalizados",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Limpar wrappers personalizados",
     "clean_custom_wrappers_confirm_description": "Eliminar todos os wrappers personalizados? Esta ação não pode ser revertida.",
     "clean_custom_variables_confirm_title": "Limpar comandos personalizados",
-    "clean_custom_variables_confirm_description": "Eliminar todos os comandos personalizados? Esta ação não pode ser revertida."
+    "clean_custom_variables_confirm_description": "Eliminar todos os comandos personalizados? Esta ação não pode ser revertida.",
+    "hide_variables_page": "Ocultar a página Lista de variáveis"
   },
   "launch_options_view": {
     "title": "Opções de lançamento",
@@ -135,31 +138,42 @@
     "delete_wrapper_confirm": "Remover",
     "show_command": "Mostrar comando",
     "hide_command": "Ocultar comando",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Ativado pelos comandos globais",
+    "global_disabled_hint": "Desativado para este jogo — continua ativo globalmente",
+    "global_commands": "Comandos globais"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Comandos globais",
+    "description": "Estes comandos são aplicados a todos os jogos que têm o wrapper instalado. Abre a página de um jogo para desativar um comando apenas para esse jogo.",
+    "loading": "A carregar...",
+    "saving": "a guardar...",
+    "error_save": "Erro ao guardar"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Adicionar wrapper personalizado",
+    "title": "Adicionar wrapper personalizado",
+    "field_name": "Nome",
+    "field_exec": "Caminho do executável",
+    "fields_required": "Todos os campos são obrigatórios",
+    "already_exists": "Já existe um wrapper com este nome",
+    "edit_title": "Editar wrapper personalizado"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Remover wrapper personalizado",
+    "description": "Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
     "dismiss": "Entendido",
+    "v0_12_0": {
+      "title": "Novidades da versão 0.12.0",
+      "items": [
+        "Notificação quando houver uma atualização do plugin disponível",
+        "Instalação num clique a partir das Definições — também é possível instalar qualquer versão anterior, não só a mais recente",
+        "Possibilidade de ocultar a página Lista de variáveis nas Definições se não for utilizada",
+        "Comandos e wrappers personalizados podem agora ser editados em vez de terem de ser eliminados e recriados",
+        "O plugin recarrega-se agora automaticamente após uma atualização ou reinstalação — deixa de ser necessário recarregá-lo manualmente nas definições do Decky"
+      ]
+    },
     "v0_11_2": {
       "title": "Novidades da versão 0.11.2",
       "items": [
@@ -189,5 +203,25 @@
     },
     "older": "Anterior",
     "newer": "Mais recente"
+  },
+  "plugin_update": {
+    "banner": "Atualização do plugin disponível: {{version}}",
+    "section_label": "Atualização do plugin",
+    "current": "Versão atual: {{version}}",
+    "latest": "Versão mais recente: {{version}}",
+    "up_to_date": "O plugin está atualizado",
+    "check_failed": "Não foi possível verificar atualizações agora",
+    "view_release": "Ver versão",
+    "check_button": "Verificar atualizações",
+    "checking": "A verificar…",
+    "install_button": "Instalar {{version}}",
+    "installing": "A instalar…",
+    "downloading": "A transferir…",
+    "install_failed_title": "Falha ao atualizar o plugin",
+    "no_backend": "O instalador do Decky não está acessível agora.",
+    "install_timeout": "Sem resposta do Decky Loader — a instalação pode ter encravado. Tenta novamente.",
+    "choose_version_label": "Instalar uma versão específica",
+    "no_releases": "Nenhuma versão encontrada",
+    "already_installed": "Já instalada ({{version}})"
   }
 }

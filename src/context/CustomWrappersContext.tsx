@@ -11,6 +11,10 @@ export interface CustomWrapper {
 interface CustomWrappersContextValue {
   customWrappers: CustomWrapper[];
   addCustomWrapper: (wrapper: Omit<CustomWrapper, "id" | "env">) => boolean;
+  editCustomWrapper: (
+    id: string,
+    updated: Omit<CustomWrapper, "id" | "env">,
+  ) => void;
   removeCustomWrapper: (id: string) => void;
   clearCustomWrappers: () => void;
 }
@@ -48,6 +52,17 @@ export const CustomWrappersProvider: React.FC<{
     return true;
   };
 
+  const editCustomWrapper = (
+    id: string,
+    updated: Omit<CustomWrapper, "id" | "env">,
+  ) => {
+    // env is never edited — it's the identifier existing per-game/global
+    // toggles are keyed on, so changing it would orphan them.
+    persist(
+      customWrappers.map((w) => (w.id === id ? { ...w, ...updated } : w)),
+    );
+  };
+
   const removeCustomWrapper = (id: string) => {
     persist(customWrappers.filter((w) => w.id !== id));
   };
@@ -61,6 +76,7 @@ export const CustomWrappersProvider: React.FC<{
       value={{
         customWrappers,
         addCustomWrapper,
+        editCustomWrapper,
         removeCustomWrapper,
         clearCustomWrappers,
       }}

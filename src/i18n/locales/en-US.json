@@ -22,8 +22,9 @@
     "create": "Create",
     "delete": "Delete",
     "clean": "Clean",
-    "update_available": "↑ v{{version}} available — tap to download",
-    "no_data": "An internet connection is required to load the variables."
+    "no_data": "An internet connection is required to load the variables.",
+    "save": "Save",
+    "edit": "Edit"
   },
   "delete_favorite_modal": {
     "title": "Delete Favorite",
@@ -40,7 +41,8 @@
     "field_env": "Environment Variable",
     "field_value": "Value",
     "fields_required": "All fields are required",
-    "already_exists": "A variable with this name already exists"
+    "already_exists": "A variable with this name already exists",
+    "edit_title": "Edit Custom Variable"
   },
   "delete_custom_variable_modal": {
     "title": "Delete Custom Variable",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Clean Custom Wrappers",
     "clean_custom_wrappers_confirm_description": "Delete all custom wrappers? This can't be undone.",
     "clean_custom_variables_confirm_title": "Clean Custom Commands",
-    "clean_custom_variables_confirm_description": "Delete all custom commands? This can't be undone."
+    "clean_custom_variables_confirm_description": "Delete all custom commands? This can't be undone.",
+    "hide_variables_page": "Hide Variable list page"
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -154,7 +157,8 @@
     "field_name": "Name",
     "field_exec": "Executable path",
     "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "already_exists": "A wrapper with this name already exists",
+    "edit_title": "Edit Custom Wrapper"
   },
   "delete_custom_wrapper_modal": {
     "title": "Delete Custom Wrapper",
@@ -162,6 +166,16 @@
   },
   "whats_new": {
     "dismiss": "Got it",
+    "v0_12_0": {
+      "title": "What's new in 0.12.0",
+      "items": [
+        "Notification when a plugin update is available",
+        "One-click install from Settings — any past release can be installed too, not just the latest",
+        "Option to hide the Variable list page from Settings if it's not used",
+        "Custom commands and wrappers can now be edited instead of having to delete and recreate them",
+        "The plugin now reloads itself automatically after updating or reinstalling — no more manually reloading it from Decky's settings"
+      ]
+    },
     "v0_11_2": {
       "title": "What's new in 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Older",
     "newer": "Newer"
+  },
+  "plugin_update": {
+    "banner": "Plugin update available: {{version}}",
+    "section_label": "Plugin update",
+    "current": "Current version: {{version}}",
+    "latest": "Latest version: {{version}}",
+    "up_to_date": "Plugin is up to date",
+    "check_failed": "Couldn't check for updates right now",
+    "view_release": "View release",
+    "check_button": "Check for updates",
+    "checking": "Checking…",
+    "install_button": "Install {{version}}",
+    "installing": "Installing…",
+    "downloading": "Downloading…",
+    "install_failed_title": "Plugin update failed",
+    "no_backend": "Decky's installer isn't reachable right now.",
+    "install_timeout": "No response from Decky Loader — the install may have stalled. Try again.",
+    "choose_version_label": "Install a specific version",
+    "no_releases": "No releases found",
+    "already_installed": "Already installed ({{version}})"
   }
 }

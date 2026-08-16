@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "즐겨찾기",
     "custom": "사용자 정의",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "커스텀 래퍼"
   },
   "common": {
     "selected": "선택됨",
@@ -22,8 +22,9 @@
     "create": "생성",
     "delete": "삭제",
     "clean": "지우기",
-    "update_available": "↑ v{{version}} 업데이트 가능 — 탭하여 다운로드",
-    "no_data": "변수를 불러오려면 인터넷 연결이 필요합니다."
+    "no_data": "변수를 불러오려면 인터넷 연결이 필요합니다.",
+    "save": "저장",
+    "edit": "편집"
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",
@@ -40,7 +41,8 @@
     "field_env": "환경 변수",
     "field_value": "값",
     "fields_required": "모든 필드를 입력해야 합니다",
-    "already_exists": "동일한 이름의 변수가 이미 존재합니다"
+    "already_exists": "동일한 이름의 변수가 이미 존재합니다",
+    "edit_title": "커스텀 변수 편집"
   },
   "delete_custom_variable_modal": {
     "title": "사용자 정의 변수 삭제",
@@ -61,9 +63,9 @@
     "default_home": "기본 홈",
     "default_home_game_manager": "게임 관리자 열기",
     "default_home_vars": "변수 목록",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "전역 명령",
+    "force_refresh": "강제 새로고침",
+    "data_title": "데이터",
     "whats_new_history": "업데이트 기록",
     "reset_title": "초기화",
     "clean_custom_wrappers": "커스텀 래퍼 초기화",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "커스텀 래퍼 초기화",
     "clean_custom_wrappers_confirm_description": "모든 커스텀 래퍼를 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
     "clean_custom_variables_confirm_title": "커스텀 명령 초기화",
-    "clean_custom_variables_confirm_description": "모든 커스텀 명령을 삭제할까요? 이 작업은 되돌릴 수 없습니다."
+    "clean_custom_variables_confirm_description": "모든 커스텀 명령을 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
+    "hide_variables_page": "변수 목록 페이지 숨기기"
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "제거",
     "show_command": "명령어 보기",
     "hide_command": "명령어 숨기기",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "전역 명령으로 활성화됨",
+    "global_disabled_hint": "이 게임에서는 비활성화됨 — 전역에서는 계속 활성",
+    "global_commands": "전역 명령"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "전역 명령",
+    "description": "이 명령들은 래퍼가 설치된 모든 게임에 적용됩니다. 특정 게임에서만 비활성화하려면 해당 게임 페이지를 여세요.",
+    "loading": "불러오는 중...",
+    "saving": "저장 중...",
+    "error_save": "저장 오류"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "커스텀 래퍼 추가",
+    "title": "커스텀 래퍼 추가",
+    "field_name": "이름",
+    "field_exec": "실행 파일 경로",
+    "fields_required": "모든 필드는 필수입니다",
+    "already_exists": "이 이름의 래퍼가 이미 존재합니다",
+    "edit_title": "커스텀 래퍼 편집"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "커스텀 래퍼 삭제",
+    "description": "\"{{wrapper_name}}\"을(를) 삭제할까요?"
   },
   "whats_new": {
     "dismiss": "확인",
+    "v0_12_0": {
+      "title": "0.12.0 버전의 새로운 기능",
+      "items": [
+        "플러그인 업데이트가 있으면 알림이 표시됩니다",
+        "설정에서 원클릭 설치 — 최신 버전뿐 아니라 이전 버전도 설치할 수 있습니다",
+        "사용하지 않는다면 설정에서 변수 목록 페이지를 숨길 수 있습니다",
+        "커스텀 명령과 커스텀 래퍼를 삭제하고 다시 만들 필요 없이 수정할 수 있습니다",
+        "이제 업데이트나 재설치 후 플러그인이 자동으로 다시 로드됩니다 — Decky 설정에서 수동으로 새로고침할 필요가 없습니다"
+      ]
+    },
     "v0_11_2": {
       "title": "0.11.2 버전의 새로운 기능",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "이전",
     "newer": "최신"
+  },
+  "plugin_update": {
+    "banner": "플러그인 업데이트 사용 가능: {{version}}",
+    "section_label": "플러그인 업데이트",
+    "current": "현재 버전: {{version}}",
+    "latest": "최신 버전: {{version}}",
+    "up_to_date": "플러그인이 최신 상태입니다",
+    "check_failed": "지금은 업데이트를 확인할 수 없습니다",
+    "view_release": "릴리스 보기",
+    "check_button": "업데이트 확인",
+    "checking": "확인 중…",
+    "install_button": "{{version}} 설치",
+    "installing": "설치 중…",
+    "downloading": "다운로드 중…",
+    "install_failed_title": "플러그인 업데이트 실패",
+    "no_backend": "Decky 설치 프로그램에 연결할 수 없습니다.",
+    "install_timeout": "Decky Loader의 응답이 없습니다 — 설치가 멈췄을 수 있습니다. 다시 시도하세요.",
+    "choose_version_label": "특정 버전 설치",
+    "no_releases": "릴리스를 찾을 수 없습니다",
+    "already_installed": "이미 설치됨 ({{version}})"
   }
 }

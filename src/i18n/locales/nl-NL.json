@@ -2,7 +2,7 @@
   "categories": {
     "favorites": "Favorieten",
     "custom": "Aangepast",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Aangepaste wrappers"
   },
   "common": {
     "selected": "Geselecteerd",
@@ -22,8 +22,9 @@
     "create": "Aanmaken",
     "delete": "Verwijderen",
     "clean": "Wissen",
-    "update_available": "↑ v{{version}} beschikbaar — tik om te downloaden",
-    "no_data": "Een internetverbinding is vereist om de variabelen te laden."
+    "no_data": "Een internetverbinding is vereist om de variabelen te laden.",
+    "save": "Opslaan",
+    "edit": "Bewerken"
   },
   "delete_favorite_modal": {
     "title": "Favoriet verwijderen",
@@ -40,7 +41,8 @@
     "field_env": "Omgevingsvariabele",
     "field_value": "Waarde",
     "fields_required": "Alle velden zijn verplicht",
-    "already_exists": "Er bestaat al een variabele met deze naam"
+    "already_exists": "Er bestaat al een variabele met deze naam",
+    "edit_title": "Aangepaste variabele bewerken"
   },
   "delete_custom_variable_modal": {
     "title": "Aangepaste variabele verwijderen",
@@ -61,9 +63,9 @@
     "default_home": "Standaard startpagina",
     "default_home_game_manager": "Openen in spelbeheer",
     "default_home_vars": "Variabelenlijst",
-    "default_home_global_commands": "Global commands",
-    "force_refresh": "Force refresh",
-    "data_title": "Data",
+    "default_home_global_commands": "Globale opdrachten",
+    "force_refresh": "Vernieuwen afdwingen",
+    "data_title": "Gegevens",
     "whats_new_history": "Updategeschiedenis",
     "reset_title": "Reset",
     "clean_custom_wrappers": "Aangepaste wrappers wissen",
@@ -71,7 +73,8 @@
     "clean_custom_wrappers_confirm_title": "Aangepaste wrappers wissen",
     "clean_custom_wrappers_confirm_description": "Alle aangepaste wrappers verwijderen? Dit kan niet ongedaan worden gemaakt.",
     "clean_custom_variables_confirm_title": "Aangepaste opdrachten wissen",
-    "clean_custom_variables_confirm_description": "Alle aangepaste opdrachten verwijderen? Dit kan niet ongedaan worden gemaakt."
+    "clean_custom_variables_confirm_description": "Alle aangepaste opdrachten verwijderen? Dit kan niet ongedaan worden gemaakt.",
+    "hide_variables_page": "Pagina Variabelenlijst verbergen"
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -137,31 +140,42 @@
     "delete_wrapper_confirm": "Verwijderen",
     "show_command": "Commando weergeven",
     "hide_command": "Commando verbergen",
-    "global_active_hint": "Enabled by global commands",
-    "global_disabled_hint": "Disabled for this game — still active globally",
-    "global_commands": "Global commands"
+    "global_active_hint": "Ingeschakeld door globale opdrachten",
+    "global_disabled_hint": "Uitgeschakeld voor deze game — wereldwijd nog steeds actief",
+    "global_commands": "Globale opdrachten"
   },
   "global_commands_view": {
-    "title": "Global commands",
-    "description": "These commands are applied to every game that has the wrapper installed. Open a game's page to disable one just for that game.",
-    "loading": "Loading...",
-    "saving": "saving...",
-    "error_save": "Save error"
+    "title": "Globale opdrachten",
+    "description": "Deze opdrachten worden toegepast op elke game waarop de wrapper is geïnstalleerd. Open de pagina van een game om er een alleen voor die game uit te schakelen.",
+    "loading": "Laden...",
+    "saving": "opslaan...",
+    "error_save": "Opslagfout"
   },
   "add_custom_wrapper_modal": {
-    "button_label": "Add Custom Wrapper",
-    "title": "Add Custom Wrapper",
-    "field_name": "Name",
-    "field_exec": "Executable path",
-    "fields_required": "All fields are required",
-    "already_exists": "A wrapper with this name already exists"
+    "button_label": "Aangepaste wrapper toevoegen",
+    "title": "Aangepaste wrapper toevoegen",
+    "field_name": "Naam",
+    "field_exec": "Pad naar uitvoerbaar bestand",
+    "fields_required": "Alle velden zijn verplicht",
+    "already_exists": "Er bestaat al een wrapper met deze naam",
+    "edit_title": "Aangepaste wrapper bewerken"
   },
   "delete_custom_wrapper_modal": {
-    "title": "Delete Custom Wrapper",
-    "description": "Delete \"{{wrapper_name}}\"?"
+    "title": "Aangepaste wrapper verwijderen",
+    "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
     "dismiss": "Begrepen",
+    "v0_12_0": {
+      "title": "Nieuw in versie 0.12.0",
+      "items": [
+        "Melding wanneer er een plugin-update beschikbaar is",
+        "Installatie met één klik vanuit Instellingen — elke eerdere versie kan ook worden geïnstalleerd, niet alleen de nieuwste",
+        "Mogelijkheid om de pagina Variabelenlijst te verbergen vanuit Instellingen als die niet wordt gebruikt",
+        "Aangepaste opdrachten en wrappers kunnen nu worden bewerkt in plaats van verwijderd en opnieuw aangemaakt te moeten worden",
+        "De plugin herlaadt zichzelf nu automatisch na een update of herinstallatie — niet meer nodig om dit handmatig via Decky's instellingen te doen"
+      ]
+    },
     "v0_11_2": {
       "title": "Nieuw in versie 0.11.2",
       "items": [
@@ -191,5 +205,25 @@
     },
     "older": "Ouder",
     "newer": "Nieuwer"
+  },
+  "plugin_update": {
+    "banner": "Plugin-update beschikbaar: {{version}}",
+    "section_label": "Plugin-update",
+    "current": "Huidige versie: {{version}}",
+    "latest": "Nieuwste versie: {{version}}",
+    "up_to_date": "Plugin is up-to-date",
+    "check_failed": "Kan nu niet controleren op updates",
+    "view_release": "Release bekijken",
+    "check_button": "Controleren op updates",
+    "checking": "Controleren…",
+    "install_button": "{{version}} installeren",
+    "installing": "Installeren…",
+    "downloading": "Downloaden…",
+    "install_failed_title": "Plugin-update mislukt",
+    "no_backend": "Decky's installatieprogramma is nu niet bereikbaar.",
+    "install_timeout": "Geen reactie van Decky Loader — de installatie is mogelijk vastgelopen. Probeer het opnieuw.",
+    "choose_version_label": "Specifieke versie installeren",
+    "no_releases": "Geen releases gevonden",
+    "already_installed": "Al geïnstalleerd ({{version}})"
   }
 }
