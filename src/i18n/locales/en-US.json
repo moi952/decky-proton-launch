@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Favorites",
     "custom": "Custom",
-    "custom_wrappers": "Custom wrappers"
+    "custom_wrappers": "Custom wrappers",
+    "active": "Active"
   },
   "common": {
     "selected": "Selected",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Delete all custom wrappers? This can't be undone.",
     "clean_custom_variables_confirm_title": "Clean Custom Commands",
     "clean_custom_variables_confirm_description": "Delete all custom commands? This can't be undone.",
-    "hide_variables_page": "Hide Variable list page"
+    "hide_variables_page": "Hide Variable list page",
+    "show_active_section": "Show active commands at the top"
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Got it",
+    "v0_12_1": {
+      "title": "What's new in 0.12.1",
+      "items": [
+        "New 'Active' section at the top of the game page and the Global Commands page, showing everything currently enabled without having to scroll through every category — can be turned off in Settings"
+      ]
+    },
     "v0_12_0": {
       "title": "What's new in 0.12.0",
       "items": [

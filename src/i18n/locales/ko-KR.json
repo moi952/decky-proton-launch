@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "즐겨찾기",
     "custom": "사용자 정의",
-    "custom_wrappers": "커스텀 래퍼"
+    "custom_wrappers": "커스텀 래퍼",
+    "active": "활성"
   },
   "common": {
     "selected": "선택됨",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "모든 커스텀 래퍼를 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
     "clean_custom_variables_confirm_title": "커스텀 명령 초기화",
     "clean_custom_variables_confirm_description": "모든 커스텀 명령을 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
-    "hide_variables_page": "변수 목록 페이지 숨기기"
+    "hide_variables_page": "변수 목록 페이지 숨기기",
+    "show_active_section": "활성 명령을 맨 위에 표시"
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "확인",
+    "v0_12_1": {
+      "title": "0.12.1 버전의 새로운 기능",
+      "items": [
+        "게임 페이지와 전역 명령 페이지 맨 위에 새로운 '활성' 섹션이 추가되어, 모든 카테고리를 일일이 스크롤하지 않고도 현재 활성화된 항목을 확인할 수 있습니다 — 설정에서 끌 수도 있습니다"
+      ]
+    },
     "v0_12_0": {
       "title": "0.12.0 버전의 새로운 기능",
       "items": [

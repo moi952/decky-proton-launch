@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Favoriler",
     "custom": "Özel",
-    "custom_wrappers": "Özel sarmalayıcılar"
+    "custom_wrappers": "Özel sarmalayıcılar",
+    "active": "Etkin"
   },
   "common": {
     "selected": "Seçili",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Tüm özel sarmalayıcılar silinsin mi? Bu işlem geri alınamaz.",
     "clean_custom_variables_confirm_title": "Özel komutları temizle",
     "clean_custom_variables_confirm_description": "Tüm özel komutlar silinsin mi? Bu işlem geri alınamaz.",
-    "hide_variables_page": "Değişken listesi sayfasını gizle"
+    "hide_variables_page": "Değişken listesi sayfasını gizle",
+    "show_active_section": "Etkin komutları üstte göster"
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -164,6 +166,12 @@
   },
   "whats_new": {
     "dismiss": "Anladım",
+    "v0_12_1": {
+      "title": "0.12.1 sürümündeki yenilikler",
+      "items": [
+        "Oyun sayfasının ve Genel Komutlar sayfasının en üstünde, her kategoriyi kaydırmaya gerek kalmadan şu anda etkin olan her şeyi gösteren yeni bir \"Etkin\" bölümü — Ayarlar'dan kapatılabilir"
+      ]
+    },
     "v0_12_0": {
       "title": "0.12.0 sürümündeki yenilikler",
       "items": [

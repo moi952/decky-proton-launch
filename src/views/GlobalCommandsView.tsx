@@ -39,7 +39,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { t: tCommon } = useTranslation("common");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
-  const { isCategoryVisible } = useSettings();
+  const { isCategoryVisible, showActiveSection } = useSettings();
   const { variables: variablesData } = useRemoteData();
   const { customWrappers, removeCustomWrapper } = useCustomWrappers();
   const { customVariables, removeCustomVariable } = useCustomVariables();
@@ -133,6 +133,26 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
     }
   };
 
+  // Surfaced at the top so the user doesn't have to scroll every category to
+  // see what's currently active globally.
+  const allVariables: Variable[] = variablesData.flatMap(
+    (cat) => cat.variables as Variable[],
+  );
+  const activeCustomVariables = customVariables.filter(
+    (cv) => draft[cv.env] !== undefined,
+  );
+  const activeCustomWrappers = customWrappers.filter(
+    (w) => draft[w.env] !== undefined,
+  );
+  const activeCatalogVariables = allVariables.filter(
+    (v) => draft[v.env] !== undefined,
+  );
+  const hasActiveCommands =
+    showActiveSection &&
+    (activeCustomVariables.length > 0 ||
+      activeCustomWrappers.length > 0 ||
+      activeCatalogVariables.length > 0);
+
   return (
     <div>
       <PanelSection>
@@ -182,6 +202,54 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
         </PanelSection>
       ) : (
         <React.Fragment>
+          {hasActiveCommands && (
+            <PanelSection title={tCat("active")}>
+              {activeCustomVariables.map((cv) => (
+                <PanelSectionRow key={cv.id}>
+                  <ToggleField
+                    label={cv.name}
+                    checked={draft[cv.env] !== undefined}
+                    onChange={() => toggleVar(cv.env, cv.value)}
+                  />
+                </PanelSectionRow>
+              ))}
+              {activeCustomWrappers.map((w) => (
+                <VariableToggleRow
+                  key={w.id}
+                  variable={{
+                    title: w.name,
+                    env: w.env,
+                    type: "exec",
+                    exec: w.exec,
+                  }}
+                  isActive={draft[w.env] !== undefined}
+                  currentValue={draft[w.env] ?? "1"}
+                  onToggle={() => toggleVar(w.env, "1")}
+                  onValueChange={(v) => setVarValue(w.env, v)}
+                />
+              ))}
+              {activeCatalogVariables.map((variable) => {
+                const defaultVal =
+                  variable.type === "enum" && "values" in variable
+                    ? ("defaultValue" in variable &&
+                        (variable as any).defaultValue) ||
+                      (variable as any).values?.[0]?.value ||
+                      "1"
+                    : (variable as any).value ?? "1";
+                return (
+                  <VariableToggleRow
+                    key={variable.env}
+                    variable={variable}
+                    isActive={draft[variable.env] !== undefined}
+                    currentValue={draft[variable.env] ?? defaultVal}
+                    onToggle={() => toggleVar(variable.env, defaultVal)}
+                    onValueChange={(v) => setVarValue(variable.env, v)}
+                  />
+                );
+              })}
+            </PanelSection>
+          )}
+
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
               {customVariables.map((cv) => {

@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Favoris",
     "custom": "Personnalisé",
-    "custom_wrappers": "Wrappers personnalisés"
+    "custom_wrappers": "Wrappers personnalisés",
+    "active": "Actives"
   },
   "common": {
     "selected": "Sélection",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Supprimer tous les wrappers personnalisés ? Cette action est irréversible.",
     "clean_custom_variables_confirm_title": "Nettoyer les commandes personnalisées",
     "clean_custom_variables_confirm_description": "Supprimer toutes les commandes personnalisées ? Cette action est irréversible.",
-    "hide_variables_page": "Masquer la page Liste des variables"
+    "hide_variables_page": "Masquer la page Liste des variables",
+    "show_active_section": "Afficher les commandes actives en haut"
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Compris",
+    "v0_12_1": {
+      "title": "Nouveautés de la version 0.12.1",
+      "items": [
+        "Nouvelle section « Actives » en haut de la page d'un jeu et de la page Commandes globales, avec tout ce qui est actuellement activé, sans avoir à parcourir chaque catégorie — désactivable dans les Réglages"
+      ]
+    },
     "v0_12_0": {
       "title": "Nouveautés de la version 0.12.0",
       "items": [

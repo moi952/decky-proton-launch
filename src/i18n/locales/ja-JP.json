@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "お気に入り",
     "custom": "カスタム",
-    "custom_wrappers": "カスタムラッパー"
+    "custom_wrappers": "カスタムラッパー",
+    "active": "有効"
   },
   "common": {
     "selected": "選択",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "すべてのカスタムラッパーを削除しますか？この操作は元に戻せません。",
     "clean_custom_variables_confirm_title": "カスタムコマンドを消去",
     "clean_custom_variables_confirm_description": "すべてのカスタムコマンドを削除しますか？この操作は元に戻せません。",
-    "hide_variables_page": "「変数一覧」ページを非表示にする"
+    "hide_variables_page": "「変数一覧」ページを非表示にする",
+    "show_active_section": "有効なコマンドを上部に表示"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "了解",
+    "v0_12_1": {
+      "title": "バージョン0.12.1の新機能",
+      "items": [
+        "ゲームページとグローバルコマンドページの一番上に「有効」セクションを追加。すべてのカテゴリーをスクロールしなくても、現在有効なものを確認できます — 設定でオフにすることも可能です"
+      ]
+    },
     "v0_12_0": {
       "title": "バージョン0.12.0の新機能",
       "items": [

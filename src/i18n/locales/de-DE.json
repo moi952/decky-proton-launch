@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Favoriten",
     "custom": "Benutzerdefiniert",
-    "custom_wrappers": "Benutzerdefinierte Wrapper"
+    "custom_wrappers": "Benutzerdefinierte Wrapper",
+    "active": "Aktiv"
   },
   "common": {
     "selected": "Ausgewählt",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Alle benutzerdefinierten Wrapper löschen? Dies kann nicht rückgängig gemacht werden.",
     "clean_custom_variables_confirm_title": "Benutzerdefinierte Befehle leeren",
     "clean_custom_variables_confirm_description": "Alle benutzerdefinierten Befehle löschen? Dies kann nicht rückgängig gemacht werden.",
-    "hide_variables_page": "Seite „Variablenliste“ ausblenden"
+    "hide_variables_page": "Seite „Variablenliste“ ausblenden",
+    "show_active_section": "Aktive Befehle oben anzeigen"
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Verstanden",
+    "v0_12_1": {
+      "title": "Neuigkeiten in Version 0.12.1",
+      "items": [
+        "Neuer Bereich „Aktiv“ ganz oben auf der Spieleseite und der Seite Globale Befehle, mit allem, was derzeit aktiviert ist, ohne jede Kategorie durchsuchen zu müssen — kann in den Einstellungen deaktiviert werden"
+      ]
+    },
     "v0_12_0": {
       "title": "Neuigkeiten in Version 0.12.0",
       "items": [

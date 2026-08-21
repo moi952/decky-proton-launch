@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Preferiti",
     "custom": "Personalizzato",
-    "custom_wrappers": "Wrapper personalizzati"
+    "custom_wrappers": "Wrapper personalizzati",
+    "active": "Attive"
   },
   "common": {
     "selected": "Selezionato",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Eliminare tutti i wrapper personalizzati? Azione irreversibile.",
     "clean_custom_variables_confirm_title": "Pulisci comandi personalizzati",
     "clean_custom_variables_confirm_description": "Eliminare tutti i comandi personalizzati? Azione irreversibile.",
-    "hide_variables_page": "Nascondi la pagina Elenco variabili"
+    "hide_variables_page": "Nascondi la pagina Elenco variabili",
+    "show_active_section": "Mostra i comandi attivi in alto"
   },
   "launch_options_view": {
     "title": "Opzioni di avvio",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Capito",
+    "v0_12_1": {
+      "title": "Novità della versione 0.12.1",
+      "items": [
+        "Nuova sezione \"Attive\" in alto nella pagina di un gioco e nella pagina Comandi globali, con tutto ciò che è attualmente attivato, senza dover scorrere ogni categoria — disattivabile dalle Impostazioni"
+      ]
+    },
     "v0_12_0": {
       "title": "Novità della versione 0.12.0",
       "items": [

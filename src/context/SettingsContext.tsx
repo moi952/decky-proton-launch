@@ -8,6 +8,7 @@ interface UiSettings {
   hiddenCategories?: string[];
   defaultHome?: DefaultHome;
   hideVariablesPage?: boolean;
+  showActiveSection?: boolean;
 }
 
 // Pre-0.10 localStorage keys, migrated below.
@@ -22,6 +23,8 @@ interface SettingsContextValue {
   setDefaultHome: (v: DefaultHome) => void;
   hideVariablesPage: boolean;
   setHideVariablesPage: (v: boolean) => void;
+  showActiveSection: boolean;
+  setShowActiveSection: (v: boolean) => void;
   settingsLoaded: boolean;
 }
 
@@ -36,6 +39,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [defaultHome, setDefaultHomeState] =
     useState<DefaultHome>("game-manager");
   const [hideVariablesPage, setHideVariablesPageState] = useState(false);
+  const [showActiveSection, setShowActiveSectionState] = useState(true);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -63,11 +67,13 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (categories) setHiddenCategories(new Set(categories));
       if (home) setDefaultHomeState(home);
       setHideVariablesPageState(data.hideVariablesPage ?? false);
+      setShowActiveSectionState(data.showActiveSection ?? true);
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
           defaultHome: home,
           hideVariablesPage: data.hideVariablesPage ?? false,
+          showActiveSection: data.showActiveSection ?? true,
         }).catch(() => {});
       }
     };
@@ -82,11 +88,13 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     hiddenCategories?: Set<string>;
     defaultHome?: DefaultHome;
     hideVariablesPage?: boolean;
+    showActiveSection?: boolean;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
       defaultHome: next.defaultHome ?? defaultHome,
       hideVariablesPage: next.hideVariablesPage ?? hideVariablesPage,
+      showActiveSection: next.showActiveSection ?? showActiveSection,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -115,6 +123,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     persist({ hideVariablesPage: v });
   };
 
+  const setShowActiveSection = (v: boolean) => {
+    setShowActiveSectionState(v);
+    persist({ showActiveSection: v });
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -125,6 +138,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         setDefaultHome,
         hideVariablesPage,
         setHideVariablesPage,
+        showActiveSection,
+        setShowActiveSection,
         settingsLoaded,
       }}
     >

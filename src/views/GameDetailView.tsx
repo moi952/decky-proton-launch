@@ -56,7 +56,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tFavModal } = useTranslation("delete_favorite_modal");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
-  const { isCategoryVisible } = useSettings();
+  const { isCategoryVisible, showActiveSection } = useSettings();
   const { customVariables, removeCustomVariable } = useCustomVariables();
   const { customWrappers, removeCustomWrapper } = useCustomWrappers();
   const { variables: variablesData } = useRemoteData();
@@ -263,6 +263,25 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
     }
   };
 
+  // Surfaced at the top so the user doesn't have to scroll every category to
+  // see what's currently on for this game. Favorites take priority on
+  // dedup — a favorited catalog variable only shows once, up here.
+  const activeFavorites = favorites.filter((f) => f.env && isVarActive(f.env));
+  const activeFavoriteEnvs = new Set(activeFavorites.map((f) => f.env));
+  const activeCustomVariables = customVariables.filter((cv) =>
+    isVarActive(cv.env),
+  );
+  const activeCustomWrappers = customWrappers.filter((w) => isVarActive(w.env));
+  const activeCatalogVariables = allVariables.filter(
+    (v) => isVarActive(v.env) && !activeFavoriteEnvs.has(v.env),
+  );
+  const hasActiveCommands =
+    showActiveSection &&
+    (activeFavorites.length > 0 ||
+      activeCustomVariables.length > 0 ||
+      activeCustomWrappers.length > 0 ||
+      activeCatalogVariables.length > 0);
+
   const loadLog = async () => {
     const [content, status] = await Promise.all([
       call<[number], string>("get_launch_log", game.appid),
@@ -433,6 +452,98 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
         </PanelSection>
       ) : (
         <div>
+          {hasActiveCommands && (
+            <PanelSection title={tCat("active")}>
+              {activeFavorites.map((fav) => {
+                const catalogVar = allVariables.find((v) => v.env === fav.env);
+                const isGlobal = isGlobalVar(fav.env!);
+                const globalHint = isGlobal
+                  ? t(
+                      isVarActive(fav.env!)
+                        ? "global_active_hint"
+                        : "global_disabled_hint",
+                    )
+                  : undefined;
+                return catalogVar ? (
+                  <VariableToggleRow
+                    key={fav.name}
+                    variable={catalogVar}
+                    isActive={isVarActive(fav.env!)}
+                    currentValue={getVarValue(
+                      fav.env!,
+                      getVariableDefault(catalogVar),
+                    )}
+                    description={globalHint}
+                    onToggle={() =>
+                      toggleVar(fav.env!, getVariableDefault(catalogVar))
+                    }
+                    onValueChange={(v) => setVarValue(fav.env!, v)}
+                  />
+                ) : (
+                  <PanelSectionRow key={fav.name}>
+                    <ToggleField
+                      label={fav.name}
+                      checked={draft[fav.env!] !== undefined}
+                      onChange={() => toggleVar(fav.env!, fav.value)}
+                    />
+                  </PanelSectionRow>
+                );
+              })}
+              {activeCustomVariables.map((cv) => (
+                <PanelSectionRow key={cv.id}>
+                  <ToggleField
+                    label={cv.name}
+                    checked={draft[cv.env] !== undefined}
+                    onChange={() => toggleVar(cv.env, cv.value)}
+                  />
+                </PanelSectionRow>
+              ))}
+              {activeCustomWrappers.map((w) => {
+                const isGlobal = isGlobalVar(w.env);
+                const globalHint = isGlobal
+                  ? t(
+                      isVarActive(w.env)
+                        ? "global_active_hint"
+                        : "global_disabled_hint",
+                    )
+                  : undefined;
+                return (
+                  <VariableToggleRow
+                    key={w.id}
+                    variable={{ title: w.name, env: w.env, type: "exec", exec: w.exec }}
+                    isActive={isVarActive(w.env)}
+                    currentValue={getVarValue(w.env, "1")}
+                    description={globalHint}
+                    onToggle={() => toggleVar(w.env, "1")}
+                    onValueChange={(v) => setVarValue(w.env, v)}
+                  />
+                );
+              })}
+              {activeCatalogVariables.map((variable) => {
+                const isGlobal = isGlobalVar(variable.env);
+                const globalHint = isGlobal
+                  ? t(
+                      isVarActive(variable.env)
+                        ? "global_active_hint"
+                        : "global_disabled_hint",
+                    )
+                  : undefined;
+                const defaultVal = getVariableDefault(variable);
+                return (
+                  <VariableToggleRow
+                    key={variable.env}
+                    variable={variable}
+                    isActive={isVarActive(variable.env)}
+                    currentValue={getVarValue(variable.env, defaultVal)}
+                    description={globalHint}
+                    onToggle={() => toggleVar(variable.env, defaultVal)}
+                    onValueChange={(v) => setVarValue(variable.env, v)}
+                  />
+                );
+              })}
+            </PanelSection>
+          )}
+
           {favorites.filter((f) => f.env).length > 0 && (
             <PanelSection title={tCat("favorites")}>
               {favorites

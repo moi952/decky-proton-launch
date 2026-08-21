@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Favorieten",
     "custom": "Aangepast",
-    "custom_wrappers": "Aangepaste wrappers"
+    "custom_wrappers": "Aangepaste wrappers",
+    "active": "Actief"
   },
   "common": {
     "selected": "Geselecteerd",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Alle aangepaste wrappers verwijderen? Dit kan niet ongedaan worden gemaakt.",
     "clean_custom_variables_confirm_title": "Aangepaste opdrachten wissen",
     "clean_custom_variables_confirm_description": "Alle aangepaste opdrachten verwijderen? Dit kan niet ongedaan worden gemaakt.",
-    "hide_variables_page": "Pagina Variabelenlijst verbergen"
+    "hide_variables_page": "Pagina Variabelenlijst verbergen",
+    "show_active_section": "Actieve opdrachten boven aan tonen"
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Begrepen",
+    "v0_12_1": {
+      "title": "Nieuw in versie 0.12.1",
+      "items": [
+        "Nieuwe sectie 'Actief' boven aan de gamepagina en de pagina Globale opdrachten, met alles wat momenteel is ingeschakeld, zonder dat je elke categorie moet doorscrollen — kan worden uitgeschakeld in Instellingen"
+      ]
+    },
     "v0_12_0": {
       "title": "Nieuw in versie 0.12.0",
       "items": [

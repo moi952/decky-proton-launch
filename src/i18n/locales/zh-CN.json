@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "收藏",
     "custom": "自定义",
-    "custom_wrappers": "自定义 wrapper"
+    "custom_wrappers": "自定义 wrapper",
+    "active": "已启用"
   },
   "common": {
     "selected": "已选择",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "删除所有自定义 wrapper？此操作无法撤销。",
     "clean_custom_variables_confirm_title": "清除自定义命令",
     "clean_custom_variables_confirm_description": "删除所有自定义命令？此操作无法撤销。",
-    "hide_variables_page": "隐藏“变量列表”页面"
+    "hide_variables_page": "隐藏“变量列表”页面",
+    "show_active_section": "在顶部显示已启用的命令"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "知道了",
+    "v0_12_1": {
+      "title": "0.12.1 版本更新内容",
+      "items": [
+        "游戏页面和全局命令页面顶部新增“已启用”区域，显示当前所有已启用的内容，无需逐个翻阅每个分类——可在设置中关闭"
+      ]
+    },
     "v0_12_0": {
       "title": "0.12.0 版本更新内容",
       "items": [

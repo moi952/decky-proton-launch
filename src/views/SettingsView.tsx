@@ -36,6 +36,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     setDefaultHome,
     hideVariablesPage,
     setHideVariablesPage,
+    showActiveSection,
+    setShowActiveSection,
   } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
@@ -172,6 +174,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
       </PanelSection>
 
       <PanelSection title={tSettings("settings_categories")}>
+        <PanelSectionRow>
+          <ToggleField
+            label={tSettings("show_active_section")}
+            checked={showActiveSection}
+            onChange={setShowActiveSection}
+          />
+        </PanelSectionRow>
         {variablesData.map((cat) => (
           <PanelSectionRow key={cat.category}>
             <ToggleField

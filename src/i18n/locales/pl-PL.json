@@ -2,7 +2,8 @@
   "categories": {
     "favorites": "Ulubione",
     "custom": "Niestandardowe",
-    "custom_wrappers": "Niestandardowe wrappery"
+    "custom_wrappers": "Niestandardowe wrappery",
+    "active": "Aktywne"
   },
   "common": {
     "selected": "Wybrane",
@@ -74,7 +75,8 @@
     "clean_custom_wrappers_confirm_description": "Usunąć wszystkie niestandardowe wrappery? Tej operacji nie można cofnąć.",
     "clean_custom_variables_confirm_title": "Wyczyść niestandardowe polecenia",
     "clean_custom_variables_confirm_description": "Usunąć wszystkie niestandardowe polecenia? Tej operacji nie można cofnąć.",
-    "hide_variables_page": "Ukryj stronę Lista zmiennych"
+    "hide_variables_page": "Ukryj stronę Lista zmiennych",
+    "show_active_section": "Pokaż aktywne polecenia na górze"
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -166,6 +168,12 @@
   },
   "whats_new": {
     "dismiss": "Rozumiem",
+    "v0_12_1": {
+      "title": "Nowości w wersji 0.12.1",
+      "items": [
+        "Nowa sekcja „Aktywne” na górze strony gry i strony Globalne polecenia, pokazująca wszystko, co jest obecnie włączone, bez przewijania każdej kategorii — można ją wyłączyć w Ustawieniach"
+      ]
+    },
     "v0_12_0": {
       "title": "Nowości w wersji 0.12.0",
       "items": [
