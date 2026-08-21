@@ -43,7 +43,8 @@
     "field_value": "Wert",
     "fields_required": "Alle Felder sind erforderlich",
     "already_exists": "Eine Variable mit diesem Namen existiert bereits",
-    "edit_title": "Benutzerdefinierte Variable bearbeiten"
+    "edit_title": "Benutzerdefinierte Variable bearbeiten",
+    "env_already_used": "Diese Umgebungsvariable wird bereits an anderer Stelle verwendet"
   },
   "delete_custom_variable_modal": {
     "title": "Benutzerdefinierte Variable löschen",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Neuigkeiten in Version 0.12.1",
       "items": [
-        "Neuer Bereich „Aktiv“ ganz oben auf der Spieleseite und der Seite Globale Befehle, mit allem, was derzeit aktiviert ist, ohne jede Kategorie durchsuchen zu müssen — kann in den Einstellungen deaktiviert werden"
+        "Neuer Bereich „Aktiv“ ganz oben auf der Spieleseite und der Seite Globale Befehle, mit allem, was derzeit aktiviert ist, ohne jede Kategorie durchsuchen zu müssen — kann in den Einstellungen deaktiviert werden",
+        "Das Löschen einer benutzerdefinierten Variable oder eines Wrappers schaltet sie jetzt auch überall aus, wo sie aktiv war, statt sie ohne Möglichkeit zur Deaktivierung aktiv zu lassen"
       ]
     },
     "v0_12_0": {

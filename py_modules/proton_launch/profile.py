@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -110,3 +111,49 @@ def write_global_profile(env_vars: Dict[str, str]) -> None:
 def read_global_profile() -> Dict[str, str]:
     env_vars, _ = _parse_env_file(global_profile_path())
     return env_vars
+
+
+_NAME_RE = re.compile(r"#\s*decky-proton-launch\s+—\s+(.*)\s+\(appid: \d+\)")
+
+
+def _extract_game_name(path: Path) -> str:
+    """Best-effort read of a profile's own header comment, so rewriting it
+    doesn't need the game's display name passed back in."""
+    try:
+        for line in path.read_text(encoding="utf-8").splitlines()[:3]:
+            m = _NAME_RE.match(line.strip())
+            if m:
+                return m.group(1)
+    except Exception:
+        pass
+    return ""
+
+
+def remove_env_keys_from_profiles(env_keys: List[str]) -> None:
+    """Strips the given env vars from every profile that currently exports
+    them (global + per-game) — deleting a custom variable/wrapper's
+    definition only ever removed it from the list backing its toggle row;
+    it never touched a profile that had already exported it, leaving that
+    export stuck forever with no toggle left to turn it off."""
+    keys = set(env_keys)
+    if not keys:
+        return
+
+    global_vars = read_global_profile()
+    if keys & global_vars.keys():
+        write_global_profile(
+            {k: v for k, v in global_vars.items() if k not in keys}
+        )
+
+    if not profiles_dir().is_dir():
+        return
+    for path in profiles_dir().glob("*.env"):
+        if not path.stem.isdigit():
+            continue
+        env_vars, disabled_globals = _parse_env_file(path)
+        if not (keys & env_vars.keys()):
+            continue
+        app_id = int(path.stem)
+        filtered = {k: v for k, v in env_vars.items() if k not in keys}
+        name = _extract_game_name(path) or str(app_id)
+        write_profile(app_id, filtered, name, disabled_globals)

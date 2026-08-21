@@ -43,7 +43,8 @@
     "field_value": "Valore",
     "fields_required": "Tutti i campi sono obbligatori",
     "already_exists": "Esiste già una variabile con questo nome",
-    "edit_title": "Modifica variabile personalizzata"
+    "edit_title": "Modifica variabile personalizzata",
+    "env_already_used": "Questa variabile d'ambiente è già utilizzata altrove"
   },
   "delete_custom_variable_modal": {
     "title": "Elimina variabile personalizzata",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Novità della versione 0.12.1",
       "items": [
-        "Nuova sezione \"Attive\" in alto nella pagina di un gioco e nella pagina Comandi globali, con tutto ciò che è attualmente attivato, senza dover scorrere ogni categoria — disattivabile dalle Impostazioni"
+        "Nuova sezione \"Attive\" in alto nella pagina di un gioco e nella pagina Comandi globali, con tutto ciò che è attualmente attivato, senza dover scorrere ogni categoria — disattivabile dalle Impostazioni",
+        "Eliminare una variabile o un wrapper personalizzato ora lo disattiva anche ovunque fosse attivo, invece di lasciarlo bloccato attivo senza modo di disattivarlo"
       ]
     },
     "v0_12_0": {

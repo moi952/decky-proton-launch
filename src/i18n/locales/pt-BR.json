@@ -43,7 +43,8 @@
     "field_value": "Valor",
     "fields_required": "Todos os campos são obrigatórios",
     "already_exists": "Uma variável com este nome já existe",
-    "edit_title": "Editar variável personalizada"
+    "edit_title": "Editar variável personalizada",
+    "env_already_used": "Esta variável de ambiente já está em uso em outro lugar"
   },
   "delete_custom_variable_modal": {
     "title": "Remover variável personalizada",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Novidades da versão 0.12.1",
       "items": [
-        "Nova seção \"Ativas\" no topo da página do jogo e da página Comandos globais, mostrando tudo o que está ativado no momento, sem precisar rolar por cada categoria — pode ser desativada nas Configurações"
+        "Nova seção \"Ativas\" no topo da página do jogo e da página Comandos globais, mostrando tudo o que está ativado no momento, sem precisar rolar por cada categoria — pode ser desativada nas Configurações",
+        "Excluir uma variável ou wrapper personalizado agora também a desativa em todos os lugares onde estava ativa, em vez de deixá-la travada sem forma de desativar"
       ]
     },
     "v0_12_0": {

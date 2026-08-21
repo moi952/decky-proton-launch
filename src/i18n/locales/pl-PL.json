@@ -43,7 +43,8 @@
     "field_value": "Wartość",
     "fields_required": "Wszystkie pola są wymagane",
     "already_exists": "Zmienna o tej nazwie już istnieje",
-    "edit_title": "Edytuj niestandardową zmienną"
+    "edit_title": "Edytuj niestandardową zmienną",
+    "env_already_used": "Ta zmienna środowiskowa jest już używana gdzie indziej"
   },
   "delete_custom_variable_modal": {
     "title": "Usuń zmienną niestandardową",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Nowości w wersji 0.12.1",
       "items": [
-        "Nowa sekcja „Aktywne” na górze strony gry i strony Globalne polecenia, pokazująca wszystko, co jest obecnie włączone, bez przewijania każdej kategorii — można ją wyłączyć w Ustawieniach"
+        "Nowa sekcja „Aktywne” na górze strony gry i strony Globalne polecenia, pokazująca wszystko, co jest obecnie włączone, bez przewijania każdej kategorii — można ją wyłączyć w Ustawieniach",
+        "Usunięcie niestandardowej zmiennej lub wrappera teraz również wyłącza ją wszędzie, gdzie była aktywna, zamiast pozostawiać ją włączoną bez możliwości wyłączenia"
       ]
     },
     "v0_12_0": {

@@ -63,10 +63,10 @@ export const CustomVariablesProvider: React.FC<{
       .catch(() => mergeLegacy([]));
   }, []);
 
-  const persist = (vars: CustomVariable[]) => {
+  const persist = (vars: CustomVariable[]): Promise<boolean> => {
     setCustomVariables(vars);
-    call<[CustomVariable[]], boolean>("set_custom_variables", vars).catch(
-      () => {},
+    return call<[CustomVariable[]], boolean>("set_custom_variables", vars).catch(
+      () => false,
     );
   };
 
@@ -76,19 +76,43 @@ export const CustomVariablesProvider: React.FC<{
     return true;
   };
 
+  // Deleting (or renaming) a variable's definition never touched a profile
+  // that had already exported it — that export just kept firing forever
+  // with no toggle left to turn it off. This strips it from every profile
+  // that currently has it. Only called after the updated list has already
+  // been persisted (see the .then() chains below) — the backend's own
+  // defensive check re-reads custom_variables.json before purging, so it
+  // needs to see the post-deletion state, not a stale one.
+  const purgeFromProfiles = (envs: string[]) => {
+    const keys = envs.filter(Boolean);
+    if (keys.length === 0) return;
+    call<[string[]], boolean>("purge_env_from_profiles", keys).catch(() => {});
+  };
+
   const editCustomVariable = (
     id: string,
     updated: Omit<CustomVariable, "id">,
   ) => {
-    persist(customVariables.map((v) => (v.id === id ? { ...updated, id } : v)));
+    const existing = customVariables.find((v) => v.id === id);
+    persist(customVariables.map((v) => (v.id === id ? { ...updated, id } : v))).then(
+      () => {
+        if (existing && existing.env !== updated.env) {
+          purgeFromProfiles([existing.env]);
+        }
+      },
+    );
   };
 
   const removeCustomVariable = (id: string) => {
-    persist(customVariables.filter((v) => v.id !== id));
+    const existing = customVariables.find((v) => v.id === id);
+    persist(customVariables.filter((v) => v.id !== id)).then(() => {
+      if (existing) purgeFromProfiles([existing.env]);
+    });
   };
 
   const clearCustomVariables = () => {
-    persist([]);
+    const envs = customVariables.map((v) => v.env);
+    persist([]).then(() => purgeFromProfiles(envs));
     // Explicit reset — clear the legacy backup too, or a remount would
     // just merge these same entries right back in.
     clearLegacyKey(LEGACY_KEY);

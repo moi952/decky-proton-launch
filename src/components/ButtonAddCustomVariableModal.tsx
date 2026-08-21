@@ -10,9 +10,12 @@ import {
   useCustomVariables,
   CustomVariable,
 } from "../context/CustomVariablesContext";
+import { useCustomWrappers } from "../context/CustomWrappersContext";
+import { useRemoteData } from "../context/RemoteDataContext";
 import { useTranslation } from "react-i18next";
 import { ActionButton } from "./ActionButton";
 import { AppProvider } from "../context/AppProvider";
+import { Variable } from "../data/types";
 
 interface CustomVariableModalContentProps {
   existing?: CustomVariable;
@@ -22,7 +25,10 @@ interface CustomVariableModalContentProps {
 export const CustomVariableModalContent: React.FC<
   CustomVariableModalContentProps
 > = ({ existing, onClose }) => {
-  const { addCustomVariable, editCustomVariable } = useCustomVariables();
+  const { customVariables, addCustomVariable, editCustomVariable } =
+    useCustomVariables();
+  const { customWrappers } = useCustomWrappers();
+  const { variables: variablesData } = useRemoteData();
   const { t } = useTranslation("add_custom_variable_modal");
   const { t: tCommon } = useTranslation();
   const [name, setName] = useState(existing?.name ?? "");
@@ -30,9 +36,30 @@ export const CustomVariableModalContent: React.FC<
   const [value, setValue] = useState(existing?.value ?? "");
   const [error, setError] = useState("");
 
+  // env doubles as the runtime identity of a toggle (it's what actually
+  // gets exported) — letting two different definitions share one would
+  // mean deleting either affects both, so it's blocked here rather than
+  // discovered later as a confusing side effect.
+  const isEnvTaken = (candidate: string): boolean => {
+    const catalogEnvs = variablesData.flatMap((cat) =>
+      (cat.variables as Variable[]).map((v) => v.env),
+    );
+    const otherCustomVariableEnvs = customVariables
+      .filter((v) => v.id !== existing?.id)
+      .map((v) => v.env);
+    const customWrapperEnvs = customWrappers.map((w) => w.env);
+    return [...catalogEnvs, ...otherCustomVariableEnvs, ...customWrapperEnvs].includes(
+      candidate,
+    );
+  };
+
   const handleSubmit = () => {
     if (!name.trim() || !env.trim() || !value.trim()) {
       setError(t("fields_required"));
+      return;
+    }
+    if (isEnvTaken(env.trim())) {
+      setError(t("env_already_used"));
       return;
     }
     if (existing) {

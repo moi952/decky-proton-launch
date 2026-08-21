@@ -13,6 +13,7 @@ from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_s
 from .profile import (
     profiles_dir, script_path, legacy_script_path, profile_path, write_profile,
     read_profile, read_profile_full, write_global_profile, read_global_profile,
+    remove_env_keys_from_profiles,
 )
 from .launch_option import (
     LAUNCH_OPTION,
@@ -809,6 +810,83 @@ class Plugin(PluginUpdaterMixin):
             decky.logger.error(f"[set_custom_wrappers] {e}")
             return False
 
+    def _known_envs(self) -> set:
+        """Every env currently claimed by something real: a custom
+        variable, a custom wrapper, or a catalog variable. Used to tell a
+        truly orphaned export apart from one that's still legitimately in
+        use — env isn't required to be unique to one UI item, so a
+        deletion must never blind-strip a key something else still owns."""
+        known: set = set()
+        try:
+            data = json.loads(self._custom_variables_path().read_text(encoding="utf-8"))
+            known.update(v["env"] for v in data if v.get("env"))
+        except Exception:
+            pass
+        try:
+            data = json.loads(self._custom_wrappers_path().read_text(encoding="utf-8"))
+            known.update(w["env"] for w in data if w.get("env"))
+        except Exception:
+            pass
+        try:
+            cache = json.loads(self._variables_cache_path().read_text(encoding="utf-8"))
+            for cat in cache.get("variables", []):
+                for v in cat.get("variables", []):
+                    if v.get("env"):
+                        known.add(v["env"])
+        except Exception:
+            pass
+        return known
+
+    async def purge_env_from_profiles(self, env_keys: List[str]) -> bool:
+        """Called when a custom variable/wrapper is deleted or its env is
+        changed — strips it from every profile that already exported it, so
+        the export doesn't keep firing forever with no toggle left to turn
+        it off. Skips any key still claimed by something else (see
+        _known_envs) — the frontend calls this only after the deletion is
+        already persisted, so a key surviving that check really is still
+        wanted, not a stale read."""
+        try:
+            known = self._known_envs()
+            to_purge = [k for k in env_keys if k not in known]
+            if to_purge:
+                remove_env_keys_from_profiles(to_purge)
+                decky.logger.info(f"[purge_env_from_profiles] removed {to_purge}")
+            skipped = [k for k in env_keys if k in known]
+            if skipped:
+                decky.logger.info(
+                    f"[purge_env_from_profiles] skipped (still in use): {skipped}"
+                )
+            return True
+        except Exception as e:
+            decky.logger.error(f"[purge_env_from_profiles] {e}")
+            return False
+
+    async def _sweep_orphaned_env_exports(self) -> None:
+        """Self-healing safety net, runs silently on every plugin load: any
+        env exported in a profile that no longer matches ANY known custom
+        variable, custom wrapper, or catalog variable is stripped — e.g.
+        left behind by deleting a custom variable's definition before
+        purge_env_from_profiles existed. A no-op once nothing is orphaned.
+        Skipped entirely if the catalog cache hasn't been fetched yet,
+        since a catalog env can't reliably be told apart from an orphaned
+        one without it."""
+        if not self._variables_cache_path().is_file():
+            return
+        try:
+            known = self._known_envs()
+            exported: set = set(read_global_profile().keys())
+            if profiles_dir().is_dir():
+                for path in profiles_dir().glob("*.env"):
+                    if path.stem.isdigit():
+                        env_vars, _ = read_profile_full(int(path.stem))
+                        exported.update(env_vars.keys())
+            orphaned = [e for e in exported if e not in known]
+            if orphaned:
+                decky.logger.info(f"[sweep] removing orphaned env exports: {orphaned}")
+                remove_env_keys_from_profiles(orphaned)
+        except Exception:
+            decky.logger.error(f"[sweep] failed:\n{traceback.format_exc()}")
+
     def _whats_new_path(self) -> Path:
         return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "whats_new_seen.json"
 
@@ -837,6 +915,7 @@ class Plugin(PluginUpdaterMixin):
         decky.logger.info("decky-proton-launch loaded")
         decky.logger.info(f"[_main] DECKY_USER_HOME={decky.DECKY_USER_HOME}")
         decky.logger.info(f"[_main] script installed={script_path().is_file()}")
+        await self._sweep_orphaned_env_exports()
         try:
             update_info = await self.check_plugin_update_on_load()
             if update_info:

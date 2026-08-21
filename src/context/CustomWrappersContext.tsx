@@ -37,10 +37,10 @@ export const CustomWrappersProvider: React.FC<{
   // The backend keeps ~/.config/decky-proton-launch/wrapper_chains.conf (a
   // small file the script re-reads on every launch) in sync as a side
   // effect of set_custom_wrappers — no script "reinstall" needed here.
-  const persist = (wrappers: CustomWrapper[]) => {
+  const persist = (wrappers: CustomWrapper[]): Promise<boolean> => {
     setCustomWrappers(wrappers);
-    call<[CustomWrapper[]], boolean>("set_custom_wrappers", wrappers).catch(
-      () => {},
+    return call<[CustomWrapper[]], boolean>("set_custom_wrappers", wrappers).catch(
+      () => false,
     );
   };
 
@@ -63,12 +63,28 @@ export const CustomWrappersProvider: React.FC<{
     );
   };
 
+  // Deleting a wrapper's definition never touched a profile that had
+  // already exported its toggle — that export just kept firing forever
+  // with no toggle left to turn it off. This strips it from every profile
+  // that currently has it. Only called after the updated list has already
+  // been persisted — the backend's own defensive check re-reads
+  // custom_wrappers.json before purging, so it needs the post-deletion state.
+  const purgeFromProfiles = (envs: string[]) => {
+    const keys = envs.filter(Boolean);
+    if (keys.length === 0) return;
+    call<[string[]], boolean>("purge_env_from_profiles", keys).catch(() => {});
+  };
+
   const removeCustomWrapper = (id: string) => {
-    persist(customWrappers.filter((w) => w.id !== id));
+    const existing = customWrappers.find((w) => w.id === id);
+    persist(customWrappers.filter((w) => w.id !== id)).then(() => {
+      if (existing) purgeFromProfiles([existing.env]);
+    });
   };
 
   const clearCustomWrappers = () => {
-    persist([]);
+    const envs = customWrappers.map((w) => w.env);
+    persist([]).then(() => purgeFromProfiles(envs));
   };
 
   return (

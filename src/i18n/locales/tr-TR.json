@@ -43,7 +43,8 @@
     "field_value": "Değer",
     "fields_required": "Tüm alanlar gerekli",
     "already_exists": "Bu isimde bir değişken zaten var",
-    "edit_title": "Özel değişkeni düzenle"
+    "edit_title": "Özel değişkeni düzenle",
+    "env_already_used": "Bu ortam değişkeni başka bir yerde zaten kullanılıyor"
   },
   "delete_custom_variable_modal": {
     "title": "Özel değişkeni sil",
@@ -169,7 +170,8 @@
     "v0_12_1": {
       "title": "0.12.1 sürümündeki yenilikler",
       "items": [
-        "Oyun sayfasının ve Genel Komutlar sayfasının en üstünde, her kategoriyi kaydırmaya gerek kalmadan şu anda etkin olan her şeyi gösteren yeni bir \"Etkin\" bölümü — Ayarlar'dan kapatılabilir"
+        "Oyun sayfasının ve Genel Komutlar sayfasının en üstünde, her kategoriyi kaydırmaya gerek kalmadan şu anda etkin olan her şeyi gösteren yeni bir \"Etkin\" bölümü — Ayarlar'dan kapatılabilir",
+        "Özel bir değişkeni veya sarmalayıcıyı silmek artık etkin olduğu her yerde de kapatıyor, kapatma imkânı olmadan açık kalması yerine"
       ]
     },
     "v0_12_0": {

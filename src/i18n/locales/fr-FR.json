@@ -43,7 +43,8 @@
     "field_value": "Valeur",
     "fields_required": "Tous les champs sont obligatoires",
     "already_exists": "Une variable portant ce nom existe déjà",
-    "edit_title": "Modifier la variable personnalisée"
+    "edit_title": "Modifier la variable personnalisée",
+    "env_already_used": "Cette variable d'environnement est déjà utilisée ailleurs"
   },
   "delete_custom_variable_modal": {
     "title": "Supprimer la variable personnalisée",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Nouveautés de la version 0.12.1",
       "items": [
-        "Nouvelle section « Actives » en haut de la page d'un jeu et de la page Commandes globales, avec tout ce qui est actuellement activé, sans avoir à parcourir chaque catégorie — désactivable dans les Réglages"
+        "Nouvelle section « Actives » en haut de la page d'un jeu et de la page Commandes globales, avec tout ce qui est actuellement activé, sans avoir à parcourir chaque catégorie — désactivable dans les Réglages",
+        "Supprimer une variable ou un wrapper personnalisé le désactive maintenant aussi partout où il était actif, au lieu de le laisser bloqué activé sans moyen de le désactiver"
       ]
     },
     "v0_12_0": {

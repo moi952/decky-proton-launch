@@ -43,7 +43,8 @@
     "field_value": "Waarde",
     "fields_required": "Alle velden zijn verplicht",
     "already_exists": "Er bestaat al een variabele met deze naam",
-    "edit_title": "Aangepaste variabele bewerken"
+    "edit_title": "Aangepaste variabele bewerken",
+    "env_already_used": "Deze omgevingsvariabele wordt al ergens anders gebruikt"
   },
   "delete_custom_variable_modal": {
     "title": "Aangepaste variabele verwijderen",
@@ -171,7 +172,8 @@
     "v0_12_1": {
       "title": "Nieuw in versie 0.12.1",
       "items": [
-        "Nieuwe sectie 'Actief' boven aan de gamepagina en de pagina Globale opdrachten, met alles wat momenteel is ingeschakeld, zonder dat je elke categorie moet doorscrollen — kan worden uitgeschakeld in Instellingen"
+        "Nieuwe sectie 'Actief' boven aan de gamepagina en de pagina Globale opdrachten, met alles wat momenteel is ingeschakeld, zonder dat je elke categorie moet doorscrollen — kan worden uitgeschakeld in Instellingen",
+        "Het verwijderen van een aangepaste variabele of wrapper schakelt deze nu ook overal uit waar hij actief was, in plaats van hem ingeschakeld te laten zonder manier om hem uit te zetten"
       ]
     },
     "v0_12_0": {
