@@ -173,7 +173,8 @@
       "title": "Neuigkeiten in Version 0.12.1",
       "items": [
         "Neuer Bereich „Aktiv“ ganz oben auf der Spieleseite und der Seite Globale Befehle, mit allem, was derzeit aktiviert ist, ohne jede Kategorie durchsuchen zu müssen — kann in den Einstellungen deaktiviert werden",
-        "Das Löschen einer benutzerdefinierten Variable oder eines Wrappers schaltet sie jetzt auch überall aus, wo sie aktiv war, statt sie ohne Möglichkeit zur Deaktivierung aktiv zu lassen"
+        "Das Löschen einer benutzerdefinierten Variable oder eines Wrappers schaltet sie jetzt auch überall aus, wo sie aktiv war, statt sie ohne Möglichkeit zur Deaktivierung aktiv zu lassen",
+        "Das Startprotokoll zeigt jetzt nur noch die für den jeweiligen Start tatsächlich aktiven Befehle an — ein für ein bestimmtes Spiel deaktivierter globaler Befehl erscheint dort nicht mehr, als wäre er noch aktiv"
       ]
     },
     "v0_12_0": {

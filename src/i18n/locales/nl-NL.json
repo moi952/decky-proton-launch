@@ -173,7 +173,8 @@
       "title": "Nieuw in versie 0.12.1",
       "items": [
         "Nieuwe sectie 'Actief' boven aan de gamepagina en de pagina Globale opdrachten, met alles wat momenteel is ingeschakeld, zonder dat je elke categorie moet doorscrollen — kan worden uitgeschakeld in Instellingen",
-        "Het verwijderen van een aangepaste variabele of wrapper schakelt deze nu ook overal uit waar hij actief was, in plaats van hem ingeschakeld te laten zonder manier om hem uit te zetten"
+        "Het verwijderen van een aangepaste variabele of wrapper schakelt deze nu ook overal uit waar hij actief was, in plaats van hem ingeschakeld te laten zonder manier om hem uit te zetten",
+        "Het opstartlogboek toont nu alleen de opdrachten die daadwerkelijk actief zijn voor die start — een globale opdracht die voor een specifieke game is uitgeschakeld, verschijnt daar niet meer alsof hij nog actief is"
       ]
     },
     "v0_12_0": {

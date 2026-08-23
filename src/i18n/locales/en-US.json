@@ -173,7 +173,8 @@
       "title": "What's new in 0.12.1",
       "items": [
         "New 'Active' section at the top of the game page and the Global Commands page, showing everything currently enabled without having to scroll through every category — can be turned off in Settings",
-        "Deleting a custom variable or wrapper now also turns it off everywhere it was active, instead of leaving it stuck on with no way to disable it"
+        "Deleting a custom variable or wrapper now also turns it off everywhere it was active, instead of leaving it stuck on with no way to disable it",
+        "The launch log now only shows commands that are actually active for each launch, so a global command disabled for a specific game no longer shows up as if it were still on"
       ]
     },
     "v0_12_0": {

@@ -173,7 +173,8 @@
       "title": "Novità della versione 0.12.1",
       "items": [
         "Nuova sezione \"Attive\" in alto nella pagina di un gioco e nella pagina Comandi globali, con tutto ciò che è attualmente attivato, senza dover scorrere ogni categoria — disattivabile dalle Impostazioni",
-        "Eliminare una variabile o un wrapper personalizzato ora lo disattiva anche ovunque fosse attivo, invece di lasciarlo bloccato attivo senza modo di disattivarlo"
+        "Eliminare una variabile o un wrapper personalizzato ora lo disattiva anche ovunque fosse attivo, invece di lasciarlo bloccato attivo senza modo di disattivarlo",
+        "Il registro di avvio ora mostra solo i comandi effettivamente attivi per ogni avvio — un comando globale disattivato per un gioco specifico non compare più come se fosse ancora attivo"
       ]
     },
     "v0_12_0": {

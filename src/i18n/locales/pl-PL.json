@@ -173,7 +173,8 @@
       "title": "Nowości w wersji 0.12.1",
       "items": [
         "Nowa sekcja „Aktywne” na górze strony gry i strony Globalne polecenia, pokazująca wszystko, co jest obecnie włączone, bez przewijania każdej kategorii — można ją wyłączyć w Ustawieniach",
-        "Usunięcie niestandardowej zmiennej lub wrappera teraz również wyłącza ją wszędzie, gdzie była aktywna, zamiast pozostawiać ją włączoną bez możliwości wyłączenia"
+        "Usunięcie niestandardowej zmiennej lub wrappera teraz również wyłącza ją wszędzie, gdzie była aktywna, zamiast pozostawiać ją włączoną bez możliwości wyłączenia",
+        "Dziennik uruchamiania pokazuje teraz tylko polecenia rzeczywiście aktywne przy danym uruchomieniu — globalne polecenie wyłączone dla konkretnej gry nie pojawia się już tak, jakby nadal było włączone"
       ]
     },
     "v0_12_0": {

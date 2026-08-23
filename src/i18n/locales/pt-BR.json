@@ -173,7 +173,8 @@
       "title": "Novidades da versão 0.12.1",
       "items": [
         "Nova seção \"Ativas\" no topo da página do jogo e da página Comandos globais, mostrando tudo o que está ativado no momento, sem precisar rolar por cada categoria — pode ser desativada nas Configurações",
-        "Excluir uma variável ou wrapper personalizado agora também a desativa em todos os lugares onde estava ativa, em vez de deixá-la travada sem forma de desativar"
+        "Excluir uma variável ou wrapper personalizado agora também a desativa em todos os lugares onde estava ativa, em vez de deixá-la travada sem forma de desativar",
+        "O log de inicialização agora mostra apenas os comandos realmente ativos em cada execução — um comando global desativado para um jogo específico não aparece mais como se ainda estivesse ativo"
       ]
     },
     "v0_12_0": {

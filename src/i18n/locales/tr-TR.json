@@ -171,7 +171,8 @@
       "title": "0.12.1 sürümündeki yenilikler",
       "items": [
         "Oyun sayfasının ve Genel Komutlar sayfasının en üstünde, her kategoriyi kaydırmaya gerek kalmadan şu anda etkin olan her şeyi gösteren yeni bir \"Etkin\" bölümü — Ayarlar'dan kapatılabilir",
-        "Özel bir değişkeni veya sarmalayıcıyı silmek artık etkin olduğu her yerde de kapatıyor, kapatma imkânı olmadan açık kalması yerine"
+        "Özel bir değişkeni veya sarmalayıcıyı silmek artık etkin olduğu her yerde de kapatıyor, kapatma imkânı olmadan açık kalması yerine",
+        "Başlatma günlüğü artık yalnızca o başlatma için gerçekten etkin olan komutları gösteriyor — belirli bir oyun için devre dışı bırakılan genel bir komut artık hâlâ açıkmış gibi görünmüyor"
       ]
     },
     "v0_12_0": {

@@ -85,7 +85,7 @@ class Plugin(PluginUpdaterMixin):
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v7"
+    SCRIPT_VERSION = "v8"
 
     def _wrapper_chains(self) -> List[Dict[str, str]]:
         """(env, exec) pairs to chain to — from "wrappers_exec" in the cached
@@ -182,16 +182,33 @@ class Plugin(PluginUpdaterMixin):
                 "GLOBAL_PROFILE=\"${HOME}/.config/decky-proton-launch/profiles/_global.env\"\n"
                 "if [ -f \"${GLOBAL_PROFILE}\" ]; then\n"
                 "    echo \"[proton-launch] APPLYING global commands\" >> \"${LOG}\"\n"
-                "    grep '^export ' \"${GLOBAL_PROFILE}\" >> \"${LOG}\"\n"
                 "    source \"${GLOBAL_PROFILE}\"\n"
                 "fi\n"
                 "echo \"[proton-launch] looking for profile: ${PROFILE}\" >> \"${LOG}\"\n"
                 "if [ -n \"${APPID}\" ] && [ -f \"${PROFILE}\" ]; then\n"
                 "    echo \"[proton-launch] APPLYING profile for appid=${APPID}\" >> \"${LOG}\"\n"
-                "    grep '^export ' \"${PROFILE}\" >> \"${LOG}\"\n"
                 "    source \"${PROFILE}\"\n"
                 "else\n"
                 "    echo \"[proton-launch] no profile found (appid=${APPID})\" >> \"${LOG}\"\n"
+                "fi\n"
+                "# Log what's actually resolved after BOTH profiles are applied,\n"
+                "# not a raw dump of each file — a per-game 'unset' overriding a\n"
+                "# globally-active command only shows up correctly this way. Only\n"
+                "# list keys still actually active — a disabled one has nothing\n"
+                "# useful to show and just reads as if it were still in effect.\n"
+                "RESOLVED_KEYS=\"\"\n"
+                "[ -f \"${GLOBAL_PROFILE}\" ] && RESOLVED_KEYS=\"${RESOLVED_KEYS} $(grep -oE '^(export|unset) [A-Za-z_][A-Za-z0-9_]*' \"${GLOBAL_PROFILE}\" | awk '{print $2}')\"\n"
+                "[ -f \"${PROFILE}\" ] && RESOLVED_KEYS=\"${RESOLVED_KEYS} $(grep -oE '^(export|unset) [A-Za-z_][A-Za-z0-9_]*' \"${PROFILE}\" | awk '{print $2}')\"\n"
+                "RESOLVED_KEYS=$(echo \"${RESOLVED_KEYS}\" | tr ' ' '\\n' | sort -u)\n"
+                "ACTIVE_KEYS=\"\"\n"
+                "for KEY in ${RESOLVED_KEYS}; do\n"
+                "    [ -n \"${!KEY+x}\" ] && ACTIVE_KEYS=\"${ACTIVE_KEYS} ${KEY}\"\n"
+                "done\n"
+                "if [ -n \"${ACTIVE_KEYS}\" ]; then\n"
+                "    echo \"[proton-launch] active commands for this launch:\" >> \"${LOG}\"\n"
+                "    for KEY in ${ACTIVE_KEYS}; do\n"
+                "        echo \"    ${KEY}=${!KEY}\" >> \"${LOG}\"\n"
+                "    done\n"
                 "fi\n"
                 "# Export any KEY=VALUE args passed before the actual command\n"
                 "while [[ \"$1\" =~ ^[A-Za-z_][A-Za-z0-9_]*= ]]; do\n"
@@ -206,11 +223,12 @@ class Plugin(PluginUpdaterMixin):
                 "    while IFS='=' read -r WRAPPER_ENV WRAPPER_EXEC || [ -n \"${WRAPPER_ENV}\" ]; do\n"
                 "        [ -z \"${WRAPPER_ENV}\" ] && continue\n"
                 "        if [ \"${!WRAPPER_ENV}\" = \"1\" ] && [ -x \"${WRAPPER_EXEC}\" ]; then\n"
-                "            echo \"[proton-launch] chaining ${WRAPPER_EXEC}\" >> \"${LOG}\"\n"
+                "            echo \"[proton-launch] launching: ${WRAPPER_EXEC} $*\" >> \"${LOG}\"\n"
                 "            exec \"${WRAPPER_EXEC}\" \"$@\"\n"
                 "        fi\n"
                 "    done < \"${CHAINS}\"\n"
                 "fi\n"
+                "echo \"[proton-launch] launching: $*\" >> \"${LOG}\"\n"
                 "exec \"$@\"\n",
                 encoding="utf-8",
             )
