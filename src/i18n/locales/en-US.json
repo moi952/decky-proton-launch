@@ -169,8 +169,8 @@
   },
   "whats_new": {
     "dismiss": "Got it",
-    "v0_12_1": {
-      "title": "What's new in 0.12.1",
+    "v0_13_0": {
+      "title": "What's new in 0.13.0",
       "items": [
         "New 'Active' section at the top of the game page and the Global Commands page, showing everything currently enabled without having to scroll through every category — can be turned off in Settings",
         "Deleting a custom variable or wrapper now also turns it off everywhere it was active, instead of leaving it stuck on with no way to disable it",

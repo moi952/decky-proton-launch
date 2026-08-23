@@ -169,8 +169,8 @@
   },
   "whats_new": {
     "dismiss": "Rozumiem",
-    "v0_12_1": {
-      "title": "Nowości w wersji 0.12.1",
+    "v0_13_0": {
+      "title": "Nowości w wersji 0.13.0",
       "items": [
         "Nowa sekcja „Aktywne” na górze strony gry i strony Globalne polecenia, pokazująca wszystko, co jest obecnie włączone, bez przewijania każdej kategorii — można ją wyłączyć w Ustawieniach",
         "Usunięcie niestandardowej zmiennej lub wrappera teraz również wyłącza ją wszędzie, gdzie była aktywna, zamiast pozostawiać ją włączoną bez możliwości wyłączenia",

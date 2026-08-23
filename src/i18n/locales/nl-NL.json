@@ -169,8 +169,8 @@
   },
   "whats_new": {
     "dismiss": "Begrepen",
-    "v0_12_1": {
-      "title": "Nieuw in versie 0.12.1",
+    "v0_13_0": {
+      "title": "Nieuw in versie 0.13.0",
       "items": [
         "Nieuwe sectie 'Actief' boven aan de gamepagina en de pagina Globale opdrachten, met alles wat momenteel is ingeschakeld, zonder dat je elke categorie moet doorscrollen — kan worden uitgeschakeld in Instellingen",
         "Het verwijderen van een aangepaste variabele of wrapper schakelt deze nu ook overal uit waar hij actief was, in plaats van hem ingeschakeld te laten zonder manier om hem uit te zetten",

@@ -167,8 +167,8 @@
   },
   "whats_new": {
     "dismiss": "Entendido",
-    "v0_12_1": {
-      "title": "Novidades da versão 0.12.1",
+    "v0_13_0": {
+      "title": "Novidades da versão 0.13.0",
       "items": [
         "Nova secção \"Ativas\" no topo da página do jogo e da página Comandos globais, com tudo o que está atualmente ativado, sem teres de percorrer cada categoria — pode ser desativada nas Definições",
         "Eliminar uma variável ou wrapper personalizado desativa-a agora também em todos os locais onde estava ativa, em vez de a deixar bloqueada sem forma de a desativar",

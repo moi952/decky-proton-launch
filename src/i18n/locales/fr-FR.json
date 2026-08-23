@@ -169,8 +169,8 @@
   },
   "whats_new": {
     "dismiss": "Compris",
-    "v0_12_1": {
-      "title": "Nouveautés de la version 0.12.1",
+    "v0_13_0": {
+      "title": "Nouveautés de la version 0.13.0",
       "items": [
         "Nouvelle section « Actives » en haut de la page d'un jeu et de la page Commandes globales, avec tout ce qui est actuellement activé, sans avoir à parcourir chaque catégorie — désactivable dans les Réglages",
         "Supprimer une variable ou un wrapper personnalisé le désactive maintenant aussi partout où il était actif, au lieu de le laisser bloqué activé sans moyen de le désactiver",
