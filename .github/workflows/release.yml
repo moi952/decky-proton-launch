@@ -74,7 +74,11 @@ jobs:
           fi
 
       - name: Push commit and tag
-        run: git push origin HEAD --follow-tags
+        run: |
+          set -e
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          git push origin HEAD
+          git push origin "v$NEW_VERSION"
 
       - name: Build plugin
         run: |
