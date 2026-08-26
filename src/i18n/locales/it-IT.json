@@ -168,7 +168,12 @@
     "description": "Eliminare \"{{wrapper_name}}\"?"
   },
   "whats_new": {
-    "dismiss": "Capito",
+    "v0_13_1": {
+      "title": "Novità della versione 0.13.1",
+      "items": [
+        "Installare una versione scelta dall'elenco nelle Impostazioni ora ricarica il plugin in modo affidabile"
+      ]
+    },
     "v0_13_0": {
       "title": "Novità della versione 0.13.0",
       "items": [
@@ -214,6 +219,7 @@
         "Lo script del wrapper non occupa più spazio nella cartella home"
       ]
     },
+    "dismiss": "Capito",
     "older": "Precedente",
     "newer": "Più recente"
   },

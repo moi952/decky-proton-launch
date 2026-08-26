@@ -168,7 +168,12 @@
     "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
-    "dismiss": "Verstanden",
+    "v0_13_1": {
+      "title": "Neuigkeiten in Version 0.13.1",
+      "items": [
+        "Das Installieren einer aus der Liste in den Einstellungen ausgewählten Version lädt das Plugin jetzt zuverlässig neu"
+      ]
+    },
     "v0_13_0": {
       "title": "Neuigkeiten in Version 0.13.0",
       "items": [
@@ -214,6 +219,7 @@
         "Das Wrapper-Skript belegt nicht mehr deinen Home-Ordner"
       ]
     },
+    "dismiss": "Verstanden",
     "older": "Älter",
     "newer": "Neuer"
   },

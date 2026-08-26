@@ -168,7 +168,12 @@
     "description": "Usunąć „{{wrapper_name}}”?"
   },
   "whats_new": {
-    "dismiss": "Rozumiem",
+    "v0_13_1": {
+      "title": "Nowości w wersji 0.13.1",
+      "items": [
+        "Instalowanie wersji wybranej z listy w Ustawieniach teraz niezawodnie przeładowuje wtyczkę"
+      ]
+    },
     "v0_13_0": {
       "title": "Nowości w wersji 0.13.0",
       "items": [
@@ -214,6 +219,7 @@
         "Skrypt wrappera nie zaśmieca już katalogu domowego"
       ]
     },
+    "dismiss": "Rozumiem",
     "older": "Starsze",
     "newer": "Nowsze"
   },

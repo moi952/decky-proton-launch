@@ -8,14 +8,16 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
+### ✨ New in 0.13.1
+
+- **Active section**: instantly see every command currently enabled, on both the game page and the Global Commands page — no more scrolling through every category
+- Deleting a custom variable or wrapper now turns it off everywhere it was active, instead of leaving it stuck on with no way to disable it
+- The launch log now reflects exactly what's active for each launch, including per-game overrides of global commands
+- Installing a version picked from the list in Settings now reliably reloads the plugin
+
 ---
 
 ## Screenshots
-
-### Variable list & selection
-
-![Favorite shortcuts](./assets/favorite_shortcuts.JPG)
-![Multiple choice](./assets/multiple_choice.JPG)
 
 ### Per-game configuration
 
@@ -27,15 +29,21 @@ When an option is enabled, you can instantly switch its value between **Enable**
 
 ![Option states](./assets/options_states.jpeg)
 
+### Global commands
+
+Set commands once from the globe icon in the top bar and they apply to every game that has the wrapper installed — no need to configure each game individually. Add your own custom variables or wrappers directly from this page.
+
+![Global commands, active section and custom buttons](./assets/global_commands_active_and_custom.jpeg)
+
+Open any game's page to disable a specific globally-enabled command just for that game, without touching the global setting. The **Active** section at the top always shows everything currently enabled, including which ones come from global commands, without having to scroll through every category.
+
+![Active section on a game page](./assets/active_section_game_page.jpeg)
+
 ### Running game detection
 
 The plugin automatically detects the currently running game and shows it at the top — click it to jump directly to its settings.
 
 ![Running game](./assets/played_game.JPG)
-
-### Global commands
-
-Set commands once from the globe icon in the top bar and they apply to every game that has the wrapper installed — no need to configure each game individually. Open any game's page to disable a specific globally-enabled command just for that game, without touching the global setting.
 
 ### Settings
 
@@ -43,11 +51,21 @@ The settings view lets you choose the default home tab (variable list, game mana
 
 ![Settings](./assets/settings.jpeg)
 
+You can also check for plugin updates, install any past release from a version picker, force-refresh the variable data, or reset your custom wrappers/commands from here.
+
+![Update, data refresh and reset](./assets/settings_update_and_reset.jpeg)
+
 ### Update notifications
 
-When a new version is available, a banner appears at the top with a direct link to download it.
+When a new version is available, a banner appears at the top with a direct link to download it. Past updates are also viewable at any time from the update history section.
 
 ![Update button](./assets/update_button.JPG)
+![What's New history](./assets/whats_new_history.jpeg)
+
+### Variable list & selection
+
+![Favorite shortcuts](./assets/favorite_shortcuts.JPG)
+![Multiple choice](./assets/multiple_choice.JPG)
 
 ---
 

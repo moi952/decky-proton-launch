@@ -14,6 +14,15 @@ const PluginUpdateContext = createContext<PluginUpdateContextValue | null>(
   null,
 );
 
+// Same remount issue as index.tsx's view restoration and PluginUpdate.tsx's
+// selectedTag: picking any DropdownItem tears down and recreates the whole
+// panel, this context included. Without this, `info` would reset to null
+// and only repopulate after a fresh GitHub fetch — during that gap,
+// PluginUpdateSection's install-progress listeners never attach (they bail
+// out while info is null), so an install started in that window finishes
+// without ever triggering the auto-reload.
+let lastInfo: PluginUpdateInfo | null = null;
+
 // Shared so the top-of-app banner and the Settings section (both consuming
 // components) always agree — a "check now" or install in one place is
 // reflected in the other without a full remount. Silent (no toast) —
@@ -24,8 +33,13 @@ const PluginUpdateContext = createContext<PluginUpdateContextValue | null>(
 export const PluginUpdateProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [info, setInfo] = useState<PluginUpdateInfo | null>(null);
+  const [info, setInfoState] = useState<PluginUpdateInfo | null>(lastInfo);
   const [checking, setChecking] = useState(false);
+
+  const setInfo = (value: PluginUpdateInfo | null) => {
+    lastInfo = value;
+    setInfoState(value);
+  };
 
   useEffect(() => {
     fetchLatestReleaseInfo().then(setInfo);

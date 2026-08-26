@@ -168,7 +168,12 @@
     "description": "Delete \"{{wrapper_name}}\"?"
   },
   "whats_new": {
-    "dismiss": "Got it",
+    "v0_13_1": {
+      "title": "What's new in 0.13.1",
+      "items": [
+        "Installing a version picked from the list in Settings now reliably reloads the plugin"
+      ]
+    },
     "v0_13_0": {
       "title": "What's new in 0.13.0",
       "items": [
@@ -214,6 +219,7 @@
         "The wrapper script no longer clutters your home folder"
       ]
     },
+    "dismiss": "Got it",
     "older": "Older",
     "newer": "Newer"
   },

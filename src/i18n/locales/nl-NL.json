@@ -168,7 +168,12 @@
     "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
-    "dismiss": "Begrepen",
+    "v0_13_1": {
+      "title": "Nieuw in versie 0.13.1",
+      "items": [
+        "Het installeren van een uit de lijst in Instellingen gekozen versie herlaadt de plugin nu betrouwbaar"
+      ]
+    },
     "v0_13_0": {
       "title": "Nieuw in versie 0.13.0",
       "items": [
@@ -214,6 +219,7 @@
         "Het wrapper-script neemt geen ruimte meer in je thuismap in"
       ]
     },
+    "dismiss": "Begrepen",
     "older": "Ouder",
     "newer": "Nieuwer"
   },

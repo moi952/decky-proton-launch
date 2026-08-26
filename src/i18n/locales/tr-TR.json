@@ -166,7 +166,12 @@
     "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
-    "dismiss": "Anladım",
+    "v0_13_1": {
+      "title": "0.13.1 sürümündeki yenilikler",
+      "items": [
+        "Ayarlar'daki listeden seçilen bir sürümü yüklemek artık eklentiyi güvenilir biçimde yeniden yüklüyor"
+      ]
+    },
     "v0_13_0": {
       "title": "0.13.0 sürümündeki yenilikler",
       "items": [
@@ -212,6 +217,7 @@
         "Sarmalayıcı betik artık ana dizininizde yer kaplamıyor"
       ]
     },
+    "dismiss": "Anladım",
     "older": "Daha eski",
     "newer": "Daha yeni"
   },

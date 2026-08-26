@@ -166,7 +166,12 @@
     "description": "Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
-    "dismiss": "Entendido",
+    "v0_13_1": {
+      "title": "Novidades da versão 0.13.1",
+      "items": [
+        "Instalar uma versão escolhida na lista nas Definições agora recarrega o plugin de forma fiável"
+      ]
+    },
     "v0_13_0": {
       "title": "Novidades da versão 0.13.0",
       "items": [
@@ -212,6 +217,7 @@
         "O script do wrapper deixou de ocupar espaço na tua pasta pessoal"
       ]
     },
+    "dismiss": "Entendido",
     "older": "Anterior",
     "newer": "Mais recente"
   },
