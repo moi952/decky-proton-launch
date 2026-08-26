@@ -1,6 +1,6 @@
 {
   "name": "decky-proton-launch",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "display_name": "Proton Launch",
   "description": "Manage Proton launch options easily on Steam",
   "type": "module",
