@@ -35,6 +35,9 @@ Thumbs.db
 # Ignore built ts files
 dist/
 
+# Release artifacts built by .github/workflows/release.yml
+artifact/
+
 __pycache__/
 
 /.yalc

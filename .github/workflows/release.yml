@@ -59,7 +59,7 @@ jobs:
       - name: Bump version and create git tag
         run: |
           set -e
-          pnpm version ${{ github.event.inputs.bump }} --message "chore(release): v%s"
+          pnpm version ${{ github.event.inputs.bump }} --message "chore(release): v%s" --no-git-checks
 
       - name: Sync What's New entry to the real version
         run: |
