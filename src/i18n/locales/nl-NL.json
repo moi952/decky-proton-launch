@@ -57,13 +57,15 @@
     "add_to_favori": "Favoriet",
     "remove_from_fav": "Verwijderen",
     "remove_from_custom": "Verwijderen",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Meer weergeven",
+    "show_less": "Minder weergeven"
   },
   "settings_view": {
     "settings": "Instellingen",
     "settings_categories": "Zichtbare categorieën",
     "default_home": "Standaard startpagina",
-    "default_home_game_manager": "Openen in spelbeheer",
+    "default_home_game_manager": "Spelbeheer",
     "default_home_vars": "Variabelenlijst",
     "default_home_global_commands": "Globale opdrachten",
     "force_refresh": "Vernieuwen afdwingen",
@@ -168,6 +170,16 @@
     "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Nieuw in 0.14.0",
+      "items": [
+        "Er verschijnt nu een waarschuwing wanneer twee actieve variabelen overbodig zijn of met elkaar conflicteren (bijvoorbeeld WineD3D met op DXVK gebaseerde opties, of DLSS4 Upgrade met de NGX Updater)",
+        "Variabelen met een lijst vooraf gedefinieerde waarden, en de versie-/startpaginaselectors in Instellingen, gebruiken nu een nieuwe aangepaste dropdown.",
+        "Het uitschakelen van alle waarden van een meerkeuzevariabele zet deze nu uit in plaats van actief te laten staan met een lege waarde",
+        "Variabelen kunnen nu worden gegroepeerd in subcategorieën, en een variabele kan een geneste subgroep met gerelateerde opties tonen zodra deze wordt ingeschakeld",
+        "Lange commando's of bestandspaden in de commandolijst worden nu over meerdere regels afgebroken in plaats van van het scherm af te lopen."
+      ]
+    },
     "v0_13_1": {
       "title": "Nieuw in versie 0.13.1",
       "items": [

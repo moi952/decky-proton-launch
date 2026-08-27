@@ -57,13 +57,15 @@
     "add_to_favori": "Favorito",
     "remove_from_fav": "Quitar",
     "remove_from_custom": "Eliminar",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Mostrar más",
+    "show_less": "Mostrar menos"
   },
   "settings_view": {
     "settings": "Ajustes",
     "settings_categories": "Categorías visibles",
     "default_home": "Inicio predeterminado",
-    "default_home_game_manager": "Abrir en el gestor de juegos",
+    "default_home_game_manager": "Gestor de juegos",
     "default_home_vars": "Lista de variables",
     "default_home_global_commands": "Comandos globales",
     "force_refresh": "Forzar actualización",
@@ -168,6 +170,16 @@
     "description": "¿Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Novedades de la versión 0.14.0",
+      "items": [
+        "Ahora aparece una advertencia cuando dos variables activas son redundantes o entran en conflicto entre sí (por ejemplo, WineD3D con opciones basadas en DXVK, o DLSS4 Upgrade con el NGX Updater)",
+        "Las variables con una lista de valores predefinidos, así como los selectores de versión y página de inicio en Ajustes, ahora usan un nuevo menú desplegable personalizado.",
+        "Deseleccionar todos los valores de una variable de selección múltiple ahora la desactiva, en lugar de dejarla activa con un valor vacío",
+        "Las variables ahora pueden agruparse en subcategorías, y una variable puede revelar un subgrupo anidado de opciones relacionadas al activarse",
+        "Los comandos o rutas de archivo largos en la lista de comandos ahora se ajustan en varias líneas en lugar de desbordarse fuera de la pantalla."
+      ]
+    },
     "v0_13_1": {
       "title": "Novedades de la versión 0.13.1",
       "items": [

@@ -16,7 +16,7 @@ import { BackHandler } from "./components/BackHandler";
 import { copy } from "./utils/functions";
 import { migrateLegacyWrapper } from "./utils/migrateLegacyWrapper";
 import { AppProvider } from "./context/AppProvider";
-import HomeView from "./views/HomeView";
+import ListCommandsView from "./views/ListCommandsView";
 import { SettingsView } from "./views/SettingsView";
 import { GamesPickerView } from "./views/GamesPickerView";
 import { GameDetailView } from "./views/GameDetailView";
@@ -190,7 +190,7 @@ const App: React.FC = () => {
         />
       )}
 
-      {view === "home" && <HomeView />}
+      {view === "home" && <ListCommandsView />}
 
       {view === "games-picker" && (
         <GamesPickerView

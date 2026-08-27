@@ -57,13 +57,15 @@
     "add_to_favori": "Favorite",
     "remove_from_fav": "Unfav",
     "remove_from_custom": "Remove",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Show more",
+    "show_less": "Show less"
   },
   "settings_view": {
     "settings": "Settings",
     "settings_categories": "Visible categories",
     "default_home": "Default home",
-    "default_home_game_manager": "Open on game manager",
+    "default_home_game_manager": "Game manager",
     "default_home_vars": "Variable list",
     "default_home_global_commands": "Global commands",
     "force_refresh": "Force refresh",
@@ -168,6 +170,16 @@
     "description": "Delete \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "What's new in 0.14.0",
+      "items": [
+        "A warning now appears when two active variables are redundant or conflict with each other (for example WineD3D with DXVK-based options, or DLSS4 Upgrade with the NGX Updater)",
+        "Variables with a list of predefined values, and the version/home-page pickers in Settings, now use a new custom dropdown.",
+        "Deselecting every value of a multi-choice variable now turns it off instead of leaving it active with an empty value",
+        "Variables can now be organized into sub-categories, and a variable can reveal a nested sub-group of related options once it's turned on",
+        "Long commands or file paths in the command list now wrap onto multiple lines instead of running off the screen."
+      ]
+    },
     "v0_13_1": {
       "title": "What's new in 0.13.1",
       "items": [

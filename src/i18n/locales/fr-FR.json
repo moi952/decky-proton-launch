@@ -57,13 +57,15 @@
     "add_to_favori": "Favori",
     "remove_from_fav": "Retirer",
     "remove_from_custom": "Supprimer",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Afficher plus",
+    "show_less": "Réduire"
   },
   "settings_view": {
     "settings": "Paramètres",
     "settings_categories": "Catégories visibles",
     "default_home": "Accueil par défaut",
-    "default_home_game_manager": "Ouvrir sur le gestionnaire de jeux",
+    "default_home_game_manager": "Gestionnaire de jeux",
     "default_home_vars": "Liste des variables",
     "default_home_global_commands": "Commandes globales",
     "force_refresh": "Forcer l'actualisation",
@@ -168,6 +170,16 @@
     "description": "Supprimer « {{wrapper_name}} » ?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Nouveautés de la version 0.14.0",
+      "items": [
+        "Un avertissement s'affiche désormais lorsque deux variables actives sont redondantes ou entrent en conflit (par exemple WineD3D avec les options basées sur DXVK, ou Mise à jour DLSS4 avec Mise à jour du NGX)",
+        "Les variables à liste de valeurs prédéfinies, ainsi que les sélecteurs de version et de page d'accueil dans les Réglages, utilisent désormais un nouveau dropdown personnalisé.",
+        "Désélectionner toutes les valeurs d'une variable à choix multiple la désactive désormais, au lieu de la laisser active avec une valeur vide",
+        "Les variables peuvent désormais être organisées en sous-catégories, et une variable peut révéler un sous-groupe d'options liées une fois activée",
+        "Les commandes ou chemins de fichiers longs dans la liste des commandes passent désormais à la ligne au lieu de déborder de l'écran."
+      ]
+    },
     "v0_13_1": {
       "title": "Nouveautés de la version 0.13.1",
       "items": [

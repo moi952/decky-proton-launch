@@ -57,13 +57,15 @@
     "add_to_favori": "Favorit",
     "remove_from_fav": "Entfernen",
     "remove_from_custom": "Löschen",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Mehr anzeigen",
+    "show_less": "Weniger anzeigen"
   },
   "settings_view": {
     "settings": "Einstellungen",
     "settings_categories": "Sichtbare Kategorien",
     "default_home": "Standard-Startseite",
-    "default_home_game_manager": "Im Spiele-Manager öffnen",
+    "default_home_game_manager": "Spiele-Manager",
     "default_home_vars": "Variablenliste",
     "default_home_global_commands": "Globale Befehle",
     "force_refresh": "Aktualisierung erzwingen",
@@ -168,6 +170,16 @@
     "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Neuerungen in 0.14.0",
+      "items": [
+        "Es erscheint jetzt eine Warnung, wenn zwei aktive Variablen redundant sind oder in Konflikt stehen (zum Beispiel WineD3D mit DXVK-basierten Optionen oder DLSS4 Upgrade mit dem NGX Updater)",
+        "Variablen mit einer Liste vordefinierter Werte sowie die Versions- und Startseiten-Auswahl in den Einstellungen verwenden jetzt ein neues, individuelles Dropdown-Menü.",
+        "Werden bei einer Mehrfachauswahl-Variable alle Werte abgewählt, wird sie jetzt automatisch deaktiviert, anstatt mit einem leeren Wert aktiv zu bleiben",
+        "Variablen können jetzt in Unterkategorien gruppiert werden, und eine Variable kann beim Aktivieren eine verschachtelte Untergruppe verwandter Optionen anzeigen",
+        "Lange Befehle oder Dateipfade in der Befehlsliste werden jetzt über mehrere Zeilen umgebrochen, anstatt über den Bildschirmrand hinauszulaufen."
+      ]
+    },
     "v0_13_1": {
       "title": "Neuigkeiten in Version 0.13.1",
       "items": [

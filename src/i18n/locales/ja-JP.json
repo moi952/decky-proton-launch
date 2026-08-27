@@ -57,13 +57,15 @@
     "add_to_favori": "お気に入り",
     "remove_from_fav": "削除",
     "remove_from_custom": "削除",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "もっと見る",
+    "show_less": "閉じる"
   },
   "settings_view": {
     "settings": "設定",
     "settings_categories": "表示するカテゴリー",
     "default_home": "デフォルトホーム",
-    "default_home_game_manager": "ゲームマネージャーを開く",
+    "default_home_game_manager": "ゲームマネージャー",
     "default_home_vars": "変数リスト",
     "default_home_global_commands": "グローバルコマンド",
     "force_refresh": "強制的に更新",
@@ -168,6 +170,16 @@
     "description": "「{{wrapper_name}}」を削除しますか？"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "0.14.0の新機能",
+      "items": [
+        "アクティブな2つの変数が重複または競合している場合に警告が表示されるようになりました(例:WineD3DとDXVKベースのオプション、またはDLSS4 UpgradeとNGX Updater)",
+        "定義済みの値のリストを持つ変数や、設定内のバージョン/ホームページ選択は、新しいカスタムドロップダウンを使用するようになりました。",
+        "複数選択の変数ですべての値の選択を解除すると、空の値のまま有効になる代わりに、自動的に無効になるようになりました",
+        "変数をサブカテゴリーに分類できるようになり、変数を有効にすると関連するオプションのサブグループが表示されるようになりました",
+        "コマンド一覧内の長いコマンドやファイルパスは、画面からはみ出す代わりに複数行に折り返されるようになりました。"
+      ]
+    },
     "v0_13_1": {
       "title": "バージョン0.13.1の新機能",
       "items": [

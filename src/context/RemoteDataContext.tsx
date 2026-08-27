@@ -12,27 +12,57 @@ type Variable = {
   value?: string;
   simple?: boolean;
   defaultValue?: string;
-  values?: { title: string; value: string }[];
+  multiSelect?: boolean;
+  values?: { title: string; value: string; titleParams?: Record<string, string | number> }[];
+  subGroup?: Variable[];
+};
+
+export type SubCategory = {
+  title: string;
+  description?: string;
+  variables: Variable[];
 };
 
 export type VariableCategory = {
   category: string;
   variables: Variable[];
+  subCategory?: SubCategory;
+};
+
+// "trigger" conflicts with each env in "conflicts" individually (a star,
+// not a clique) — the envs inside "conflicts" are not in conflict with
+// each other, only each one with "trigger".
+export type ConflictRule = {
+  trigger: string;
+  conflicts: string[];
 };
 
 type RemoteData = {
   variables: VariableCategory[];
-  locales: Record<string, { variables: Record<string, string>; categories: Record<string, string> }>;
+  // Each entry is a star, not a clique: "trigger" conflicts with each env
+  // in "conflicts" individually — the envs inside "conflicts" are not
+  // considered in conflict with each other.
+  conflictGroups?: ConflictRule[];
+  locales: Record<
+    string,
+    {
+      variables: Record<string, string>;
+      categories: Record<string, string>;
+      descriptions?: Record<string, string>;
+    }
+  >;
 };
 
 interface RemoteDataContextValue {
   variables: VariableCategory[];
+  conflictGroups: ConflictRule[];
   noData: boolean; // true when cache empty AND fetch failed/empty
   refresh: () => void;
 }
 
 const RemoteDataContext = createContext<RemoteDataContextValue>({
   variables: [],
+  conflictGroups: [],
   noData: false,
   refresh: () => {},
 });
@@ -54,6 +84,9 @@ const getLangCode = (): string => {
 const injectTranslations = (lang: string, localeData: RemoteData["locales"][string]) => {
   i18n.addResourceBundle(lang, "categories", localeData.categories, true, false);
   i18n.addResourceBundle(lang, "variables", localeData.variables, true, true);
+  if (localeData.descriptions) {
+    i18n.addResourceBundle(lang, "descriptions", localeData.descriptions, true, true);
+  }
 };
 
 // "wrappers" is legacy — kept in the data for old plugin versions, replaced
@@ -63,15 +96,18 @@ const HIDDEN_CATEGORIES = new Set(["wrappers"]);
 const applyData = (
   data: RemoteData,
   setVariables: (v: VariableCategory[]) => void,
+  setConflictGroups: (v: ConflictRule[]) => void,
 ) => {
   const lang = getLangCode();
   setVariables((data.variables ?? []).filter((c) => !HIDDEN_CATEGORIES.has(c.category)));
+  setConflictGroups(data.conflictGroups ?? []);
   const localeData = data.locales?.[lang];
   if (localeData) injectTranslations(lang, localeData);
 };
 
 const loadData = (
   setVariables: (v: VariableCategory[]) => void,
+  setConflictGroups: (v: ConflictRule[]) => void,
   setNoData: (v: boolean) => void,
 ) => {
   let hasData = false;
@@ -79,7 +115,7 @@ const loadData = (
   const cachePromise = call<[], Record<string, any>>("get_variables_cache").then((cached) => {
     if (cached && (cached as RemoteData).variables?.length) {
       hasData = true;
-      applyData(cached as RemoteData, setVariables);
+      applyData(cached as RemoteData, setVariables, setConflictGroups);
     }
   });
 
@@ -93,7 +129,7 @@ const loadData = (
         }
         hasData = true;
         setNoData(false);
-        applyData(data, setVariables);
+        applyData(data, setVariables, setConflictGroups);
         call<[Record<string, any>], boolean>("set_variables_cache", data);
       })
       .catch(() => {
@@ -106,21 +142,24 @@ export const RemoteDataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [variables, setVariables] = useState<VariableCategory[]>([]);
+  const [conflictGroups, setConflictGroups] = useState<ConflictRule[]>([]);
   const [noData, setNoData] = useState(false);
 
   useEffect(() => {
-    loadData(setVariables, setNoData);
+    loadData(setVariables, setConflictGroups, setNoData);
   }, []);
 
   const refresh = () => {
     call<[], boolean>("clear_variables_cache").catch(() => {});
     setVariables([]);
     setNoData(false);
-    loadData(setVariables, setNoData);
+    loadData(setVariables, setConflictGroups, setNoData);
   };
 
   return (
-    <RemoteDataContext.Provider value={{ variables, noData, refresh }}>
+    <RemoteDataContext.Provider
+      value={{ variables, conflictGroups, noData, refresh }}
+    >
       {children}
     </RemoteDataContext.Provider>
   );

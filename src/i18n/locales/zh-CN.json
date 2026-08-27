@@ -57,13 +57,15 @@
     "add_to_favori": "收藏",
     "remove_from_fav": "移除",
     "remove_from_custom": "删除",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "显示更多",
+    "show_less": "收起"
   },
   "settings_view": {
     "settings": "设置",
     "settings_categories": "显示的分类",
     "default_home": "默认主页",
-    "default_home_game_manager": "在游戏管理器中打开",
+    "default_home_game_manager": "游戏管理器",
     "default_home_vars": "变量列表",
     "default_home_global_commands": "全局命令",
     "force_refresh": "强制刷新",
@@ -168,11 +170,19 @@
     "description": "删除“{{wrapper_name}}”？"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "0.14.0 更新内容",
+      "items": [
+        "当两个已启用的变量存在冗余或冲突时,现在会显示警告(例如 WineD3D 与基于 DXVK 的选项,或 DLSS4 Upgrade 与 NGX Updater)",
+        "带有预定义值列表的变量，以及设置中的版本/主页选择器，现在使用全新的自定义下拉菜单。",
+        "取消选择多选变量的所有值时,现在会自动关闭该变量,而不是让它以空值保持启用状态",
+        "变量现在可以按子类别分组,启用某个变量后还可以展开一组相关选项的嵌套子组",
+        "命令列表中过长的命令或文件路径现在会自动换行显示，而不会超出屏幕。"
+      ]
+    },
     "v0_13_1": {
       "title": "0.13.1 版本更新内容",
-      "items": [
-        "从设置列表中选择安装的版本现在能可靠地重新加载插件"
-      ]
+      "items": ["从设置列表中选择安装的版本现在能可靠地重新加载插件"]
     },
     "v0_13_0": {
       "title": "0.13.0 版本更新内容",

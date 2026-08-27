@@ -57,13 +57,15 @@
     "add_to_favori": "즐겨찾기",
     "remove_from_fav": "제거",
     "remove_from_custom": "삭제",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "더 보기",
+    "show_less": "간략히"
   },
   "settings_view": {
     "settings": "설정",
     "settings_categories": "표시할 카테고리",
     "default_home": "기본 홈",
-    "default_home_game_manager": "게임 관리자 열기",
+    "default_home_game_manager": "게임 관리자",
     "default_home_vars": "변수 목록",
     "default_home_global_commands": "전역 명령",
     "force_refresh": "강제 새로고침",
@@ -168,6 +170,16 @@
     "description": "\"{{wrapper_name}}\"을(를) 삭제할까요?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "0.14.0 새로운 기능",
+      "items": [
+        "두 개의 활성 변수가 중복되거나 서로 충돌할 경우 이제 경고가 표시됩니다(예: WineD3D와 DXVK 기반 옵션, 또는 DLSS4 Upgrade와 NGX Updater)",
+        "미리 정의된 값 목록이 있는 변수와 설정의 버전/홈 페이지 선택기가 이제 새로운 커스텀 드롭다운을 사용합니다.",
+        "다중 선택 변수의 모든 값을 선택 해제하면 이제 빈 값으로 활성 상태를 유지하는 대신 자동으로 꺼집니다",
+        "이제 변수를 하위 카테고리로 구성할 수 있으며, 변수를 활성화하면 관련 옵션의 중첩된 하위 그룹이 표시될 수 있습니다",
+        "명령어 목록의 긴 명령어나 파일 경로가 화면 밖으로 넘치는 대신 이제 여러 줄로 줄바꿈됩니다."
+      ]
+    },
     "v0_13_1": {
       "title": "0.13.1 버전의 새로운 기능",
       "items": [

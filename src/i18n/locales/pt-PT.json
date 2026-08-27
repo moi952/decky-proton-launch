@@ -57,13 +57,15 @@
     "add_to_favori": "Favorito",
     "remove_from_fav": "Remover",
     "remove_from_custom": "Eliminar",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Mostrar mais",
+    "show_less": "Mostrar menos"
   },
   "settings_view": {
     "settings": "Definições",
     "settings_categories": "Categorias visíveis",
     "default_home": "Início padrão",
-    "default_home_game_manager": "Abrir no gestor de jogos",
+    "default_home_game_manager": "Gestor de jogos",
     "default_home_vars": "Lista de variáveis",
     "default_home_global_commands": "Comandos globais",
     "force_refresh": "Forçar atualização",
@@ -166,6 +168,16 @@
     "description": "Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Novidades da versão 0.14.0",
+      "items": [
+        "Agora aparece um aviso quando duas variáveis ativas são redundantes ou entram em conflito entre si (por exemplo, WineD3D com opções baseadas em DXVK, ou DLSS4 Upgrade com o NGX Updater)",
+        "Variáveis com uma lista de valores predefinidos, assim como os seletores de versão e página inicial nas Definições, usam agora um novo menu suspenso personalizado.",
+        "Desselecionar todos os valores de uma variável de escolha múltipla desativa-a agora automaticamente, em vez de a deixar ativa com um valor vazio",
+        "As variáveis podem agora ser organizadas em subcategorias, e uma variável pode revelar um subgrupo de opções relacionadas assim que é ativada",
+        "Comandos ou caminhos de ficheiro longos na lista de comandos agora quebram em várias linhas em vez de ultrapassarem o ecrã."
+      ]
+    },
     "v0_13_1": {
       "title": "Novidades da versão 0.13.1",
       "items": [

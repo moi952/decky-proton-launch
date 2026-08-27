@@ -57,13 +57,15 @@
     "add_to_favori": "Favori",
     "remove_from_fav": "Kaldır",
     "remove_from_custom": "Sil",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Daha fazla göster",
+    "show_less": "Daha az göster"
   },
   "settings_view": {
     "settings": "Ayarlar",
     "settings_categories": "Görünür kategoriler",
     "default_home": "Varsayılan ana sayfa",
-    "default_home_game_manager": "Oyun yöneticisinde aç",
+    "default_home_game_manager": "Oyun yöneticisi",
     "default_home_vars": "Değişken listesi",
     "default_home_global_commands": "Genel komutlar",
     "force_refresh": "Yenilemeyi zorla",
@@ -166,6 +168,16 @@
     "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "0.14.0 sürümündeki yenilikler",
+      "items": [
+        "İki etkin değişken birbiriyle gereksiz veya çakışıyorsa artık bir uyarı gösteriliyor (örneğin DXVK tabanlı seçeneklerle WineD3D, ya da NGX Updater ile DLSS4 Upgrade)",
+        "Önceden tanımlanmış değer listesine sahip değişkenler ile Ayarlar'daki sürüm/ana sayfa seçiciler artık yeni, özel bir açılır menü kullanıyor.",
+        "Çoklu seçim değişkeninde tüm değerlerin seçimini kaldırmak, artık boş bir değerle etkin bırakmak yerine değişkeni otomatik olarak kapatıyor",
+        "Değişkenler artık alt kategorilere ayrılabiliyor ve bir değişken etkinleştirildiğinde ilişkili seçeneklerden oluşan iç içe bir alt grubu ortaya çıkarabiliyor",
+        "Komut listesindeki uzun komutlar veya dosya yolları artık ekranın dışına taşmak yerine birden çok satıra bölünüyor."
+      ]
+    },
     "v0_13_1": {
       "title": "0.13.1 sürümündeki yenilikler",
       "items": [

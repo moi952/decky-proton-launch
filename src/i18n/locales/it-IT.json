@@ -57,13 +57,15 @@
     "add_to_favori": "Preferito",
     "remove_from_fav": "Rimuovi",
     "remove_from_custom": "Elimina",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Mostra altro",
+    "show_less": "Mostra meno"
   },
   "settings_view": {
     "settings": "Impostazioni",
     "settings_categories": "Categorie visibili",
     "default_home": "Home predefinita",
-    "default_home_game_manager": "Apri nel gestore giochi",
+    "default_home_game_manager": "Gestore giochi",
     "default_home_vars": "Lista variabili",
     "default_home_global_commands": "Comandi globali",
     "force_refresh": "Forza aggiornamento",
@@ -168,6 +170,16 @@
     "description": "Eliminare \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Novità della versione 0.14.0",
+      "items": [
+        "Ora viene mostrato un avviso quando due variabili attive sono ridondanti o in conflitto tra loro (ad esempio WineD3D con le opzioni basate su DXVK, oppure DLSS4 Upgrade con l'NGX Updater)",
+        "Le variabili con un elenco di valori predefiniti, così come i selettori di versione e pagina iniziale nelle Impostazioni, ora utilizzano un nuovo menu a tendina personalizzato.",
+        "Deselezionare tutti i valori di una variabile a scelta multipla ora la disattiva, invece di lasciarla attiva con un valore vuoto",
+        "Le variabili possono ora essere organizzate in sottocategorie, e una variabile può rivelare un sottogruppo annidato di opzioni correlate una volta attivata",
+        "I comandi o i percorsi di file lunghi nell'elenco dei comandi ora vanno a capo su più righe invece di uscire dallo schermo."
+      ]
+    },
     "v0_13_1": {
       "title": "Novità della versione 0.13.1",
       "items": [

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PanelSectionRow, DialogButton, Focusable } from "@decky/ui";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
 import { ActionButton } from "./ActionButton";
+import { ThemedDropdown } from "./ThemedDropdown";
 import { InlineConfirm } from "./InlineConfirm";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
 import { ButtonDeleteCustomVariableModal } from "./ButtonDeleteCustomVariableModal";
@@ -115,18 +116,18 @@ export const VariableItem: React.FC<VariableItemProps> = ({
 
     if (variable.type === "enum") {
       return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          {variable.values.map((opt) => (
-            <ActionButton
-              key={opt.value}
-              size="small"
-              width="100%"
-              onClick={() => setSelectedValue(opt.value)}
-            >
-              {tVariables(opt.title)}
-            </ActionButton>
-          ))}
-        </div>
+        <ThemedDropdown
+          variant="boxed"
+          size="small"
+          multiple={variable.multiSelect !== false}
+          maxDisplayLines={variable.multiSelect !== false ? 2 : 1}
+          options={variable.values.map((opt) => ({
+            value: opt.value,
+            label: tVariables(opt.title, opt.titleParams),
+          }))}
+          selectedValue={selectedValue}
+          onChange={setSelectedValue}
+        />
       );
     }
 
@@ -157,7 +158,7 @@ export const VariableItem: React.FC<VariableItemProps> = ({
       <DialogButton
         onClick={() => setExpanded(!expanded)}
         style={{
-          display: "inline-flex",
+          display: "flex",
           width: "100%",
           justifyContent: "space-between",
           alignItems: "center",
@@ -174,11 +175,13 @@ export const VariableItem: React.FC<VariableItemProps> = ({
         onMenuActionDescription={tButtons("add_to_stack")}
         onMenuButton={addToStack}
       >
-        {title}{" "}
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: "normal", wordBreak: "break-word" }}>
+          {title}
+        </span>
         {expanded ? (
-          <RiArrowUpSFill size={16} />
+          <RiArrowUpSFill size={16} style={{ flexShrink: 0 }} />
         ) : (
-          <RiArrowDownSFill size={16} />
+          <RiArrowDownSFill size={16} style={{ flexShrink: 0 }} />
         )}
       </DialogButton>
 
@@ -211,7 +214,13 @@ export const VariableItem: React.FC<VariableItemProps> = ({
           >
             {renderValueChips()}
             <div
-              style={{ fontFamily: "monospace", color: "#aaa", fontSize: 11 }}
+              style={{
+                fontFamily: "monospace",
+                color: "#aaa",
+                fontSize: 11,
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
             >
               {line}
             </div>

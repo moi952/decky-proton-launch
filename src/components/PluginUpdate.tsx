@@ -2,14 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import {
   ButtonItem,
   DialogButton,
-  DropdownItem,
   Navigation,
   PanelSectionRow,
   ProgressBarWithInfo,
 } from "@decky/ui";
 import { toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
-import { CollapsibleSection } from "./CollapsibleSection";
+import { AnchoredDropdown, CollapsibleSection } from "@moi952/decky-ui-kit";
 import {
   compareVersions,
   fetchPluginReleases,
@@ -340,14 +339,13 @@ export function PluginUpdateSection({
       </PanelSectionRow>
       {releases && releases.length > 0 && (
         <PanelSectionRow>
-          <DropdownItem
-            rgOptions={releases.map((r) => ({
-              data: r.tag,
+          <AnchoredDropdown
+            options={releases.map((r) => ({
+              value: r.tag,
               label: r.prerelease ? `${r.version} (pre-release)` : r.version,
             }))}
-            selectedOption={selectedTag}
-            layout="below"
-            onChange={(opt) => setSelectedTag(opt.data)}
+            selectedValue={selectedTag ?? ""}
+            onChange={setSelectedTag}
           />
         </PanelSectionRow>
       )}

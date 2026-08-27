@@ -4,10 +4,10 @@ import {
   PanelSection,
   PanelSectionRow,
   ToggleField,
-  DropdownItem,
 } from "@decky/ui";
 import { call } from "@decky/api";
-import { useSettings } from "../context/SettingsContext";
+import { useSettings, DefaultHome } from "../context/SettingsContext";
+import { AnchoredDropdown, CollapsibleSection } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
 import { FiArrowLeft, FiRefreshCw } from "react-icons/fi";
 import { ActionButton } from "../components/ActionButton";
@@ -15,7 +15,6 @@ import { useRemoteData } from "../context/RemoteDataContext";
 import { openGenericDeleteModal } from "../utils/modals";
 import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
-import { CollapsibleSection } from "../components/CollapsibleSection";
 import { WhatsNewCard } from "../components/WhatsNewCard";
 import { PluginUpdateSection } from "../components/PluginUpdate";
 import { usePluginUpdate } from "../context/PluginUpdateContext";
@@ -139,36 +138,22 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
           />
         </PanelSectionRow>
         <PanelSectionRow>
-          <DropdownItem
-            rgOptions={[
+          <AnchoredDropdown
+            options={[
               ...(hideVariablesPage
                 ? []
-                : [{ data: "home", label: tSettings("default_home_vars") }]),
+                : [{ value: "home", label: tSettings("default_home_vars") }]),
               {
-                data: "game-manager",
+                value: "game-manager",
                 label: tSettings("default_home_game_manager"),
               },
               {
-                data: "global-commands",
+                value: "global-commands",
                 label: tSettings("default_home_global_commands"),
               },
             ]}
-            selectedOption={defaultHome}
-            layout="below"
-            renderButtonValue={(value) => (
-              <span
-                style={{
-                  display: "block",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {value}
-              </span>
-            )}
-            {...({ childrenContainerWidth: "max" } as any)}
-            onChange={(opt) => setDefaultHome(opt.data)}
+            selectedValue={defaultHome}
+            onChange={(value) => setDefaultHome(value as DefaultHome)}
           />
         </PanelSectionRow>
       </PanelSection>
@@ -182,13 +167,26 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
           />
         </PanelSectionRow>
         {variablesData.map((cat) => (
-          <PanelSectionRow key={cat.category}>
-            <ToggleField
-              label={t(cat.category)}
-              checked={isCategoryVisible(cat.category)}
-              onChange={() => toggleCategory(cat.category)}
-            />
-          </PanelSectionRow>
+          <React.Fragment key={cat.category}>
+            <PanelSectionRow>
+              <ToggleField
+                label={t(cat.category)}
+                checked={isCategoryVisible(cat.category)}
+                onChange={() => toggleCategory(cat.category)}
+              />
+            </PanelSectionRow>
+            {cat.subCategory && (
+              <PanelSectionRow>
+                <div style={{ marginLeft: 16 }}>
+                  <ToggleField
+                    label={t(cat.subCategory.title)}
+                    checked={isCategoryVisible(cat.subCategory.title)}
+                    onChange={() => toggleCategory(cat.subCategory!.title)}
+                  />
+                </div>
+              </PanelSectionRow>
+            )}
+          </React.Fragment>
         ))}
       </PanelSection>
 

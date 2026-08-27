@@ -57,13 +57,15 @@
     "add_to_favori": "Ulubione",
     "remove_from_fav": "Usuń",
     "remove_from_custom": "Usuń",
-    "add_to_stack": "+ Stack"
+    "add_to_stack": "+ Stack",
+    "show_more": "Pokaż więcej",
+    "show_less": "Pokaż mniej"
   },
   "settings_view": {
     "settings": "Ustawienia",
     "settings_categories": "Widoczne kategorie",
     "default_home": "Domyślna strona główna",
-    "default_home_game_manager": "Otwórz w menedżerze gier",
+    "default_home_game_manager": "Menedżer gier",
     "default_home_vars": "Lista zmiennych",
     "default_home_global_commands": "Globalne polecenia",
     "force_refresh": "Wymuś odświeżenie",
@@ -168,6 +170,16 @@
     "description": "Usunąć „{{wrapper_name}}”?"
   },
   "whats_new": {
+    "v0_14_0": {
+      "title": "Nowości w wersji 0.14.0",
+      "items": [
+        "Pojawia się teraz ostrzeżenie, gdy dwie aktywne zmienne są zbędne lub wzajemnie się wykluczają (na przykład WineD3D z opcjami opartymi na DXVK albo DLSS4 Upgrade z NGX Updater)",
+        "Zmienne z listą predefiniowanych wartości oraz selektory wersji i strony domowej w Ustawieniach korzystają teraz z nowej, niestandardowej listy rozwijanej.",
+        "Odznaczenie wszystkich wartości zmiennej wielokrotnego wyboru wyłącza ją teraz automatycznie, zamiast pozostawiać aktywną z pustą wartością",
+        "Zmienne można teraz grupować w podkategorie, a dana zmienna może odsłonić zagnieżdżoną podgrupę powiązanych opcji po jej włączeniu",
+        "Długie polecenia lub ścieżki plików na liście poleceń zawijają się teraz na wiele linii zamiast wychodzić poza ekran."
+      ]
+    },
     "v0_13_1": {
       "title": "Nowości w wersji 0.13.1",
       "items": [

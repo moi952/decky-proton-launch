@@ -8,7 +8,7 @@ import { SearchField } from "../components/SearchField";
 import { useSettings } from "../context/SettingsContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 
-const HomeView: React.FC = () => {
+const ListCommandsView: React.FC = () => {
   const [search, setSearch] = useState("");
   const { isCategoryVisible } = useSettings();
   const { variables: variablesData } = useRemoteData();
@@ -29,6 +29,16 @@ const HomeView: React.FC = () => {
               variables={(cat.variables as Variable[]).filter((v) =>
                 v.title.toLowerCase().includes(search.toLowerCase()),
               )}
+              subCategory={
+                cat.subCategory && isCategoryVisible(cat.subCategory.title)
+                  ? {
+                      ...cat.subCategory,
+                      variables: (cat.subCategory.variables as Variable[]).filter(
+                        (v) => v.title.toLowerCase().includes(search.toLowerCase()),
+                      ),
+                    }
+                  : undefined
+              }
             />
           ))}
       </div>
@@ -48,4 +58,4 @@ const HomeView: React.FC = () => {
   );
 };
 
-export default HomeView;
+export default ListCommandsView;
