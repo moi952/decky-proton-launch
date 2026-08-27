@@ -1,0 +1,6 @@
+packages:
+  - "."
+
+# Our own package — exempt from pnpm's 24h minimum-release-age check.
+minimumReleaseAgeExclude:
+  - "@moi952/decky-ui-kit"
