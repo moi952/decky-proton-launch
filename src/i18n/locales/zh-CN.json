@@ -44,7 +44,8 @@
     "fields_required": "所有字段为必填项",
     "already_exists": "该名称的变量已存在",
     "edit_title": "编辑自定义变量",
-    "env_already_used": "该环境变量已在别处使用"
+    "env_already_used": "该环境变量已在别处使用",
+    "shadows_catalog_hint": "Custom values will apply — the built-in toggle for this variable becomes read-only."
   },
   "delete_custom_variable_modal": {
     "title": "删除自定义变量",
@@ -170,6 +171,18 @@
     "description": "删除“{{wrapper_name}}”？"
   },
   "whats_new": {
+    "v0_15_0": {
+      "title": "What's new in 0.15.0",
+      "items": [
+        "VKD3D_CONFIG is now sorted alphabetically, with an \"X enabled\" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names",
+        "Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated",
+        "VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own \"DXVK\" sub-category",
+        "New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "A custom variable can now reuse a catalog entry's environment variable instead of being blocked",
+        "The game list no longer shows Proton or the Steam Linux Runtime",
+        "Fixed a bug that could keep stale variable data cached after an update"
+      ]
+    },
     "v0_14_0": {
       "title": "0.14.0 更新内容",
       "items": [
@@ -182,7 +195,9 @@
     },
     "v0_13_1": {
       "title": "0.13.1 版本更新内容",
-      "items": ["从设置列表中选择安装的版本现在能可靠地重新加载插件"]
+      "items": [
+        "从设置列表中选择安装的版本现在能可靠地重新加载插件"
+      ]
     },
     "v0_13_0": {
       "title": "0.13.0 版本更新内容",

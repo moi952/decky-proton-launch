@@ -12,9 +12,7 @@ export interface BoolVariable {
   type: "bool";
   value: "0" | "1";
   simple?: boolean;
-  // Nested variables shown (and independently toggleable) only while this
-  // one is active — e.g. a "use latest DLL" toggle revealing sub-options
-  // that only make sense once it's on.
+  // Nested variables shown only while this one is active.
   subGroup?: Variable[];
 }
 
@@ -23,14 +21,16 @@ export interface EnumVariable {
   env: string;
   type: "enum";
   defaultValue: string;
-  // Whether multiple values can be picked at once, comma-joined into the
-  // final env value (e.g. RADV_PERFTEST=aco,gpl). Defaults to true when
-  // absent — most of these flags are combinable lists, not exclusive picks.
+  // Comma-joined multi-pick; defaults to true.
   multiSelect?: boolean;
-  // titleParams is interpolated into the i18n string for that option's
-  // title (e.g. "preset_cnn" + {letter: "A"} -> "Preset A (CNN)") — lets
-  // one i18n key cover a whole family of near-identical option labels.
+  // titleParams interpolates into the option's i18n title.
   values: { title: string; value: string; titleParams?: Record<string, string | number> }[];
+  // Caps visible option rows before the list scrolls.
+  maxVisibleOptions?: number;
+  // Shows the full selected-values summary, unclamped.
+  showAllSelected?: boolean;
+  // One selected value per line instead of comma-joined.
+  selectedValuesLayout?: "inline" | "stacked";
   subGroup?: Variable[];
 }
 
@@ -42,10 +42,7 @@ export interface SimpleVariable {
   subGroup?: Variable[];
 }
 
-// A wrapper chain target (e.g. lsfg, fgmod) — data-driven, see
-// wrappers_exec in decky-proton-launch-data. Renders as a plain toggle,
-// same as a "simple" bool; `exec` is only read by the backend to generate
-// install_script()'s chaining logic.
+// A wrapper chain target, data-driven via wrappers_exec.
 export interface ExecVariable {
   title: string;
   env: string;
@@ -54,11 +51,45 @@ export interface ExecVariable {
   subGroup?: Variable[];
 }
 
-export type Variable = BoolVariable | EnumVariable | SimpleVariable | ExecVariable;
+// A single flag in a compound variable's composed value; value is the raw token.
+export interface CompoundFlag {
+  title: string;
+  value: string;
+  // Present: written as "value=<companion>". Omitted: written bare.
+  companion?:
+    | { kind: "text" | "number"; defaultValue?: string }
+    | { kind: "enum"; options: { title: string; value: string }[]; defaultValue?: string };
+}
 
-// A category can nest one secondary group of variables under its own
-// title/description — rendered as its own section right after the
-// category's main list (e.g. "NVIDIA" -> "NVIDIA (Driver)").
+// Active flags joined into one composed env value (e.g. DXVK_CONFIG).
+export interface CompoundVariable {
+  title: string;
+  env: string;
+  type: "compound";
+  separator: string;
+  flags: CompoundFlag[];
+  subGroup?: Variable[];
+}
+
+// Free-typed value, not picked from a fixed list.
+export interface FreeValueVariable {
+  title: string;
+  env: string;
+  type: "value";
+  valueKind?: "text" | "number";
+  defaultValue: string;
+  subGroup?: Variable[];
+}
+
+export type Variable =
+  | BoolVariable
+  | EnumVariable
+  | SimpleVariable
+  | ExecVariable
+  | CompoundVariable
+  | FreeValueVariable;
+
+// A category's own secondary group, rendered as its own section after the main list.
 export interface SubCategory {
   title: string;
   description?: string;

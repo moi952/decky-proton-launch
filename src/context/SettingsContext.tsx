@@ -9,6 +9,7 @@ interface UiSettings {
   defaultHome?: DefaultHome;
   hideVariablesPage?: boolean;
   showActiveSection?: boolean;
+  showRawTechnicalValues?: boolean;
 }
 
 // Pre-0.10 localStorage keys, migrated below.
@@ -25,6 +26,8 @@ interface SettingsContextValue {
   setHideVariablesPage: (v: boolean) => void;
   showActiveSection: boolean;
   setShowActiveSection: (v: boolean) => void;
+  showRawTechnicalValues: boolean;
+  setShowRawTechnicalValues: (v: boolean) => void;
   settingsLoaded: boolean;
 }
 
@@ -40,6 +43,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     useState<DefaultHome>("game-manager");
   const [hideVariablesPage, setHideVariablesPageState] = useState(false);
   const [showActiveSection, setShowActiveSectionState] = useState(true);
+  const [showRawTechnicalValues, setShowRawTechnicalValuesState] = useState(true);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -68,12 +72,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       if (home) setDefaultHomeState(home);
       setHideVariablesPageState(data.hideVariablesPage ?? false);
       setShowActiveSectionState(data.showActiveSection ?? true);
+      setShowRawTechnicalValuesState(data.showRawTechnicalValues ?? true);
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
           defaultHome: home,
           hideVariablesPage: data.hideVariablesPage ?? false,
           showActiveSection: data.showActiveSection ?? true,
+          showRawTechnicalValues: data.showRawTechnicalValues ?? true,
         }).catch(() => {});
       }
     };
@@ -89,12 +95,14 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     defaultHome?: DefaultHome;
     hideVariablesPage?: boolean;
     showActiveSection?: boolean;
+    showRawTechnicalValues?: boolean;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
       defaultHome: next.defaultHome ?? defaultHome,
       hideVariablesPage: next.hideVariablesPage ?? hideVariablesPage,
       showActiveSection: next.showActiveSection ?? showActiveSection,
+      showRawTechnicalValues: next.showRawTechnicalValues ?? showRawTechnicalValues,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -128,6 +136,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     persist({ showActiveSection: v });
   };
 
+  const setShowRawTechnicalValues = (v: boolean) => {
+    setShowRawTechnicalValuesState(v);
+    persist({ showRawTechnicalValues: v });
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -140,6 +153,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         setHideVariablesPage,
         showActiveSection,
         setShowActiveSection,
+        showRawTechnicalValues,
+        setShowRawTechnicalValues,
         settingsLoaded,
       }}
     >

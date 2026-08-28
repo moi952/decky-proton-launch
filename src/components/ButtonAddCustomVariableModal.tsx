@@ -36,22 +36,24 @@ export const CustomVariableModalContent: React.FC<
   const [value, setValue] = useState(existing?.value ?? "");
   const [error, setError] = useState("");
 
-  // env doubles as the runtime identity of a toggle (it's what actually
-  // gets exported) — letting two different definitions share one would
-  // mean deleting either affects both, so it's blocked here rather than
-  // discovered later as a confusing side effect.
+  // env doubles as the runtime identity of a toggle. Two custom entries (or
+  // a custom one and a custom wrapper) sharing one would mean deleting
+  // either affects both with no obvious "who owns this" — still blocked.
+  // A catalog variable is different: VariableRow renders it read-only
+  // whenever a custom variable claims its env (see envShadow.ts), so the
+  // custom one just becomes the one real editable source — allowed.
   const isEnvTaken = (candidate: string): boolean => {
-    const catalogEnvs = variablesData.flatMap((cat) =>
-      (cat.variables as Variable[]).map((v) => v.env),
-    );
     const otherCustomVariableEnvs = customVariables
       .filter((v) => v.id !== existing?.id)
       .map((v) => v.env);
     const customWrapperEnvs = customWrappers.map((w) => w.env);
-    return [...catalogEnvs, ...otherCustomVariableEnvs, ...customWrapperEnvs].includes(
-      candidate,
-    );
+    return [...otherCustomVariableEnvs, ...customWrapperEnvs].includes(candidate);
   };
+
+  const catalogEnvs = variablesData.flatMap((cat) =>
+    (cat.variables as Variable[]).map((v) => v.env),
+  );
+  const shadowsCatalogVariable = catalogEnvs.includes(env.trim());
 
   const handleSubmit = () => {
     if (!name.trim() || !env.trim() || !value.trim()) {
@@ -107,6 +109,11 @@ export const CustomVariableModalContent: React.FC<
         />
         {error && (
           <span style={{ color: "#ff4444", fontSize: 12 }}>{error}</span>
+        )}
+        {!error && shadowsCatalogVariable && (
+          <span style={{ color: "#aaa", fontSize: 12 }}>
+            {t("shadows_catalog_hint")}
+          </span>
         )}
         <Focusable
           style={{

@@ -66,7 +66,8 @@ jobs:
           set -e
           NEW_VERSION=$(node -p "require('./package.json').version")
           node scripts/sync-whats-new-version.js "${{ steps.pre_version.outputs.version }}" "$NEW_VERSION"
-          git add src/i18n/locales/*.json
+          node scripts/sync-readme-whats-new.js "$NEW_VERSION"
+          git add src/i18n/locales/*.json README.md
           if ! git diff --cached --quiet; then
             git tag -d "v$NEW_VERSION"
             git commit --amend --no-edit

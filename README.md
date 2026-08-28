@@ -8,12 +8,13 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.13.1
+### ✨ New in 0.14.0
 
-- **Active section**: instantly see every command currently enabled, on both the game page and the Global Commands page — no more scrolling through every category
-- Deleting a custom variable or wrapper now turns it off everywhere it was active, instead of leaving it stuck on with no way to disable it
-- The launch log now reflects exactly what's active for each launch, including per-game overrides of global commands
-- Installing a version picked from the list in Settings now reliably reloads the plugin
+- A warning now appears when two active variables are redundant or conflict with each other (for example WineD3D with DXVK-based options, or DLSS4 Upgrade with the NGX Updater)
+- Variables with a list of predefined values, and the version/home-page pickers in Settings, now use a new custom dropdown.
+- Deselecting every value of a multi-choice variable now turns it off instead of leaving it active with an empty value
+- Variables can now be organized into sub-categories, and a variable can reveal a nested sub-group of related options once it's turned on
+- Long commands or file paths in the command list now wrap onto multiple lines instead of running off the screen.
 
 ---
 

@@ -44,7 +44,8 @@
     "fields_required": "Tous les champs sont obligatoires",
     "already_exists": "Une variable portant ce nom existe déjà",
     "edit_title": "Modifier la variable personnalisée",
-    "env_already_used": "Cette variable d'environnement est déjà utilisée ailleurs"
+    "env_already_used": "Cette variable d'environnement est déjà utilisée ailleurs",
+    "shadows_catalog_hint": "Ta valeur personnalisée s'appliquera — le réglage intégré pour cette variable devient en lecture seule."
   },
   "delete_custom_variable_modal": {
     "title": "Supprimer la variable personnalisée",
@@ -170,6 +171,18 @@
     "description": "Supprimer « {{wrapper_name}} » ?"
   },
   "whats_new": {
+    "v0_15_0": {
+      "title": "Nouveautés de la version 0.15.0",
+      "items": [
+        "VKD3D_CONFIG est maintenant trié par ordre alphabétique, avec un compteur \"X activés\" et une bascule (touche Y, affichée dans la barre du bas) entre noms bruts et noms formatés",
+        "Chaque valeur sélectionnée de VKD3D_CONFIG s'affiche sur sa propre ligne au lieu d'être séparée par des virgules",
+        "VKD3D_CONFIG et DXVK_ASYNC sont regroupés dans leur propre sous-catégorie \"DXVK\"",
+        "Nouvelles variables : DXVK_CONFIG (checklist avec valeurs par option), VKD3D_FRAME_RATE (champ libre) et VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "Une variable personnalisée peut désormais réutiliser la variable d'environnement d'une entrée du catalogue, au lieu d'être bloquée",
+        "La liste des jeux n'affiche plus Proton ni le Steam Linux Runtime",
+        "Correction d'un bug qui pouvait garder des données de variables obsolètes en cache après une mise à jour"
+      ]
+    },
     "v0_14_0": {
       "title": "Nouveautés de la version 0.14.0",
       "items": [

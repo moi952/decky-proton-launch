@@ -44,7 +44,8 @@
     "fields_required": "Todos los campos son obligatorios",
     "already_exists": "Ya existe una variable con este nombre",
     "edit_title": "Editar variable personalizada",
-    "env_already_used": "Esta variable de entorno ya se usa en otro sitio"
+    "env_already_used": "Esta variable de entorno ya se usa en otro sitio",
+    "shadows_catalog_hint": "Custom values will apply — the built-in toggle for this variable becomes read-only."
   },
   "delete_custom_variable_modal": {
     "title": "Eliminar variable personalizada",
@@ -170,6 +171,18 @@
     "description": "¿Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_15_0": {
+      "title": "What's new in 0.15.0",
+      "items": [
+        "VKD3D_CONFIG is now sorted alphabetically, with an \"X enabled\" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names",
+        "Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated",
+        "VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own \"DXVK\" sub-category",
+        "New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "A custom variable can now reuse a catalog entry's environment variable instead of being blocked",
+        "The game list no longer shows Proton or the Steam Linux Runtime",
+        "Fixed a bug that could keep stale variable data cached after an update"
+      ]
+    },
     "v0_14_0": {
       "title": "Novedades de la versión 0.14.0",
       "items": [

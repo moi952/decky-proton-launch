@@ -1,6 +1,7 @@
 import base64
 import json
 import os
+import re
 import traceback
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -25,6 +26,18 @@ from .launch_option import (
 from .plugin_updater import PluginUpdaterMixin
 
 
+# Valve's own compat tools (Proton builds, Steam Linux Runtime, redistributables)
+# get an appmanifest_*.acf just like real games, so they'd otherwise show up in
+# the picker. Anchored on exact known name patterns to avoid catching a real
+# game that merely starts with "Proton" (e.g. "Protonovus Assault").
+VALVE_TOOL_RE = re.compile(
+    r"^(Proton\s(\d+\.\d+|Experimental|Hotfix|Next|EasyAntiCheat Runtime|BattlEye Runtime)"
+    r"|Steam Linux Runtime( - |\s\d)"
+    r"|Steamworks Common Redistributables$)",
+    re.IGNORECASE,
+)
+
+
 class Plugin(PluginUpdaterMixin):
 
     async def ping(self) -> str:
@@ -46,7 +59,7 @@ class Plugin(PluginUpdaterMixin):
                         state = data.get("AppState", {})
                         appid_str = state.get("appid", "")
                         name = state.get("name", "")
-                        if appid_str and name:
+                        if appid_str and name and not VALVE_TOOL_RE.match(name):
                             appid = int(appid_str)
                             if appid not in seen:
                                 seen.add(appid)

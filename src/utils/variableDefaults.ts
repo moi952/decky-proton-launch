@@ -38,5 +38,8 @@ export const getVariableDefault = (variable: Variable): string => {
       "1"
     );
   }
+  if (variable.type === "value") {
+    return variable.defaultValue;
+  }
   return (variable as any).value ?? "1";
 };

@@ -1,10 +1,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { PanelSectionRow, ToggleField } from "@decky/ui";
 import { VariableToggleRow } from "./VariableToggleRow";
 import { Variable } from "../data/types";
 import { getVariableDefault } from "../utils/variableDefaults";
 import { getConflictingEnvs } from "../utils/conflicts";
 import { ConflictRule } from "../context/RemoteDataContext";
+import { useCustomVariables } from "../context/CustomVariablesContext";
+import { findShadowingCustomVariable } from "../utils/envShadow";
 
 interface VariableRowProps {
   variable: Variable;
@@ -47,10 +50,29 @@ export const VariableRow: React.FC<VariableRowProps> = ({
   envToTitle,
 }) => {
   const { t: tVars } = useTranslation("variables");
+  const { customVariables } = useCustomVariables();
   const defaultVal = getVariableDefault(variable);
   const active = isActive(variable.env);
   const subGroup = (variable as any).subGroup as Variable[] | undefined;
   const hasSubGroup = Boolean(subGroup && subGroup.length > 0);
+
+  const shadowingVariable = findShadowingCustomVariable(variable.env, customVariables);
+  if (shadowingVariable) {
+    console.warn(
+      `[VariableRow] "${variable.env}" is shadowed by custom variable "${shadowingVariable.name}" — rendering read-only.`,
+    );
+    return (
+      <PanelSectionRow>
+        <ToggleField
+          label={tVars(variable.title)}
+          description={tVars("shadowed_by_custom_variable", { name: shadowingVariable.name })}
+          checked={active}
+          disabled
+          onChange={() => {}}
+        />
+      </PanelSectionRow>
+    );
+  }
 
   const handleToggle = () => {
     onToggle(variable.env, defaultVal);

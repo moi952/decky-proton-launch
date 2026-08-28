@@ -29,9 +29,7 @@ export type VariableCategory = {
   subCategory?: SubCategory;
 };
 
-// "trigger" conflicts with each env in "conflicts" individually (a star,
-// not a clique) — the envs inside "conflicts" are not in conflict with
-// each other, only each one with "trigger".
+// "trigger" conflicts with each env in "conflicts" individually, a star not a clique.
 export type ConflictRule = {
   trigger: string;
   conflicts: string[];
@@ -39,9 +37,6 @@ export type ConflictRule = {
 
 type RemoteData = {
   variables: VariableCategory[];
-  // Each entry is a star, not a clique: "trigger" conflicts with each env
-  // in "conflicts" individually — the envs inside "conflicts" are not
-  // considered in conflict with each other.
   conflictGroups?: ConflictRule[];
   locales: Record<
     string,
@@ -89,8 +84,7 @@ const injectTranslations = (lang: string, localeData: RemoteData["locales"][stri
   }
 };
 
-// "wrappers" is legacy — kept in the data for old plugin versions, replaced
-// here by "wrappers_exec". Hidden from display only, cache below keeps it.
+// "wrappers" is legacy, replaced by "wrappers_exec" — hidden, not deleted.
 const HIDDEN_CATEGORIES = new Set(["wrappers"]);
 
 const applyData = (
@@ -120,7 +114,8 @@ const loadData = (
   });
 
   cachePromise.finally(() => {
-    fetch(DATA_URL)
+    // no-store: the browser's own HTTP cache isn't cleared by the app cache above.
+    fetch(DATA_URL, { cache: "no-store" })
       .then((r) => r.json())
       .then((data: RemoteData) => {
         if (!data?.variables?.length) {

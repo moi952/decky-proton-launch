@@ -1,9 +1,13 @@
 import React from "react";
 import { Focusable, PanelSectionRow, ToggleField } from "@decky/ui";
+import { FieldTextInput } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
 import { ValButton } from "./ValButton";
 import { ThemedDropdown } from "./ThemedDropdown";
+import { CompoundVariableEditor } from "./CompoundVariableEditor";
 import { Variable } from "../data/types";
+import { prettifyToken } from "../utils/prettify";
+import { useSettings } from "../context/SettingsContext";
 
 interface VariableToggleRowProps {
   variable: Variable;
@@ -25,8 +29,26 @@ export const VariableToggleRow: React.FC<VariableToggleRowProps> = ({
   onEmptyMultiSelect,
 }) => {
   const { t: tVars } = useTranslation("variables");
+  // Raw config tokens (title === value, e.g. VKD3D_CONFIG's flags) have no
+  // real translation — only a toggle between the literal token and an
+  // auto-formatted version, never a translated one. It's a UI display
+  // preference, persisted like any other UI setting — never written into
+  // the env/draft state used to build the launch command.
+  const { showRawTechnicalValues: showRawValues, setShowRawTechnicalValues: setShowRawValues } = useSettings();
 
   if (variable.type === "enum" && "values" in variable) {
+    const isTechnical = variable.values.every((opt) => opt.title === opt.value);
+    const isMulti = variable.multiSelect !== false;
+    const options = variable.values
+      .map((opt) => ({
+        value: opt.value,
+        label:
+          isTechnical && !showRawValues
+            ? prettifyToken(opt.value)
+            : tVars(opt.title, opt.titleParams),
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label));
+
     return (
       <React.Fragment>
         <PanelSectionRow>
@@ -42,20 +64,65 @@ export const VariableToggleRow: React.FC<VariableToggleRowProps> = ({
             <ThemedDropdown
               variant="boxed"
               size="small"
-              multiple={variable.multiSelect !== false}
-              maxDisplayLines={variable.multiSelect !== false ? 2 : 1}
-              options={variable.values.map((opt) => ({
-                value: opt.value,
-                label: tVars(opt.title, opt.titleParams),
-              }))}
+              multiple={isMulti}
+              selectedCountLabel={isMulti ? (n) => tVars("n_enabled", { count: n }) : undefined}
+              onOptionsButton={isTechnical ? () => setShowRawValues(!showRawValues) : undefined}
+              onOptionsActionDescription={
+                isTechnical ? tVars(showRawValues ? "y_show_formatted" : "y_show_raw") : undefined
+              }
+              maxDisplayLines={variable.showAllSelected ? 0 : isMulti ? 2 : 1}
+              selectedValuesLayout={variable.selectedValuesLayout}
+              maxVisibleOptions={variable.maxVisibleOptions}
+              options={options}
               selectedValue={currentValue}
               onChange={(v) => {
-                if (variable.multiSelect !== false && v.trim() === "" && onEmptyMultiSelect) {
+                if (isMulti && v.trim() === "" && onEmptyMultiSelect) {
                   onEmptyMultiSelect();
                 } else {
                   onValueChange(v);
                 }
               }}
+            />
+          </PanelSectionRow>
+        )}
+      </React.Fragment>
+    );
+  }
+
+  if (variable.type === "compound") {
+    return (
+      <React.Fragment>
+        <PanelSectionRow>
+          <ToggleField
+            label={tVars(variable.title)}
+            description={description}
+            checked={isActive}
+            onChange={onToggle}
+          />
+        </PanelSectionRow>
+        {isActive && <CompoundVariableEditor variable={variable} value={currentValue} onChange={onValueChange} />}
+      </React.Fragment>
+    );
+  }
+
+  if (variable.type === "value") {
+    return (
+      <React.Fragment>
+        <PanelSectionRow>
+          <ToggleField
+            label={tVars(variable.title)}
+            description={description}
+            checked={isActive}
+            onChange={onToggle}
+          />
+        </PanelSectionRow>
+        {isActive && (
+          <PanelSectionRow>
+            <FieldTextInput
+              size="small"
+              mustBeNumeric={variable.valueKind === "number"}
+              value={currentValue}
+              onChange={onValueChange}
             />
           </PanelSectionRow>
         )}
