@@ -354,7 +354,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               if (hasWrapper) {
                 setConfirmRemoveWrapper(true);
               } else {
-                toggleWrapper(game, false, t, (nowSet) => setHasWrapper(nowSet));
+                toggleWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
               }
             }}
           >

@@ -141,14 +141,17 @@
     "restart_steam_non_steam_body": "请重启 Steam 以应用更改。",
     "ok": "知道了",
     "restart_steam_btn": "重启 Steam",
-    "delete_wrapper_title": "移除 Wrapper",
     "delete_wrapper_description": "从 {{game_name}} 移除 Wrapper？",
     "delete_wrapper_confirm": "移除",
     "show_command": "显示命令",
     "hide_command": "隐藏命令",
     "global_active_hint": "由全局命令启用",
     "global_disabled_hint": "此游戏已禁用——全局仍然有效",
-    "global_commands": "全局命令"
+    "global_commands": "全局命令",
+    "group_ready": "已就绪",
+    "group_wrapper_only": "仅 Wrapper（无命令）",
+    "group_configured": "仅命令（无 Wrapper）",
+    "group_none": "未配置"
   },
   "global_commands_view": {
     "title": "全局命令",
@@ -174,13 +177,18 @@
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
-        "VKD3D_CONFIG is now sorted alphabetically, with an \"X enabled\" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names",
-        "Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated",
-        "VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own \"DXVK\" sub-category",
-        "New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE",
-        "A custom variable can now reuse a catalog entry's environment variable instead of being blocked",
-        "The game list no longer shows Proton or the Steam Linux Runtime",
-        "Fixed a bug that could keep stale variable data cached after an update"
+        "全新游戏列表页面：重新整理为 4 个可折叠分组 —— 已就绪、仅 Wrapper、仅命令、未配置 —— 前 3 个分组会在两次访问之间记住其展开/折叠状态，最后一个分组每次打开时始终保持折叠",
+        "从游戏列表中移除 Wrapper 时，现在会像游戏详情页一样显示内联确认，而不是打开弹窗",
+        "游戏列表的搜索栏现在会显示占位文字和搜索图标",
+        "游戏列表不再显示 Proton 或 Steam Linux Runtime",
+        "VKD3D_CONFIG 现在按字母顺序排序，并带有\"已启用 X 个\"计数器，以及在原始名称和格式化名称之间切换的开关（Y 键，显示在底部栏）",
+        "每个已选择的 VKD3D_CONFIG 值现在会单独显示一行，而不是用逗号分隔",
+        "VKD3D_CONFIG 和 DXVK_ASYNC 现在被归入它们自己的\"DXVK\"子分类",
+        "新增变量：DXVK_CONFIG（带每个选项对应值的检查列表）、VKD3D_FRAME_RATE（自由文本字段）和 VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "自定义变量现在可以重用目录条目的环境变量，而不再被阻止",
+        "修复了更新后可能导致过期变量数据被缓存的错误",
+        "修复了停用游戏最后一条命令时，即使全局命令仍处于启用状态，也可能静默移除其 Wrapper 的错误",
+        "修复了修改游戏命令时，可能会静默重新添加刚刚移除的 Wrapper 的错误"
       ]
     },
     "v0_14_0": {

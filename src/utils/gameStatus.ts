@@ -20,3 +20,14 @@ export const STATUS_LABEL_KEY: Record<GameStatus, string> = {
   wrapper_only: "legend_wrapper",
   none: "profile_none",
 };
+
+// Group order on the games list: actively-managed games first, the
+// untouched bulk of the library last.
+export const GAME_STATUS_ORDER: GameStatus[] = ["ready", "wrapper_only", "configured", "none"];
+
+export const STATUS_GROUP_TITLE_KEY: Record<GameStatus, string> = {
+  ready: "group_ready",
+  wrapper_only: "group_wrapper_only",
+  configured: "group_configured",
+  none: "group_none",
+};

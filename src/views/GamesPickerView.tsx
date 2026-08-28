@@ -1,16 +1,27 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { SearchField } from "../components/SearchField";
 import { Focusable } from "@decky/ui";
 import { call } from "@decky/api";
 import { ActionButton } from "../components/ActionButton";
 import { GameRow } from "../components/GameRow";
+import { GameGroupHeader } from "../components/GameGroupHeader";
 import { FiLink } from "react-icons/fi";
-import { FaCircleNotch, FaCog } from "react-icons/fa";
+import { FaCircleNotch, FaCog, FaSearch } from "react-icons/fa";
+import { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
 import PanelSectionCustom from "../components/PanelSectionCustom";
 import { SteamGame, ScriptStatus } from "../data/types";
+import { useSettings } from "../context/SettingsContext";
+import {
+  GameStatus,
+  GAME_STATUS_ORDER,
+  STATUS_COLOR,
+  STATUS_GROUP_TITLE_KEY,
+  getGameStatus,
+} from "../utils/gameStatus";
 
-import { toggleWrapper } from "../utils/wrapperAction";
+import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
+import { InlineConfirm } from "../components/InlineConfirm";
 
 export type { SteamGame };
 
@@ -25,11 +36,27 @@ interface ConfiguredAppStatus {
   has_launch_option: boolean;
 }
 
+const GROUP_ICON: Record<GameStatus, IconType> = {
+  ready: FaCog,
+  configured: FaCog,
+  wrapper_only: FiLink,
+  none: FaCog,
+};
+
+// Only the "not configured" bucket needs incremental rendering — it's the
+// one that can hold an entire untouched Steam library.
+const INCREMENTAL_STATUS: GameStatus = "none";
+
 export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   onSelectGame,
   onScriptInstalled,
 }) => {
   const { t } = useTranslation("game_manager");
+  const { isGameGroupCollapsed, toggleGameGroup } = useSettings();
+  // "Not configured" is never remembered across visits — it's the bulk of
+  // an untouched library, so every fresh visit to this page starts it
+  // collapsed again regardless of what was expanded last time.
+  const [noneCollapsed, setNoneCollapsed] = useState(true);
   const [search, setSearch] = useState("");
   const [games, setGames] = useState<SteamGame[]>([]);
   const [configuredStatus, setConfiguredStatus] = useState<
@@ -40,6 +67,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
   const [visibleCount, setVisibleCount] = useState(50);
+  const [pendingRemoveWrapper, setPendingRemoveWrapper] = useState<number | null>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const loadingMoreRef = useRef(false);
 
@@ -81,54 +109,86 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     reload();
   }, [reload]);
 
+  const applyWrapperChange = useCallback((game: SteamGame, nowSet: boolean) => {
+    if (nowSet) {
+      setWrapperApps((prev) => new Set([...prev, game.appid]));
+      setConfiguredStatus((prev) => {
+        if (prev.has(game.appid)) {
+          const next = new Map(prev);
+          next.set(game.appid, "ready");
+          return next;
+        }
+        return prev;
+      });
+    } else {
+      setWrapperApps((prev) => {
+        const next = new Set(prev);
+        next.delete(game.appid);
+        return next;
+      });
+      setConfiguredStatus((prev) => {
+        if (prev.get(game.appid) === "ready") {
+          const next = new Map(prev);
+          next.set(game.appid, "configured");
+          return next;
+        }
+        return prev;
+      });
+    }
+  }, []);
+
   const handleQuickAdd = useCallback(
     (game: SteamGame) => {
-      const alreadySet = wrapperApps.has(game.appid);
-      toggleWrapper(game, alreadySet, t, (nowSet) => {
-        if (nowSet) {
-          setWrapperApps((prev) => new Set([...prev, game.appid]));
-          setConfiguredStatus((prev) => {
-            if (prev.has(game.appid)) {
-              const next = new Map(prev);
-              next.set(game.appid, "ready");
-              return next;
-            }
-            return prev;
-          });
-        } else {
-          setWrapperApps((prev) => {
-            const next = new Set(prev);
-            next.delete(game.appid);
-            return next;
-          });
-          setConfiguredStatus((prev) => {
-            if (prev.get(game.appid) === "ready") {
-              const next = new Map(prev);
-              next.set(game.appid, "configured");
-              return next;
-            }
-            return prev;
-          });
-        }
-      });
+      if (wrapperApps.has(game.appid)) {
+        // Removing needs confirmation — shown inline, below this game's row.
+        setPendingRemoveWrapper(game.appid);
+        return;
+      }
+      toggleWrapper(game, t, (nowSet) => applyWrapperChange(game, nowSet));
     },
-    [wrapperApps, t],
+    [wrapperApps, t, applyWrapperChange],
+  );
+
+  const confirmRemoveWrapper = useCallback(
+    (game: SteamGame) => {
+      setPendingRemoveWrapper(null);
+      doRemoveWrapper(game, t, (nowSet) => applyWrapperChange(game, nowSet));
+    },
+    [t, applyWrapperChange],
   );
 
   const q = search.toLowerCase();
-  const filtered = games.filter((g) => g.name.toLowerCase().includes(q));
-  const configuredGames = games.filter((g) => configuredStatus.has(g.appid));
-  const configuredFiltered = configuredGames.filter((g) =>
-    g.name.toLowerCase().includes(q),
-  );
-  const unconfiguredFiltered = filtered.filter(
-    (g) => !configuredStatus.has(g.appid),
-  );
+
+  const gamesByStatus = useMemo(() => {
+    const map: Record<GameStatus, SteamGame[]> = {
+      ready: [],
+      wrapper_only: [],
+      configured: [],
+      none: [],
+    };
+    for (const g of games) {
+      const status = getGameStatus(configuredStatus.has(g.appid), wrapperApps.has(g.appid));
+      map[status].push(g);
+    }
+    return map;
+  }, [games, configuredStatus, wrapperApps]);
+
+  const filteredByStatus = useMemo(() => {
+    const map = {} as Record<GameStatus, SteamGame[]>;
+    for (const status of GAME_STATUS_ORDER) {
+      map[status] = gamesByStatus[status].filter((g) => g.name.toLowerCase().includes(q));
+    }
+    return map;
+  }, [gamesByStatus, q]);
+
+  const totalMatches = GAME_STATUS_ORDER.reduce((n, status) => n + filteredByStatus[status].length, 0);
 
   // Reset visible count when search changes
   useEffect(() => {
     setVisibleCount(50);
   }, [q]);
+
+  const incrementalGames = filteredByStatus[INCREMENTAL_STATUS];
 
   // Load more when sentinel becomes visible
   useEffect(() => {
@@ -142,11 +202,11 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         if (
           entry.isIntersecting &&
           !loadingMoreRef.current &&
-          visibleCount < unconfiguredFiltered.length
+          visibleCount < incrementalGames.length
         ) {
           loadingMoreRef.current = true;
 
-          setVisibleCount((c) => Math.min(c + 50, unconfiguredFiltered.length));
+          setVisibleCount((c) => Math.min(c + 50, incrementalGames.length));
 
           setTimeout(() => {
             loadingMoreRef.current = false;
@@ -163,7 +223,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, [unconfiguredFiltered.length]);
+  }, [incrementalGames.length]);
 
   const needsAction = scriptStatus === "missing" || scriptStatus === "outdated";
 
@@ -200,7 +260,15 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       )}
 
       {/* Search */}
-      <SearchField value={search} onChange={setSearch} />
+      <SearchField
+        value={search}
+        onChange={setSearch}
+        size="small"
+        highlightOnFocus={false}
+        bottomSeparator={false}
+        placeholder={t("search")}
+        iconEnd={<FaSearch size={12} color="#888" />}
+      />
 
       {loading && (
         <PanelSectionCustom>
@@ -208,131 +276,86 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         </PanelSectionCustom>
       )}
 
-      {!loading && filtered.length === 0 && (
+      {!loading && totalMatches === 0 && (
         <PanelSectionCustom>
           <span style={{ color: "#888", fontSize: 12 }}>{t("no_games")}</span>
         </PanelSectionCustom>
       )}
 
-      {/* Configured games at top */}
-      {!loading &&
-        configuredGames.length > 0 &&
-        (!q || configuredFiltered.length > 0) && (
-          <PanelSectionCustom>
-            <div style={{ padding: "0 2px 4px", marginBottom: "2px" }}>
-              <div
-                style={{
-                  fontSize: 10,
-                  color: "#888",
-                  marginBottom: 2,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <FaCog size={8} style={{ marginRight: 4 }} />
-                {q ? configuredFiltered.length : configuredGames.length}{" "}
-                {t("configured")}
-              </div>
-              <div
-                style={{
-                  fontSize: 9,
-                  color: "#666",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  lineHeight: "1.3",
-                }}
-              >
-                <FaCog size={7} color="#4caf50" />
-                <span>{t("legend_ready")}</span>
-              </div>
-              <div
-                style={{
-                  fontSize: 9,
-                  color: "#666",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  lineHeight: "1.3",
-                }}
-              >
-                <FaCog size={7} color="#f5a623" />
-                <span>{t("legend_configured")}</span>
-              </div>
-              <div
-                style={{
-                  fontSize: 9,
-                  color: "#666",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 4,
-                  lineHeight: "1.3",
-                }}
-              >
-                <FiLink size={7} color="#29b6f6" />
-                <span>{t("legend_wrapper")}</span>
-              </div>
-            </div>
-            <Focusable flow-children="vertical">
-              {(q ? configuredFiltered : configuredGames).map((game) => (
-                <GameRow
-                  key={game.appid}
-                  game={game}
-                  hasProfile
-                  profileStatus={configuredStatus.get(game.appid)}
-                  hasWrapper={wrapperApps.has(game.appid)}
-                  onClick={() => onSelectGame(game)}
-                  onQuickAdd={() => handleQuickAdd(game)}
-                  quickAddLabel={
-                    wrapperApps.has(game.appid)
-                      ? t("remove_wrapper")
-                      : t("add_wrapper")
-                  }
-                />
-              ))}
-            </Focusable>
-          </PanelSectionCustom>
-        )}
-
-      {/* All other games */}
-      {!loading && unconfiguredFiltered.length > 0 && (
+      {!loading && (
         <PanelSectionCustom>
-          <Focusable flow-children="vertical">
-            {unconfiguredFiltered.slice(0, visibleCount).map((game) => (
-              <GameRow
-                key={game.appid}
-                game={game}
-                hasProfile={false}
-                hasWrapper={wrapperApps.has(game.appid)}
-                onClick={() => onSelectGame(game)}
-                onQuickAdd={() => handleQuickAdd(game)}
-                quickAddLabel={
-                  wrapperApps.has(game.appid)
-                    ? t("remove_wrapper")
-                    : t("add_wrapper")
-                }
-              />
-            ))}
-          </Focusable>
-          {visibleCount < unconfiguredFiltered.length && (
-            <div
-              ref={sentinelRef}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                padding: "8px 0",
-              }}
-            >
-              <style>{`@keyframes plch-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
-              <FaCircleNotch
-                size={14}
-                style={{
-                  animation: "plch-spin 1s linear infinite",
-                  color: "#888",
-                }}
-              />
-            </div>
-          )}
+          {GAME_STATUS_ORDER.map((status) => {
+            const groupGames = filteredByStatus[status];
+            if (groupGames.length === 0) return null;
+            const isNone = status === "none";
+            // Searching always shows matches, regardless of the saved/local collapse state.
+            const collapsed = !q && (isNone ? noneCollapsed : isGameGroupCollapsed(status));
+            const isIncremental = status === INCREMENTAL_STATUS;
+            const visibleGames = isIncremental ? groupGames.slice(0, visibleCount) : groupGames;
+
+            return (
+              <div key={status} style={{ marginBottom: 8 }}>
+                <GameGroupHeader
+                  icon={GROUP_ICON[status]}
+                  color={STATUS_COLOR[status]}
+                  title={t(STATUS_GROUP_TITLE_KEY[status])}
+                  count={groupGames.length}
+                  collapsed={collapsed}
+                  onToggle={() => (isNone ? setNoneCollapsed((v) => !v) : toggleGameGroup(status))}
+                />
+                {!collapsed && (
+                  <Focusable flow-children="vertical">
+                    {visibleGames.map((game) => (
+                      <React.Fragment key={game.appid}>
+                        <GameRow
+                          game={game}
+                          hasProfile={configuredStatus.has(game.appid)}
+                          profileStatus={configuredStatus.get(game.appid)}
+                          hasWrapper={wrapperApps.has(game.appid)}
+                          onClick={() => onSelectGame(game)}
+                          onQuickAdd={() => handleQuickAdd(game)}
+                          quickAddLabel={
+                            wrapperApps.has(game.appid)
+                              ? t("remove_wrapper")
+                              : t("add_wrapper")
+                          }
+                        />
+                        {pendingRemoveWrapper === game.appid && (
+                          <div style={{ margin: "0 0 8px" }}>
+                            <InlineConfirm
+                              description={t("delete_wrapper_description", { game_name: game.name })}
+                              confirmLabel={t("delete_wrapper_confirm")}
+                              onCancel={() => setPendingRemoveWrapper(null)}
+                              onConfirm={() => confirmRemoveWrapper(game)}
+                            />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </Focusable>
+                )}
+                {!collapsed && isIncremental && visibleCount < groupGames.length && (
+                  <div
+                    ref={sentinelRef}
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      padding: "8px 0",
+                    }}
+                  >
+                    <style>{`@keyframes plch-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+                    <FaCircleNotch
+                      size={14}
+                      style={{
+                        animation: "plch-spin 1s linear infinite",
+                        color: "#888",
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </PanelSectionCustom>
       )}
     </div>

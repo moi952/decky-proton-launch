@@ -141,14 +141,17 @@
     "restart_steam_non_steam_body": "Pour les raccourcis non-Steam, redémarrez Steam pour que les changements prennent effet.",
     "ok": "Compris",
     "restart_steam_btn": "Redémarrer Steam",
-    "delete_wrapper_title": "Supprimer le wrapper",
     "delete_wrapper_description": "Retirer le wrapper de {{game_name}} ?",
     "delete_wrapper_confirm": "Supprimer",
     "show_command": "Afficher la commande",
     "hide_command": "Masquer la commande",
     "global_active_hint": "Activée par les commandes globales",
     "global_disabled_hint": "Désactivée pour ce jeu — toujours active globalement",
-    "global_commands": "Commandes globales"
+    "global_commands": "Commandes globales",
+    "group_ready": "Prêts",
+    "group_wrapper_only": "Wrapper sans commande",
+    "group_configured": "Commande sans wrapper",
+    "group_none": "Non configurés"
   },
   "global_commands_view": {
     "title": "Commandes globales",
@@ -174,13 +177,18 @@
     "v0_15_0": {
       "title": "Nouveautés de la version 0.15.0",
       "items": [
+        "Nouvelle page de liste de jeux : réorganisée en 4 groupes repliables — Prêts, Wrapper sans commande, Commande sans wrapper, Non configurés — les 3 premiers se souviennent de leur état entre les visites, le dernier reste toujours replié à l'ouverture",
+        "Sur la liste des jeux, retirer un wrapper affiche désormais une confirmation en ligne, comme sur la page du jeu, au lieu d'ouvrir une popup",
+        "La barre de recherche de la liste des jeux affiche désormais un texte d'exemple et une icône loupe",
+        "La liste des jeux n'affiche plus Proton ni le Steam Linux Runtime",
         "VKD3D_CONFIG est maintenant trié par ordre alphabétique, avec un compteur \"X activés\" et une bascule (touche Y, affichée dans la barre du bas) entre noms bruts et noms formatés",
         "Chaque valeur sélectionnée de VKD3D_CONFIG s'affiche sur sa propre ligne au lieu d'être séparée par des virgules",
         "VKD3D_CONFIG et DXVK_ASYNC sont regroupés dans leur propre sous-catégorie \"DXVK\"",
         "Nouvelles variables : DXVK_CONFIG (checklist avec valeurs par option), VKD3D_FRAME_RATE (champ libre) et VKD3D_SWAPCHAIN_PRESENT_MODE",
         "Une variable personnalisée peut désormais réutiliser la variable d'environnement d'une entrée du catalogue, au lieu d'être bloquée",
-        "La liste des jeux n'affiche plus Proton ni le Steam Linux Runtime",
-        "Correction d'un bug qui pouvait garder des données de variables obsolètes en cache après une mise à jour"
+        "Correction d'un bug qui pouvait garder des données de variables obsolètes en cache après une mise à jour",
+        "Correction d'un bug où désactiver la dernière commande d'un jeu pouvait retirer le wrapper silencieusement, même avec des commandes globales encore actives",
+        "Correction d'un bug où modifier les commandes d'un jeu pouvait réinstaller silencieusement un wrapper qu'on venait pourtant de retirer"
       ]
     },
     "v0_14_0": {

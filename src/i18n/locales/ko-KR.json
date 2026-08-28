@@ -141,14 +141,17 @@
     "restart_steam_non_steam_body": "변경 사항을 적용하려면 Steam을 재시작하세요.",
     "ok": "확인",
     "restart_steam_btn": "Steam 재시작",
-    "delete_wrapper_title": "Wrapper 제거",
     "delete_wrapper_description": "{{game_name}}에서 Wrapper를 제거하시겠습니까?",
     "delete_wrapper_confirm": "제거",
     "show_command": "명령어 보기",
     "hide_command": "명령어 숨기기",
     "global_active_hint": "전역 명령으로 활성화됨",
     "global_disabled_hint": "이 게임에서는 비활성화됨 — 전역에서는 계속 활성",
-    "global_commands": "전역 명령"
+    "global_commands": "전역 명령",
+    "group_ready": "준비 완료",
+    "group_wrapper_only": "Wrapper만 (명령 없음)",
+    "group_configured": "명령만 (Wrapper 없음)",
+    "group_none": "설정되지 않음"
   },
   "global_commands_view": {
     "title": "전역 명령",
@@ -174,13 +177,18 @@
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
-        "VKD3D_CONFIG is now sorted alphabetically, with an \"X enabled\" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names",
-        "Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated",
-        "VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own \"DXVK\" sub-category",
-        "New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE",
-        "A custom variable can now reuse a catalog entry's environment variable instead of being blocked",
-        "The game list no longer shows Proton or the Steam Linux Runtime",
-        "Fixed a bug that could keep stale variable data cached after an update"
+        "새로운 게임 목록 페이지: 4개의 접을 수 있는 그룹으로 재구성되었습니다 — 준비 완료, Wrapper만, 명령만, 설정되지 않음 — 처음 3개는 방문 간에 상태를 기억하며, 마지막 그룹은 열 때마다 항상 접힌 상태로 시작합니다",
+        "게임 목록에서 Wrapper를 제거하면 이제 팝업을 여는 대신 게임 상세 페이지처럼 인라인으로 확인 메시지가 표시됩니다",
+        "게임 목록 검색창에 이제 안내 문구와 검색 아이콘이 표시됩니다",
+        "게임 목록에 더 이상 Proton이나 Steam Linux Runtime이 표시되지 않습니다",
+        "VKD3D_CONFIG가 이제 알파벳순으로 정렬되며, \"X개 활성화\" 카운터와 원본/포맷된 이름을 전환하는 토글(하단 바에 표시되는 Y 버튼)이 추가되었습니다",
+        "선택된 VKD3D_CONFIG 값이 이제 쉼표로 구분되는 대신 각각 별도의 줄에 표시됩니다",
+        "VKD3D_CONFIG와 DXVK_ASYNC가 이제 전용 \"DXVK\" 하위 카테고리로 그룹화됩니다",
+        "새 변수: DXVK_CONFIG(옵션별 값이 있는 체크리스트), VKD3D_FRAME_RATE(자유 입력 필드), VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "커스텀 변수가 이제 차단되는 대신 카탈로그 항목의 환경 변수를 재사용할 수 있습니다",
+        "업데이트 후 오래된 변수 데이터가 캐시에 남아있을 수 있었던 버그를 수정했습니다",
+        "게임의 마지막 명령을 비활성화하면 전역 명령이 여전히 활성 상태여도 Wrapper가 조용히 제거될 수 있었던 버그를 수정했습니다",
+        "게임의 명령을 수정하면 방금 제거한 Wrapper가 조용히 다시 추가될 수 있었던 버그를 수정했습니다"
       ]
     },
     "v0_14_0": {

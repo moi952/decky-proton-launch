@@ -20,6 +20,12 @@ Decky Proton Launch provides a simple, intuitive interface to enable commonly us
 
 ## Screenshots
 
+### Games list
+
+Your Steam library, grouped by configuration status — Ready, Wrapper only, Commands only, Not configured — with a search bar to quickly find a game.
+
+![Games list](./assets/games_list.jpeg)
+
 ### Per-game configuration
 
 Click on any game to open its profile and configure launch options individually. Changes apply on next game launch.

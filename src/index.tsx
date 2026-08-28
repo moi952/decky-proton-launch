@@ -30,6 +30,7 @@ import { usePluginUpdate } from "./context/PluginUpdateContext";
 import { markPluginUpdateExpanded } from "./utils/pluginUpdateFocus";
 import { WhatsNewBanner } from "./components/WhatsNewBanner";
 import { GAME_ROW_STYLES } from "./components/GameRow";
+import { GAME_GROUP_HEADER_STYLES } from "./components/GameGroupHeader";
 import { SteamGame, ScriptStatus } from "./data/types";
 
 type View =
@@ -154,6 +155,7 @@ const App: React.FC = () => {
   return (
     <BackHandler onBack={isOnHome ? undefined : goHome}>
       <style>{GAME_ROW_STYLES}</style>
+      <style>{GAME_GROUP_HEADER_STYLES}</style>
       <NavBar
         view={mainView}
         scriptStatus={scriptStatus}

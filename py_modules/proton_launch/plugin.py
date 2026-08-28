@@ -266,12 +266,17 @@ class Plugin(PluginUpdaterMixin):
         disabled_globals: Optional[List[str]] = None,
     ) -> bool:
         try:
+            # Only wire the wrapper in on a brand-new profile — the wrapper
+            # is otherwise the user's own, separate on/off switch, and every
+            # later edit to an existing profile was re-adding it even after
+            # an explicit "Remove wrapper".
+            is_new_profile = not profile_path(app_id).is_file()
             write_profile(app_id, env_vars, game_name, disabled_globals or [])
             decky.logger.info(
                 f"[set_game_profile] {app_id} — {len(env_vars)} vars, "
                 f"{len(disabled_globals or [])} disabled globals"
             )
-            if not app_id >> 25:
+            if is_new_profile and not app_id >> 25:
                 set_launch_option(app_id)
             return True
         except Exception as e:
@@ -283,7 +288,10 @@ class Plugin(PluginUpdaterMixin):
             path = profile_path(app_id)
             if path.is_file():
                 path.unlink()
-            if not app_id >> 25:
+            # Global commands still need the wrapper on every game they apply
+            # to — clearing a game's own profile shouldn't silently break
+            # those just because this game has no local commands left.
+            if not app_id >> 25 and not read_global_profile():
                 remove_launch_option(app_id)
             decky.logger.info(f"[delete_game_profile] {app_id}")
             return True

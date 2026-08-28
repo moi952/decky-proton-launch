@@ -1,6 +1,5 @@
 import React from "react";
 import { ConfirmModal, showModal } from "@decky/ui";
-import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { SteamGame } from "../data/types";
@@ -48,26 +47,6 @@ export function openRestartModal(game: SteamGame): void {
   showModal(<RestartModalContent game={game} />);
 }
 
-// ── Delete wrapper confirmation modal ─────────────────────────────────────────
-
-const DeleteWrapperModal: React.FC<{
-  game: SteamGame;
-  onConfirm: () => void;
-  closeModal?: () => void;
-}> = ({ game, onConfirm, closeModal }) => {
-  const { t } = useTranslation("game_manager");
-  return (
-    <ConfirmDeleteModal
-      title={t("delete_wrapper_title")}
-      description={t("delete_wrapper_description", { game_name: game.name })}
-      confirmLabel={t("delete_wrapper_confirm")}
-      onConfirm={onConfirm}
-      onClose={() => closeModal?.()}
-      closeModal={closeModal}
-    />
-  );
-};
-
 // ── Wrapper remove (called after confirmation) ────────────────────────────────
 
 export async function doRemoveWrapper(
@@ -103,22 +82,13 @@ export async function doRemoveWrapper(
 
 // ── Wrapper toggle ────────────────────────────────────────────────────────────
 
+// Only ever adds — removal is confirmed inline by the caller, then calls
+// doRemoveWrapper directly (see GamesPickerView/GameDetailView).
 export async function toggleWrapper(
   game: SteamGame,
-  isCurrentlySet: boolean,
   t: (key: string) => string,
   onSuccess: (nowSet: boolean) => void,
 ): Promise<void> {
-  if (isCurrentlySet) {
-    showModal(
-      <DeleteWrapperModal
-        game={game}
-        onConfirm={() => doRemoveWrapper(game, t, onSuccess)}
-      />,
-    );
-    return;
-  }
-
   try {
     if (!game.is_shortcut) {
       const current = await getAppLaunchOptions(game.appid);

@@ -141,14 +141,17 @@
     "restart_steam_non_steam_body": "Riavvia Steam per applicare le modifiche.",
     "ok": "Capito",
     "restart_steam_btn": "Riavvia Steam",
-    "delete_wrapper_title": "Rimuovi wrapper",
     "delete_wrapper_description": "Rimuovere il wrapper da {{game_name}}?",
     "delete_wrapper_confirm": "Rimuovi",
     "show_command": "Mostra comando",
     "hide_command": "Nascondi comando",
     "global_active_hint": "Attivato dai comandi globali",
     "global_disabled_hint": "Disattivato per questo gioco — ancora attivo globalmente",
-    "global_commands": "Comandi globali"
+    "global_commands": "Comandi globali",
+    "group_ready": "Pronti",
+    "group_wrapper_only": "Wrapper, nessun comando",
+    "group_configured": "Comandi, nessun wrapper",
+    "group_none": "Non configurati"
   },
   "global_commands_view": {
     "title": "Comandi globali",
@@ -174,13 +177,18 @@
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
-        "VKD3D_CONFIG is now sorted alphabetically, with an \"X enabled\" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names",
-        "Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated",
-        "VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own \"DXVK\" sub-category",
-        "New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE",
-        "A custom variable can now reuse a catalog entry's environment variable instead of being blocked",
-        "The game list no longer shows Proton or the Steam Linux Runtime",
-        "Fixed a bug that could keep stale variable data cached after an update"
+        "Nuova pagina della lista giochi: riorganizzata in 4 gruppi comprimibili — Pronti, Solo wrapper, Solo comandi, Non configurati — i primi 3 ricordano il loro stato tra le visite, l'ultimo parte sempre compresso",
+        "Rimuovere un wrapper dalla lista giochi ora mostra una conferma in linea, come nella pagina dei dettagli del gioco, invece di aprire un popup",
+        "La barra di ricerca della lista giochi ora mostra un testo segnaposto e un'icona di ricerca",
+        "La lista giochi non mostra più Proton né lo Steam Linux Runtime",
+        "VKD3D_CONFIG è ora ordinato alfabeticamente, con un contatore \"X attivati\" e un interruttore (pulsante Y, mostrato nella barra inferiore) tra nomi grezzi e formattati",
+        "Ogni valore selezionato di VKD3D_CONFIG ora viene mostrato su una riga propria invece di essere separato da virgole",
+        "VKD3D_CONFIG e DXVK_ASYNC sono ora raggruppati nella propria sottocategoria \"DXVK\"",
+        "Nuove variabili: DXVK_CONFIG (checklist con valori per opzione), VKD3D_FRAME_RATE (campo di testo libero) e VKD3D_SWAPCHAIN_PRESENT_MODE",
+        "Una variabile personalizzata ora può riutilizzare la variabile d'ambiente di una voce del catalogo, invece di essere bloccata",
+        "Corretto un bug che poteva mantenere in cache dati di variabili obsoleti dopo un aggiornamento",
+        "Corretto un bug per cui disattivare l'ultimo comando di un gioco poteva rimuovere silenziosamente il suo wrapper, anche con comandi globali ancora attivi",
+        "Corretto un bug per cui modificare i comandi di un gioco poteva reinstallare silenziosamente un wrapper appena rimosso"
       ]
     },
     "v0_14_0": {
