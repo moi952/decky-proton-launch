@@ -8,13 +8,20 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.14.0
+### ✨ New in 0.15.0
 
-- A warning now appears when two active variables are redundant or conflict with each other (for example WineD3D with DXVK-based options, or DLSS4 Upgrade with the NGX Updater)
-- Variables with a list of predefined values, and the version/home-page pickers in Settings, now use a new custom dropdown.
-- Deselecting every value of a multi-choice variable now turns it off instead of leaving it active with an empty value
-- Variables can now be organized into sub-categories, and a variable can reveal a nested sub-group of related options once it's turned on
-- Long commands or file paths in the command list now wrap onto multiple lines instead of running off the screen.
+- New games list page: reorganized into 4 collapsible groups — Ready, Wrapper only, Commands only, Not configured — the first 3 remember their state between visits, the last one always starts collapsed
+- Removing a wrapper from the games list now confirms inline, matching the game detail page, instead of opening a popup
+- The games list search bar now shows a placeholder and a search icon
+- The game list no longer shows Proton or the Steam Linux Runtime
+- VKD3D_CONFIG is now sorted alphabetically, with an "X enabled" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names
+- Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated
+- VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own "DXVK" sub-category
+- New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE
+- A custom variable can now reuse a catalog entry's environment variable instead of being blocked
+- Fixed a bug that could keep stale variable data cached after an update
+- Fixed a bug where deactivating a game's last command could silently remove its wrapper, even while global commands were still active
+- Fixed a bug where modifying a game's commands could silently re-add a wrapper that had just been removed
 
 ---
 
