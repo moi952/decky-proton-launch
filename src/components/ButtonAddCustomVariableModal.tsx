@@ -13,7 +13,7 @@ import {
 import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { useTranslation } from "react-i18next";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { AppProvider } from "../context/AppProvider";
 import { Variable } from "../data/types";
 

@@ -12,8 +12,8 @@ importers:
         specifier: ^1.1.3
         version: 1.1.3
       '@moi952/decky-ui-kit':
-        specifier: ^0.3.0
-        version: 0.3.0(@decky/ui@4.11.1)(react-icons@5.3.0(react@18.3.1))(react@18.3.1)
+        specifier: ^0.4.0
+        version: 0.4.0(@decky/ui@4.11.1)(react-icons@5.3.0(react@18.3.1))(react@18.3.1)
       i18next:
         specifier: ^25.8.13
         version: 25.8.13(typescript@5.6.2)
@@ -98,8 +98,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@moi952/decky-ui-kit@0.3.0':
-    resolution: {integrity: sha512-P6w3Uagx6A72ZU4VraN73UoDbSj81PIIUqfiaRluhDPVTTv25nxH433XzU2Kqir/wza8s2WucUML/GwGcW8c4A==}
+  '@moi952/decky-ui-kit@0.4.0':
+    resolution: {integrity: sha512-f2zzX2iZiH4H2wvg58J4K+233QkLi7Vq/iNWDbWdke4JVS3feQ+zvCiDsak4y6Q7J5UczMSOEkDdb+LPEMtzZw==}
     peerDependencies:
       '@decky/ui': '>=4.0.0'
       react: '>=18.0.0'
@@ -1057,7 +1057,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@moi952/decky-ui-kit@0.3.0(@decky/ui@4.11.1)(react-icons@5.3.0(react@18.3.1))(react@18.3.1)':
+  '@moi952/decky-ui-kit@0.4.0(@decky/ui@4.11.1)(react-icons@5.3.0(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@decky/ui': 4.11.1
       react: 18.3.1

@@ -1,7 +1,7 @@
 import React from "react";
 import { DialogButton, Focusable, ModalRoot } from "@decky/ui";
 import { useCustomVariables } from "../context/CustomVariablesContext";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
 import { FiTrash } from "react-icons/fi";
 import { openDeleteCustomVariableModal } from "../utils/modals";

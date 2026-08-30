@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PanelSectionRow, DialogButton, Focusable } from "@decky/ui";
 import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { ThemedDropdown } from "./ThemedDropdown";
 import { InlineConfirm } from "./InlineConfirm";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";

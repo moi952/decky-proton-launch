@@ -3,8 +3,9 @@ import { DialogButton } from "@decky/ui";
 import { IconType } from "react-icons";
 import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 
-// Same edge-to-edge focus pattern as GameRow's GAME_ROW_STYLES — Field's own
-// highlight didn't span the full row, a plain DialogButton does.
+// Same edge-to-edge focus pattern as GameRow (now @moi952/decky-ui-kit's
+// MediaRow) — Field's own highlight didn't span the full row, a plain
+// DialogButton does.
 export const GAME_GROUP_HEADER_STYLES = `
   .plch-group-header:focus {
     outline: 2px solid #dcdedf !important;

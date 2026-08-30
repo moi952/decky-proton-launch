@@ -6,7 +6,7 @@ import PanelSectionCustom from "./PanelSectionCustom";
 interface SearchFieldProps {
   value: string;
   onChange: (value: string) => void;
-  size?: "default" | "small";
+  size?: "small" | "medium" | "large";
   highlightOnFocus?: boolean;
   bottomSeparator?: boolean;
   // Opts into a placeholder-inside-the-input look instead of the default
@@ -18,7 +18,7 @@ interface SearchFieldProps {
 export const SearchField: React.FC<SearchFieldProps> = ({
   value,
   onChange,
-  size = "default",
+  size = "medium",
   highlightOnFocus = true,
   bottomSeparator = true,
   placeholder,

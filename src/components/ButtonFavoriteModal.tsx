@@ -7,7 +7,7 @@ import {
   Focusable,
 } from "@decky/ui";
 import { useFavorites } from "../context/FavoritesContext";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
 import { FiStar } from "react-icons/fi";
 

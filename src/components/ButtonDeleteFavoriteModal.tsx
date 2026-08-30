@@ -1,6 +1,6 @@
 import React from "react";
 import { useFavorites } from "../context/FavoritesContext";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { ConfirmDeleteModal } from "./ConfirmDeleteModal";
 import { useTranslation } from "react-i18next";
 import { FiTrash } from "react-icons/fi";

@@ -11,7 +11,7 @@ import {
   CustomWrapper,
 } from "../context/CustomWrappersContext";
 import { useTranslation } from "react-i18next";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { AppProvider } from "../context/AppProvider";
 
 interface CustomWrapperModalContentProps {

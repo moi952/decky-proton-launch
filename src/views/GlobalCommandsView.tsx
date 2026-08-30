@@ -10,7 +10,7 @@ import type { GamepadEvent } from "@decky/ui";
 import { call, toaster } from "@decky/api";
 import { useTranslation } from "react-i18next";
 import { FiArrowLeft } from "react-icons/fi";
-import { ActionButton } from "../components/ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { InlineConfirm } from "../components/InlineConfirm";
 import { VariableRow } from "../components/VariableRow";
 import { ButtonAddCustomWrapperModal } from "../components/ButtonAddCustomWrapperModal";

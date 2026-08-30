@@ -7,7 +7,7 @@ import {
   DialogButton,
 } from "@decky/ui";
 import { call, toaster } from "@decky/api";
-import { ActionButton } from "../components/ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { FiArrowLeft, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useLaunchStack } from "../context/LaunchStackContext";
 import { useTranslation } from "react-i18next";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Focusable } from "@decky/ui";
 import { FiSettings, FiList, FiPlay, FiCopy, FiGlobe } from "react-icons/fi";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import PanelSectionCustom from "./PanelSectionCustom";
 import { ScriptStatus } from "../data/types";
 import { useTranslation } from "react-i18next";

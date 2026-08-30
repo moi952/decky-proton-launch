@@ -7,10 +7,9 @@ import {
 } from "@decky/ui";
 import { call } from "@decky/api";
 import { useSettings, DefaultHome } from "../context/SettingsContext";
-import { AnchoredDropdown, CollapsibleSection } from "@moi952/decky-ui-kit";
+import { ActionButton, AnchoredDropdown, CollapsibleSection } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
 import { FiArrowLeft, FiRefreshCw } from "react-icons/fi";
-import { ActionButton } from "../components/ActionButton";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { openGenericDeleteModal } from "../utils/modals";
 import { useCustomWrappers } from "../context/CustomWrappersContext";

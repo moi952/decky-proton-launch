@@ -8,7 +8,7 @@ import {
 } from "@decky/ui";
 import type { GamepadEvent } from "@decky/ui";
 import { call, toaster } from "@decky/api";
-import { ActionButton } from "../components/ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { InlineConfirm } from "../components/InlineConfirm";
 import { GameCover } from "../components/GameCover";
 import { VariableRow } from "../components/VariableRow";

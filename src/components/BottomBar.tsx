@@ -1,7 +1,7 @@
 import React from "react";
 import { Focusable, PanelSectionRow } from "@decky/ui";
 import { copy } from "../utils/functions";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { ButtonFavoriteModal } from "./ButtonFavoriteModal";
 import { useTranslation } from "react-i18next";
 import { useLaunchStack } from "../context/LaunchStackContext";

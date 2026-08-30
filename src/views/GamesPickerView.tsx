@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { SearchField } from "../components/SearchField";
 import { Focusable } from "@decky/ui";
 import { call } from "@decky/api";
-import { ActionButton } from "../components/ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { GameRow } from "../components/GameRow";
 import { GameGroupHeader } from "../components/GameGroupHeader";
 import { FiLink } from "react-icons/fi";

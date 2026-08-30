@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Focusable } from "@decky/ui";
 import { useTranslation } from "react-i18next";
 import { FiChevronLeft, FiChevronRight, FiGift } from "react-icons/fi";
-import { ActionButton } from "./ActionButton";
+import { ActionButton } from "@moi952/decky-ui-kit";
 import { getWhatsNewVersionKeys } from "../utils/whatsNewVersions";
 
 interface WhatsNewCardProps {
