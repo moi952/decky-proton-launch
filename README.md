@@ -8,20 +8,17 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.15.0
+### ✨ New in 0.16.0
 
-- New games list page: reorganized into 4 collapsible groups — Ready, Wrapper only, Commands only, Not configured — the first 3 remember their state between visits, the last one always starts collapsed
-- Removing a wrapper from the games list now confirms inline, matching the game detail page, instead of opening a popup
-- The games list search bar now shows a placeholder and a search icon
-- The game list no longer shows Proton or the Steam Linux Runtime
-- VKD3D_CONFIG is now sorted alphabetically, with an "X enabled" counter and a toggle (Y button, shown in the bottom bar) between raw and formatted names
-- Each selected VKD3D_CONFIG value now shows on its own line instead of being comma-separated
-- VKD3D_CONFIG and DXVK_ASYNC are now grouped under their own "DXVK" sub-category
-- New variables: DXVK_CONFIG (checklist with per-option values), VKD3D_FRAME_RATE (free-text field), and VKD3D_SWAPCHAIN_PRESENT_MODE
-- A custom variable can now reuse a catalog entry's environment variable instead of being blocked
-- Fixed a bug that could keep stale variable data cached after an update
-- Fixed a bug where deactivating a game's last command could silently remove its wrapper, even while global commands were still active
-- Fixed a bug where modifying a game's commands could silently re-add a wrapper that had just been removed
+- New "Configured globally" category in the games list: groups games with no configuration of their own that still receive at least one active global command
+- Categories renamed for clarity: "Ready" is now "Per-game configuration", "Command without wrapper" is now "Configured without wrapper", "Wrapper without command" is now "Wrapper not configured"
+- New setting in Images: choose the cover image format shown in the games list (portrait, wide, or banner), with a button to clear the image cache
+- When a game has no art in the chosen format, a dedicated icon shows instead of an image in the wrong format
+- New "My other plugins" section in Settings: a notification when a new plugin is available, with description, image, one-click install, or a GitHub link
+- New "Support" section to check out my Ko-fi if you'd like to help out
+- Settings reorganized (GitHub, Images, Support grouped more logically)
+- Removed the debug "launching:" log lines from the wrapper script
+- Fix: a game whose only custom command exactly matches an active global command is no longer wrongly classified as "configured per-game"
 
 ---
 
