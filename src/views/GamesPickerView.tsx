@@ -5,7 +5,6 @@ import { call } from "@decky/api";
 import { ActionButton } from "@moi952/decky-ui-kit";
 import { GameRow } from "../components/GameRow";
 import { GameGroupHeader } from "../components/GameGroupHeader";
-import { FiLink } from "react-icons/fi";
 import { FaCircleNotch, FaCog, FaSearch } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
@@ -17,6 +16,7 @@ import {
   GAME_STATUS_ORDER,
   STATUS_COLOR,
   STATUS_GROUP_TITLE_KEY,
+  STATUS_BADGE_ICON,
   getGameStatus,
 } from "../utils/gameStatus";
 
@@ -36,12 +36,13 @@ interface ConfiguredAppStatus {
   has_launch_option: boolean;
 }
 
+// Same icon choices as GameRow's own per-row badge (STATUS_BADGE_ICON) —
+// "none" is the only addition, since a group header always needs some
+// icon but a "none" row never shows a badge at all.
 const GROUP_ICON: Record<GameStatus, IconType> = {
-  ready: FaCog,
-  configured: FaCog,
-  wrapper_only: FiLink,
+  ...STATUS_BADGE_ICON,
   none: FaCog,
-};
+} as Record<GameStatus, IconType>;
 
 // Only the "not configured" bucket needs incremental rendering — it's the
 // one that can hold an entire untouched Steam library.
@@ -63,6 +64,8 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
     Map<number, "configured" | "ready">
   >(new Map());
   const [wrapperApps, setWrapperApps] = useState<Set<number>>(new Set());
+  const [activeGlobalKeys, setActiveGlobalKeys] = useState<string[]>([]);
+  const [disabledGlobalsMap, setDisabledGlobalsMap] = useState<Record<number, string[]>>({});
   const [loading, setLoading] = useState(true);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus | null>(null);
   const [installing, setInstalling] = useState(false);
@@ -78,8 +81,10 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       call<[], ConfiguredAppStatus[]>("get_configured_apps_status"),
       call<[], ScriptStatus>("is_script_installed"),
       call<[], number[]>("get_wrapper_app_ids"),
+      call<[], Record<string, string>>("get_global_profile"),
+      call<[], Record<string, string[]>>("get_disabled_globals_map"),
     ])
-      .then(([g, appStatuses, status, wrapperIds]) => {
+      .then(([g, appStatuses, status, wrapperIds, globalProfile, disabledMap]) => {
         setGames(g);
         const map = new Map<number, "configured" | "ready">();
         for (const s of appStatuses) {
@@ -88,6 +93,10 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
         setConfiguredStatus(map);
         setScriptStatus(status);
         setWrapperApps(new Set(wrapperIds));
+        setActiveGlobalKeys(Object.keys(globalProfile));
+        setDisabledGlobalsMap(
+          Object.fromEntries(Object.entries(disabledMap).map(([id, keys]) => [Number(id), keys])),
+        );
       })
       .finally(() => setLoading(false));
   }, []);
@@ -162,16 +171,30 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
   const gamesByStatus = useMemo(() => {
     const map: Record<GameStatus, SteamGame[]> = {
       ready: [],
+      configured_globally: [],
       wrapper_only: [],
       configured: [],
       none: [],
     };
     for (const g of games) {
-      const status = getGameStatus(configuredStatus.has(g.appid), wrapperApps.has(g.appid));
+      // Whether some globally-active key still actually reaches THIS game
+      // — not just whether any global command exists anywhere. A game
+      // that opted out of every currently-active global (disabledGlobals
+      // covers all of activeGlobalKeys) has nothing applied to it, even
+      // while other games are genuinely reached by the same globals.
+      const disabledForThisGame = disabledGlobalsMap[g.appid] ?? [];
+      const hasActiveGlobalForThisGame = activeGlobalKeys.some(
+        (key) => !disabledForThisGame.includes(key),
+      );
+      const status = getGameStatus(
+        configuredStatus.has(g.appid),
+        wrapperApps.has(g.appid),
+        hasActiveGlobalForThisGame,
+      );
       map[status].push(g);
     }
     return map;
-  }, [games, configuredStatus, wrapperApps]);
+  }, [games, configuredStatus, wrapperApps, activeGlobalKeys, disabledGlobalsMap]);
 
   const filteredByStatus = useMemo(() => {
     const map = {} as Record<GameStatus, SteamGame[]>;
@@ -309,9 +332,7 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
                       <React.Fragment key={game.appid}>
                         <GameRow
                           game={game}
-                          hasProfile={configuredStatus.has(game.appid)}
-                          profileStatus={configuredStatus.get(game.appid)}
-                          hasWrapper={wrapperApps.has(game.appid)}
+                          status={status}
                           onClick={() => onSelectGame(game)}
                           onQuickAdd={() => handleQuickAdd(game)}
                           quickAddLabel={

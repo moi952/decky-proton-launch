@@ -72,6 +72,11 @@
     "force_refresh": "강제 새로고침",
     "data_title": "데이터",
     "whats_new_history": "업데이트 기록",
+    "github_section_title": "GitHub",
+    "feature_request_button": "기능 요청하기",
+    "feature_request_hint": "휴대폰으로 스캔하거나, 눌러서 브라우저에서 열기",
+    "bug_report_button": "버그 신고하기",
+    "bug_report_hint": "휴대폰으로 스캔하거나, 눌러서 브라우저에서 열기",
     "reset_title": "초기화",
     "clean_custom_wrappers": "커스텀 래퍼 초기화",
     "clean_custom_variables": "커스텀 명령 초기화",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "커스텀 명령 초기화",
     "clean_custom_variables_confirm_description": "모든 커스텀 명령을 삭제할까요? 이 작업은 되돌릴 수 없습니다.",
     "hide_variables_page": "변수 목록 페이지 숨기기",
-    "show_active_section": "활성 명령을 맨 위에 표시"
+    "show_active_section": "활성 명령을 맨 위에 표시",
+    "images_title": "이미지",
+    "cover_image_type_portrait": "커버 (세로형)",
+    "cover_image_type_landscape": "와이드 커버 (가로형)",
+    "cover_image_type_banner": "배너 (초광폭)",
+    "purge_image_cache": "이미지 캐시 지우기",
+    "purge_image_cache_done": "이미지 캐시를 지웠습니다. 다음에 게임 목록을 열면 커버가 다시 로드됩니다.",
+    "support_section_title": "후원",
+    "kofi_button": "Ko-fi에서 후원하기",
+    "kofi_hint": "휴대폰으로 스캔하거나 눌러서 브라우저에서 열기",
+    "other_plugins_section_title": "다른 플러그인",
+    "kofi_description": "이 플러그인은 무료이며 앞으로도 그럴 것입니다. 그래도 힘을 보태고 싶다면, 커피 한 잔이 큰 도움이 됩니다."
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -127,6 +143,7 @@
     "error_save": "저장 오류",
     "configured": "구성됨",
     "legend_ready": "프로필 활성 · wrapper 설치됨",
+    "legend_configured_globally": "프로필 없음 · 전역 명령 활성",
     "legend_configured": "프로필 활성 · wrapper 없음",
     "script_outdated": "스크립트 업데이트가 필요합니다. 변경 사항을 적용하려면 재설치하세요.",
     "reinstall_script": "스크립트 재설치",
@@ -148,9 +165,10 @@
     "global_active_hint": "전역 명령으로 활성화됨",
     "global_disabled_hint": "이 게임에서는 비활성화됨 — 전역에서는 계속 활성",
     "global_commands": "전역 명령",
-    "group_ready": "준비 완료",
-    "group_wrapper_only": "Wrapper만 (명령 없음)",
-    "group_configured": "명령만 (Wrapper 없음)",
+    "group_ready": "게임별 설정",
+    "group_configured_globally": "전역으로 설정됨",
+    "group_wrapper_only": "Wrapper (설정 안 됨)",
+    "group_configured": "설정됨 (Wrapper 없음)",
     "group_none": "설정되지 않음"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "\"{{wrapper_name}}\"을(를) 삭제할까요?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "0.16.0 버전 새 기능",
+      "items": [
+        "게임 목록에 새로운 \"전역으로 설정됨\" 카테고리 추가: 자체 설정은 없지만 하나 이상의 활성 전역 명령이 적용되는 게임을 모아서 표시",
+        "명확성을 위해 카테고리 이름 변경: \"준비됨\"은 \"게임별 설정\"으로, \"래퍼 없는 명령\"은 \"래퍼 없이 설정됨\"으로, \"명령 없는 래퍼\"는 \"래퍼 미설정\"으로 변경",
+        "\"이미지\" 설정에 새 항목 추가: 게임 목록에 표시되는 커버 이미지 형식(세로형, 가로형, 배너) 선택 가능, 이미지 캐시 지우기 버튼 추가",
+        "선택한 형식의 이미지가 없는 게임은 잘못된 형식의 이미지 대신 전용 아이콘 표시",
+        "설정에 새로운 \"다른 플러그인\" 섹션 추가: 새 플러그인이 있을 때 알림 표시, 설명·이미지·원클릭 설치 또는 GitHub 링크 제공",
+        "후원하고 싶다면 내 Ko-fi를 확인할 수 있는 새로운 \"후원\" 섹션 추가",
+        "설정 재구성(GitHub, 이미지, 후원을 더 논리적으로 그룹화)",
+        "래퍼 스크립트에서 디버그용 \"launching:\" 로그 줄 제거",
+        "수정: 유일한 사용자 지정 명령이 활성 전역 명령과 정확히 일치하는 게임이 더 이상 \"게임별 설정됨\"으로 잘못 분류되지 않음"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "특정 버전 설치",
     "no_releases": "릴리스를 찾을 수 없습니다",
     "already_installed": "이미 설치됨 ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "새 플러그인이 있습니다!",
+    "banner_title_other": "새 플러그인이 있습니다!",
+    "open_settings": "설정으로 이동",
+    "install_latest": "최신 버전 설치",
+    "installing": "설치 중…",
+    "install_failed": "최신 버전을 가져오지 못했습니다. 나중에 다시 시도하세요.",
+    "view_on_github": "GitHub에서 보기"
   }
 }

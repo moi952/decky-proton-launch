@@ -15,21 +15,9 @@ import {
   PluginRelease,
   PluginUpdateInfo,
 } from "../utils/githubReleases";
+import { getDeckyBackend, installPlugin, PluginInstallType } from "../utils/deckyInstall";
 
 export type { PluginUpdateInfo, PluginRelease };
-
-// Decky Loader's own PluginInstallType enum — verified against
-// backend/decky_loader/browser.py in SteamDeckHomebrew/decky-loader. Only
-// used for labeling Decky's own native install-confirm dialog (see
-// PluginBrowser.request_plugin_install in that file, which just forwards it
-// to a UI event); the actual install always installs whatever artifact/
-// version/hash was passed regardless of this value.
-enum PluginInstallType {
-  INSTALL = 0,
-  REINSTALL = 1,
-  UPDATE = 2,
-  DOWNGRADE = 3,
-}
 
 const installTypeFor = (
   targetVersion: string,
@@ -49,14 +37,6 @@ const installTypeFor = (
 const SELECTION_RESTORE_WINDOW_MS = 5000;
 let lastSelectedTag = "";
 let lastSelectedTagAt = 0;
-
-// window.DeckyBackend lives on whichever window actually created this
-// document. In Gaming Mode the Quick Access panel renders inside a popup
-// window (opened via window.open by Big Picture Mode) — DeckyBackend is
-// undefined on that popup's own `window` there, but reachable via
-// `window.opener`.
-const getDeckyBackend = (): Window["DeckyBackend"] | null =>
-  window.DeckyBackend ?? window.opener?.DeckyBackend ?? null;
 
 // If Decky's own loader install dies silently (e.g. a dead asset URL),
 // nothing else would ever flip the "installing" state back off — this is
@@ -231,8 +211,7 @@ export function PluginUpdateSection({
     assetUrl: string,
     sha256: string,
   ) => {
-    const backend = getDeckyBackend();
-    if (!backend) {
+    if (!getDeckyBackend()) {
       toaster.toast({
         title: t("install_failed_title"),
         body: t("no_backend"),
@@ -244,12 +223,11 @@ export function PluginUpdateSection({
       // Only registers the request and pops Decky's own native confirm
       // modal (which owns the actual download/install and its own progress
       // bar) — returns immediately, the listeners above mirror the rest.
-      await backend.call(
-        "utilities/install_plugin",
+      await installPlugin(
         assetUrl,
         displayName,
         version,
-        sha256 || "",
+        sha256,
         installTypeFor(version, info?.current_version ?? version),
       );
     } catch (e) {

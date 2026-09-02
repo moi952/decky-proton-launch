@@ -177,9 +177,27 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
     return () => clearTimeout(timer);
   }, [draft, disabledGlobalsDraft]);
 
+  // Broad: also true when the only thing on disk is a "disable this global
+  // command for this game" list, with zero real commands of its own — the
+  // delete button below still needs to offer clearing that out.
   const hasProfile =
     Object.keys(profile).length > 0 || disabledGlobals.length > 0;
-  const status = getGameStatus(hasProfile, hasWrapper);
+  // Narrow: real per-game commands only — disabling a global isn't a
+  // configuration of its own, it's an opt-out of someone else's, and a
+  // value that merely mirrors the current global one isn't a genuine
+  // override either, so neither counts as "this game is configured" for
+  // status purposes (matches the backend's own get_configured_apps_status
+  // filter — see real_commands() in profile.py).
+  const hasRealCommands = Object.keys(profile).some(
+    (key) => globalVars[key] === undefined || globalVars[key] !== profile[key],
+  );
+  // Same "does an active global actually still reach THIS game" check as
+  // GamesPickerView's own per-game computation — not just whether any
+  // global command exists anywhere (see gameStatus.ts's getGameStatus).
+  const hasActiveGlobalForThisGame = Object.keys(globalVars).some(
+    (key) => !disabledGlobals.includes(key),
+  );
+  const status = getGameStatus(hasRealCommands, hasWrapper, hasActiveGlobalForThisGame);
 
   const isGlobalVar = (envKey: string) => globalVars[envKey] !== undefined;
 
@@ -229,9 +247,24 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
     setDraft((prev) => ({ ...prev, [envKey]: defaultValue }));
   };
 
-  // A chip pick always sets an explicit local value, whether the command
-  // starts out globally-inherited or purely local.
+  // A chip pick sets an explicit local value — except when it exactly
+  // matches what this game already inherits from an enabled global. That
+  // case must stay pure inheritance, not a real per-game export: writing
+  // one anyway would silently fork this game off from the global (any
+  // later edit to the global value stops reaching it) and misclassify it
+  // as "configured per-game" in the games list, even though the user
+  // never actually asked for anything game-specific.
   const setVarValue = (envKey: string, value: string) => {
+    if (isGlobalVar(envKey) && !disabledGlobalsDraft.includes(envKey) && globalVars[envKey] === value) {
+      if (draft[envKey] !== undefined) {
+        setDraft((prev) => {
+          const next = { ...prev };
+          delete next[envKey];
+          return next;
+        });
+      }
+      return;
+    }
     setDraft((prev) => ({ ...prev, [envKey]: value }));
     if (isGlobalVar(envKey)) {
       setDisabledGlobalsDraft((prev) => prev.filter((k) => k !== envKey));

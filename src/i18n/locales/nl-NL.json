@@ -72,6 +72,11 @@
     "force_refresh": "Vernieuwen afdwingen",
     "data_title": "Gegevens",
     "whats_new_history": "Updategeschiedenis",
+    "github_section_title": "GitHub",
+    "feature_request_button": "Functie aanvragen",
+    "feature_request_hint": "Scan met je telefoon, of druk om in de browser te openen",
+    "bug_report_button": "Bug melden",
+    "bug_report_hint": "Scan met je telefoon, of druk om in de browser te openen",
     "reset_title": "Reset",
     "clean_custom_wrappers": "Aangepaste wrappers wissen",
     "clean_custom_variables": "Aangepaste opdrachten wissen",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "Aangepaste opdrachten wissen",
     "clean_custom_variables_confirm_description": "Alle aangepaste opdrachten verwijderen? Dit kan niet ongedaan worden gemaakt.",
     "hide_variables_page": "Pagina Variabelenlijst verbergen",
-    "show_active_section": "Actieve opdrachten boven aan tonen"
+    "show_active_section": "Actieve opdrachten boven aan tonen",
+    "images_title": "Afbeeldingen",
+    "cover_image_type_portrait": "Cover (staand)",
+    "cover_image_type_landscape": "Brede cover (liggend)",
+    "cover_image_type_banner": "Banner (ultrabreed)",
+    "purge_image_cache": "Afbeeldingscache wissen",
+    "purge_image_cache_done": "Afbeeldingscache gewist — covers worden opnieuw geladen zodra je de spellenlijst weer opent.",
+    "support_section_title": "Ondersteuning",
+    "kofi_button": "Steun me op Ko-fi",
+    "kofi_hint": "Scan met je telefoon, of druk om in de browser te openen",
+    "other_plugins_section_title": "Mijn andere plugins",
+    "kofi_description": "Deze plugin is gratis en blijft dat ook. Wil je toch een handje helpen, elke koffie telt."
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -127,6 +143,7 @@
     "error_save": "Opslagfout",
     "configured": "geconfigureerd",
     "legend_ready": "Actief profiel · wrapper geïnstalleerd",
+    "legend_configured_globally": "Geen profiel · globale commando's actief",
     "legend_configured": "Actief profiel · wrapper afwezig",
     "script_outdated": "Scriptupdate vereist. Herinstalleer om wijzigingen toe te passen.",
     "reinstall_script": "Script herinstalleren",
@@ -148,9 +165,10 @@
     "global_active_hint": "Ingeschakeld door globale opdrachten",
     "global_disabled_hint": "Uitgeschakeld voor deze game — wereldwijd nog steeds actief",
     "global_commands": "Globale opdrachten",
-    "group_ready": "Klaar",
-    "group_wrapper_only": "Wrapper, geen commando's",
-    "group_configured": "Commando's, geen wrapper",
+    "group_ready": "Configuratie per spel",
+    "group_configured_globally": "Globaal geconfigureerd",
+    "group_wrapper_only": "Wrapper, niet geconfigureerd",
+    "group_configured": "Geconfigureerd zonder wrapper",
     "group_none": "Niet geconfigureerd"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "Nieuw in versie 0.16.0",
+      "items": [
+        "Nieuwe categorie \"Globaal geconfigureerd\" in de spellenlijst: verzamelt spellen zonder eigen configuratie die toch door minstens één actief globaal commando worden bereikt",
+        "Categorieën hernoemd voor meer duidelijkheid: \"Klaar\" wordt \"Configuratie per spel\", \"Commando zonder wrapper\" wordt \"Geconfigureerd zonder wrapper\", \"Wrapper zonder commando\" wordt \"Wrapper niet geconfigureerd\"",
+        "Nieuwe instelling bij Afbeeldingen: kies het covertype dat in de spellenlijst wordt getoond (staand, breed of banner), met een knop om de afbeeldingscache te wissen",
+        "Als een spel geen afbeelding heeft in het gekozen formaat, verschijnt een apart icoon in plaats van een afbeelding in het verkeerde formaat",
+        "Nieuwe sectie \"Mijn andere plugins\" in Instellingen: melding wanneer een nieuwe plugin beschikbaar is, met beschrijving, afbeelding, installatie met één klik of een GitHub-link",
+        "Nieuwe sectie \"Ondersteuning\" om mijn Ko-fi te bekijken als je een handje wilt helpen",
+        "Instellingen opnieuw geordend (GitHub, Afbeeldingen en Ondersteuning logischer gegroepeerd)",
+        "De debug-logregels \"launching:\" zijn verwijderd uit het wrapperscript",
+        "Fix: een spel waarvan het enige eigen commando exact overeenkomt met een actief globaal commando wordt niet meer onterecht als \"per spel geconfigureerd\" gemarkeerd"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "Specifieke versie installeren",
     "no_releases": "Geen releases gevonden",
     "already_installed": "Al geïnstalleerd ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "Nieuwe plugin beschikbaar!",
+    "banner_title_other": "Nieuwe plugins beschikbaar!",
+    "open_settings": "Naar instellingen",
+    "install_latest": "Nieuwste versie installeren",
+    "installing": "Installeren…",
+    "install_failed": "Kon de nieuwste versie niet ophalen. Probeer het later opnieuw.",
+    "view_on_github": "Bekijk op GitHub"
   }
 }

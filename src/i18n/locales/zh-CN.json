@@ -72,6 +72,11 @@
     "force_refresh": "强制刷新",
     "data_title": "数据",
     "whats_new_history": "更新历史",
+    "github_section_title": "GitHub",
+    "feature_request_button": "请求一个功能",
+    "feature_request_hint": "用手机扫描，或按下以在浏览器中打开",
+    "bug_report_button": "报告一个 Bug",
+    "bug_report_hint": "用手机扫描，或按下以在浏览器中打开",
     "reset_title": "重置",
     "clean_custom_wrappers": "清除自定义 wrapper",
     "clean_custom_variables": "清除自定义命令",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "清除自定义命令",
     "clean_custom_variables_confirm_description": "删除所有自定义命令？此操作无法撤销。",
     "hide_variables_page": "隐藏“变量列表”页面",
-    "show_active_section": "在顶部显示已启用的命令"
+    "show_active_section": "在顶部显示已启用的命令",
+    "images_title": "图片",
+    "cover_image_type_portrait": "封面（竖版）",
+    "cover_image_type_landscape": "宽版封面（横版）",
+    "cover_image_type_banner": "横幅（超宽）",
+    "purge_image_cache": "清除图片缓存",
+    "purge_image_cache_done": "图片缓存已清除 — 下次打开游戏列表时封面将重新加载。",
+    "support_section_title": "支持",
+    "kofi_button": "在 Ko-fi 上支持我",
+    "kofi_hint": "用手机扫描，或点击在浏览器中打开",
+    "other_plugins_section_title": "我的其他插件",
+    "kofi_description": "这个插件是免费的，并将始终免费。如果你仍然想出一份力，每一杯咖啡都很重要。"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -127,6 +143,7 @@
     "error_save": "保存错误",
     "configured": "已配置",
     "legend_ready": "配置文件激活 · wrapper 已安装",
+    "legend_configured_globally": "无配置文件 · 全局命令已启用",
     "legend_configured": "配置文件激活 · wrapper 未安装",
     "script_outdated": "需要更新脚本。请重新安装以应用更改。",
     "reinstall_script": "重新安装脚本",
@@ -148,9 +165,10 @@
     "global_active_hint": "由全局命令启用",
     "global_disabled_hint": "此游戏已禁用——全局仍然有效",
     "global_commands": "全局命令",
-    "group_ready": "已就绪",
-    "group_wrapper_only": "仅 Wrapper（无命令）",
-    "group_configured": "仅命令（无 Wrapper）",
+    "group_ready": "按游戏配置",
+    "group_configured_globally": "已通过全局配置",
+    "group_wrapper_only": "Wrapper（未配置）",
+    "group_configured": "已配置（无 Wrapper）",
     "group_none": "未配置"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "删除“{{wrapper_name}}”？"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "0.16.0 版本更新内容",
+      "items": [
+        "游戏列表中新增「全局已配置」分类：归集没有自身配置、但仍受至少一个已启用全局命令影响的游戏",
+        "为清晰起见重命名分类：「就绪」改为「按游戏配置」，「无包装器的命令」改为「已配置（无包装器）」，「无命令的包装器」改为「包装器未配置」",
+        "「图片」中新增设置：选择游戏列表中显示的封面格式（竖版、宽版或横幅），并提供清除图片缓存的按钮",
+        "当某个游戏没有所选格式的图片时，会显示专用图标，而不是错误格式的图片",
+        "设置中新增「我的其他插件」板块：有新插件时会收到通知，包含描述、图片、一键安装或 GitHub 链接",
+        "新增「支持」板块，如果你想帮忙可以看看我的 Ko-fi",
+        "设置已重新整理（GitHub、图片、支持分组更合理）",
+        "已从包装脚本中移除调试用的「launching:」日志行",
+        "修复：唯一自定义命令与某个已启用全局命令完全相同的游戏，不再被错误归类为「按游戏配置」"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "安装指定版本",
     "no_releases": "未找到发行版",
     "already_installed": "已安装（{{version}}）"
+  },
+  "other_plugins": {
+    "banner_title_one": "有新插件可用！",
+    "banner_title_other": "有新插件可用！",
+    "open_settings": "前往设置",
+    "install_latest": "安装最新版本",
+    "installing": "正在安装…",
+    "install_failed": "无法获取最新版本，请稍后再试。",
+    "view_on_github": "在 GitHub 上查看"
   }
 }

@@ -52,7 +52,7 @@ export const compareVersions = (a: string, b: string): number => {
   return 0;
 };
 
-const releaseFromJson = (data: any): PluginRelease | null => {
+export const releaseFromJson = (data: any): PluginRelease | null => {
   const tag = data?.tag_name;
   if (!tag) return null;
   const assets: any[] = data.assets ?? [];

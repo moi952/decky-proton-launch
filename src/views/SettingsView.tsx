@@ -5,22 +5,32 @@ import {
   PanelSectionRow,
   ToggleField,
 } from "@decky/ui";
-import { call } from "@decky/api";
+import { call, toaster } from "@decky/api";
 import { useSettings, DefaultHome } from "../context/SettingsContext";
-import { ActionButton, AnchoredDropdown, CollapsibleSection } from "@moi952/decky-ui-kit";
+import { ActionButton, AnchoredDropdown, CollapsibleSection, QrCodeButton } from "@moi952/decky-ui-kit";
 import { useTranslation } from "react-i18next";
-import { FiArrowLeft, FiRefreshCw } from "react-icons/fi";
+import { FiArrowLeft, FiRefreshCw, FiImage } from "react-icons/fi";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { openGenericDeleteModal } from "../utils/modals";
 import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { WhatsNewCard } from "../components/WhatsNewCard";
 import { PluginUpdateSection } from "../components/PluginUpdate";
+import { OtherPluginRow } from "../components/OtherPluginRow";
 import { usePluginUpdate } from "../context/PluginUpdateContext";
 import {
   markPluginUpdateExpanded,
   isPluginUpdateExpansionFresh,
 } from "../utils/pluginUpdateFocus";
+import {
+  markOtherPluginsExpanded,
+  isOtherPluginsExpansionFresh,
+} from "../utils/otherPluginsFocus";
+import { isFeatureRequestFocusFresh } from "../utils/featureRequestFocus";
+import { FEATURE_REQUEST_URL, BUG_REPORT_URL, KOFI_URL } from "../utils/links";
+import { clearCoverCache } from "../utils/coverCache";
+import { CoverImageType } from "../context/SettingsContext";
+import { useOtherPlugins } from "../context/OtherPluginsContext";
 
 interface SettingsViewProps {
   onBack: () => void;
@@ -36,14 +46,24 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     setHideVariablesPage,
     showActiveSection,
     setShowActiveSection,
+    coverImageType,
+    setCoverImageType,
   } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
+  const { others: otherPlugins } = useOtherPlugins();
   const { variables: variablesData, refresh } = useRemoteData();
   const { clearCustomWrappers } = useCustomWrappers();
   const { clearCustomVariables } = useCustomVariables();
   const [cachePath, setCachePath] = React.useState<string>("");
   const [showWhatsNewHistory, setShowWhatsNewHistory] = React.useState(false);
+  const [showOtherPlugins, setShowOtherPluginsState] = React.useState(
+    isOtherPluginsExpansionFresh,
+  );
+  const setShowOtherPlugins = (v: boolean) => {
+    if (v) markOtherPluginsExpanded();
+    setShowOtherPluginsState(v);
+  };
   const [showPluginUpdate, setShowPluginUpdateState] = React.useState(
     isPluginUpdateExpansionFresh,
   );
@@ -58,6 +78,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     const heartbeat = setInterval(markPluginUpdateExpanded, 1000);
     return () => clearInterval(heartbeat);
   }, [showPluginUpdate]);
+  React.useEffect(() => {
+    if (!showOtherPlugins) return;
+    const heartbeat = setInterval(markOtherPluginsExpanded, 1000);
+    return () => clearInterval(heartbeat);
+  }, [showOtherPlugins]);
   // True only when this mount restored an already-expanded section, never
   // on a normal fresh visit.
   const wasRestoredExpanded = React.useRef(showPluginUpdate).current;
@@ -92,6 +117,65 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     );
     return () => retries.forEach(clearTimeout);
   }, [wasRestoredExpanded]);
+  // Same restore-and-land pattern as the plugin-update section above, for
+  // the banner's own "Aller aux paramètres" button — lands right on the
+  // "My other plugins" header (already expanded) instead of just the top
+  // of the page, leaving the user to hunt for it themselves.
+  const wasOtherPluginsRestoredExpanded = React.useRef(showOtherPlugins).current;
+  const otherPluginsSectionRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!wasOtherPluginsRestoredExpanded) return;
+    const focusAndScrollToFirst = () => {
+      const container = otherPluginsSectionRef.current;
+      if (!container) return;
+      const target = container.querySelector<HTMLElement>(
+        'button:not([disabled]):not([aria-disabled="true"]), [tabindex]:not([disabled]):not([aria-disabled="true"]), a[href]',
+      );
+      if (!target) return;
+      target.focus();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ block: "center" });
+        });
+      });
+    };
+
+    focusAndScrollToFirst();
+    const retries = [300, 700, 1200].map((delay) =>
+      setTimeout(focusAndScrollToFirst, delay),
+    );
+    return () => retries.forEach(clearTimeout);
+  }, [wasOtherPluginsRestoredExpanded]);
+  // Same restore-and-land pattern, for the What's New banner's own
+  // "Suggest a feature" button — lands right on the real feature-request
+  // QR code in the GitHub section below instead of just the top of the
+  // page. No expand/collapse involved here (unlike the two above), so
+  // just a one-shot scroll+focus on a fresh landing.
+  const featureRequestFresh = React.useRef(isFeatureRequestFocusFresh()).current;
+  const featureRequestSectionRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!featureRequestFresh) return;
+    const focusAndScrollToFirst = () => {
+      const container = featureRequestSectionRef.current;
+      if (!container) return;
+      const target = container.querySelector<HTMLElement>(
+        'button:not([disabled]):not([aria-disabled="true"]), [tabindex]:not([disabled]):not([aria-disabled="true"]), a[href]',
+      );
+      if (!target) return;
+      target.focus();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          target.scrollIntoView({ block: "center" });
+        });
+      });
+    };
+
+    focusAndScrollToFirst();
+    const retries = [300, 700, 1200].map((delay) =>
+      setTimeout(focusAndScrollToFirst, delay),
+    );
+    return () => retries.forEach(clearTimeout);
+  }, [featureRequestFresh]);
   const {
     info: pluginUpdateInfo,
     checking: checkingPluginUpdate,
@@ -189,7 +273,36 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
         ))}
       </PanelSection>
 
-      <PanelSection>
+      <PanelSection title={tSettings("images_title")}>
+        <PanelSectionRow>
+          <AnchoredDropdown
+            options={[
+              { value: "portrait", label: tSettings("cover_image_type_portrait") },
+              { value: "landscape", label: tSettings("cover_image_type_landscape") },
+              { value: "banner", label: tSettings("cover_image_type_banner") },
+            ]}
+            selectedValue={coverImageType}
+            onChange={(value) => {
+              setCoverImageType(value as CoverImageType);
+              clearCoverCache();
+            }}
+          />
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <ActionButton
+            onClick={() => {
+              clearCoverCache();
+              toaster.toast({ title: tSettings("images_title"), body: tSettings("purge_image_cache_done") });
+            }}
+            width="100%"
+          >
+            <FiImage size={14} style={{ marginRight: 6 }} />
+            {tSettings("purge_image_cache")}
+          </ActionButton>
+        </PanelSectionRow>
+      </PanelSection>
+
+      <PanelSection title={tSettings("github_section_title")}>
         <PanelSectionRow>
           <div ref={pluginUpdateSectionRef}>
             <PluginUpdateSection
@@ -201,6 +314,52 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
             />
           </div>
         </PanelSectionRow>
+        <PanelSectionRow>
+          <div ref={featureRequestSectionRef}>
+            <QrCodeButton
+              value={FEATURE_REQUEST_URL}
+              label={tSettings("feature_request_button")}
+              hint={tSettings("feature_request_hint")}
+            />
+          </div>
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <QrCodeButton
+            value={BUG_REPORT_URL}
+            label={tSettings("bug_report_button")}
+            hint={tSettings("bug_report_hint")}
+          />
+        </PanelSectionRow>
+      </PanelSection>
+
+      <PanelSection title={tSettings("support_section_title")}>
+        <PanelSectionRow>
+          <div style={{ fontSize: 11, opacity: 0.7, marginBottom: 8 }}>
+            {tSettings("kofi_description")}
+          </div>
+          <QrCodeButton
+            value={KOFI_URL}
+            label={tSettings("kofi_button")}
+            hint={tSettings("kofi_hint")}
+          />
+        </PanelSectionRow>
+        {otherPlugins.length > 0 && (
+          <PanelSectionRow>
+            <div ref={otherPluginsSectionRef}>
+              <CollapsibleSection
+                label={tSettings("other_plugins_section_title")}
+                expanded={showOtherPlugins}
+                onToggle={() => setShowOtherPlugins(!showOtherPlugins)}
+              >
+                <div style={{ marginTop: 8, marginLeft: 16 }}>
+                  {otherPlugins.map((plugin) => (
+                    <OtherPluginRow key={plugin.id} plugin={plugin} />
+                  ))}
+                </div>
+              </CollapsibleSection>
+            </div>
+          </PanelSectionRow>
+        )}
       </PanelSection>
 
       <PanelSection title={tSettings("data_title")}>

@@ -72,6 +72,11 @@
     "force_refresh": "強制的に更新",
     "data_title": "データ",
     "whats_new_history": "更新履歴",
+    "github_section_title": "GitHub",
+    "feature_request_button": "機能をリクエストする",
+    "feature_request_hint": "スマートフォンでスキャンするか、ボタンを押してブラウザで開く",
+    "bug_report_button": "バグを報告する",
+    "bug_report_hint": "スマートフォンでスキャンするか、ボタンを押してブラウザで開く",
     "reset_title": "リセット",
     "clean_custom_wrappers": "カスタムラッパーを消去",
     "clean_custom_variables": "カスタムコマンドを消去",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "カスタムコマンドを消去",
     "clean_custom_variables_confirm_description": "すべてのカスタムコマンドを削除しますか？この操作は元に戻せません。",
     "hide_variables_page": "「変数一覧」ページを非表示にする",
-    "show_active_section": "有効なコマンドを上部に表示"
+    "show_active_section": "有効なコマンドを上部に表示",
+    "images_title": "画像",
+    "cover_image_type_portrait": "カバー（縦長）",
+    "cover_image_type_landscape": "ワイドカバー（横長）",
+    "cover_image_type_banner": "バナー（超横長）",
+    "purge_image_cache": "画像キャッシュを消去",
+    "purge_image_cache_done": "画像キャッシュを消去しました。次回ゲーム一覧を開いたときにカバー画像が再読み込みされます。",
+    "support_section_title": "サポート",
+    "kofi_button": "Ko-fiで応援する",
+    "kofi_hint": "スマートフォンでスキャンするか、押してブラウザで開く",
+    "other_plugins_section_title": "他のプラグイン",
+    "kofi_description": "このプラグインは無料で、これからも無料です。それでも応援したいと思ったら、コーヒー一杯でも力になります。"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -127,6 +143,7 @@
     "error_save": "保存エラー",
     "configured": "設定済み",
     "legend_ready": "プロファイル有効 · wrapper インストール済",
+    "legend_configured_globally": "プロファイルなし · グローバルコマンド有効",
     "legend_configured": "プロファイル有効 · wrapper 未インストール",
     "script_outdated": "スクリプトの更新が必要です。変更を適用するには再インストールしてください。",
     "reinstall_script": "スクリプトを再インストール",
@@ -148,9 +165,10 @@
     "global_active_hint": "グローバルコマンドで有効",
     "global_disabled_hint": "このゲームでは無効 — グローバルでは引き続き有効",
     "global_commands": "グローバルコマンド",
-    "group_ready": "準備完了",
-    "group_wrapper_only": "Wrapperのみ(コマンドなし)",
-    "group_configured": "コマンドのみ(Wrapperなし)",
+    "group_ready": "ゲームごとの設定",
+    "group_configured_globally": "グローバル設定済み",
+    "group_wrapper_only": "Wrapper(未設定)",
+    "group_configured": "設定済み(Wrapperなし)",
     "group_none": "未設定"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "「{{wrapper_name}}」を削除しますか？"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "バージョン0.16.0の新機能",
+      "items": [
+        "ゲームリストに新しいカテゴリ「グローバルに設定済み」を追加：独自の設定はないが、有効なグローバルコマンドが少なくとも1つ適用されているゲームをまとめて表示",
+        "分かりやすくするためカテゴリ名を変更：「準備完了」は「ゲームごとの設定」に、「ラッパーなしのコマンド」は「ラッパーなしで設定済み」に、「コマンドなしのラッパー」は「ラッパー未設定」に変更",
+        "「画像」に新しい設定を追加：ゲームリストに表示するカバー画像の形式（縦長、横長、バナー）を選択可能に。画像キャッシュを消去するボタンも追加",
+        "選択した形式の画像がゲームに存在しない場合、間違った形式の画像の代わりに専用アイコンを表示",
+        "設定に新しい「他のプラグイン」セクションを追加：新しいプラグインが利用可能になると通知され、説明・画像・ワンクリックインストール・GitHubリンクを表示",
+        "応援したい方向けに、Ko-fiを紹介する新しい「サポート」セクションを追加",
+        "設定を整理（GitHub、画像、サポートをより論理的にグループ化）",
+        "ラッパースクリプトからデバッグ用の「launching:」ログ行を削除",
+        "修正：唯一のカスタムコマンドが有効なグローバルコマンドと完全に一致するゲームが、誤って「ゲームごとに設定済み」と分類される不具合を修正"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "特定のバージョンをインストール",
     "no_releases": "リリースが見つかりません",
     "already_installed": "インストール済み（{{version}}）"
+  },
+  "other_plugins": {
+    "banner_title_one": "新しいプラグインが利用可能です！",
+    "banner_title_other": "新しいプラグインが利用可能です！",
+    "open_settings": "設定を開く",
+    "install_latest": "最新バージョンをインストール",
+    "installing": "インストール中…",
+    "install_failed": "最新バージョンを取得できませんでした。後でもう一度お試しください。",
+    "view_on_github": "GitHubで見る"
   }
 }

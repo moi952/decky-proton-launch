@@ -14,7 +14,7 @@ from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_s
 from .profile import (
     profiles_dir, script_path, legacy_script_path, profile_path, write_profile,
     read_profile, read_profile_full, write_global_profile, read_global_profile,
-    remove_env_keys_from_profiles,
+    remove_env_keys_from_profiles, real_commands,
 )
 from .launch_option import (
     LAUNCH_OPTION,
@@ -98,7 +98,7 @@ class Plugin(PluginUpdaterMixin):
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v8"
+    SCRIPT_VERSION = "v9"
 
     def _wrapper_chains(self) -> List[Dict[str, str]]:
         """(env, exec) pairs to chain to — from "wrappers_exec" in the cached
@@ -236,12 +236,10 @@ class Plugin(PluginUpdaterMixin):
                 "    while IFS='=' read -r WRAPPER_ENV WRAPPER_EXEC || [ -n \"${WRAPPER_ENV}\" ]; do\n"
                 "        [ -z \"${WRAPPER_ENV}\" ] && continue\n"
                 "        if [ \"${!WRAPPER_ENV}\" = \"1\" ] && [ -x \"${WRAPPER_EXEC}\" ]; then\n"
-                "            echo \"[proton-launch] launching: ${WRAPPER_EXEC} $*\" >> \"${LOG}\"\n"
                 "            exec \"${WRAPPER_EXEC}\" \"$@\"\n"
                 "        fi\n"
                 "    done < \"${CHAINS}\"\n"
                 "fi\n"
-                "echo \"[proton-launch] launching: $*\" >> \"${LOG}\"\n"
                 "exec \"$@\"\n",
                 encoding="utf-8",
             )
@@ -303,6 +301,25 @@ class Plugin(PluginUpdaterMixin):
 
     async def get_global_profile(self) -> Dict[str, str]:
         return read_global_profile()
+
+    async def get_disabled_globals_map(self) -> Dict[str, List[str]]:
+        """appid (string) -> globally-active env keys this specific game
+        opted out of. Lets the games list tell apart a game that's truly
+        reached by an active global command from one that disabled every
+        global key that would otherwise apply — the latter isn't
+        meaningfully "configured globally" even while globals are active
+        for other games, so this can't be a single yes/no flag."""
+        result: Dict[str, List[str]] = {}
+        try:
+            for p in profiles_dir().glob("*.env"):
+                if not p.stem.isdigit():
+                    continue
+                _, disabled = read_profile_full(int(p.stem))
+                if disabled:
+                    result[p.stem] = disabled
+        except Exception as e:
+            decky.logger.error(f"[get_disabled_globals_map] {e}")
+        return result
 
     async def set_global_profile(self, env_vars: Dict[str, str]) -> bool:
         try:
@@ -391,20 +408,35 @@ class Plugin(PluginUpdaterMixin):
 
     async def get_configured_apps(self) -> List[int]:
         try:
+            # A profile file can exist purely to record disabled-globals
+            # ("unset KEY" lines) for a game with no real export of its
+            # own — that's not a per-game configuration, just an opt-out
+            # from the global one, so it must not count as "configured"
+            # here. Same for an export that merely mirrors the current
+            # global value for that key (see real_commands) — it's not a
+            # genuine per-game override, just a coincidental match.
+            global_vars = read_global_profile()
             return [
-                int(p.stem)
+                app_id
                 for p in profiles_dir().glob("*.env")
                 if p.stem.isdigit()
+                for app_id in [int(p.stem)]
+                if real_commands(read_profile(app_id), global_vars)
             ]
         except Exception:
             return []
 
     async def get_configured_apps_status(self) -> List[Dict[str, Any]]:
         try:
+            # Same "real, non-global-mirroring export lines only" filter
+            # as get_configured_apps — see the comment there.
+            global_vars = read_global_profile()
             app_ids = [
-                int(p.stem)
+                app_id
                 for p in profiles_dir().glob("*.env")
                 if p.stem.isdigit()
+                for app_id in [int(p.stem)]
+                if real_commands(read_profile(app_id), global_vars)
             ]
             if not app_ids:
                 return []
@@ -586,87 +618,88 @@ class Plugin(PluginUpdaterMixin):
     async def get_shortcut_cover(self, app_id: int) -> str:
         return await self.get_game_cover(app_id)
 
-    async def get_game_cover(self, app_id: int) -> str:
-        EXTS = ("jpg", "jpeg", "png", "webp")
+    COVER_IMAGE_TYPES = ("portrait", "landscape", "banner")
+    _COVER_EXTS = ("jpg", "jpeg", "png", "webp")
 
+    def _cover_candidates(self, app_id: int, image_type: str) -> List[Path]:
+        """Ordered candidate paths for one explicit cover-art type, by
+        location/naming SLOT — not by reading each file's real pixel
+        dimensions. This deliberately matches how Steam's own client (and
+        decky-steamgriddb, which drives it through
+        SteamClient.Apps.SetCustomArtworkForApp/eAssetType) treats these
+        slots: grid_p(0)="p" suffix, hero(1)="_hero", grid_l(3)=bare — it
+        shows whatever's stored in a slot as that slot's art regardless of
+        the file's actual shape, so a game whose "Wide Capsule" happens to
+        contain a portrait-shaped image still shows up as its current wide
+        capsule there. A previous version here second-guessed the slot by
+        classifying each file's real ratio instead, which just meant this
+        plugin silently disagreed with what SteamGridDB itself reports as
+        the current asset for that type."""
+        if image_type == "portrait":
+            grid_suffix, cache_suffix = "p", "_library_600x900"
+        elif image_type == "banner":
+            grid_suffix, cache_suffix = "_hero", "_library_hero"
+        else:
+            grid_suffix, cache_suffix = "", "_header"
+
+        paths: List[Path] = []
+        for user_dir in get_user_dirs():
+            grid = user_dir / "config" / "grid"
+            for ext in self._COVER_EXTS:
+                paths.append(grid / f"{app_id}{grid_suffix}.{ext}")
+
+        for steam_root in get_steam_roots():
+            librarycache = steam_root / "appcache" / "librarycache"
+            for ext in self._COVER_EXTS:
+                paths.append(librarycache / f"{app_id}{cache_suffix}.{ext}")
+            if image_type == "landscape":
+                app_cache_dir = librarycache / str(app_id)
+                if app_cache_dir.is_dir():
+                    for ext in self._COVER_EXTS:
+                        paths.append(app_cache_dir / f"header.{ext}")
+        return paths
+
+    async def get_game_cover(self, app_id: int, image_type: Optional[str] = None) -> str:
         def _read(path: Path) -> Optional[str]:
-            if not path.is_file():
-                return None
             ext = path.suffix.lstrip(".")
             mime = "image/jpeg" if ext in ("jpg", "jpeg") else f"image/{ext}"
             encoded = base64.b64encode(path.read_bytes()).decode("ascii")
             return f"data:{mime};base64,{encoded}"
 
         try:
-            for user_dir in get_user_dirs():
-                grid = user_dir / "config" / "grid"
-                if not grid.is_dir():
-                    continue
-                for suffix in ("", "_header"):
-                    for ext in EXTS:
-                        result = _read(grid / f"{app_id}{suffix}.{ext}")
-                        if result:
-                            return result
-                for ext in EXTS:
-                    path = grid / f"{app_id}_hero.{ext}"
-                    if path.is_file() and is_horizontal(path):
-                        result = _read(path)
-                        if result:
-                            return result
-                originals = grid / "originals"
-                if originals.is_dir():
-                    for suffix in ("", "_header"):
-                        for ext in EXTS:
-                            result = _read(originals / f"{app_id}{suffix}.{ext}")
-                            if result:
-                                return result
+            # image_type: an explicit override for a caller that always
+            # wants one specific slot regardless of the user's Settings
+            # choice (the game detail page's own header image is always
+            # "landscape", independent of what the games-list rows show —
+            # see GameCover.tsx). Omitted (None), it falls back to the
+            # user's actual preference, same as every list row.
+            preferred = image_type
+            if preferred not in self.COVER_IMAGE_TYPES:
+                settings = await self.get_ui_settings()
+                preferred = settings.get("coverImageType", "landscape")
+                if preferred not in self.COVER_IMAGE_TYPES:
+                    preferred = "landscape"
 
-            for steam_root in get_steam_roots():
-                app_cache_dir = steam_root / "appcache" / "librarycache" / str(app_id)
-                if not app_cache_dir.is_dir():
+            # No cross-type fallback (landscape asked, banner shown
+            # instead, ...) — a game showing a differently-shaped cover
+            # than its neighbors just because it lacks the exact requested
+            # type looked like a bug, not a helpful substitute. An empty
+            # result here means "this game has no art in the requested
+            # slot", and the frontend shows an explicit placeholder for
+            # that instead of silently rendering a mismatched one.
+            for path in self._cover_candidates(app_id, preferred):
+                if not path.is_file():
                     continue
-                for name in ("header", "library_header"):
-                    for ext in EXTS:
-                        path = app_cache_dir / f"{name}.{ext}"
-                        if path.is_file() and is_horizontal(path):
-                            result = _read(path)
-                            if result:
-                                return result
-                subdirs = sorted(d for d in app_cache_dir.iterdir() if d.is_dir())
-                for name in ("header", "library_header"):
-                    for subdir in subdirs:
-                        for ext in EXTS:
-                            path = subdir / f"{name}.{ext}"
-                            if path.is_file() and is_horizontal(path):
-                                result = _read(path)
-                                if result:
-                                    return result
-                for subdir in subdirs:
-                    for img in sorted(subdir.iterdir()):
-                        if img.suffix.lower().lstrip(".") in EXTS and img.is_file():
-                            if is_horizontal(img):
-                                result = _read(img)
-                                if result:
-                                    return result
+                result = _read(path)
+                if result:
+                    decky.logger.info(
+                        f"[get_game_cover] appid={app_id} preferred={preferred} path={path}"
+                    )
+                    return result
 
-            for steam_root in get_steam_roots():
-                librarycache = steam_root / "appcache" / "librarycache"
-                if not librarycache.is_dir():
-                    continue
-                for suffix in ("_header", "_library_hero"):
-                    for ext in EXTS:
-                        path = librarycache / f"{app_id}{suffix}.{ext}"
-                        if path.is_file() and is_horizontal(path):
-                            result = _read(path)
-                            if result:
-                                return result
-                for ext in EXTS:
-                    path = librarycache / f"{app_id}.{ext}"
-                    if path.is_file() and is_horizontal(path):
-                        result = _read(path)
-                        if result:
-                            return result
-
+            decky.logger.info(
+                f"[get_game_cover] appid={app_id} preferred={preferred} -> no cover found"
+            )
             return ""
         except Exception as e:
             decky.logger.error(f"[get_game_cover] {app_id}: {e}")
@@ -780,6 +813,7 @@ class Plugin(PluginUpdaterMixin):
             path = self._settings_path()
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            decky.logger.info(f"[set_ui_settings] saved coverImageType={data.get('coverImageType')}")
             return True
         except Exception as e:
             decky.logger.error(f"[set_ui_settings] {e}")
@@ -946,6 +980,28 @@ class Plugin(PluginUpdaterMixin):
             return True
         except Exception as e:
             decky.logger.error(f"[set_whats_new_seen_version] {e}")
+            return False
+
+    def _other_plugins_seen_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "other_plugins_seen.json"
+
+    async def get_other_plugins_seen_ids(self) -> List[str]:
+        try:
+            path = self._other_plugins_seen_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8")).get("ids", [])
+        except Exception as e:
+            decky.logger.error(f"[get_other_plugins_seen_ids] {e}")
+        return []
+
+    async def set_other_plugins_seen_ids(self, ids: List[str]) -> bool:
+        try:
+            path = self._other_plugins_seen_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps({"ids": ids}), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_other_plugins_seen_ids] {e}")
             return False
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────

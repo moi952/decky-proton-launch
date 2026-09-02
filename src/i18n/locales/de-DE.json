@@ -72,6 +72,11 @@
     "force_refresh": "Aktualisierung erzwingen",
     "data_title": "Daten",
     "whats_new_history": "Update-Verlauf",
+    "github_section_title": "GitHub",
+    "feature_request_button": "Funktion anfragen",
+    "feature_request_hint": "Mit dem Handy scannen, oder drücken, um im Browser zu öffnen",
+    "bug_report_button": "Fehler melden",
+    "bug_report_hint": "Mit dem Handy scannen, oder drücken, um im Browser zu öffnen",
     "reset_title": "Zurücksetzen",
     "clean_custom_wrappers": "Benutzerdefinierte Wrapper leeren",
     "clean_custom_variables": "Benutzerdefinierte Befehle leeren",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "Benutzerdefinierte Befehle leeren",
     "clean_custom_variables_confirm_description": "Alle benutzerdefinierten Befehle löschen? Dies kann nicht rückgängig gemacht werden.",
     "hide_variables_page": "Seite „Variablenliste“ ausblenden",
-    "show_active_section": "Aktive Befehle oben anzeigen"
+    "show_active_section": "Aktive Befehle oben anzeigen",
+    "images_title": "Bilder",
+    "cover_image_type_portrait": "Cover (Hochformat)",
+    "cover_image_type_landscape": "Breites Cover (Querformat)",
+    "cover_image_type_banner": "Banner (ultrabreit)",
+    "purge_image_cache": "Bild-Cache leeren",
+    "purge_image_cache_done": "Bild-Cache geleert — Cover werden beim nächsten Öffnen der Spieleliste neu geladen.",
+    "support_section_title": "Unterstützung",
+    "kofi_button": "Unterstütz mich auf Ko-fi",
+    "kofi_hint": "Mit dem Handy scannen oder drücken, um im Browser zu öffnen",
+    "other_plugins_section_title": "Meine anderen Plugins",
+    "kofi_description": "Dieses Plugin ist kostenlos und bleibt es auch. Wenn du trotzdem eine Kleinigkeit beisteuern möchtest, hilft jeder Kaffee."
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -127,6 +143,7 @@
     "error_save": "Speicherfehler",
     "configured": "konfiguriert",
     "legend_ready": "Aktives Profil · Wrapper installiert",
+    "legend_configured_globally": "Kein Profil · globale Befehle aktiv",
     "legend_configured": "Aktives Profil · Wrapper fehlt",
     "script_outdated": "Skript-Update erforderlich. Neu installieren, um Änderungen anzuwenden.",
     "reinstall_script": "Skript neu installieren",
@@ -148,9 +165,10 @@
     "global_active_hint": "Durch globale Befehle aktiviert",
     "global_disabled_hint": "Für dieses Spiel deaktiviert — global weiterhin aktiv",
     "global_commands": "Globale Befehle",
-    "group_ready": "Bereit",
-    "group_wrapper_only": "Wrapper, keine Befehle",
-    "group_configured": "Befehle, kein Wrapper",
+    "group_ready": "Konfiguration pro Spiel",
+    "group_configured_globally": "Global konfiguriert",
+    "group_wrapper_only": "Wrapper, nicht konfiguriert",
+    "group_configured": "Konfiguriert, ohne Wrapper",
     "group_none": "Nicht konfiguriert"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "Neuigkeiten in Version 0.16.0",
+      "items": [
+        "Neue Kategorie \"Global konfiguriert\" in der Spieleliste: fasst Spiele ohne eigene Konfiguration zusammen, die aber von mindestens einem aktiven globalen Befehl erreicht werden",
+        "Kategorien zur besseren Klarheit umbenannt: \"Bereit\" heißt jetzt \"Pro-Spiel-Konfiguration\", \"Befehl ohne Wrapper\" heißt jetzt \"Konfiguriert ohne Wrapper\", \"Wrapper ohne Befehl\" heißt jetzt \"Wrapper nicht konfiguriert\"",
+        "Neue Einstellung unter Bilder: Wähle das Format des in der Spieleliste angezeigten Covers (Hochformat, breit oder Banner), mit einem Button zum Leeren des Bild-Caches",
+        "Wenn für ein Spiel kein Bild im gewählten Format existiert, wird ein eigenes Symbol angezeigt statt eines Bildes im falschen Format",
+        "Neuer Bereich \"Meine anderen Plugins\" in den Einstellungen: Benachrichtigung, wenn ein neues Plugin verfügbar ist, mit Beschreibung, Bild, Installation mit einem Klick oder GitHub-Link",
+        "Neuer Bereich \"Unterstützung\", um dir mein Ko-fi anzusehen, falls du helfen möchtest",
+        "Einstellungen neu geordnet (GitHub, Bilder, Unterstützung logischer gruppiert)",
+        "Die Debug-Logzeilen \"launching:\" wurden aus dem Wrapper-Skript entfernt",
+        "Fehlerbehebung: Ein Spiel, dessen einziger eigener Befehl exakt einem aktiven globalen Befehl entspricht, wird nicht mehr fälschlich als \"pro Spiel konfiguriert\" eingestuft"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "Bestimmte Version installieren",
     "no_releases": "Keine Releases gefunden",
     "already_installed": "Bereits installiert ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "Neues Plugin verfügbar!",
+    "banner_title_other": "Neue Plugins verfügbar!",
+    "open_settings": "Zu den Einstellungen",
+    "install_latest": "Neueste Version installieren",
+    "installing": "Wird installiert …",
+    "install_failed": "Neueste Version konnte nicht abgerufen werden. Versuch es später erneut.",
+    "view_on_github": "Auf GitHub ansehen"
   }
 }

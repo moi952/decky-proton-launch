@@ -28,7 +28,10 @@ import { NowPlayingCard } from "./components/NowPlayingCard";
 import { PluginUpdateBanner } from "./components/PluginUpdate";
 import { usePluginUpdate } from "./context/PluginUpdateContext";
 import { markPluginUpdateExpanded } from "./utils/pluginUpdateFocus";
+import { markOtherPluginsExpanded } from "./utils/otherPluginsFocus";
+import { markFeatureRequestFocus } from "./utils/featureRequestFocus";
 import { WhatsNewBanner } from "./components/WhatsNewBanner";
+import { OtherPluginsBanner } from "./components/OtherPluginsBanner";
 import { GAME_GROUP_HEADER_STYLES } from "./components/GameGroupHeader";
 import { SteamGame, ScriptStatus } from "./data/types";
 
@@ -132,7 +135,14 @@ const App: React.FC = () => {
   if (view === "global-commands")
     return (
       <BackHandler onBack={goHome}>
-        {defaultHome === "global-commands" && <WhatsNewBanner />}
+        {defaultHome === "global-commands" && (
+          <WhatsNewBanner
+            onFeatureRequest={() => {
+              markFeatureRequestFocus();
+              setView("settings");
+            }}
+          />
+        )}
         <GlobalCommandsView onBack={goHome} />
       </BackHandler>
     );
@@ -173,7 +183,22 @@ const App: React.FC = () => {
           setView("settings");
         }}
       />
-      {isOnHome && <WhatsNewBanner />}
+      {isOnHome && (
+        <WhatsNewBanner
+          onFeatureRequest={() => {
+            markFeatureRequestFocus();
+            setView("settings");
+          }}
+        />
+      )}
+      {isOnHome && (
+        <OtherPluginsBanner
+          onOpenSettings={() => {
+            markOtherPluginsExpanded();
+            setView("settings");
+          }}
+        />
+      )}
       {noData && (
         <div style={{ margin: "4px 16px 0", padding: "6px 10px", background: "#3a0000", border: "1px solid #c00", borderRadius: "6px", fontSize: 11, color: "#ff6b6b" }}>
           {t("no_data")}

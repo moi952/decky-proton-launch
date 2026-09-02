@@ -157,3 +157,21 @@ def remove_env_keys_from_profiles(env_keys: List[str]) -> None:
         filtered = {k: v for k, v in env_vars.items() if k not in keys}
         name = _extract_game_name(path) or str(app_id)
         write_profile(app_id, filtered, name, disabled_globals)
+
+
+def real_commands(env_vars: Dict[str, str], global_vars: Dict[str, str]) -> Dict[str, str]:
+    """A per-game export whose value is byte-identical to what the global
+    profile already exports for that key isn't a genuine per-game
+    configuration — it's either a leftover duplicate from the old
+    GameDetailView bug, or a value the user deliberately pinned to match
+    global, and there's no way to tell those apart. Rather than guessing
+    and deleting the export (that used to run as an automatic migration
+    on every load and silently wiped a real per-game command that
+    happened to coincide with an active global value), this is a
+    read-only view used only for "is this game really configured"
+    purposes — the profile file itself is never touched, so nothing is
+    ever lost."""
+    return {
+        k: v for k, v in env_vars.items()
+        if not (k in global_vars and global_vars[k] == v)
+    }

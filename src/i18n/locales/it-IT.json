@@ -72,6 +72,11 @@
     "force_refresh": "Forza aggiornamento",
     "data_title": "Dati",
     "whats_new_history": "Cronologia aggiornamenti",
+    "github_section_title": "GitHub",
+    "feature_request_button": "Richiedi una funzionalità",
+    "feature_request_hint": "Scansiona con il telefono, oppure premi per aprire nel browser",
+    "bug_report_button": "Segnala un bug",
+    "bug_report_hint": "Scansiona con il telefono, oppure premi per aprire nel browser",
     "reset_title": "Ripristino",
     "clean_custom_wrappers": "Pulisci wrapper personalizzati",
     "clean_custom_variables": "Pulisci comandi personalizzati",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "Pulisci comandi personalizzati",
     "clean_custom_variables_confirm_description": "Eliminare tutti i comandi personalizzati? Azione irreversibile.",
     "hide_variables_page": "Nascondi la pagina Elenco variabili",
-    "show_active_section": "Mostra i comandi attivi in alto"
+    "show_active_section": "Mostra i comandi attivi in alto",
+    "images_title": "Immagini",
+    "cover_image_type_portrait": "Copertina (verticale)",
+    "cover_image_type_landscape": "Copertina larga (orizzontale)",
+    "cover_image_type_banner": "Banner (ultra largo)",
+    "purge_image_cache": "Svuota la cache delle immagini",
+    "purge_image_cache_done": "Cache delle immagini svuotata — le copertine verranno ricaricate alla prossima apertura della lista giochi.",
+    "support_section_title": "Supporto",
+    "kofi_button": "Sostienimi su Ko-fi",
+    "kofi_hint": "Scansiona con il telefono, oppure premi per aprire nel browser",
+    "other_plugins_section_title": "I miei altri plugin",
+    "kofi_description": "Questo plugin è gratuito e lo rimarrà. Se vuoi comunque dare una mano, ogni caffè conta."
   },
   "launch_options_view": {
     "title": "Opzioni di avvio",
@@ -127,6 +143,7 @@
     "error_save": "Errore di salvataggio",
     "configured": "configurati",
     "legend_ready": "Profilo attivo · wrapper installato",
+    "legend_configured_globally": "Nessun profilo · comandi globali attivi",
     "legend_configured": "Profilo attivo · wrapper assente",
     "script_outdated": "Aggiornamento script richiesto. Reinstalla per applicare le modifiche.",
     "reinstall_script": "Reinstalla script",
@@ -148,9 +165,10 @@
     "global_active_hint": "Attivato dai comandi globali",
     "global_disabled_hint": "Disattivato per questo gioco — ancora attivo globalmente",
     "global_commands": "Comandi globali",
-    "group_ready": "Pronti",
-    "group_wrapper_only": "Wrapper, nessun comando",
-    "group_configured": "Comandi, nessun wrapper",
+    "group_ready": "Configurazione per gioco",
+    "group_configured_globally": "Configurato globalmente",
+    "group_wrapper_only": "Wrapper, non configurato",
+    "group_configured": "Configurato senza wrapper",
     "group_none": "Non configurati"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "Eliminare \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "Novità della versione 0.16.0",
+      "items": [
+        "Nuova categoria \"Configurato globalmente\" nella lista dei giochi: raggruppa i giochi senza una configurazione propria ma raggiunti da almeno un comando globale attivo",
+        "Categorie rinominate per maggiore chiarezza: \"Pronti\" diventa \"Configurazione per gioco\", \"Comando senza wrapper\" diventa \"Configurato senza wrapper\", \"Wrapper senza comando\" diventa \"Wrapper non configurato\"",
+        "Nuova impostazione in Immagini: scegli il formato di copertina mostrato nella lista dei giochi (verticale, largo o banner), con un pulsante per svuotare la cache delle immagini",
+        "Quando un gioco non ha un'immagine nel formato scelto, viene mostrata un'icona dedicata invece di un'immagine nel formato sbagliato",
+        "Nuova sezione \"I miei altri plugin\" nelle impostazioni: notifica quando è disponibile un nuovo plugin, con descrizione, immagine, installazione con un clic o link a GitHub",
+        "Nuova sezione \"Supporto\" per scoprire il mio Ko-fi se vuoi dare una mano",
+        "Impostazioni riorganizzate (GitHub, Immagini e Supporto raggruppati in modo più logico)",
+        "Rimosse le righe di log di debug \"launching:\" dallo script wrapper",
+        "Correzione: un gioco il cui unico comando personalizzato corrisponde esattamente a un comando globale attivo non viene più classificato erroneamente come \"configurato per gioco\""
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "Installa una versione specifica",
     "no_releases": "Nessuna release trovata",
     "already_installed": "Già installata ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "Nuovo plugin disponibile!",
+    "banner_title_other": "Nuovi plugin disponibili!",
+    "open_settings": "Vai alle impostazioni",
+    "install_latest": "Installa l'ultima versione",
+    "installing": "Installazione…",
+    "install_failed": "Impossibile recuperare l'ultima versione. Riprova più tardi.",
+    "view_on_github": "Vedi su GitHub"
   }
 }

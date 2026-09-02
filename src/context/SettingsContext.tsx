@@ -3,6 +3,8 @@ import { call } from "@decky/api";
 import { readLegacyArray, readLegacyString } from "../utils/legacyStorage";
 
 export type DefaultHome = "home" | "game-manager" | "global-commands";
+// Must match COVER_IMAGE_TYPES / the coverImageType default in plugin.py.
+export type CoverImageType = "portrait" | "landscape" | "banner";
 
 interface UiSettings {
   hiddenCategories?: string[];
@@ -11,6 +13,7 @@ interface UiSettings {
   showActiveSection?: boolean;
   showRawTechnicalValues?: boolean;
   collapsedGameGroups?: string[];
+  coverImageType?: CoverImageType;
 }
 
 // "Not configured" isn't tracked here at all — it always starts collapsed on
@@ -36,6 +39,8 @@ interface SettingsContextValue {
   collapsedGameGroups: Set<string>;
   toggleGameGroup: (status: string) => void;
   isGameGroupCollapsed: (status: string) => boolean;
+  coverImageType: CoverImageType;
+  setCoverImageType: (v: CoverImageType) => void;
   settingsLoaded: boolean;
 }
 
@@ -55,6 +60,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [collapsedGameGroups, setCollapsedGameGroups] = useState<Set<string>>(
     new Set(DEFAULT_COLLAPSED_GAME_GROUPS),
   );
+  const [coverImageType, setCoverImageTypeState] = useState<CoverImageType>("landscape");
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -87,6 +93,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       setCollapsedGameGroups(
         new Set(data.collapsedGameGroups ?? DEFAULT_COLLAPSED_GAME_GROUPS),
       );
+      setCoverImageTypeState(data.coverImageType ?? "landscape");
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
@@ -111,6 +118,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     showActiveSection?: boolean;
     showRawTechnicalValues?: boolean;
     collapsedGameGroups?: Set<string>;
+    coverImageType?: CoverImageType;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
@@ -119,6 +127,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       showActiveSection: next.showActiveSection ?? showActiveSection,
       showRawTechnicalValues: next.showRawTechnicalValues ?? showRawTechnicalValues,
       collapsedGameGroups: [...(next.collapsedGameGroups ?? collapsedGameGroups)],
+      coverImageType: next.coverImageType ?? coverImageType,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -170,6 +179,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const isGameGroupCollapsed = (status: string) => collapsedGameGroups.has(status);
 
+  const setCoverImageType = (v: CoverImageType) => {
+    setCoverImageTypeState(v);
+    persist({ coverImageType: v });
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -187,6 +201,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         collapsedGameGroups,
         toggleGameGroup,
         isGameGroupCollapsed,
+        coverImageType,
+        setCoverImageType,
         settingsLoaded,
       }}
     >

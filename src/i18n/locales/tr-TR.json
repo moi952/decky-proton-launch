@@ -72,6 +72,11 @@
     "force_refresh": "Yenilemeyi zorla",
     "data_title": "Veri",
     "whats_new_history": "Güncelleme geçmişi",
+    "github_section_title": "GitHub",
+    "feature_request_button": "Özellik iste",
+    "feature_request_hint": "Telefonunuzla tarayın veya tarayıcıda açmak için basın",
+    "bug_report_button": "Hata bildir",
+    "bug_report_hint": "Telefonunuzla tarayın veya tarayıcıda açmak için basın",
     "reset_title": "Sıfırlama",
     "clean_custom_wrappers": "Özel sarmalayıcıları temizle",
     "clean_custom_variables": "Özel komutları temizle",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "Özel komutları temizle",
     "clean_custom_variables_confirm_description": "Tüm özel komutlar silinsin mi? Bu işlem geri alınamaz.",
     "hide_variables_page": "Değişken listesi sayfasını gizle",
-    "show_active_section": "Etkin komutları üstte göster"
+    "show_active_section": "Etkin komutları üstte göster",
+    "images_title": "Görseller",
+    "cover_image_type_portrait": "Kapak (dikey)",
+    "cover_image_type_landscape": "Geniş kapak (yatay)",
+    "cover_image_type_banner": "Afiş (ultra geniş)",
+    "purge_image_cache": "Görsel önbelleğini temizle",
+    "purge_image_cache_done": "Görsel önbelleği temizlendi — kapaklar oyun listesini bir sonraki açışınızda yeniden yüklenecek.",
+    "support_section_title": "Destek",
+    "kofi_button": "Ko-fi'de beni destekle",
+    "kofi_hint": "Telefonunla tara veya tarayıcıda açmak için bas",
+    "other_plugins_section_title": "Diğer eklentilerim",
+    "kofi_description": "Bu eklenti ücretsiz ve öyle kalacak. Yine de bir elini taşın altına koymak istersen, her kahve bir işe yarar."
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -125,6 +141,7 @@
     "profile_deleted": "Profil silindi",
     "error_save": "Kaydetme hatası",
     "legend_ready": "Aktif profil · wrapper kurulu",
+    "legend_configured_globally": "Profil yok · genel komutlar aktif",
     "legend_configured": "Aktif profil · wrapper yok",
     "script_outdated": "Komut dosyası güncellemesi gerekiyor. Değişiklikleri uygulamak için yeniden yükleyin.",
     "reinstall_script": "Komut dosyasını yeniden yükle",
@@ -146,9 +163,10 @@
     "global_active_hint": "Genel komutlarla etkinleştirildi",
     "global_disabled_hint": "Bu oyun için devre dışı — genelde hâlâ etkin",
     "global_commands": "Genel komutlar",
-    "group_ready": "Hazır",
-    "group_wrapper_only": "Wrapper, komut yok",
-    "group_configured": "Komutlar, wrapper yok",
+    "group_ready": "Oyuna özel yapılandırma",
+    "group_configured_globally": "Genel olarak yapılandırıldı",
+    "group_wrapper_only": "Wrapper, yapılandırılmamış",
+    "group_configured": "Wrapper olmadan yapılandırıldı",
     "group_none": "Yapılandırılmamış"
   },
   "global_commands_view": {
@@ -172,6 +190,20 @@
     "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "0.16.0 sürümündeki yenilikler",
+      "items": [
+        "Oyun listesinde yeni \"Genel olarak yapılandırıldı\" kategorisi: kendi yapılandırması olmayan ama yine de en az bir etkin genel komuta ulaşan oyunları gruplar",
+        "Netlik için kategoriler yeniden adlandırıldı: \"Hazır\" artık \"Oyun bazında yapılandırma\", \"Sarmalayıcısız komut\" artık \"Sarmalayıcısız yapılandırıldı\", \"Komutsuz sarmalayıcı\" artık \"Sarmalayıcı yapılandırılmadı\"",
+        "Görseller'de yeni bir ayar: oyun listesinde gösterilen kapak formatını seç (dikey, geniş veya afiş), görsel önbelleğini temizleyen bir düğmeyle birlikte",
+        "Bir oyunun seçilen formatta görseli yoksa, yanlış formatta bir görsel yerine özel bir simge gösterilir",
+        "Ayarlar'da yeni \"Diğer eklentilerim\" bölümü: yeni bir eklenti mevcut olduğunda bildirim, açıklama, görsel, tek tıkla kurulum veya GitHub bağlantısıyla birlikte",
+        "Yardım etmek istersen Ko-fi'ıma göz atabileceğin yeni bir \"Destek\" bölümü",
+        "Ayarlar yeniden düzenlendi (GitHub, Görseller ve Destek daha mantıklı şekilde gruplandı)",
+        "Sarmalayıcı betiğinden hata ayıklama amaçlı \"launching:\" günlük satırları kaldırıldı",
+        "Düzeltme: tek özel komutu etkin bir genel komutla tam olarak eşleşen bir oyun artık yanlışlıkla \"oyun bazında yapılandırıldı\" olarak sınıflandırılmıyor"
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -273,5 +305,14 @@
     "choose_version_label": "Belirli bir sürüm yükle",
     "no_releases": "Sürüm bulunamadı",
     "already_installed": "Zaten yüklü ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "Yeni eklenti mevcut!",
+    "banner_title_other": "Yeni eklentiler mevcut!",
+    "open_settings": "Ayarlara git",
+    "install_latest": "En son sürümü yükle",
+    "installing": "Yükleniyor…",
+    "install_failed": "En son sürüm alınamadı. Daha sonra tekrar dene.",
+    "view_on_github": "GitHub'da görüntüle"
   }
 }

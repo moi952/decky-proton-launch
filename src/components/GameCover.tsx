@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { call } from "@decky/api";
 import { FaSteam } from "react-icons/fa";
 import { SteamGame } from "../data/types";
-import { getCachedCover, setCachedCover } from "../utils/coverCache";
+import { getCachedCover, setCachedCover, useCoverCacheVersion } from "../utils/coverCache";
 
 interface GameCoverProps {
   game: SteamGame;
@@ -10,20 +10,24 @@ interface GameCoverProps {
 
 export const GameCover: React.FC<GameCoverProps> = ({ game }) => {
   const [cover, setCover] = useState<string | null>(null);
+  const cacheVersion = useCoverCacheVersion();
 
   useEffect(() => {
-    const cached = getCachedCover(game.appid);
+    // Always the wide "landscape" header image, independent of whatever
+    // cover type the games list is currently showing (see Settings) —
+    // the detail page's own header keeps one consistent look regardless.
+    const cached = getCachedCover(game.appid, "landscape");
     if (cached !== undefined) {
       if (cached) setCover(cached);
       return;
     }
-    call<[number], string>("get_game_cover", game.appid).then((url) => {
+    call<[number, string], string>("get_game_cover", game.appid, "landscape").then((url) => {
       if (url) {
-        setCachedCover(game.appid, url);
+        setCachedCover(game.appid, "landscape", url);
         setCover(url);
       }
     });
-  }, [game.appid]);
+  }, [game.appid, cacheVersion]);
 
   if (!cover) return null;
 

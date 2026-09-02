@@ -72,6 +72,11 @@
     "force_refresh": "Force refresh",
     "data_title": "Data",
     "whats_new_history": "Update history",
+    "github_section_title": "GitHub",
+    "feature_request_button": "Request a feature",
+    "feature_request_hint": "Scan with your phone, or press to open in your browser",
+    "bug_report_button": "Report a bug",
+    "bug_report_hint": "Scan with your phone, or press to open in your browser",
     "reset_title": "Reset",
     "clean_custom_wrappers": "Clean custom wrappers",
     "clean_custom_variables": "Clean custom commands",
@@ -80,7 +85,18 @@
     "clean_custom_variables_confirm_title": "Clean Custom Commands",
     "clean_custom_variables_confirm_description": "Delete all custom commands? This can't be undone.",
     "hide_variables_page": "Hide Variable list page",
-    "show_active_section": "Show active commands at the top"
+    "show_active_section": "Show active commands at the top",
+    "images_title": "Images",
+    "cover_image_type_portrait": "Cover (portrait)",
+    "cover_image_type_landscape": "Wide cover (landscape)",
+    "cover_image_type_banner": "Banner (ultra-wide)",
+    "purge_image_cache": "Clear image cache",
+    "purge_image_cache_done": "Image cache cleared — covers will reload next time you open the games list.",
+    "support_section_title": "Support",
+    "kofi_button": "Support me on Ko-fi",
+    "kofi_hint": "Scan with your phone, or press to open in your browser",
+    "other_plugins_section_title": "My other plugins",
+    "kofi_description": "This plugin is free and always will be. If you'd still like to lend a hand, every coffee helps."
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -127,6 +143,7 @@
     "error_save": "Save error",
     "configured": "configured",
     "legend_ready": "Active profile · wrapper installed",
+    "legend_configured_globally": "No profile · global commands active",
     "legend_configured": "Active profile · wrapper missing",
     "script_outdated": "Script update required. Reinstall to apply changes.",
     "reinstall_script": "Reinstall script",
@@ -148,9 +165,10 @@
     "global_active_hint": "Enabled by global commands",
     "global_disabled_hint": "Disabled for this game — still active globally",
     "global_commands": "Global commands",
-    "group_ready": "Ready",
-    "group_wrapper_only": "Wrapper, no commands",
-    "group_configured": "Commands, no wrapper",
+    "group_ready": "Per-game configuration",
+    "group_configured_globally": "Configured globally",
+    "group_wrapper_only": "Wrapper, not configured",
+    "group_configured": "Configured without wrapper",
     "group_none": "Not configured"
   },
   "global_commands_view": {
@@ -174,6 +192,20 @@
     "description": "Delete \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_0": {
+      "title": "What's new in 0.16.0",
+      "items": [
+        "New \"Configured globally\" category in the games list: groups games with no configuration of their own that still receive at least one active global command",
+        "Categories renamed for clarity: \"Ready\" is now \"Per-game configuration\", \"Command without wrapper\" is now \"Configured without wrapper\", \"Wrapper without command\" is now \"Wrapper not configured\"",
+        "New setting in Images: choose the cover image format shown in the games list (portrait, wide, or banner), with a button to clear the image cache",
+        "When a game has no art in the chosen format, a dedicated icon shows instead of an image in the wrong format",
+        "New \"My other plugins\" section in Settings: a notification when a new plugin is available, with description, image, one-click install, or a GitHub link",
+        "New \"Support\" section to check out my Ko-fi if you'd like to help out",
+        "Settings reorganized (GitHub, Images, Support grouped more logically)",
+        "Removed the debug \"launching:\" log lines from the wrapper script",
+        "Fix: a game whose only custom command exactly matches an active global command is no longer wrongly classified as \"configured per-game\""
+      ]
+    },
     "v0_15_0": {
       "title": "What's new in 0.15.0",
       "items": [
@@ -275,5 +307,14 @@
     "choose_version_label": "Install a specific version",
     "no_releases": "No releases found",
     "already_installed": "Already installed ({{version}})"
+  },
+  "other_plugins": {
+    "banner_title_one": "New plugin available!",
+    "banner_title_other": "New plugins available!",
+    "open_settings": "Go to Settings",
+    "install_latest": "Install latest version",
+    "installing": "Installing…",
+    "install_failed": "Couldn't fetch the latest release. Try again later.",
+    "view_on_github": "View on GitHub"
   }
 }
