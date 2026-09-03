@@ -192,6 +192,13 @@
     "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Neuigkeiten in Version 0.16.1",
+      "items": [
+        "Behoben: Auf manchen Installationen (PC, neuerer Steam-Client) wurde überhaupt kein Coverbild angezeigt — das Plugin sucht jetzt an allen Orten, an denen Steam sie tatsächlich speichert",
+        "Zuverlässigere Update-Prüfung (sowohl die eigene Update-Benachrichtigung als auch die Installationen unter \"Meine anderen Plugins\"): ist nicht mehr von der GitHub-API abhängig, die zeitweise limitiert sein konnte"
+      ]
+    },
     "v0_16_0": {
       "title": "Neuigkeiten in Version 0.16.0",
       "items": [

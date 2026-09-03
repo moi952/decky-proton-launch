@@ -192,6 +192,13 @@
     "description": "¿Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Novedades de la versión 0.16.1",
+      "items": [
+        "Corrección: en algunas instalaciones (PC, cliente de Steam más reciente), no se mostraba ninguna imagen de portada — el plugin ahora busca las imágenes en todos los lugares donde Steam realmente las guarda",
+        "Comprobación de actualizaciones más fiable (tanto la propia notificación de actualización como las instalaciones de \"Mis otros plugins\"): ya no depende de la API de GitHub, que podía verse limitada temporalmente"
+      ]
+    },
     "v0_16_0": {
       "title": "Novedades de la versión 0.16.0",
       "items": [

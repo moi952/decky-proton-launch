@@ -190,6 +190,13 @@
     "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "0.16.1 sürümündeki yenilikler",
+      "items": [
+        "Düzeltme: bazı kurulumlarda (PC, daha yeni Steam istemcisi) hiç kapak görseli gösterilmiyordu — eklenti artık Steam'in görselleri gerçekten sakladığı tüm konumları arıyor",
+        "Daha güvenilir güncelleme kontrolü (hem kendi güncelleme bildirimi hem de \"Diğer eklentilerim\" kurulumları): artık zaman zaman sınırlandırılabilen GitHub API'sine bağlı değil"
+      ]
+    },
     "v0_16_0": {
       "title": "0.16.0 sürümündeki yenilikler",
       "items": [

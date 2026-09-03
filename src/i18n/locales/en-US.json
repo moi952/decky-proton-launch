@@ -192,6 +192,13 @@
     "description": "Delete \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "What's new in 0.16.1",
+      "items": [
+        "Fix: on some installs (PC, newer Steam client), no cover image would show at all — the plugin now searches every location Steam actually stores them in",
+        "More reliable plugin-update checks (both the self-update notification and \"My other plugins\" installs): no longer depends on GitHub's API, which could get rate-limited"
+      ]
+    },
     "v0_16_0": {
       "title": "What's new in 0.16.0",
       "items": [

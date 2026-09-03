@@ -192,6 +192,13 @@
     "description": "Eliminare \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Novità della versione 0.16.1",
+      "items": [
+        "Corretto: su alcune installazioni (PC, client Steam più recente), non veniva mostrata alcuna immagine di copertina — il plugin ora cerca le immagini in tutti i punti in cui Steam le memorizza realmente",
+        "Controllo degli aggiornamenti più affidabile (sia la notifica di auto-aggiornamento che le installazioni da \"I miei altri plugin\"): non dipende più dall'API di GitHub, che poteva essere temporaneamente limitata"
+      ]
+    },
     "v0_16_0": {
       "title": "Novità della versione 0.16.0",
       "items": [

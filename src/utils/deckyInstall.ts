@@ -1,4 +1,6 @@
-import { releaseFromJson, PluginRelease } from "./githubReleases";
+import { call } from "@decky/api";
+
+import { PluginRelease } from "./githubReleases";
 
 // Decky Loader's own PluginInstallType enum — verified against
 // backend/decky_loader/browser.py in SteamDeckHomebrew/decky-loader. Only
@@ -53,17 +55,23 @@ const parseGitHubRepo = (repoUrl: string): { owner: string; repo: string } | nul
 };
 
 // Latest release for an arbitrary public GitHub repo (not just this
-// plugin's own) — same `releaseFromJson` shape githubReleases.ts already
-// uses for self-updates.
+// plugin's own) — resolved backend-side via resolve_other_plugin_release,
+// the same api.github.com-free lookup this plugin's own self-update uses
+// (see plugin_updater.py's resolve_latest_release), valid here too since
+// every plugin in moi952/decky-plugins' manifest shares the same
+// release.yml asset-naming convention. `parsed.repo` doubles as the
+// plugin name that convention needs (repo name == plugin.json "name" for
+// all of these).
 export const fetchLatestReleaseFor = async (repoUrl: string): Promise<PluginRelease | null> => {
   const parsed = parseGitHubRepo(repoUrl);
   if (!parsed) return null;
   try {
-    const res = await fetch(
-      `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/releases/latest`,
+    return await call<[string, string, string], PluginRelease | null>(
+      "resolve_other_plugin_release",
+      parsed.owner,
+      parsed.repo,
+      parsed.repo,
     );
-    if (!res.ok) return null;
-    return releaseFromJson(await res.json());
   } catch {
     return null;
   }

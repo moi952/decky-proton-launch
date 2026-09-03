@@ -1,12 +1,15 @@
+import { call } from "@decky/api";
 // @ts-ignore — replaced at build time by rollup with the content of plugin.json
 import manifest from "@decky/manifest";
 
-// Fetched directly from the frontend for the interactive Settings UI —
-// simpler and proven reliable here, unlike the backend curl check
-// (plugin_updater.py) used separately for the mount-time notification,
-// which needs to run before any UI even exists.
+// The interactive Settings UI's check now goes through the same backend
+// resolver plugin_updater.py's own mount-time notification uses
+// (check_plugin_update_now) — see fetchLatestReleaseInfo below — instead
+// of its own separate frontend fetch(), so both paths get the same
+// api.github.com-free resolution (see plugin_updater.py's own docstring
+// for why: the anonymous 60/hour/IP quota was getting exhausted fast with
+// every plugin doing its own check on every load).
 const REPO = "moi952/decky-proton-launch";
-const LATEST_RELEASE_URL = `https://api.github.com/repos/${REPO}/releases/latest`;
 const RELEASES_URL = `https://api.github.com/repos/${REPO}/releases?per_page=15`;
 const FALLBACK_RELEASE_URL = `https://github.com/${REPO}/releases/latest`;
 
@@ -87,20 +90,8 @@ const emptyInfo = (checkedOk: boolean): PluginUpdateInfo => ({
 
 export const fetchLatestReleaseInfo = async (): Promise<PluginUpdateInfo> => {
   try {
-    const res = await fetch(LATEST_RELEASE_URL);
-    if (!res.ok) return emptyInfo(false);
-    const release = releaseFromJson(await res.json());
-    if (!release) return emptyInfo(false);
-    return {
-      current_version: CURRENT_VERSION,
-      latest_version: release.version,
-      has_update: compareVersions(release.version, CURRENT_VERSION) > 0,
-      release_url: release.url,
-      asset_url: release.asset_url,
-      sha256: release.sha256,
-      plugin_display_name: PLUGIN_DISPLAY_NAME,
-      checked_ok: true,
-    };
+    const info = await call<[], PluginUpdateInfo>("check_plugin_update_now");
+    return info ?? emptyInfo(false);
   } catch {
     return emptyInfo(false);
   }

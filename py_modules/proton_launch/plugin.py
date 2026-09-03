@@ -23,7 +23,7 @@ from .launch_option import (
     migrate_legacy_shortcut_options, legacy_apps_with_wrapper,
     legacy_wrapper_still_referenced,
 )
-from .plugin_updater import PluginUpdaterMixin
+from .plugin_updater import PluginUpdaterMixin, resolve_latest_release
 
 
 # Valve's own compat tools (Proton builds, Steam Linux Runtime, redistributables)
@@ -634,13 +634,43 @@ class Plugin(PluginUpdaterMixin):
         capsule there. A previous version here second-guessed the slot by
         classifying each file's real ratio instead, which just meant this
         plugin silently disagreed with what SteamGridDB itself reports as
-        the current asset for that type."""
+        the current asset for that type.
+
+        Three on-disk layouts are checked, oldest-first, because different
+        Steam client versions use different ones and a game's art can be
+        cached under any depending on when it was fetched: flat
+        `librarycache/<appid>_<suffix>.ext` files (seen on SteamOS/Deck
+        installs); a per-appid `librarycache/<appid>/<name>.ext` folder;
+        and, one level deeper, `librarycache/<appid>/<hash>/<name>.ext` —
+        Steam content-hashes each cached asset into its own subfolder
+        whose name isn't predictable, and different asset types for the
+        same game can each end up in a *different* hash subfolder (all
+        three confirmed on a real desktop Bazzite install: two games there
+        had zero flat files and no direct-in-appid-folder files either —
+        every asset was one level deeper, split across 2-3 different hash
+        subfolders per game). Real filenames found there: library_600x900
+        .jpg and library_capsule.jpg (both seen for portrait, depending on
+        the game), library_hero.jpg (banner — not library_hero_blur.jpg,
+        that's a separate blurred variant), header.jpg and
+        library_header.jpg (both seen for landscape)."""
         if image_type == "portrait":
-            grid_suffix, cache_suffix = "p", "_library_600x900"
+            grid_suffix, cache_suffix, cache_dir_names = (
+                "p",
+                "_library_600x900",
+                ("library_600x900", "library_capsule"),
+            )
         elif image_type == "banner":
-            grid_suffix, cache_suffix = "_hero", "_library_hero"
+            grid_suffix, cache_suffix, cache_dir_names = (
+                "_hero",
+                "_library_hero",
+                ("library_hero",),
+            )
         else:
-            grid_suffix, cache_suffix = "", "_header"
+            grid_suffix, cache_suffix, cache_dir_names = (
+                "",
+                "_header",
+                ("header", "library_header"),
+            )
 
         paths: List[Path] = []
         for user_dir in get_user_dirs():
@@ -652,11 +682,17 @@ class Plugin(PluginUpdaterMixin):
             librarycache = steam_root / "appcache" / "librarycache"
             for ext in self._COVER_EXTS:
                 paths.append(librarycache / f"{app_id}{cache_suffix}.{ext}")
-            if image_type == "landscape":
-                app_cache_dir = librarycache / str(app_id)
-                if app_cache_dir.is_dir():
-                    for ext in self._COVER_EXTS:
-                        paths.append(app_cache_dir / f"header.{ext}")
+            app_cache_dir = librarycache / str(app_id)
+            if app_cache_dir.is_dir():
+                search_dirs = [app_cache_dir]
+                try:
+                    search_dirs += [d for d in app_cache_dir.iterdir() if d.is_dir()]
+                except OSError:
+                    pass
+                for d in search_dirs:
+                    for name in cache_dir_names:
+                        for ext in self._COVER_EXTS:
+                            paths.append(d / f"{name}.{ext}")
         return paths
 
     async def get_game_cover(self, app_id: int, image_type: Optional[str] = None) -> str:
@@ -1003,6 +1039,18 @@ class Plugin(PluginUpdaterMixin):
         except Exception as e:
             decky.logger.error(f"[set_other_plugins_seen_ids] {e}")
             return False
+
+    async def resolve_other_plugin_release(
+        self, owner: str, repo: str, plugin_name: str
+    ) -> Optional[Dict[str, Any]]:
+        """Latest-release lookup for an arbitrary sibling plugin (see
+        OtherPluginsContext.tsx / deckyInstall.ts's fetchLatestReleaseFor)
+        — same api.github.com-free resolution check_plugin_update_now uses
+        for this plugin's own self-update, valid here too since every
+        plugin in moi952/decky-plugins' manifest is built from the same
+        release.yml template (same "<plugin_name>-<tag>.zip" asset
+        naming)."""
+        return await resolve_latest_release(f"{owner}/{repo}", plugin_name)
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────
 

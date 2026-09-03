@@ -192,6 +192,13 @@
     "description": "Usunąć „{{wrapper_name}}”?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Nowości w wersji 0.16.1",
+      "items": [
+        "Poprawka: na niektórych instalacjach (PC, nowszy klient Steam) w ogóle nie wyświetlał się obraz okładki — wtyczka teraz przeszukuje wszystkie miejsca, w których Steam faktycznie je przechowuje",
+        "Bardziej niezawodne sprawdzanie aktualizacji (zarówno powiadomienie o własnej aktualizacji, jak i instalacje z \"Moje inne wtyczki\"): nie zależy już od API GitHub, które mogło być czasowo limitowane"
+      ]
+    },
     "v0_16_0": {
       "title": "Co nowego w wersji 0.16.0",
       "items": [

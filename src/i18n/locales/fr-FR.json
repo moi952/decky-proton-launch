@@ -192,6 +192,13 @@
     "description": "Supprimer « {{wrapper_name}} » ?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Nouveautés de la version 0.16.1",
+      "items": [
+        "Correction : sur certaines installations (PC, client Steam plus récent), aucune image de couverture ne s'affichait — le plugin cherche maintenant les images à tous les emplacements où Steam les stocke réellement",
+        "Fiabilité améliorée pour la vérification des mises à jour (la mienne et celles de \"Mes autres plugins\") : ne dépend plus de l'API GitHub, qui pouvait être temporairement limitée"
+      ]
+    },
     "v0_16_0": {
       "title": "Nouveautés de la version 0.16.0",
       "items": [

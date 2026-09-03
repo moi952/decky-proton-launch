@@ -192,6 +192,13 @@
     "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
+    "v0_16_1": {
+      "title": "Nieuw in versie 0.16.1",
+      "items": [
+        "Opgelost: op sommige installaties (PC, nieuwere Steam-client) werd helemaal geen coverafbeelding getoond — de plugin zoekt nu op alle plekken waar Steam ze daadwerkelijk opslaat",
+        "Betrouwbaardere update-controle (zowel de eigen update-melding als installaties via \"Mijn andere plugins\"): is niet langer afhankelijk van de GitHub-API, die tijdelijk beperkt kon zijn"
+      ]
+    },
     "v0_16_0": {
       "title": "Nieuw in versie 0.16.0",
       "items": [
