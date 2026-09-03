@@ -8,17 +8,10 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.16.0
+### ✨ New in 0.16.1
 
-- New "Configured globally" category in the games list: groups games with no configuration of their own that still receive at least one active global command
-- Categories renamed for clarity: "Ready" is now "Per-game configuration", "Command without wrapper" is now "Configured without wrapper", "Wrapper without command" is now "Wrapper not configured"
-- New setting in Images: choose the cover image format shown in the games list (portrait, wide, or banner), with a button to clear the image cache
-- When a game has no art in the chosen format, a dedicated icon shows instead of an image in the wrong format
-- New "My other plugins" section in Settings: a notification when a new plugin is available, with description, image, one-click install, or a GitHub link
-- New "Support" section to check out my Ko-fi if you'd like to help out
-- Settings reorganized (GitHub, Images, Support grouped more logically)
-- Removed the debug "launching:" log lines from the wrapper script
-- Fix: a game whose only custom command exactly matches an active global command is no longer wrongly classified as "configured per-game"
+- Fix: on some installs (PC, newer Steam client), no cover image would show at all — the plugin now searches every location Steam actually stores them in
+- More reliable plugin-update checks (both the self-update notification and "My other plugins" installs): no longer depends on GitHub's API, which could get rate-limited
 
 ---
 
