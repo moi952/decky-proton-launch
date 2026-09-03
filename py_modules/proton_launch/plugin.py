@@ -1073,21 +1073,19 @@ class Plugin(PluginUpdaterMixin):
         decky.logger.info("decky-proton-launch unloaded")
 
     async def _uninstall(self):
-        """Called after _unload on an actual uninstall (not a plain update).
-        Wipes purely-regenerable derived files — the launch script, the
-        wrapper chain list, the cached remote catalog — so a reinstall
-        starts from a guaranteed-clean state instead of whatever was left
-        behind. Never touches the user's actual data (profiles, favorites,
-        custom variables/wrappers, settings): all of that survives a
-        reinstall untouched."""
+        """Decky calls this on every update too, not just a real uninstall
+        (its own install flow uninstalls the previous version before
+        installing the new one — confirmed 2026-09-03 via a real self-update
+        install on a live device). It used to wipe the launch script, the
+        wrapper chain list and the cached remote catalog here on the
+        (wrong) assumption this only ran on a genuine uninstall — which
+        meant every update silently broke already-configured launch
+        options (their Steam launch command still pointed at the now-
+        deleted script) until the user noticed and re-installed it, and
+        blanked the variables list until the next successful fetch. None
+        of that is worth "leave no trace" tidiness on an actual uninstall,
+        so this is intentionally a no-op now."""
         decky.logger.info("decky-proton-launch uninstalling")
-        for path in (script_path(), self._wrapper_chains_path(), self._variables_cache_path()):
-            try:
-                if path.is_file():
-                    path.unlink()
-                    decky.logger.info(f"[_uninstall] removed {path}")
-            except Exception as e:
-                decky.logger.error(f"[_uninstall] failed to remove {path}: {e}")
 
     async def _migration(self):
         decky.logger.info("decky-proton-launch migrations")
