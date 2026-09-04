@@ -190,6 +190,13 @@
     "description": "\"{{wrapper_name}}\" silinsin mi?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "0.16.2 sürümündeki yenilikler",
+      "items": [
+        "Düzeltme: eklentiyi güncellemek artık başlatma betiğini veya değişken önbelleğini silmiyor — bu hata, elle yeniden yüklenene kadar zaten yapılandırılmış Proton başlatma seçeneklerinin artık var olmayan bir betiğe işaret etmesine neden olabiliyordu",
+        "Düzeltme: varsayılan ana ekran \"Genel Komutlar\" olarak ayarlandığında geri düğmesi işlevini yitiriyor ve Ayarlara erişilemiyordu — gezinme çubuğu artık bu durumda da normal şekilde gösteriliyor"
+      ]
+    },
     "v0_16_1": {
       "title": "0.16.1 sürümündeki yenilikler",
       "items": [

@@ -190,6 +190,13 @@
     "description": "Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Novidades da versão 0.16.2",
+      "items": [
+        "Correção: atualizar o plugin já não apaga o script de lançamento nem a cache de variáveis — este erro podia deixar as opções de lançamento do Proton já configuradas a apontar para um script inexistente até uma reinstalação manual",
+        "Correção: com \"Comandos globais\" definido como ecrã inicial predefinido, o botão de retrocesso deixava de funcionar e as Definições ficavam inacessíveis — a barra de navegação é agora apresentada normalmente nesse caso"
+      ]
+    },
     "v0_16_1": {
       "title": "Novidades da versão 0.16.1",
       "items": [

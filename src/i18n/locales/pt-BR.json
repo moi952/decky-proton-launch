@@ -192,6 +192,13 @@
     "description": "Excluir \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Novidades da versão 0.16.2",
+      "items": [
+        "Correção: atualizar o plugin não apaga mais o script de inicialização nem o cache de variáveis — esse bug podia deixar as opções de inicialização do Proton já configuradas apontando para um script inexistente até uma reinstalação manual",
+        "Correção: com \"Comandos globais\" definido como tela inicial padrão, o botão voltar parava de funcionar e as Configurações ficavam inacessíveis — a barra de navegação agora é exibida normalmente nesse caso"
+      ]
+    },
     "v0_16_1": {
       "title": "Novidades da versão 0.16.1",
       "items": [

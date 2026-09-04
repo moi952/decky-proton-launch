@@ -192,6 +192,13 @@
     "description": "¿Eliminar \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Novedades de la versión 0.16.2",
+      "items": [
+        "Corrección: actualizar el plugin ya no elimina el script de lanzamiento ni la caché de variables — este fallo podía dejar las opciones de lanzamiento de Proton ya configuradas apuntando a un script inexistente hasta reinstalarlo manualmente",
+        "Corrección: con \"Comandos globales\" como pantalla de inicio predeterminada, el botón de retroceso dejaba de funcionar y no se podía acceder a los Ajustes — la barra de navegación ahora aparece con normalidad en ese caso"
+      ]
+    },
     "v0_16_1": {
       "title": "Novedades de la versión 0.16.1",
       "items": [

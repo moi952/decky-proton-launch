@@ -192,6 +192,13 @@
     "description": "Eliminare \"{{wrapper_name}}\"?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Novità della versione 0.16.2",
+      "items": [
+        "Corretto: un aggiornamento del plugin non elimina più lo script di avvio né la cache delle variabili — questo bug poteva lasciare le opzioni di avvio Proton già configurate puntare a uno script non più presente finché non veniva reinstallato manualmente",
+        "Corretto: con \"Comandi globali\" impostato come schermata iniziale predefinita, il pulsante indietro smetteva di funzionare e le Impostazioni diventavano irraggiungibili — la barra di navigazione ora viene mostrata normalmente in questo caso"
+      ]
+    },
     "v0_16_1": {
       "title": "Novità della versione 0.16.1",
       "items": [

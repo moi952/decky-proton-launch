@@ -192,6 +192,13 @@
     "description": "„{{wrapper_name}}“ löschen?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Neuigkeiten in Version 0.16.2",
+      "items": [
+        "Behoben: Ein Update löscht nicht mehr das Start-Skript oder den Variablen-Cache — dieser Fehler konnte dazu führen, dass bereits konfigurierte Proton-Startoptionen auf ein nicht mehr vorhandenes Skript verwiesen, bis es manuell neu installiert wurde",
+        "Behoben: War \"Globale Befehle\" als Standard-Startseite festgelegt, tat die Zurück-Taste nichts mehr und die Einstellungen waren nicht mehr erreichbar — die Navigationsleiste wird in diesem Fall jetzt wie gewohnt angezeigt"
+      ]
+    },
     "v0_16_1": {
       "title": "Neuigkeiten in Version 0.16.1",
       "items": [

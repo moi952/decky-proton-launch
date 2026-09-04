@@ -192,6 +192,13 @@
     "description": "\"{{wrapper_name}}\" verwijderen?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Nieuw in versie 0.16.2",
+      "items": [
+        "Opgelost: het bijwerken van de plugin verwijdert niet langer het opstartscript of de variabelencache — door deze bug konden al ingestelde Proton-opstartopties verwijzen naar een niet meer bestaand script totdat het handmatig opnieuw werd geïnstalleerd",
+        "Opgelost: als \"Algemene commando's\" was ingesteld als standaard startscherm, deed de terug-knop niets meer en waren de Instellingen onbereikbaar — de navigatiebalk wordt in dat geval nu gewoon getoond"
+      ]
+    },
     "v0_16_1": {
       "title": "Nieuw in versie 0.16.1",
       "items": [

@@ -192,6 +192,13 @@
     "description": "Supprimer « {{wrapper_name}} » ?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Nouveautés de la version 0.16.2",
+      "items": [
+        "Correction : une mise à jour ne supprime plus le script de lancement ni le cache des variables — ce bug pouvait laisser les options de lancement Proton déjà configurées pointer vers un script absent jusqu'à une réinstallation manuelle",
+        "Correction : si \"Commandes globales\" est défini comme accueil par défaut, le bouton retour ne faisait plus rien et les Réglages devenaient inaccessibles — la barre de navigation s'affiche maintenant normalement dans ce cas"
+      ]
+    },
     "v0_16_1": {
       "title": "Nouveautés de la version 0.16.1",
       "items": [

@@ -132,10 +132,32 @@ const App: React.FC = () => {
       </BackHandler>
     );
 
-  if (view === "global-commands")
+  if (view === "global-commands") {
+    // When this IS the default home, goHome() resolves right back to
+    // "global-commands" (see resolveHomeView) — the on-screen/hardware
+    // back button was a no-op, and this branch rendered no NavBar either,
+    // leaving no way to reach Settings at all. Render the same NavBar the
+    // other home views get in that case (Settings included); otherwise
+    // (reached as a sub-page from another home) keep the plain back
+    // button, which correctly returns to that other home.
+    const isGlobalCommandsHome = defaultHome === "global-commands";
     return (
-      <BackHandler onBack={goHome}>
-        {defaultHome === "global-commands" && (
+      <BackHandler onBack={isGlobalCommandsHome ? undefined : goHome}>
+        {isGlobalCommandsHome && (
+          <NavBar
+            view="games-picker"
+            scriptStatus={scriptStatus}
+            showHome={!hideVariablesPage}
+            onHome={() => setView("home")}
+            onGamesManager={() => setView("games-picker")}
+            onGlobalCommands={() => setView("global-commands")}
+            onSettings={() => setView("settings")}
+            onCopyWrapper={() =>
+              copy("~/.config/decky-proton-launch/proton-launch %command%")
+            }
+          />
+        )}
+        {isGlobalCommandsHome && (
           <WhatsNewBanner
             onFeatureRequest={() => {
               markFeatureRequestFocus();
@@ -146,6 +168,7 @@ const App: React.FC = () => {
         <GlobalCommandsView onBack={goHome} />
       </BackHandler>
     );
+  }
 
   if (view === "game-detail" && selectedGame)
     return (

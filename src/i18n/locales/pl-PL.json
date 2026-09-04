@@ -192,6 +192,13 @@
     "description": "Usunąć „{{wrapper_name}}”?"
   },
   "whats_new": {
+    "v0_16_2": {
+      "title": "Nowości w wersji 0.16.2",
+      "items": [
+        "Poprawka: aktualizacja wtyczki nie usuwa już skryptu uruchamiającego ani pamięci podręcznej zmiennych — ten błąd mógł sprawiać, że już skonfigurowane opcje uruchamiania Proton wskazywały na nieistniejący skrypt aż do ręcznej reinstalacji",
+        "Poprawka: gdy \"Polecenia globalne\" były ustawione jako domyślny ekran startowy, przycisk wstecz przestawał działać, a Ustawienia stawały się niedostępne — pasek nawigacji jest teraz w takim przypadku wyświetlany normalnie"
+      ]
+    },
     "v0_16_1": {
       "title": "Nowości w wersji 0.16.1",
       "items": [
