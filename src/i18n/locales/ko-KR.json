@@ -71,12 +71,6 @@
     "default_home_global_commands": "전역 명령",
     "force_refresh": "강제 새로고침",
     "data_title": "데이터",
-    "whats_new_history": "업데이트 기록",
-    "github_section_title": "GitHub",
-    "feature_request_button": "기능 요청하기",
-    "feature_request_hint": "휴대폰으로 스캔하거나, 눌러서 브라우저에서 열기",
-    "bug_report_button": "버그 신고하기",
-    "bug_report_hint": "휴대폰으로 스캔하거나, 눌러서 브라우저에서 열기",
     "reset_title": "초기화",
     "clean_custom_wrappers": "커스텀 래퍼 초기화",
     "clean_custom_variables": "커스텀 명령 초기화",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "와이드 커버 (가로형)",
     "cover_image_type_banner": "배너 (초광폭)",
     "purge_image_cache": "이미지 캐시 지우기",
-    "purge_image_cache_done": "이미지 캐시를 지웠습니다. 다음에 게임 목록을 열면 커버가 다시 로드됩니다.",
-    "support_section_title": "후원",
-    "kofi_button": "Ko-fi에서 후원하기",
-    "kofi_hint": "휴대폰으로 스캔하거나 눌러서 브라우저에서 열기",
-    "other_plugins_section_title": "다른 플러그인",
-    "kofi_description": "이 플러그인은 무료이며 앞으로도 그럴 것입니다. 그래도 힘을 보태고 싶다면, 커피 한 잔이 큰 도움이 됩니다."
+    "purge_image_cache_done": "이미지 캐시를 지웠습니다. 다음에 게임 목록을 열면 커버가 다시 로드됩니다."
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -297,38 +286,6 @@
         "즐겨찾기, 설정, 커스텀 항목이 더 안정적으로 저장됩니다",
         "래퍼 스크립트가 더 이상 홈 폴더를 차지하지 않습니다"
       ]
-    },
-    "dismiss": "확인",
-    "older": "이전",
-    "newer": "최신"
-  },
-  "plugin_update": {
-    "banner": "플러그인 업데이트 사용 가능: {{version}}",
-    "section_label": "플러그인 업데이트",
-    "current": "현재 버전: {{version}}",
-    "latest": "최신 버전: {{version}}",
-    "up_to_date": "플러그인이 최신 상태입니다",
-    "check_failed": "지금은 업데이트를 확인할 수 없습니다",
-    "view_release": "릴리스 보기",
-    "check_button": "업데이트 확인",
-    "checking": "확인 중…",
-    "install_button": "{{version}} 설치",
-    "installing": "설치 중…",
-    "downloading": "다운로드 중…",
-    "install_failed_title": "플러그인 업데이트 실패",
-    "no_backend": "Decky 설치 프로그램에 연결할 수 없습니다.",
-    "install_timeout": "Decky Loader의 응답이 없습니다 — 설치가 멈췄을 수 있습니다. 다시 시도하세요.",
-    "choose_version_label": "특정 버전 설치",
-    "no_releases": "릴리스를 찾을 수 없습니다",
-    "already_installed": "이미 설치됨 ({{version}})"
-  },
-  "other_plugins": {
-    "banner_title_one": "새 플러그인이 있습니다!",
-    "banner_title_other": "새 플러그인이 있습니다!",
-    "open_settings": "설정으로 이동",
-    "install_latest": "최신 버전 설치",
-    "installing": "설치 중…",
-    "install_failed": "최신 버전을 가져오지 못했습니다. 나중에 다시 시도하세요.",
-    "view_on_github": "GitHub에서 보기"
+    }
   }
 }

@@ -25,6 +25,18 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Vendor decky-plugin-toolkit
+              run: |
+                  set -e
+                  pip3 install --target py_modules --no-deps --upgrade \
+                    "git+https://github.com/moi952/decky-plugin-toolkit.git@v0.1.0"
+                  find py_modules -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
             - name: Build plugin
               run: |
                   set -e
@@ -36,7 +48,7 @@ jobs:
                   PLUGIN_NAME=$(node -p "require('./package.json').name")
                   mkdir -p artifact/$PLUGIN_NAME
                   cp -r dist artifact/$PLUGIN_NAME/
-                  cp main.py plugin.json package.json artifact/$PLUGIN_NAME/
+                  cp main.py plugin.json package.json project.config.json artifact/$PLUGIN_NAME/
                   cp -r py_modules artifact/$PLUGIN_NAME/
                   cp LICENSE* README* artifact/$PLUGIN_NAME/ || true
 

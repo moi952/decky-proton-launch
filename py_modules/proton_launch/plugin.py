@@ -23,7 +23,7 @@ from .launch_option import (
     migrate_legacy_shortcut_options, legacy_apps_with_wrapper,
     legacy_wrapper_still_referenced,
 )
-from .plugin_updater import PluginUpdaterMixin, resolve_latest_release
+from decky_plugin_toolkit import PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin
 
 
 # Valve's own compat tools (Proton builds, Steam Linux Runtime, redistributables)
@@ -38,7 +38,7 @@ VALVE_TOOL_RE = re.compile(
 )
 
 
-class Plugin(PluginUpdaterMixin):
+class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
 
     async def ping(self) -> str:
         decky.logger.info("[ping] pong")
@@ -996,61 +996,11 @@ class Plugin(PluginUpdaterMixin):
         except Exception:
             decky.logger.error(f"[sweep] failed:\n{traceback.format_exc()}")
 
-    def _whats_new_path(self) -> Path:
-        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "whats_new_seen.json"
-
-    async def get_whats_new_seen_version(self) -> str:
-        try:
-            path = self._whats_new_path()
-            if path.is_file():
-                return json.loads(path.read_text(encoding="utf-8")).get("version", "")
-        except Exception as e:
-            decky.logger.error(f"[get_whats_new_seen_version] {e}")
-        return ""
-
-    async def set_whats_new_seen_version(self, version: str) -> bool:
-        try:
-            path = self._whats_new_path()
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"version": version}), encoding="utf-8")
-            return True
-        except Exception as e:
-            decky.logger.error(f"[set_whats_new_seen_version] {e}")
-            return False
-
-    def _other_plugins_seen_path(self) -> Path:
-        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "other_plugins_seen.json"
-
-    async def get_other_plugins_seen_ids(self) -> List[str]:
-        try:
-            path = self._other_plugins_seen_path()
-            if path.is_file():
-                return json.loads(path.read_text(encoding="utf-8")).get("ids", [])
-        except Exception as e:
-            decky.logger.error(f"[get_other_plugins_seen_ids] {e}")
-        return []
-
-    async def set_other_plugins_seen_ids(self, ids: List[str]) -> bool:
-        try:
-            path = self._other_plugins_seen_path()
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps({"ids": ids}), encoding="utf-8")
-            return True
-        except Exception as e:
-            decky.logger.error(f"[set_other_plugins_seen_ids] {e}")
-            return False
-
-    async def resolve_other_plugin_release(
-        self, owner: str, repo: str, plugin_name: str
-    ) -> Optional[Dict[str, Any]]:
-        """Latest-release lookup for an arbitrary sibling plugin (see
-        OtherPluginsContext.tsx / deckyInstall.ts's fetchLatestReleaseFor)
-        — same api.github.com-free resolution check_plugin_update_now uses
-        for this plugin's own self-update, valid here too since every
-        plugin in moi952/decky-plugins' manifest is built from the same
-        release.yml template (same "<plugin_name>-<tag>.zip" asset
-        naming)."""
-        return await resolve_latest_release(f"{owner}/{repo}", plugin_name)
+    # get_whats_new_seen_version/set_whats_new_seen_version,
+    # get_other_plugins_seen_ids/set_other_plugins_seen_ids, and
+    # resolve_other_plugin_release are all inherited for free from
+    # decky_plugin_toolkit's WhatsNewSeenMixin/OtherPluginsSeenMixin/
+    # PluginUpdaterMixin (see the class declaration above).
 
     # ── Lifecycle ───────────────────────────────────────────────────────────────
 

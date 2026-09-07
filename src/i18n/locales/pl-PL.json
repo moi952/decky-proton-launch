@@ -71,12 +71,6 @@
     "default_home_global_commands": "Globalne polecenia",
     "force_refresh": "Wymuś odświeżenie",
     "data_title": "Dane",
-    "whats_new_history": "Historia aktualizacji",
-    "github_section_title": "GitHub",
-    "feature_request_button": "Poproś o funkcję",
-    "feature_request_hint": "Zeskanuj telefonem lub naciśnij, aby otworzyć w przeglądarce",
-    "bug_report_button": "Zgłoś błąd",
-    "bug_report_hint": "Zeskanuj telefonem lub naciśnij, aby otworzyć w przeglądarce",
     "reset_title": "Resetowanie",
     "clean_custom_wrappers": "Wyczyść niestandardowe wrappery",
     "clean_custom_variables": "Wyczyść niestandardowe polecenia",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "Szeroka okładka (pozioma)",
     "cover_image_type_banner": "Baner (ultraszeroki)",
     "purge_image_cache": "Wyczyść pamięć podręczną obrazów",
-    "purge_image_cache_done": "Pamięć podręczna obrazów wyczyszczona — okładki zostaną wczytane ponownie po następnym otwarciu listy gier.",
-    "support_section_title": "Wsparcie",
-    "kofi_button": "Wesprzyj mnie na Ko-fi",
-    "kofi_hint": "Zeskanuj telefonem lub naciśnij, aby otworzyć w przeglądarce",
-    "other_plugins_section_title": "Moje inne pluginy",
-    "kofi_description": "Ten plugin jest darmowy i takim pozostanie. Jeśli mimo to chcesz pomóc, każda kawa się liczy."
+    "purge_image_cache_done": "Pamięć podręczna obrazów wyczyszczona — okładki zostaną wczytane ponownie po następnym otwarciu listy gier."
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -297,38 +286,6 @@
         "Ulubione, ustawienia i elementy niestandardowe są teraz zapisywane bardziej niezawodnie",
         "Skrypt wrappera nie zaśmieca już katalogu domowego"
       ]
-    },
-    "dismiss": "Rozumiem",
-    "older": "Starsze",
-    "newer": "Nowsze"
-  },
-  "plugin_update": {
-    "banner": "Dostępna aktualizacja wtyczki: {{version}}",
-    "section_label": "Aktualizacja wtyczki",
-    "current": "Bieżąca wersja: {{version}}",
-    "latest": "Najnowsza wersja: {{version}}",
-    "up_to_date": "Wtyczka jest aktualna",
-    "check_failed": "Nie można teraz sprawdzić aktualizacji",
-    "view_release": "Zobacz wydanie",
-    "check_button": "Sprawdź aktualizacje",
-    "checking": "Sprawdzanie…",
-    "install_button": "Zainstaluj {{version}}",
-    "installing": "Instalowanie…",
-    "downloading": "Pobieranie…",
-    "install_failed_title": "Aktualizacja wtyczki nie powiodła się",
-    "no_backend": "Instalator Decky jest teraz niedostępny.",
-    "install_timeout": "Brak odpowiedzi od Decky Loader — instalacja mogła się zawiesić. Spróbuj ponownie.",
-    "choose_version_label": "Zainstaluj konkretną wersję",
-    "no_releases": "Nie znaleziono wydań",
-    "already_installed": "Już zainstalowana ({{version}})"
-  },
-  "other_plugins": {
-    "banner_title_one": "Dostępny nowy plugin!",
-    "banner_title_other": "Dostępne nowe pluginy!",
-    "open_settings": "Przejdź do ustawień",
-    "install_latest": "Zainstaluj najnowszą wersję",
-    "installing": "Instalowanie…",
-    "install_failed": "Nie udało się pobrać najnowszej wersji. Spróbuj ponownie później.",
-    "view_on_github": "Zobacz na GitHub"
+    }
   }
 }

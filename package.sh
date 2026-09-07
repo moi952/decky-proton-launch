@@ -19,9 +19,20 @@ OUT_DIR="$PLUGIN_DIR/packages"
 
 command -v pnpm >/dev/null || die "pnpm not found"
 command -v zip >/dev/null || die "zip not found"
+command -v pip3 >/dev/null || die "pip3 not found"
 
 log "Building frontend..."
 ( cd "$PLUGIN_DIR" && pnpm run build )
+
+# Vendors decky-plugin-toolkit straight into py_modules (not a vendor/
+# subfolder — Decky Loader already puts py_modules on sys.path itself, so
+# this needs no extra wiring). Pinned to a tag: this plugin only picks up
+# a newer toolkit version when that tag is bumped here, never silently on
+# a rebuild — same convention as @moi952/decky-ui-kit's semver pin in
+# package.json.
+log "Vendoring decky-plugin-toolkit..."
+pip3 install --target "$PLUGIN_DIR/py_modules" --no-deps --upgrade \
+  "git+https://github.com/moi952/decky-plugin-toolkit.git@v0.1.0"
 
 mkdir -p "$OUT_DIR"
 n=1

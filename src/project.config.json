@@ -1,0 +1,8 @@
+{
+  "githubOwner": "moi952",
+  "githubRepo": "decky-proton-launch",
+  "pluginName": "decky-proton-launch",
+  "displayName": "Decky Proton Launch",
+  "description": "Manage Steam game launch options from Gaming Mode. Set Proton environment variables like PROTON_FSR4_UPGRADE=1 or PROTON_DLSS4_UPGRADE=1 and add wrappers such as MangoHud or GameScope.",
+  "author": "moi952"
+}

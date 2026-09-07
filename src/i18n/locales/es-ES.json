@@ -71,12 +71,6 @@
     "default_home_global_commands": "Comandos globales",
     "force_refresh": "Forzar actualización",
     "data_title": "Datos",
-    "whats_new_history": "Historial de actualizaciones",
-    "github_section_title": "GitHub",
-    "feature_request_button": "Solicitar una función",
-    "feature_request_hint": "Escanea con tu teléfono, o pulsa para abrir en el navegador",
-    "bug_report_button": "Reportar un error",
-    "bug_report_hint": "Escanea con tu teléfono, o pulsa para abrir en el navegador",
     "reset_title": "Restablecer",
     "clean_custom_wrappers": "Limpiar wrappers personalizados",
     "clean_custom_variables": "Limpiar comandos personalizados",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "Portada ancha (horizontal)",
     "cover_image_type_banner": "Banner (ultra ancho)",
     "purge_image_cache": "Vaciar la caché de imágenes",
-    "purge_image_cache_done": "Caché de imágenes vaciada — las portadas se recargarán la próxima vez que abras la lista de juegos.",
-    "support_section_title": "Apoyo",
-    "kofi_button": "Apóyame en Ko-fi",
-    "kofi_hint": "Escanea con tu teléfono, o pulsa para abrir en el navegador",
-    "other_plugins_section_title": "Mis otros plugins",
-    "kofi_description": "Este plugin es gratis y lo seguirá siendo. Si aun así quieres echar una mano, cada café cuenta."
+    "purge_image_cache_done": "Caché de imágenes vaciada — las portadas se recargarán la próxima vez que abras la lista de juegos."
   },
   "launch_options_view": {
     "title": "Opciones de lanzamiento",
@@ -297,38 +286,6 @@
         "Los favoritos, ajustes y elementos personalizados ahora se guardan de forma más fiable",
         "El script del wrapper ya no ocupa espacio en tu carpeta personal"
       ]
-    },
-    "dismiss": "Entendido",
-    "older": "Anterior",
-    "newer": "Más reciente"
-  },
-  "plugin_update": {
-    "banner": "Actualización del plugin disponible: {{version}}",
-    "section_label": "Actualización del plugin",
-    "current": "Versión actual: {{version}}",
-    "latest": "Última versión: {{version}}",
-    "up_to_date": "El plugin está actualizado",
-    "check_failed": "No se pudo comprobar actualizaciones ahora mismo",
-    "view_release": "Ver versión",
-    "check_button": "Buscar actualizaciones",
-    "checking": "Comprobando…",
-    "install_button": "Instalar {{version}}",
-    "installing": "Instalando…",
-    "downloading": "Descargando…",
-    "install_failed_title": "Error al actualizar el plugin",
-    "no_backend": "El instalador de Decky no está disponible ahora mismo.",
-    "install_timeout": "Sin respuesta de Decky Loader — la instalación podría haberse detenido. Inténtalo de nuevo.",
-    "choose_version_label": "Instalar una versión específica",
-    "no_releases": "No se encontraron versiones",
-    "already_installed": "Ya instalada ({{version}})"
-  },
-  "other_plugins": {
-    "banner_title_one": "¡Nuevo plugin disponible!",
-    "banner_title_other": "¡Nuevos plugins disponibles!",
-    "open_settings": "Ir a Ajustes",
-    "install_latest": "Instalar la última versión",
-    "installing": "Instalando…",
-    "install_failed": "No se pudo obtener la última versión. Inténtalo más tarde.",
-    "view_on_github": "Ver en GitHub"
+    }
   }
 }

@@ -43,6 +43,11 @@ __pycache__/
 /.yalc
 yalc.lock
 
+# Vendored by package.sh's pip install step — a build artifact, not
+# something to commit (same reasoning as node_modules).
+py_modules/decky_plugin_toolkit/
+py_modules/decky_plugin_toolkit-*.dist-info/
+
 # Ignore output folder
 
 backend/out

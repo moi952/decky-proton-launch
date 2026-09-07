@@ -9,10 +9,20 @@ import {
 } from "@decky/api";
 import { FaRocket } from "react-icons/fa";
 import i18n from "i18next";
+import {
+  BackHandler,
+  WhatsNewBanner,
+  OtherPluginsBanner,
+  PluginUpdateBanner,
+  usePluginUpdate,
+  getWhatsNewVersions,
+  pluginUpdateFocus,
+  otherPluginsFocus,
+  featureRequestFocus,
+  PluginUpdateInfo,
+} from "@moi952/decky-plugin-toolkit";
 import { loadTranslations } from "./i18n";
-import type { PluginUpdateInfo } from "./utils/githubReleases";
 import { staticClasses } from "@decky/ui";
-import { BackHandler } from "./components/BackHandler";
 import { copy } from "./utils/functions";
 import { migrateLegacyWrapper } from "./utils/migrateLegacyWrapper";
 import { AppProvider } from "./context/AppProvider";
@@ -25,13 +35,6 @@ import { useSettings, DefaultHome } from "./context/SettingsContext";
 import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
 import { NowPlayingCard } from "./components/NowPlayingCard";
-import { PluginUpdateBanner } from "./components/PluginUpdate";
-import { usePluginUpdate } from "./context/PluginUpdateContext";
-import { markPluginUpdateExpanded } from "./utils/pluginUpdateFocus";
-import { markOtherPluginsExpanded } from "./utils/otherPluginsFocus";
-import { markFeatureRequestFocus } from "./utils/featureRequestFocus";
-import { WhatsNewBanner } from "./components/WhatsNewBanner";
-import { OtherPluginsBanner } from "./components/OtherPluginsBanner";
 import { GAME_GROUP_HEADER_STYLES } from "./components/GameGroupHeader";
 import { SteamGame, ScriptStatus } from "./data/types";
 
@@ -65,6 +68,7 @@ const App: React.FC = () => {
   const { noData } = useRemoteData();
   const { info: pluginUpdateInfo } = usePluginUpdate();
   const { t } = useTranslation();
+  const whatsNewVersions = getWhatsNewVersions();
   // game-detail can't be restored this way (selectedGame would be lost
   // along with it) — fall back to games-picker for that one case.
   const isRestoringView = useRef(
@@ -159,8 +163,9 @@ const App: React.FC = () => {
         )}
         {isGlobalCommandsHome && (
           <WhatsNewBanner
+            versions={whatsNewVersions}
             onFeatureRequest={() => {
-              markFeatureRequestFocus();
+              featureRequestFocus.markExpanded();
               setView("settings");
             }}
           />
@@ -202,14 +207,15 @@ const App: React.FC = () => {
       <PluginUpdateBanner
         info={pluginUpdateInfo}
         onClick={() => {
-          markPluginUpdateExpanded();
+          pluginUpdateFocus.markExpanded();
           setView("settings");
         }}
       />
       {isOnHome && (
         <WhatsNewBanner
+          versions={whatsNewVersions}
           onFeatureRequest={() => {
-            markFeatureRequestFocus();
+            featureRequestFocus.markExpanded();
             setView("settings");
           }}
         />
@@ -217,7 +223,7 @@ const App: React.FC = () => {
       {isOnHome && (
         <OtherPluginsBanner
           onOpenSettings={() => {
-            markOtherPluginsExpanded();
+            otherPluginsFocus.markExpanded();
             setView("settings");
           }}
         />

@@ -71,12 +71,6 @@
     "default_home_global_commands": "全局命令",
     "force_refresh": "强制刷新",
     "data_title": "数据",
-    "whats_new_history": "更新历史",
-    "github_section_title": "GitHub",
-    "feature_request_button": "请求一个功能",
-    "feature_request_hint": "用手机扫描，或按下以在浏览器中打开",
-    "bug_report_button": "报告一个 Bug",
-    "bug_report_hint": "用手机扫描，或按下以在浏览器中打开",
     "reset_title": "重置",
     "clean_custom_wrappers": "清除自定义 wrapper",
     "clean_custom_variables": "清除自定义命令",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "宽版封面（横版）",
     "cover_image_type_banner": "横幅（超宽）",
     "purge_image_cache": "清除图片缓存",
-    "purge_image_cache_done": "图片缓存已清除 — 下次打开游戏列表时封面将重新加载。",
-    "support_section_title": "支持",
-    "kofi_button": "在 Ko-fi 上支持我",
-    "kofi_hint": "用手机扫描，或点击在浏览器中打开",
-    "other_plugins_section_title": "我的其他插件",
-    "kofi_description": "这个插件是免费的，并将始终免费。如果你仍然想出一份力，每一杯咖啡都很重要。"
+    "purge_image_cache_done": "图片缓存已清除 — 下次打开游戏列表时封面将重新加载。"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -297,38 +286,6 @@
         "收藏夹、设置和自定义项目的保存现在更加可靠",
         "wrapper 脚本不再占用你的主目录空间"
       ]
-    },
-    "dismiss": "知道了",
-    "older": "更早",
-    "newer": "更新"
-  },
-  "plugin_update": {
-    "banner": "有可用的插件更新：{{version}}",
-    "section_label": "插件更新",
-    "current": "当前版本：{{version}}",
-    "latest": "最新版本：{{version}}",
-    "up_to_date": "插件已是最新版本",
-    "check_failed": "目前无法检查更新",
-    "view_release": "查看发行版",
-    "check_button": "检查更新",
-    "checking": "检查中…",
-    "install_button": "安装 {{version}}",
-    "installing": "安装中…",
-    "downloading": "下载中…",
-    "install_failed_title": "插件更新失败",
-    "no_backend": "目前无法连接到 Decky 的安装程序。",
-    "install_timeout": "Decky Loader 无响应——安装可能已卡住。请重试。",
-    "choose_version_label": "安装指定版本",
-    "no_releases": "未找到发行版",
-    "already_installed": "已安装（{{version}}）"
-  },
-  "other_plugins": {
-    "banner_title_one": "有新插件可用！",
-    "banner_title_other": "有新插件可用！",
-    "open_settings": "前往设置",
-    "install_latest": "安装最新版本",
-    "installing": "正在安装…",
-    "install_failed": "无法获取最新版本，请稍后再试。",
-    "view_on_github": "在 GitHub 上查看"
+    }
   }
 }

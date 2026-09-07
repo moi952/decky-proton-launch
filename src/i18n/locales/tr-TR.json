@@ -71,12 +71,6 @@
     "default_home_global_commands": "Genel komutlar",
     "force_refresh": "Yenilemeyi zorla",
     "data_title": "Veri",
-    "whats_new_history": "Güncelleme geçmişi",
-    "github_section_title": "GitHub",
-    "feature_request_button": "Özellik iste",
-    "feature_request_hint": "Telefonunuzla tarayın veya tarayıcıda açmak için basın",
-    "bug_report_button": "Hata bildir",
-    "bug_report_hint": "Telefonunuzla tarayın veya tarayıcıda açmak için basın",
     "reset_title": "Sıfırlama",
     "clean_custom_wrappers": "Özel sarmalayıcıları temizle",
     "clean_custom_variables": "Özel komutları temizle",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "Geniş kapak (yatay)",
     "cover_image_type_banner": "Afiş (ultra geniş)",
     "purge_image_cache": "Görsel önbelleğini temizle",
-    "purge_image_cache_done": "Görsel önbelleği temizlendi — kapaklar oyun listesini bir sonraki açışınızda yeniden yüklenecek.",
-    "support_section_title": "Destek",
-    "kofi_button": "Ko-fi'de beni destekle",
-    "kofi_hint": "Telefonunla tara veya tarayıcıda açmak için bas",
-    "other_plugins_section_title": "Diğer eklentilerim",
-    "kofi_description": "Bu eklenti ücretsiz ve öyle kalacak. Yine de bir elini taşın altına koymak istersen, her kahve bir işe yarar."
+    "purge_image_cache_done": "Görsel önbelleği temizlendi — kapaklar oyun listesini bir sonraki açışınızda yeniden yüklenecek."
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -295,38 +284,6 @@
         "Favoriler, ayarlar ve özel ögeler artık daha güvenilir şekilde saklanıyor",
         "Sarmalayıcı betik artık ana dizininizde yer kaplamıyor"
       ]
-    },
-    "dismiss": "Anladım",
-    "older": "Daha eski",
-    "newer": "Daha yeni"
-  },
-  "plugin_update": {
-    "banner": "Eklenti güncellemesi mevcut: {{version}}",
-    "section_label": "Eklenti güncellemesi",
-    "current": "Mevcut sürüm: {{version}}",
-    "latest": "En son sürüm: {{version}}",
-    "up_to_date": "Eklenti güncel",
-    "check_failed": "Şu anda güncellemeler kontrol edilemiyor",
-    "view_release": "Sürümü görüntüle",
-    "check_button": "Güncellemeleri kontrol et",
-    "checking": "Kontrol ediliyor…",
-    "install_button": "{{version}} yükle",
-    "installing": "Yükleniyor…",
-    "downloading": "İndiriliyor…",
-    "install_failed_title": "Eklenti güncellemesi başarısız oldu",
-    "no_backend": "Decky'nin yükleyicisine şu anda ulaşılamıyor.",
-    "install_timeout": "Decky Loader'dan yanıt yok — kurulum takılmış olabilir. Tekrar deneyin.",
-    "choose_version_label": "Belirli bir sürüm yükle",
-    "no_releases": "Sürüm bulunamadı",
-    "already_installed": "Zaten yüklü ({{version}})"
-  },
-  "other_plugins": {
-    "banner_title_one": "Yeni eklenti mevcut!",
-    "banner_title_other": "Yeni eklentiler mevcut!",
-    "open_settings": "Ayarlara git",
-    "install_latest": "En son sürümü yükle",
-    "installing": "Yükleniyor…",
-    "install_failed": "En son sürüm alınamadı. Daha sonra tekrar dene.",
-    "view_on_github": "GitHub'da görüntüle"
+    }
   }
 }

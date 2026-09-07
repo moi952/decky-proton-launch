@@ -1,13 +1,13 @@
 import React from "react";
+import { WhatsNewProvider, OtherPluginsProvider, PluginUpdateProvider } from "@moi952/decky-plugin-toolkit";
 import { LaunchStackProvider } from "./LaunchStackContext";
 import { FavoritesProvider } from "./FavoritesContext";
 import { CustomVariablesProvider } from "./CustomVariablesContext";
 import { CustomWrappersProvider } from "./CustomWrappersContext";
 import { SettingsProvider } from "./SettingsContext";
 import { RemoteDataProvider } from "./RemoteDataContext";
-import { WhatsNewProvider } from "./WhatsNewContext";
-import { OtherPluginsProvider } from "./OtherPluginsContext";
-import { PluginUpdateProvider } from "./PluginUpdateContext";
+import { SELF_PLUGIN_ID } from "../utils/otherPlugins";
+import { CURRENT_VERSION } from "../utils/githubReleases";
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -18,8 +18,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
         <CustomVariablesProvider>
           <CustomWrappersProvider>
             <SettingsProvider>
-              <WhatsNewProvider>
-                <OtherPluginsProvider>
+              <WhatsNewProvider currentVersion={CURRENT_VERSION}>
+                <OtherPluginsProvider selfPluginId={SELF_PLUGIN_ID}>
                   <PluginUpdateProvider>{children}</PluginUpdateProvider>
                 </OtherPluginsProvider>
               </WhatsNewProvider>

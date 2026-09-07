@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { pluginToolkitTranslations } from "@moi952/decky-plugin-toolkit";
 
 import enUS from "./locales/en-US.json";
 import frFR from "./locales/fr-FR.json";
@@ -16,7 +17,7 @@ import plPL from "./locales/pl-PL.json";
 import trTR from "./locales/tr-TR.json";
 import ukUA from "./locales/uk-UA.json";
 
-const resources: Record<string, any> = {
+const ownByLocale: Record<string, any> = {
   "en-US": enUS,
   "fr-FR": frFR,
   "pt-BR": ptBR,
@@ -32,6 +33,26 @@ const resources: Record<string, any> = {
   "tr-TR": trTR,
   "uk-UA": ukUA,
 };
+
+// The toolkit's own fixed namespaces (plugin_update/other_plugins/
+// settings_common, and whats_new's own older/newer/dismiss/support_note)
+// merged in first — this plugin's own locale files only ever add to them
+// (its own "whats_new" changelog entries), never duplicate them.
+// whats_new needs its own nested merge: a shallow spread would let this
+// plugin's own `whats_new` key (its own version entries) silently replace
+// the toolkit's older/newer/support_note instead of adding to them.
+const mergeLocale = (toolkit: any, own: any) => ({
+  ...toolkit,
+  ...own,
+  whats_new: { ...toolkit.whats_new, ...own.whats_new },
+});
+
+const resources: Record<string, any> = Object.fromEntries(
+  Object.entries(pluginToolkitTranslations).map(([locale, toolkit]) => [
+    locale,
+    mergeLocale(toolkit, ownByLocale[locale] ?? {}),
+  ]),
+);
 
 // Native language names for display in dropdown
 export const LANGUAGE_NAMES: Record<string, string> = {
@@ -83,7 +104,10 @@ export const loadTranslations = (savedLanguage?: string) => {
     },
     load: "languageOnly",
     defaultNS: "common",
-    ns: Object.keys(enUS),
+    // The merged bundle's own namespaces, not enUS's — enUS no longer has
+    // plugin_update/other_plugins/settings_common (those come from the
+    // toolkit merge above), and this list is what i18next actually loads.
+    ns: Object.keys(resources["en-US"]),
     interpolation: { escapeValue: false },
     debug: true,
   });

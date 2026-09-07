@@ -71,12 +71,6 @@
     "default_home_global_commands": "グローバルコマンド",
     "force_refresh": "強制的に更新",
     "data_title": "データ",
-    "whats_new_history": "更新履歴",
-    "github_section_title": "GitHub",
-    "feature_request_button": "機能をリクエストする",
-    "feature_request_hint": "スマートフォンでスキャンするか、ボタンを押してブラウザで開く",
-    "bug_report_button": "バグを報告する",
-    "bug_report_hint": "スマートフォンでスキャンするか、ボタンを押してブラウザで開く",
     "reset_title": "リセット",
     "clean_custom_wrappers": "カスタムラッパーを消去",
     "clean_custom_variables": "カスタムコマンドを消去",
@@ -91,12 +85,7 @@
     "cover_image_type_landscape": "ワイドカバー（横長）",
     "cover_image_type_banner": "バナー（超横長）",
     "purge_image_cache": "画像キャッシュを消去",
-    "purge_image_cache_done": "画像キャッシュを消去しました。次回ゲーム一覧を開いたときにカバー画像が再読み込みされます。",
-    "support_section_title": "サポート",
-    "kofi_button": "Ko-fiで応援する",
-    "kofi_hint": "スマートフォンでスキャンするか、押してブラウザで開く",
-    "other_plugins_section_title": "他のプラグイン",
-    "kofi_description": "このプラグインは無料で、これからも無料です。それでも応援したいと思ったら、コーヒー一杯でも力になります。"
+    "purge_image_cache_done": "画像キャッシュを消去しました。次回ゲーム一覧を開いたときにカバー画像が再読み込みされます。"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -297,38 +286,6 @@
         "お気に入り、設定、カスタム項目の保存がより確実になりました",
         "ラッパースクリプトがホームフォルダを圧迫しなくなりました"
       ]
-    },
-    "dismiss": "了解",
-    "older": "前へ",
-    "newer": "次へ"
-  },
-  "plugin_update": {
-    "banner": "プラグインの更新があります: {{version}}",
-    "section_label": "プラグインの更新",
-    "current": "現在のバージョン: {{version}}",
-    "latest": "最新バージョン: {{version}}",
-    "up_to_date": "プラグインは最新です",
-    "check_failed": "現在、更新を確認できません",
-    "view_release": "リリースを見る",
-    "check_button": "更新を確認",
-    "checking": "確認中…",
-    "install_button": "{{version}} をインストール",
-    "installing": "インストール中…",
-    "downloading": "ダウンロード中…",
-    "install_failed_title": "プラグインの更新に失敗しました",
-    "no_backend": "Decky のインストーラーに接続できません。",
-    "install_timeout": "Decky Loader からの応答がありません — インストールが停止した可能性があります。もう一度お試しください。",
-    "choose_version_label": "特定のバージョンをインストール",
-    "no_releases": "リリースが見つかりません",
-    "already_installed": "インストール済み（{{version}}）"
-  },
-  "other_plugins": {
-    "banner_title_one": "新しいプラグインが利用可能です！",
-    "banner_title_other": "新しいプラグインが利用可能です！",
-    "open_settings": "設定を開く",
-    "install_latest": "最新バージョンをインストール",
-    "installing": "インストール中…",
-    "install_failed": "最新バージョンを取得できませんでした。後でもう一度お試しください。",
-    "view_on_github": "GitHubで見る"
+    }
   }
 }
