@@ -286,6 +286,13 @@
         "Favorieten, instellingen en aangepaste items worden nu betrouwbaarder opgeslagen",
         "Het wrapper-script neemt geen ruimte meer in je thuismap in"
       ]
+    },
+    "v0_16_3": {
+      "title": "Nieuw in versie 0.16.3",
+      "items": [
+        "Aangepaste variabelen en wrappers die zijn aangemaakt of bewerkt vanuit Algemene commando's of de pagina van een game worden nu direct weergegeven, zonder dat Steam opnieuw moet worden opgestart.",
+        "Interface-aanpassingen en algemene betrouwbaarheidsverbeteringen."
+      ]
     }
   }
 }

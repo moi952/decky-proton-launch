@@ -47,6 +47,35 @@ export function openRestartModal(game: SteamGame): void {
   showModal(<RestartModalContent game={game} />);
 }
 
+// ── Steam app launch options (live via SteamClient) ───────────────────────────
+//
+// localconfig.vdf is Steam's own live state while Steam is running — a
+// direct file write to it (like the backend still does for non-Steam
+// shortcuts, which aren't kept live in memory) gets silently clobbered the
+// next time Steam flushes its in-memory copy back to disk. Going through
+// SteamClient here can't be raced like that. Used both for the explicit
+// toggle buttons below and for the silent auto-wire/unwire that
+// GameDetailView's save effect does when a profile is created/emptied.
+
+export async function addWrapperViaSteamClient(appId: number): Promise<void> {
+  const current = await getAppLaunchOptions(appId);
+  let newOptions: string;
+  if (current.includes("%command%")) {
+    newOptions = current.replace("%command%", LAUNCH_OPTION);
+  } else if (current.trim()) {
+    newOptions = `${LAUNCH_OPTION} ${current.trim()}`;
+  } else {
+    newOptions = LAUNCH_OPTION;
+  }
+  await SteamClient.Apps.SetAppLaunchOptions(appId, newOptions);
+}
+
+export async function removeWrapperViaSteamClient(appId: number): Promise<void> {
+  const current = await getAppLaunchOptions(appId);
+  const newOptions = current.replace(LAUNCH_OPTION, "").trim();
+  await SteamClient.Apps.SetAppLaunchOptions(appId, newOptions);
+}
+
 // ── Wrapper remove (called after confirmation) ────────────────────────────────
 
 export async function doRemoveWrapper(
@@ -56,9 +85,7 @@ export async function doRemoveWrapper(
 ): Promise<void> {
   try {
     if (!game.is_shortcut) {
-      const current = await getAppLaunchOptions(game.appid);
-      const newOptions = current.replace(LAUNCH_OPTION, "").trim();
-      await SteamClient.Apps.SetAppLaunchOptions(game.appid, newOptions);
+      await removeWrapperViaSteamClient(game.appid);
       onSuccess(false);
       toaster.toast({ title: t("wrapper_removed"), body: game.name });
     } else {
@@ -91,16 +118,7 @@ export async function toggleWrapper(
 ): Promise<void> {
   try {
     if (!game.is_shortcut) {
-      const current = await getAppLaunchOptions(game.appid);
-      let newOptions: string;
-      if (current.includes("%command%")) {
-        newOptions = current.replace("%command%", LAUNCH_OPTION);
-      } else if (current.trim()) {
-        newOptions = `${LAUNCH_OPTION} ${current.trim()}`;
-      } else {
-        newOptions = LAUNCH_OPTION;
-      }
-      await SteamClient.Apps.SetAppLaunchOptions(game.appid, newOptions);
+      await addWrapperViaSteamClient(game.appid);
       onSuccess(true);
       toaster.toast({ title: t("wrapper_added"), body: game.name });
     } else {

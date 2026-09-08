@@ -262,26 +262,35 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
         env_vars: Dict[str, str],
         game_name: str,
         disabled_globals: Optional[List[str]] = None,
-    ) -> bool:
+    ) -> Dict[str, Any]:
         try:
             # Only wire the wrapper in on a brand-new profile — the wrapper
             # is otherwise the user's own, separate on/off switch, and every
             # later edit to an existing profile was re-adding it even after
             # an explicit "Remove wrapper".
+            #
+            # Wiring itself is NOT done here: localconfig.vdf is Steam's own
+            # live state while Steam is running, and writing it directly gets
+            # silently clobbered the next time Steam flushes its in-memory
+            # copy back to disk (same confirmed race as
+            # legacy_apps_with_wrapper() in launch_option.py) — the game
+            # would show "has wrapper" right after saving, then quietly lose
+            # it again after some unrelated Steam action. The frontend does
+            # this live via SteamClient instead (see GameDetailView's
+            # save effect), which can't be raced like that.
             is_new_profile = not profile_path(app_id).is_file()
             write_profile(app_id, env_vars, game_name, disabled_globals or [])
             decky.logger.info(
                 f"[set_game_profile] {app_id} — {len(env_vars)} vars, "
                 f"{len(disabled_globals or [])} disabled globals"
             )
-            if is_new_profile and not app_id >> 25:
-                set_launch_option(app_id)
-            return True
+            wire_wrapper = is_new_profile and not app_id >> 25
+            return {"success": True, "wire_wrapper": wire_wrapper}
         except Exception as e:
             decky.logger.error(f"[set_game_profile] {app_id}: {e}")
-            return False
+            return {"success": False, "wire_wrapper": False}
 
-    async def delete_game_profile(self, app_id: int) -> bool:
+    async def delete_game_profile(self, app_id: int) -> Dict[str, Any]:
         try:
             path = profile_path(app_id)
             if path.is_file():
@@ -289,13 +298,13 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
             # Global commands still need the wrapper on every game they apply
             # to — clearing a game's own profile shouldn't silently break
             # those just because this game has no local commands left.
-            if not app_id >> 25 and not read_global_profile():
-                remove_launch_option(app_id)
+            # Unwiring is left to the frontend for the same reason as above.
+            unwire_wrapper = not app_id >> 25 and not read_global_profile()
             decky.logger.info(f"[delete_game_profile] {app_id}")
-            return True
+            return {"success": True, "unwire_wrapper": unwire_wrapper}
         except Exception as e:
             decky.logger.error(f"[delete_game_profile] {app_id}: {e}")
-            return False
+            return {"success": False, "unwire_wrapper": False}
 
     # ── Global commands (applied to every game with the wrapper) ───────────────
 

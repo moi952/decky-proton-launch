@@ -43,8 +43,10 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible, showActiveSection } = useSettings();
   const { variables: variablesData, conflictGroups } = useRemoteData();
-  const { customWrappers, removeCustomWrapper } = useCustomWrappers();
-  const { customVariables, removeCustomVariable } = useCustomVariables();
+  const { customWrappers, removeCustomWrapper, addCustomWrapper, editCustomWrapper } =
+    useCustomWrappers();
+  const { customVariables, removeCustomVariable, addCustomVariable, editCustomVariable } =
+    useCustomVariables();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
@@ -156,6 +158,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const envToTitle: Record<string, string> = Object.fromEntries(
     flattenAllVariables(variablesData).map((v) => [v.env, v.title]),
   );
+  const catalogEnvs = flattenAllVariables(variablesData).map((v) => v.env);
   const activeCustomVariables = customVariables.filter(
     (cv) => draft[cv.env] !== undefined,
   );
@@ -289,7 +292,13 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                     key={cv.id}
                     onButtonDown={(evt: GamepadEvent) => {
                       if (evt.detail.button === GamepadButton.SECONDARY)
-                        openEditCustomVariableModal(cv);
+                        openEditCustomVariableModal(cv, {
+                          customVariables,
+                          customWrapperEnvs: customWrappers.map((w) => w.env),
+                          catalogEnvs,
+                          addCustomVariable,
+                          editCustomVariable,
+                        });
                     }}
                     onSecondaryActionDescription={tCommon("edit")}
                     onOptionsButton={() => setPendingDeleteVariable(cv.id)}
@@ -332,7 +341,10 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                     key={w.id}
                     onButtonDown={(evt: GamepadEvent) => {
                       if (evt.detail.button === GamepadButton.SECONDARY)
-                        openEditCustomWrapperModal(w);
+                        openEditCustomWrapperModal(w, {
+                          addCustomWrapper,
+                          editCustomWrapper,
+                        });
                     }}
                     onSecondaryActionDescription={tCommon("edit")}
                     onOptionsButton={() => setPendingDeleteWrapper(w.id)}

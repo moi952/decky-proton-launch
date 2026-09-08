@@ -146,16 +146,18 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
           />
         </PanelSectionRow>
         <PanelSectionRow>
-          <ActionButton
-            onClick={() => {
-              clearCoverCache();
-              toaster.toast({ title: tSettings("images_title"), body: tSettings("purge_image_cache_done") });
-            }}
-            width="100%"
-          >
-            <FiImage size={14} style={{ marginRight: 6 }} />
-            {tSettings("purge_image_cache")}
-          </ActionButton>
+          <div style={{ marginTop: 8 }}>
+            <ActionButton
+              onClick={() => {
+                clearCoverCache();
+                toaster.toast({ title: tSettings("images_title"), body: tSettings("purge_image_cache_done") });
+              }}
+              width="100%"
+            >
+              <FiImage size={14} style={{ marginRight: 6 }} />
+              {tSettings("purge_image_cache")}
+            </ActionButton>
+          </div>
         </PanelSectionRow>
       </PanelSection>
 

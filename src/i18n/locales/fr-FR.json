@@ -286,6 +286,13 @@
         "Favoris, réglages et éléments personnalisés sont stockés de manière plus fiable",
         "Le script wrapper n'encombre plus ton dossier personnel"
       ]
+    },
+    "v0_16_3": {
+      "title": "Nouveautés de la version 0.16.3",
+      "items": [
+        "Les variables et wrappers personnalisés créés ou modifiés depuis les Commandes globales ou la page d'un jeu s'affichent désormais immédiatement, sans avoir à redémarrer Steam.",
+        "Ajustements d'interface et fiabilisation générale."
+      ]
     }
   }
 }

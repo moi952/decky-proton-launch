@@ -286,6 +286,13 @@
         "Ulubione, ustawienia i elementy niestandardowe są teraz zapisywane bardziej niezawodnie",
         "Skrypt wrappera nie zaśmieca już katalogu domowego"
       ]
+    },
+    "v0_16_3": {
+      "title": "Nowości w wersji 0.16.3",
+      "items": [
+        "Niestandardowe zmienne i wrappery utworzone lub edytowane w Poleceniach globalnych albo na stronie gry pojawiają się teraz od razu, bez konieczności ponownego uruchamiania Steam.",
+        "Poprawki interfejsu i ogólna poprawa niezawodności."
+      ]
     }
   }
 }

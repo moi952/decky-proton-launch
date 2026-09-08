@@ -14,21 +14,44 @@ import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useRemoteData } from "../context/RemoteDataContext";
 import { useTranslation } from "react-i18next";
 import { ActionButton } from "@moi952/decky-ui-kit";
-import { AppProvider } from "../context/AppProvider";
 import { Variable } from "../data/types";
 
-interface CustomVariableModalContentProps {
+export interface CustomVariableModalContext {
+  customVariables: CustomVariable[];
+  customWrapperEnvs: string[];
+  catalogEnvs: string[];
+  addCustomVariable: (variable: Omit<CustomVariable, "id">) => boolean;
+  editCustomVariable: (
+    id: string,
+    updated: Omit<CustomVariable, "id">,
+  ) => void;
+}
+
+interface CustomVariableModalContentProps extends CustomVariableModalContext {
   existing?: CustomVariable;
   onClose: () => void;
 }
 
+// Takes its data/mutators as props rather than reading them from context —
+// showModal() renders this outside the main <AppProvider> tree, so a
+// useCustomVariables()/useCustomWrappers() call here would hit a brand new,
+// separate provider instance (its own empty-then-refetched state) instead of
+// the one GlobalCommandsView actually renders from. That mismatch was why a
+// freshly created variable persisted to disk but never showed up in the
+// list: the write landed on the modal's own throwaway instance, not the
+// live one. See ButtonAddCustomVariableModal/openEditCustomVariableModal for
+// how these props get sourced from the real, single instance.
 export const CustomVariableModalContent: React.FC<
   CustomVariableModalContentProps
-> = ({ existing, onClose }) => {
-  const { customVariables, addCustomVariable, editCustomVariable } =
-    useCustomVariables();
-  const { customWrappers } = useCustomWrappers();
-  const { variables: variablesData } = useRemoteData();
+> = ({
+  existing,
+  onClose,
+  customVariables,
+  customWrapperEnvs,
+  catalogEnvs,
+  addCustomVariable,
+  editCustomVariable,
+}) => {
   const { t } = useTranslation("add_custom_variable_modal");
   const { t: tCommon } = useTranslation();
   const [name, setName] = useState(existing?.name ?? "");
@@ -46,13 +69,9 @@ export const CustomVariableModalContent: React.FC<
     const otherCustomVariableEnvs = customVariables
       .filter((v) => v.id !== existing?.id)
       .map((v) => v.env);
-    const customWrapperEnvs = customWrappers.map((w) => w.env);
     return [...otherCustomVariableEnvs, ...customWrapperEnvs].includes(candidate);
   };
 
-  const catalogEnvs = variablesData.flatMap((cat) =>
-    (cat.variables as Variable[]).map((v) => v.env),
-  );
   const shadowsCatalogVariable = catalogEnvs.includes(env.trim());
 
   const handleSubmit = () => {
@@ -135,13 +154,25 @@ export const CustomVariableModalContent: React.FC<
 
 export const ButtonAddCustomVariableModal: React.FC = () => {
   const { t } = useTranslation("add_custom_variable_modal");
+  const { customVariables, addCustomVariable, editCustomVariable } =
+    useCustomVariables();
+  const { customWrappers } = useCustomWrappers();
+  const { variables: variablesData } = useRemoteData();
 
   const handleOpen = () => {
     let modalResult: ReturnType<typeof showModal> | null = null;
+    const catalogEnvs = variablesData.flatMap((cat) =>
+      (cat.variables as Variable[]).map((v) => v.env),
+    );
     modalResult = showModal(
-      <AppProvider>
-        <CustomVariableModalContent onClose={() => modalResult?.Close()} />
-      </AppProvider>,
+      <CustomVariableModalContent
+        customVariables={customVariables}
+        customWrapperEnvs={customWrappers.map((w) => w.env)}
+        catalogEnvs={catalogEnvs}
+        addCustomVariable={addCustomVariable}
+        editCustomVariable={editCustomVariable}
+        onClose={() => modalResult?.Close()}
+      />,
     );
   };
 

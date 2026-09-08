@@ -4,8 +4,14 @@ import { FavoriteModalContent } from "../components/ButtonFavoriteModal";
 import { DeleteFavoriteModalContent } from "../components/ButtonDeleteFavoriteModal";
 import { DeleteCustomVariableModalContent } from "../components/ButtonDeleteCustomVariableModal";
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal";
-import { CustomVariableModalContent } from "../components/ButtonAddCustomVariableModal";
-import { CustomWrapperModalContent } from "../components/ButtonAddCustomWrapperModal";
+import {
+  CustomVariableModalContent,
+  CustomVariableModalContext,
+} from "../components/ButtonAddCustomVariableModal";
+import {
+  CustomWrapperModalContent,
+  CustomWrapperModalContext,
+} from "../components/ButtonAddCustomWrapperModal";
 import { CustomVariable } from "../context/CustomVariablesContext";
 import { CustomWrapper } from "../context/CustomWrappersContext";
 
@@ -57,27 +63,35 @@ export const openGenericDeleteModal = (params: {
   );
 };
 
-export const openEditCustomVariableModal = (variable: CustomVariable) => {
+// ctx must come from the caller's own useCustomVariables()/useCustomWrappers()
+// instance (see GlobalCommandsView) — this function has no hooks of its own,
+// and wrapping in <AppProvider> here would spin up a separate provider
+// instance whose edits wouldn't reflect back in the real list.
+export const openEditCustomVariableModal = (
+  variable: CustomVariable,
+  ctx: CustomVariableModalContext,
+) => {
   let modal: ReturnType<typeof showModal> | null = null;
   modal = showModal(
-    <AppProvider>
-      <CustomVariableModalContent
-        existing={variable}
-        onClose={() => modal?.Close()}
-      />
-    </AppProvider>,
+    <CustomVariableModalContent
+      existing={variable}
+      {...ctx}
+      onClose={() => modal?.Close()}
+    />,
   );
 };
 
-export const openEditCustomWrapperModal = (wrapper: CustomWrapper) => {
+export const openEditCustomWrapperModal = (
+  wrapper: CustomWrapper,
+  ctx: CustomWrapperModalContext,
+) => {
   let modal: ReturnType<typeof showModal> | null = null;
   modal = showModal(
-    <AppProvider>
-      <CustomWrapperModalContent
-        existing={wrapper}
-        onClose={() => modal?.Close()}
-      />
-    </AppProvider>,
+    <CustomWrapperModalContent
+      existing={wrapper}
+      {...ctx}
+      onClose={() => modal?.Close()}
+    />,
   );
 };
 

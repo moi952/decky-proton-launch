@@ -286,6 +286,13 @@
         "Favoriten, Einstellungen und benutzerdefinierte Elemente werden jetzt zuverlässiger gespeichert",
         "Das Wrapper-Skript belegt nicht mehr deinen Home-Ordner"
       ]
+    },
+    "v0_16_3": {
+      "title": "Neuigkeiten in Version 0.16.3",
+      "items": [
+        "Benutzerdefinierte Variablen und Wrapper, die über Globale Befehle oder die Seite eines Spiels erstellt oder bearbeitet werden, werden jetzt sofort angezeigt, ohne dass Steam neu gestartet werden muss.",
+        "UI-Anpassungen und allgemeine Zuverlässigkeitsverbesserungen."
+      ]
     }
   }
 }

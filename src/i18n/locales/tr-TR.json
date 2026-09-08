@@ -284,6 +284,13 @@
         "Favoriler, ayarlar ve özel ögeler artık daha güvenilir şekilde saklanıyor",
         "Sarmalayıcı betik artık ana dizininizde yer kaplamıyor"
       ]
+    },
+    "v0_16_3": {
+      "title": "0.16.3 sürümündeki yenilikler",
+      "items": [
+        "Genel Komutlar veya bir oyunun sayfasından oluşturulan ya da düzenlenen özel değişkenler ve sarmalayıcılar artık Steam'i yeniden başlatmaya gerek kalmadan hemen görüntüleniyor.",
+        "Arayüz ayarlamaları ve genel güvenilirlik iyileştirmeleri."
+      ]
     }
   }
 }

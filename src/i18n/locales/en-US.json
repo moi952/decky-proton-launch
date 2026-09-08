@@ -286,6 +286,13 @@
         "Favorites, settings and custom items are now stored more reliably",
         "The wrapper script no longer clutters your home folder"
       ]
+    },
+    "v0_16_3": {
+      "title": "What's new in 0.16.3",
+      "items": [
+        "Custom variables and wrappers created or edited from Global Commands or a game's page now show up right away, without having to restart Steam.",
+        "UI adjustments and general reliability improvements."
+      ]
     }
   }
 }

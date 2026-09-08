@@ -20,7 +20,12 @@ import { useSettings } from "../context/SettingsContext";
 import { useCustomVariables } from "../context/CustomVariablesContext";
 import { useCustomWrappers } from "../context/CustomWrappersContext";
 import { useRemoteData } from "../context/RemoteDataContext";
-import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
+import {
+  toggleWrapper,
+  doRemoveWrapper,
+  addWrapperViaSteamClient,
+  removeWrapperViaSteamClient,
+} from "../utils/wrapperAction";
 import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
 import { useFavorites } from "../context/FavoritesContext";
 import {
@@ -48,11 +53,14 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible, showActiveSection } = useSettings();
-  const { customVariables, removeCustomVariable } = useCustomVariables();
-  const { customWrappers, removeCustomWrapper } = useCustomWrappers();
+  const { customVariables, removeCustomVariable, addCustomVariable, editCustomVariable } =
+    useCustomVariables();
+  const { customWrappers, removeCustomWrapper, addCustomWrapper, editCustomWrapper } =
+    useCustomWrappers();
   const { variables: variablesData, conflictGroups } = useRemoteData();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
   const allVariables: Variable[] = flattenAllVariables(variablesData);
+  const catalogEnvs = allVariables.map((v) => v.env);
   const topLevelVariables: Variable[] = getTopLevelVariables(variablesData);
   const envToTitle: Record<string, string> = Object.fromEntries(
     allVariables.map((v) => [v.env, v.title]),
@@ -152,11 +160,18 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
           Object.keys(currentDraft).length === 0 &&
           currentDisabled.length === 0
         ) {
-          await call<[number], boolean>("delete_game_profile", game.appid);
+          const { unwire_wrapper } = await call<
+            [number],
+            { success: boolean; unwire_wrapper: boolean }
+          >("delete_game_profile", game.appid);
+          if (unwire_wrapper && !game.is_shortcut) {
+            await removeWrapperViaSteamClient(game.appid);
+            setHasWrapper(false);
+          }
         } else {
-          await call<
+          const { wire_wrapper } = await call<
             [number, Record<string, string>, string, string[]],
-            boolean
+            { success: boolean; wire_wrapper: boolean }
           >(
             "set_game_profile",
             game.appid,
@@ -164,6 +179,10 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             game.name,
             currentDisabled,
           );
+          if (wire_wrapper && !game.is_shortcut) {
+            await addWrapperViaSteamClient(game.appid);
+            setHasWrapper(true);
+          }
         }
         setProfile(currentDraft);
         setDisabledGlobals(currentDisabled);
@@ -283,7 +302,14 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const deleteProfile = async () => {
     setSaving(true);
     try {
-      await call<[number], boolean>("delete_game_profile", game.appid);
+      const { unwire_wrapper } = await call<
+        [number],
+        { success: boolean; unwire_wrapper: boolean }
+      >("delete_game_profile", game.appid);
+      if (unwire_wrapper && !game.is_shortcut) {
+        await removeWrapperViaSteamClient(game.appid);
+        setHasWrapper(false);
+      }
       setProfile({});
       setDraft({});
       setDisabledGlobals([]);
@@ -669,7 +695,13 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                     key={cv.id}
                     onButtonDown={(evt: GamepadEvent) => {
                       if (evt.detail.button === GamepadButton.SECONDARY)
-                        openEditCustomVariableModal(cv);
+                        openEditCustomVariableModal(cv, {
+                          customVariables,
+                          customWrapperEnvs: customWrappers.map((w) => w.env),
+                          catalogEnvs,
+                          addCustomVariable,
+                          editCustomVariable,
+                        });
                     }}
                     onSecondaryActionDescription={tCommon("edit")}
                     onOptionsButton={() => setPendingDeleteVariable(cv.id)}
@@ -720,7 +752,10 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                     key={w.id}
                     onButtonDown={(evt: GamepadEvent) => {
                       if (evt.detail.button === GamepadButton.SECONDARY)
-                        openEditCustomWrapperModal(w);
+                        openEditCustomWrapperModal(w, {
+                          addCustomWrapper,
+                          editCustomWrapper,
+                        });
                     }}
                     onSecondaryActionDescription={tCommon("edit")}
                     onOptionsButton={() => setPendingDeleteCustomWrapper(w.id)}
