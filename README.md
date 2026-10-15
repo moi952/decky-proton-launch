@@ -124,7 +124,8 @@ pnpm run build
 Contributions are welcome!
 
 - **New language**: add a JSON file in `src/i18n/locales/` following the existing structure and open a PR.
-- **New Proton variable**: propose it via an issue or a PR, following the category and naming conventions in `src/data/variables.json`.
+- **New Proton variable**: propose it via an issue or a PR in the
+[decky-proton-launch-data](https://github.com/moi952/decky-proton-launch-data) repository.
 
 ---
 
