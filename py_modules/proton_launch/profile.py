@@ -76,6 +76,11 @@ def write_profile(
         "",
     ]
     for key, value in env_vars.items():
+        # A free-text variable left blank (e.g. an optional DLL path) must not
+        # export an empty string — some programs treat that as a bad value
+        # rather than as unset.
+        if not value.strip():
+            continue
         safe_val = value.replace("'", "'\\''")
         lines.append(f"export {key}='{safe_val}'")
     if disabled_global_keys:
@@ -103,6 +108,11 @@ def write_global_profile(env_vars: Dict[str, str]) -> None:
         "",
     ]
     for key, value in env_vars.items():
+        # A free-text variable left blank (e.g. an optional DLL path) must not
+        # export an empty string — some programs treat that as a bad value
+        # rather than as unset.
+        if not value.strip():
+            continue
         safe_val = value.replace("'", "'\\''")
         lines.append(f"export {key}='{safe_val}'")
     global_profile_path().write_text("\n".join(lines) + "\n", encoding="utf-8")
