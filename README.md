@@ -12,10 +12,10 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.16.4
+### ✨ New in 0.16.5
 
-- Plugin notifications now show the Decky Proton Launch icon
-- Adding a command to a game no longer duplicates its wrapper when it is already there, and existing duplicates are cleaned up automatically at startup
+- Free-text fields left empty are no longer exported as an empty variable
+- Added a Favorites section to the Global Commands view
 
 ---
 
