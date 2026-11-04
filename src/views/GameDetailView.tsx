@@ -13,6 +13,7 @@ import { ActionButton } from "@moi952/decky-ui-kit";
 import { InlineConfirm } from "../components/InlineConfirm";
 import { GameCover } from "../components/GameCover";
 import { VariableRow } from "../components/VariableRow";
+import { FavoritesPanelSection } from "../components/FavoritesPanelSection";
 import { FiArrowLeft, FiExternalLink, FiLink, FiTerminal } from "react-icons/fi";
 import { FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
@@ -50,7 +51,6 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCat } = useTranslation("categories");
   const { t: tDescriptions } = useTranslation("descriptions");
   const { t: tCommon } = useTranslation("common");
-  const { t: tFavModal } = useTranslation("delete_favorite_modal");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible, showActiveSection } = useSettings();
@@ -82,7 +82,6 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
     null,
   );
   const [hasWrapper, setHasWrapper] = useState(false);
-  const [pendingDeleteFav, setPendingDeleteFav] = useState<string | null>(null);
   const [confirmRemoveWrapper, setConfirmRemoveWrapper] = useState(false);
   const [pendingDeleteVariable, setPendingDeleteVariable] = useState<
     string | null
@@ -607,71 +606,21 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             </PanelSection>
           )}
 
-          {favorites.filter((f) => f.env).length > 0 && (
-            <PanelSection title={tCat("favorites")}>
-              {favorites
-                .filter((f) => f.env)
-                .map((fav) => {
-                  if (pendingDeleteFav === fav.name) {
-                    return (
-                      <PanelSectionRow key={fav.name}>
-                        <InlineConfirm
-                          description={tFavModal("description", { favorite_name: fav.name })}
-                          onCancel={() => setPendingDeleteFav(null)}
-                          onConfirm={() => {
-                            removeFavorite(fav.name);
-                            setPendingDeleteFav(null);
-                          }}
-                        />
-                      </PanelSectionRow>
-                    );
-                  }
-
-                  const catalogVar = allVariables.find((v) => v.env === fav.env);
-                  const isGlobal = isGlobalVar(fav.env!);
-                  const globalHint = isGlobal
-                    ? t(
-                        isVarActive(fav.env!)
-                          ? "global_active_hint"
-                          : "global_disabled_hint",
-                      )
-                    : undefined;
-
-                  return (
-                    <Focusable
-                      key={fav.name}
-                      onButtonDown={(evt: GamepadEvent) => {
-                        if (evt.detail.button === GamepadButton.SECONDARY)
-                          setPendingDeleteFav(fav.name);
-                      }}
-                      onSecondaryActionDescription={tCommon("remove_from_favorite")}
-                    >
-                      {catalogVar ? (
-                        <VariableRow
-                          variable={catalogVar}
-                          isActive={isVarActive}
-                          getValue={getVarValue}
-                          onToggle={toggleVar}
-                          onValueChange={setVarValue}
-                          onDeactivate={deactivateVar}
-                          conflictGroups={conflictGroups}
-                          envToTitle={envToTitle}
-                          description={globalHint}
-                        />
-                      ) : (
-                        <PanelSectionRow>
-                          <ToggleField
-                            label={fav.name}
-                            checked={draft[fav.env!] !== undefined}
-                            onChange={() => toggleVar(fav.env!, fav.value)}
-                          />
-                        </PanelSectionRow>
-                      )}
-                    </Focusable>
-                  );
-                })}
-            </PanelSection>
-          )}
+          <FavoritesPanelSection
+            allVariables={allVariables}
+            isActive={isVarActive}
+            getValue={getVarValue}
+            onToggle={toggleVar}
+            onValueChange={setVarValue}
+            onDeactivate={deactivateVar}
+            conflictGroups={conflictGroups}
+            envToTitle={envToTitle}
+            getDescription={(env) =>
+              isGlobalVar(env)
+                ? t(isVarActive(env) ? "global_active_hint" : "global_disabled_hint")
+                : undefined
+            }
+          />
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
               {customVariables.map((cv) => {

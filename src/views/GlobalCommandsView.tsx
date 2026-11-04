@@ -14,6 +14,7 @@ import { FiArrowLeft } from "react-icons/fi";
 import { ActionButton } from "@moi952/decky-ui-kit";
 import { InlineConfirm } from "../components/InlineConfirm";
 import { VariableRow } from "../components/VariableRow";
+import { FavoritesPanelSection } from "../components/FavoritesPanelSection";
 import { ButtonAddCustomWrapperModal } from "../components/ButtonAddCustomWrapperModal";
 import { ButtonAddCustomVariableModal } from "../components/ButtonAddCustomVariableModal";
 import { useSettings } from "../context/SettingsContext";
@@ -26,7 +27,11 @@ import {
   openEditCustomWrapperModal,
 } from "../utils/modals";
 import { Variable } from "../data/types";
-import { getVariableDefault, getTopLevelVariables, flattenAllVariables } from "../utils/variableDefaults";
+import {
+  getVariableDefault,
+  getTopLevelVariables,
+  flattenAllVariables,
+} from "../utils/variableDefaults";
 
 interface GlobalCommandsViewProps {
   onBack: () => void;
@@ -44,10 +49,18 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { isCategoryVisible, showActiveSection } = useSettings();
   const { variables: variablesData, conflictGroups } = useRemoteData();
-  const { customWrappers, removeCustomWrapper, addCustomWrapper, editCustomWrapper } =
-    useCustomWrappers();
-  const { customVariables, removeCustomVariable, addCustomVariable, editCustomVariable } =
-    useCustomVariables();
+  const {
+    customWrappers,
+    removeCustomWrapper,
+    addCustomWrapper,
+    editCustomWrapper,
+  } = useCustomWrappers();
+  const {
+    customVariables,
+    removeCustomVariable,
+    addCustomVariable,
+    editCustomVariable,
+  } = useCustomVariables();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
 
   const [profile, setProfile] = useState<Record<string, string>>({});
@@ -269,6 +282,17 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
             </PanelSection>
           )}
 
+          <FavoritesPanelSection
+            allVariables={flattenAllVariables(variablesData)}
+            isActive={isVarActive}
+            getValue={getVarValue}
+            onToggle={toggleVar}
+            onValueChange={setVarValue}
+            onDeactivate={deactivateVar}
+            conflictGroups={conflictGroups}
+            envToTitle={envToTitle}
+          />
+
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
               {customVariables.map((cv) => {
@@ -384,7 +408,11 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                         key={variable.env}
                         onButtonDown={(evt: GamepadEvent) => {
                           if (evt.detail.button === GamepadButton.SECONDARY)
-                            toggleFavorite(variable.env, tVars(variable.title), defaultVal);
+                            toggleFavorite(
+                              variable.env,
+                              tVars(variable.title),
+                              defaultVal,
+                            );
                         }}
                         onSecondaryActionDescription={
                           favorites.some((f) => f.env === variable.env)
@@ -406,47 +434,64 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                     );
                   })}
                 </PanelSection>
-                {cat.subCategory && isCategoryVisible(cat.subCategory.title) && (
-                  <div style={{ marginLeft: 12 }}>
-                  <PanelSection title={tCat(cat.subCategory.title)}>
-                    {cat.subCategory.description && (
-                      <PanelSectionRow>
-                        <div style={{ fontSize: 11, color: "#aaa", lineHeight: 1.4, marginBottom: 4 }}>
-                          {tDescriptions(cat.subCategory.description)}
-                        </div>
-                      </PanelSectionRow>
-                    )}
-                    {(cat.subCategory.variables as Variable[]).map((variable) => {
-                      const defaultVal = getVariableDefault(variable);
-                      return (
-                        <Focusable
-                          key={variable.env}
-                          onButtonDown={(evt: GamepadEvent) => {
-                            if (evt.detail.button === GamepadButton.SECONDARY)
-                              toggleFavorite(variable.env, tVars(variable.title), defaultVal);
-                          }}
-                          onSecondaryActionDescription={
-                            favorites.some((f) => f.env === variable.env)
-                              ? tCommon("remove_from_favorite")
-                              : tCommon("add_to_favorite")
-                          }
-                        >
-                          <VariableRow
-                            variable={variable}
-                            isActive={isVarActive}
-                            getValue={getVarValue}
-                            onToggle={toggleVar}
-                            onValueChange={setVarValue}
-                            onDeactivate={deactivateVar}
-                            conflictGroups={conflictGroups}
-                            envToTitle={envToTitle}
-                          />
-                        </Focusable>
-                      );
-                    })}
-                  </PanelSection>
-                  </div>
-                )}
+                {cat.subCategory &&
+                  isCategoryVisible(cat.subCategory.title) && (
+                    <div style={{ marginLeft: 12 }}>
+                      <PanelSection title={tCat(cat.subCategory.title)}>
+                        {cat.subCategory.description && (
+                          <PanelSectionRow>
+                            <div
+                              style={{
+                                fontSize: 11,
+                                color: "#aaa",
+                                lineHeight: 1.4,
+                                marginBottom: 4,
+                              }}
+                            >
+                              {tDescriptions(cat.subCategory.description)}
+                            </div>
+                          </PanelSectionRow>
+                        )}
+                        {(cat.subCategory.variables as Variable[]).map(
+                          (variable) => {
+                            const defaultVal = getVariableDefault(variable);
+                            return (
+                              <Focusable
+                                key={variable.env}
+                                onButtonDown={(evt: GamepadEvent) => {
+                                  if (
+                                    evt.detail.button ===
+                                    GamepadButton.SECONDARY
+                                  )
+                                    toggleFavorite(
+                                      variable.env,
+                                      tVars(variable.title),
+                                      defaultVal,
+                                    );
+                                }}
+                                onSecondaryActionDescription={
+                                  favorites.some((f) => f.env === variable.env)
+                                    ? tCommon("remove_from_favorite")
+                                    : tCommon("add_to_favorite")
+                                }
+                              >
+                                <VariableRow
+                                  variable={variable}
+                                  isActive={isVarActive}
+                                  getValue={getVarValue}
+                                  onToggle={toggleVar}
+                                  onValueChange={setVarValue}
+                                  onDeactivate={deactivateVar}
+                                  conflictGroups={conflictGroups}
+                                  envToTitle={envToTitle}
+                                />
+                              </Focusable>
+                            );
+                          },
+                        )}
+                      </PanelSection>
+                    </div>
+                  )}
               </React.Fragment>
             ))}
         </React.Fragment>
