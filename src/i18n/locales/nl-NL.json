@@ -300,6 +300,13 @@
         "Meldingen van de plugin tonen nu het Decky Proton Launch-pictogram",
         "Een commando aan een game toevoegen dupliceert de wrapper niet meer als die er al is, en bestaande duplicaten worden bij het opstarten automatisch opgeruimd"
       ]
+    },
+    "v0_16_5": {
+      "title": "Nieuw in versie 0.16.5",
+      "items": [
+        "Leeggelaten tekstvelden worden niet langer als lege variabele geëxporteerd",
+        "Nieuwe sectie Favorieten in de weergave Globale opdrachten"
+      ]
     }
   }
 }

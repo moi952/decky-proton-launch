@@ -300,6 +300,13 @@
         "Plugin notifications now show the Decky Proton Launch icon",
         "Adding a command to a game no longer duplicates its wrapper when it is already there, and existing duplicates are cleaned up automatically at startup"
       ]
+    },
+    "v0_16_5": {
+      "title": "What's new in 0.16.5",
+      "items": [
+        "Free-text fields left empty are no longer exported as an empty variable",
+        "Added a Favorites section to the Global Commands view"
+      ]
     }
   }
 }

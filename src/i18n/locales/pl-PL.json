@@ -300,6 +300,13 @@
         "Powiadomienia wtyczki wyświetlają teraz ikonę Decky Proton Launch",
         "Dodanie polecenia do gry nie duplikuje już wrappera, jeśli już istnieje, a istniejące duplikaty są automatycznie czyszczone przy uruchomieniu"
       ]
+    },
+    "v0_16_5": {
+      "title": "Nowości w wersji 0.16.5",
+      "items": [
+        "Pola tekstowe pozostawione puste nie są już eksportowane jako pusta zmienna",
+        "Dodano sekcję Ulubione w widoku Komendy globalne"
+      ]
     }
   }
 }

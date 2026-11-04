@@ -300,6 +300,13 @@
         "As notificações do plugin agora exibem o ícone do Decky Proton Launch",
         "Adicionar um comando a um jogo não duplica mais o wrapper quando ele já existe, e as duplicatas existentes são limpas automaticamente na inicialização"
       ]
+    },
+    "v0_16_5": {
+      "title": "Novidades da versão 0.16.5",
+      "items": [
+        "Campos de texto deixados em branco não são mais exportados como variável vazia",
+        "Nova seção de Favoritos na tela de Comandos globais"
+      ]
     }
   }
 }

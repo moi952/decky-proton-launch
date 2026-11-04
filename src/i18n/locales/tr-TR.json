@@ -298,6 +298,13 @@
         "Eklenti bildirimleri artık Decky Proton Launch simgesini gösteriyor",
         "Bir oyuna komut eklemek, wrapper zaten varsa onu çoğaltmıyor; mevcut kopyalar açılışta otomatik olarak temizleniyor"
       ]
+    },
+    "v0_16_5": {
+      "title": "0.16.5 sürümündeki yenilikler",
+      "items": [
+        "Boş bırakılan metin alanları artık boş bir değişken olarak dışa aktarılmıyor",
+        "Genel Komutlar görünümüne Favoriler bölümü eklendi"
+      ]
     }
   }
 }

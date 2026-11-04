@@ -300,6 +300,13 @@
         "Benachrichtigungen des Plugins zeigen jetzt das Decky-Proton-Launch-Symbol",
         "Das Hinzufügen eines Befehls zu einem Spiel dupliziert den Wrapper nicht mehr, wenn er bereits vorhanden ist; vorhandene Duplikate werden beim Start automatisch bereinigt"
       ]
+    },
+    "v0_16_5": {
+      "title": "Neuigkeiten in Version 0.16.5",
+      "items": [
+        "Leer gelassene Textfelder werden nicht mehr als leere Variable exportiert",
+        "Neuer Bereich „Favoriten“ in der Ansicht „Globale Befehle“"
+      ]
     }
   }
 }

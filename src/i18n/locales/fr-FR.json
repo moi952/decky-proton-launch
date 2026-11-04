@@ -300,6 +300,13 @@
         "Les notifications du plugin affichent désormais l'icône de Decky Proton Launch",
         "Ajouter une commande à un jeu ne duplique plus son wrapper s'il est déjà présent, et les doublons existants sont nettoyés automatiquement au démarrage"
       ]
+    },
+    "v0_16_5": {
+      "title": "Nouveautés de la version 0.16.5",
+      "items": [
+        "Les champs texte laissés vides ne sont plus exportés comme variable vide",
+        "Ajout d'une section Favoris dans la vue Commandes globales"
+      ]
     }
   }
 }
