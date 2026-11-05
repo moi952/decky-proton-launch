@@ -12,10 +12,13 @@
 
 Decky Proton Launch provides a simple, intuitive interface to enable commonly used Proton environment variables for your Steam games. Select one or multiple options, copy the wrapper command, or configure per-game profiles directly from the plugin.
 
-### ✨ New in 0.16.5
+### ✨ New in 0.17.0
 
-- Free-text fields left empty are no longer exported as an empty variable
-- Added a Favorites section to the Global Commands view
+- Apply a variable to several games at once from the Options button, with a live progress card
+- Command groups: create a group from pasted launch options, apply it to chosen games (with “VR” and “VR only” filters to tick matching games in one tap), then edit it to update all of them at once
+- Automatic filter for groups (e.g. VR games): newly installed matching games get the group automatically, can be turned off in Settings
+- “Clean launch options” button: removes from Steam launch options what the plugin already applies, with a before/after preview and undo
+- Tab navigation, on by default and optional in Settings: switch pages with the controller's shoulder buttons from anywhere
 
 ---
 
