@@ -32,15 +32,31 @@ import { SettingsView } from "./views/SettingsView";
 import { GamesPickerView } from "./views/GamesPickerView";
 import { GameDetailView } from "./views/GameDetailView";
 import { GlobalCommandsView } from "./views/GlobalCommandsView";
+import { BulkApplyView } from "./views/BulkApplyView";
+import {
+  CleanLaunchOptionsView,
+  CleanPayload,
+} from "./views/CleanLaunchOptionsView";
+import { GroupsView } from "./views/GroupsView";
+import { BulkPayload } from "./utils/bulkApply";
+import { startAutoApplyScan } from "./utils/autoApplyGroups";
 import { useSettings, DefaultHome } from "./context/SettingsContext";
 import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
+import { TabbedMain, isMainView } from "./components/TabbedMain";
 import { NowPlayingCard } from "./components/NowPlayingCard";
 import { GAME_GROUP_HEADER_STYLES } from "./components/GameGroupHeader";
 import { SteamGame, ScriptStatus } from "./data/types";
 
 type View =
-  "home" | "settings" | "games-picker" | "game-detail" | "global-commands";
+  | "home"
+  | "settings"
+  | "games-picker"
+  | "game-detail"
+  | "global-commands"
+  | "bulk-apply"
+  | "clean-options"
+  | "groups";
 
 const resolveHomeView = (
   defaultHome: DefaultHome,
@@ -61,16 +77,20 @@ let lastView: View = "games-picker";
 let lastViewAt = 0;
 
 const App: React.FC = () => {
-  const { defaultHome, hideVariablesPage, settingsLoaded } = useSettings();
+  const { defaultHome, hideVariablesPage, settingsLoaded, tabbedNavigation } =
+    useSettings();
   const { noData } = useRemoteData();
   const { info: pluginUpdateInfo } = usePluginUpdate();
   const { t } = useTranslation();
   const whatsNewVersions = getWhatsNewVersions();
-  // game-detail can't be restored this way (selectedGame would be lost
-  // along with it) — fall back to games-picker for that one case.
+  // game-detail and bulk-apply can't be restored this way (selectedGame /
+  // the payload being applied would be lost along with them) — fall back to
+  // games-picker for those cases.
   const isRestoringView = useRef(
     Date.now() - lastViewAt < NAV_RESTORE_WINDOW_MS &&
-      lastView !== "game-detail",
+      lastView !== "game-detail" &&
+      lastView !== "bulk-apply" &&
+      lastView !== "clean-options",
   ).current;
   const [view, setView] = useState<View>(
     isRestoringView ? lastView : "games-picker",
@@ -78,11 +98,48 @@ const App: React.FC = () => {
   const [selectedGame, setSelectedGame] = useState<SteamGame | null>(null);
   const [runningGame, setRunningGame] = useState<SteamGame | null>(null);
   const [scriptStatus, setScriptStatus] = useState<ScriptStatus>("missing");
+  const [bulkPayload, setBulkPayload] = useState<BulkPayload | null>(null);
+  const [bulkReturnView, setBulkReturnView] = useState<View>("games-picker");
+  // Where "back" leads from a game's page: the games list by default, the
+  // bulk page when the game was opened from there.
+  const [gameReturnView, setGameReturnView] = useState<View>("games-picker");
+
+  const openBulkApply = (payload: BulkPayload) => {
+    setBulkReturnView(view);
+    setBulkPayload(payload);
+    setView("bulk-apply");
+  };
+
+  const [cleanPayload, setCleanPayload] = useState<CleanPayload | null>(null);
+  const [cleanReturnView, setCleanReturnView] = useState<View>("groups");
+
+  const openCleanOptions = (payload: CleanPayload) => {
+    setCleanReturnView(view);
+    setCleanPayload(payload);
+    setView("clean-options");
+  };
+
+  const openGameFromBulk = (game: SteamGame) => {
+    setSelectedGame(game);
+    setGameReturnView("bulk-apply");
+    setView("game-detail");
+  };
+
+  const leaveGameDetail = () => {
+    const target = gameReturnView;
+    setGameReturnView("games-picker");
+    setView(target);
+  };
 
   // Keeps lastViewAt fresh the whole time this view is showing, not just
   // the instant it changed.
   useEffect(() => {
-    if (view === "game-detail") return;
+    if (
+      view === "game-detail" ||
+      view === "bulk-apply" ||
+      view === "clean-options"
+    )
+      return;
     lastView = view;
     lastViewAt = Date.now();
     const heartbeat = setInterval(() => {
@@ -127,10 +184,63 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Optional tab layout for the five main pages. Sub-pages (a game, the bulk
+  // and cleanup pages) keep opening exactly as below, with their own back.
+  if (tabbedNavigation && isMainView(view))
+    return (
+      <TabbedMain
+        view={view}
+        onShowView={(next) => setView(next)}
+        isOnHome={view === resolveHomeView(defaultHome, hideVariablesPage)}
+        hideVariablesPage={hideVariablesPage}
+        scriptStatus={scriptStatus}
+        onScriptInstalled={() => setScriptStatus("current")}
+        runningGame={runningGame}
+        onSelectGame={(game) => {
+          setSelectedGame(game);
+          setView("game-detail");
+        }}
+        onGoHome={goHome}
+        onBulkApply={openBulkApply}
+        onCleanOptions={openCleanOptions}
+      />
+    );
+
   if (view === "settings")
     return (
       <BackHandler onBack={goHome}>
         <SettingsView onBack={goHome} />
+      </BackHandler>
+    );
+
+  // BulkApplyView carries its own BackHandler — it has to ignore the back
+  // button while a run is in progress.
+  if (view === "bulk-apply" && bulkPayload)
+    return (
+      <BulkApplyView
+        payload={bulkPayload}
+        onBack={() => setView(bulkReturnView)}
+        onOpenGame={openGameFromBulk}
+      />
+    );
+
+  // CleanLaunchOptionsView carries its own BackHandler for the same reason.
+  if (view === "clean-options" && cleanPayload)
+    return (
+      <CleanLaunchOptionsView
+        payload={cleanPayload}
+        onBack={() => setView(cleanReturnView)}
+      />
+    );
+
+  if (view === "groups")
+    return (
+      <BackHandler onBack={goHome}>
+        <GroupsView
+          onBack={goHome}
+          onApply={openBulkApply}
+          onCleanOptions={openCleanOptions}
+        />
       </BackHandler>
     );
 
@@ -153,6 +263,7 @@ const App: React.FC = () => {
             onHome={() => setView("home")}
             onGamesManager={() => setView("games-picker")}
             onGlobalCommands={() => setView("global-commands")}
+            onGroups={() => setView("groups")}
             onSettings={() => setView("settings")}
             onCopyWrapper={() =>
               copy("~/.config/decky-proton-launch/proton-launch %command%")
@@ -168,17 +279,19 @@ const App: React.FC = () => {
             }}
           />
         )}
-        <GlobalCommandsView onBack={goHome} />
+        <GlobalCommandsView onBack={goHome} onBulkApply={openBulkApply} />
       </BackHandler>
     );
   }
 
   if (view === "game-detail" && selectedGame)
     return (
-      <BackHandler onBack={() => setView("games-picker")}>
+      <BackHandler onBack={leaveGameDetail}>
         <GameDetailView
           game={selectedGame}
-          onBack={() => setView("games-picker")}
+          onBack={leaveGameDetail}
+          onBulkApply={openBulkApply}
+          onCleanOptions={openCleanOptions}
         />
       </BackHandler>
     );
@@ -196,6 +309,7 @@ const App: React.FC = () => {
         onHome={() => setView("home")}
         onGamesManager={() => setView("games-picker")}
         onGlobalCommands={() => setView("global-commands")}
+        onGroups={() => setView("groups")}
         onSettings={() => setView("settings")}
         onCopyWrapper={() =>
           copy("~/.config/decky-proton-launch/proton-launch %command%")
@@ -268,6 +382,10 @@ const App: React.FC = () => {
 
 export default definePlugin(() => {
   loadTranslations();
+
+  // Watches for newly installed games that match a group's filter, for the
+  // whole session — the panel doesn't have to be open.
+  startAutoApplyScan();
 
   const listener = addEventListener("timer_event", (...args) => {
     pluginToast({ title: "Event received", body: JSON.stringify(args) });

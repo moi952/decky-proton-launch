@@ -1,6 +1,6 @@
 import re
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import decky
 
@@ -167,6 +167,91 @@ def remove_env_keys_from_profiles(env_keys: List[str]) -> None:
         filtered = {k: v for k, v in env_vars.items() if k not in keys}
         name = _extract_game_name(path) or str(app_id)
         write_profile(app_id, filtered, name, disabled_globals)
+
+
+def apply_vars_to_profile(
+    app_id: int,
+    new_vars: Dict[str, str],
+    game_name: str = "",
+    overwrite: bool = False,
+) -> Dict[str, object]:
+    """Merges new_vars into one game's profile without touching its other
+    exports. A key the game already has with a different value is left alone
+    unless overwrite is set — it comes back in "skipped" so the caller can
+    offer to replace it. "previous" records what each applied key held
+    before (None when it was absent), which is what an undo needs."""
+    path = profile_path(app_id)
+    existed = path.is_file()
+    env_vars, disabled = read_profile_full(app_id)
+    applied: List[str] = []
+    unchanged: List[str] = []
+    skipped: List[str] = []
+    previous: Dict[str, object] = {}
+    for key, value in new_vars.items():
+        if not value.strip():
+            continue
+        current = env_vars.get(key)
+        if current == value:
+            unchanged.append(key)
+        elif current is not None and not overwrite:
+            skipped.append(key)
+        else:
+            previous[key] = current
+            env_vars[key] = value
+            applied.append(key)
+    if applied:
+        # An "unset KEY" line sourced after the export would cancel it.
+        disabled = [k for k in disabled if k not in applied]
+        write_profile(app_id, env_vars, game_name or _extract_game_name(path) or str(app_id), disabled)
+    return {
+        "applied": applied,
+        "unchanged": unchanged,
+        "skipped": skipped,
+        "previous": previous,
+        "created": bool(applied) and not existed,
+    }
+
+
+def remove_vars_from_profile(
+    app_id: int,
+    keys: List[str],
+    expected: Optional[Dict[str, str]] = None,
+) -> Dict[str, object]:
+    """Strips keys from one game's profile. With expected, a key whose value
+    no longer matches (edited by hand since it was applied) is kept, so a
+    removal never wipes something the user changed on purpose. The profile
+    file is deleted once nothing is left in it."""
+    path = profile_path(app_id)
+    if not path.is_file():
+        return {"removed": [], "kept": [], "deleted": False}
+    env_vars, disabled = read_profile_full(app_id)
+    removed: List[str] = []
+    kept: List[str] = []
+    for key in keys:
+        if key not in env_vars:
+            continue
+        if expected is not None and key in expected and env_vars[key] != expected[key]:
+            kept.append(key)
+            continue
+        del env_vars[key]
+        removed.append(key)
+    if not removed:
+        return {"removed": [], "kept": kept, "deleted": False}
+    if env_vars or disabled:
+        write_profile(app_id, env_vars, _extract_game_name(path) or str(app_id), disabled)
+        return {"removed": removed, "kept": kept, "deleted": False}
+    path.unlink()
+    return {"removed": removed, "kept": kept, "deleted": True}
+
+
+def read_all_profiles() -> Dict[str, Dict[str, str]]:
+    """appid (string) -> that game's own exports, for every per-game profile."""
+    result: Dict[str, Dict[str, str]] = {}
+    if profiles_dir().is_dir():
+        for path in profiles_dir().glob("*.env"):
+            if path.stem.isdigit():
+                result[path.stem] = _parse_env_file(path)[0]
+    return result
 
 
 def real_commands(env_vars: Dict[str, str], global_vars: Dict[str, str]) -> Dict[str, str]:

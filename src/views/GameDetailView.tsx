@@ -14,7 +14,15 @@ import { InlineConfirm } from "../components/InlineConfirm";
 import { GameCover } from "../components/GameCover";
 import { VariableRow } from "../components/VariableRow";
 import { FavoritesPanelSection } from "../components/FavoritesPanelSection";
-import { FiArrowLeft, FiExternalLink, FiLink, FiTerminal } from "react-icons/fi";
+import { GameGroupsSection } from "../components/GameGroupsSection";
+import { BulkPayload } from "../utils/bulkApply";
+import type { CleanPayload } from "./CleanLaunchOptionsView";
+import {
+  FiArrowLeft,
+  FiExternalLink,
+  FiLink,
+  FiTerminal,
+} from "react-icons/fi";
 import { FaCog } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import type { SteamGame } from "./GamesPickerView";
@@ -28,23 +36,35 @@ import {
   addWrapperViaSteamClient,
   removeWrapperViaSteamClient,
 } from "../utils/wrapperAction";
-import { getGameStatus, STATUS_COLOR, STATUS_LABEL_KEY } from "../utils/gameStatus";
+import {
+  getGameStatus,
+  STATUS_COLOR,
+  STATUS_LABEL_KEY,
+} from "../utils/gameStatus";
 import { useFavorites } from "../context/FavoritesContext";
 import {
   openEditCustomVariableModal,
   openEditCustomWrapperModal,
 } from "../utils/modals";
 import { Variable } from "../data/types";
-import { getVariableDefault, flattenAllVariables, getTopLevelVariables } from "../utils/variableDefaults";
+import {
+  getVariableDefault,
+  flattenAllVariables,
+  getTopLevelVariables,
+} from "../utils/variableDefaults";
 
 interface GameDetailViewProps {
   game: SteamGame;
   onBack: () => void;
+  onBulkApply?: (payload: BulkPayload) => void;
+  onCleanOptions?: (payload: CleanPayload) => void;
 }
 
 export const GameDetailView: React.FC<GameDetailViewProps> = ({
   game,
   onBack,
+  onBulkApply,
+  onCleanOptions,
 }) => {
   const { t } = useTranslation("game_manager");
   const { t: tVars } = useTranslation("variables");
@@ -53,11 +73,21 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tCommon } = useTranslation("common");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
+  const { t: tBulk } = useTranslation("bulk_apply");
+  const { t: tClean } = useTranslation("clean_options");
   const { isCategoryVisible, showActiveSection } = useSettings();
-  const { customVariables, removeCustomVariable, addCustomVariable, editCustomVariable } =
-    useCustomVariables();
-  const { customWrappers, removeCustomWrapper, addCustomWrapper, editCustomWrapper } =
-    useCustomWrappers();
+  const {
+    customVariables,
+    removeCustomVariable,
+    addCustomVariable,
+    editCustomVariable,
+  } = useCustomVariables();
+  const {
+    customWrappers,
+    removeCustomWrapper,
+    addCustomWrapper,
+    editCustomWrapper,
+  } = useCustomWrappers();
   const { variables: variablesData, conflictGroups } = useRemoteData();
   const { favorites, addFavorite, removeFavorite } = useFavorites();
   const allVariables: Variable[] = flattenAllVariables(variablesData);
@@ -86,8 +116,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const [pendingDeleteVariable, setPendingDeleteVariable] = useState<
     string | null
   >(null);
-  const [pendingDeleteCustomWrapper, setPendingDeleteCustomWrapper] =
-    useState<string | null>(null);
+  const [pendingDeleteCustomWrapper, setPendingDeleteCustomWrapper] = useState<
+    string | null
+  >(null);
 
   // Track whether initial load is done so we don't auto-save on mount
   const initializedRef = useRef(false);
@@ -100,11 +131,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const reload = useCallback(() => {
     initializedRef.current = false;
     setLoading(true);
-    Promise.all([
-      call<[number], { vars: Record<string, string>; disabled_globals: string[] }>(
-        "get_game_profile",
-        game.appid,
-      ),
+    return Promise.all([
+      call<
+        [number],
+        { vars: Record<string, string>; disabled_globals: string[] }
+      >("get_game_profile", game.appid),
       call<[number, boolean], boolean>(
         "get_wrapper_status",
         game.appid,
@@ -216,7 +247,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const hasActiveGlobalForThisGame = Object.keys(globalVars).some(
     (key) => !disabledGlobals.includes(key),
   );
-  const status = getGameStatus(hasRealCommands, hasWrapper, hasActiveGlobalForThisGame);
+  const status = getGameStatus(
+    hasRealCommands,
+    hasWrapper,
+    hasActiveGlobalForThisGame,
+  );
 
   const isGlobalVar = (envKey: string) => globalVars[envKey] !== undefined;
 
@@ -274,7 +309,11 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   // as "configured per-game" in the games list, even though the user
   // never actually asked for anything game-specific.
   const setVarValue = (envKey: string, value: string) => {
-    if (isGlobalVar(envKey) && !disabledGlobalsDraft.includes(envKey) && globalVars[envKey] === value) {
+    if (
+      isGlobalVar(envKey) &&
+      !disabledGlobalsDraft.includes(envKey) &&
+      globalVars[envKey] === value
+    ) {
       if (draft[envKey] !== undefined) {
         setDraft((prev) => {
           const next = { ...prev };
@@ -289,6 +328,25 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
       setDisabledGlobalsDraft((prev) => prev.filter((k) => k !== envKey));
     }
   };
+
+  // Options button on a catalog row: apply this variable, with the value it
+  // currently shows for this game, onto several games.
+  const bulkApplyProps = (variable: Variable) =>
+    onBulkApply
+      ? {
+          onOptionsButton: () =>
+            onBulkApply({
+              title: tVars(variable.title),
+              vars: {
+                [variable.env]: getVarValue(
+                  variable.env,
+                  getVariableDefault(variable),
+                ),
+              },
+            }),
+          onOptionsActionDescription: tBulk("action_label"),
+        }
+      : {};
 
   const toggleFavorite = (env: string, name: string, value: string) => {
     const existing = favorites.find((f) => f.env === env);
@@ -402,48 +460,73 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
 
       {/* Wrapper + product page actions */}
       <div ref={wrapperSectionRef}>
-      <PanelSection>
-        <Focusable
-          style={{ display: "flex", gap: "8px" }}
-          flow-children="horizontal"
-        >
-          <ActionButton
-            width="100%"
-            onClick={() => {
-              if (hasWrapper) {
-                setConfirmRemoveWrapper(true);
-              } else {
-                toggleWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
-              }
-            }}
+        <PanelSection>
+          <Focusable
+            style={{ display: "flex", gap: "8px" }}
+            flow-children="horizontal"
           >
-            <FiLink size={12} />
-            <span style={{ marginLeft: 4 }}>
-              {hasWrapper ? t("remove_wrapper") : t("add_wrapper")}
-            </span>
-          </ActionButton>
-          <ActionButton
-            onClick={() =>
-              window.open(`steam://nav/games/details/${game.appid}`)
-            }
-          >
-            <FiExternalLink size={14} />
-          </ActionButton>
-        </Focusable>
-        {confirmRemoveWrapper && (
-          <div style={{ marginTop: "8px" }}>
-            <InlineConfirm
-              description={t("delete_wrapper_description", { game_name: game.name })}
-              confirmLabel={t("delete_wrapper_confirm")}
-              onCancel={() => setConfirmRemoveWrapper(false)}
-              onConfirm={() => {
-                setConfirmRemoveWrapper(false);
-                doRemoveWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
+            <ActionButton
+              width="100%"
+              onClick={() => {
+                if (hasWrapper) {
+                  setConfirmRemoveWrapper(true);
+                } else {
+                  toggleWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
+                }
               }}
-            />
-          </div>
-        )}
-      </PanelSection>
+            >
+              <FiLink size={12} />
+              <span style={{ marginLeft: 4 }}>
+                {hasWrapper ? t("remove_wrapper") : t("add_wrapper")}
+              </span>
+            </ActionButton>
+            <ActionButton
+              onClick={() =>
+                window.open(`steam://nav/games/details/${game.appid}`)
+              }
+            >
+              <FiExternalLink size={14} />
+            </ActionButton>
+          </Focusable>
+          {confirmRemoveWrapper && (
+            <div style={{ marginTop: "8px" }}>
+              <InlineConfirm
+                description={t("delete_wrapper_description", {
+                  game_name: game.name,
+                })}
+                confirmLabel={t("delete_wrapper_confirm")}
+                onCancel={() => setConfirmRemoveWrapper(false)}
+                onConfirm={() => {
+                  setConfirmRemoveWrapper(false);
+                  doRemoveWrapper(game, t, (nowSet) => setHasWrapper(nowSet));
+                }}
+              />
+            </div>
+          )}
+          {hasWrapper && onCleanOptions && (
+            <div style={{ marginTop: "8px" }}>
+              <ActionButton
+                size="small"
+                width="100%"
+                onClick={() =>
+                  onCleanOptions({ title: game.name, games: [game] })
+                }
+              >
+                {tClean("button_label")}
+              </ActionButton>
+              <div
+                style={{
+                  fontSize: 10,
+                  color: "#8a94a0",
+                  marginTop: 4,
+                  lineHeight: 1.4,
+                }}
+              >
+                {tClean("button_hint")}
+              </div>
+            </div>
+          )}
+        </PanelSection>
       </div>
 
       {/* Debug log viewer */}
@@ -567,7 +650,12 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                 return (
                   <VariableRow
                     key={w.id}
-                    variable={{ title: w.name, env: w.env, type: "exec", exec: w.exec }}
+                    variable={{
+                      title: w.name,
+                      env: w.env,
+                      type: "exec",
+                      exec: w.exec,
+                    }}
                     isActive={isVarActive}
                     getValue={getVarValue}
                     onToggle={toggleVar}
@@ -617,9 +705,23 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             envToTitle={envToTitle}
             getDescription={(env) =>
               isGlobalVar(env)
-                ? t(isVarActive(env) ? "global_active_hint" : "global_disabled_hint")
+                ? t(
+                    isVarActive(env)
+                      ? "global_active_hint"
+                      : "global_disabled_hint",
+                  )
                 : undefined
             }
+          />
+          <GameGroupsSection
+            game={game}
+            profile={draft}
+            hasWrapper={hasWrapper}
+            onChanged={(wrapperAdded) => {
+              reload().then(() => {
+                if (wrapperAdded) setHasWrapper(true);
+              });
+            }}
           />
           {customVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
@@ -712,7 +814,12 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                     onOptionsActionDescription={tCommon("delete")}
                   >
                     <VariableRow
-                      variable={{ title: w.name, env: w.env, type: "exec", exec: w.exec }}
+                      variable={{
+                        title: w.name,
+                        env: w.env,
+                        type: "exec",
+                        exec: w.exec,
+                      }}
                       isActive={isVarActive}
                       getValue={getVarValue}
                       onToggle={toggleVar}
@@ -749,13 +856,18 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                         key={variable.env}
                         onButtonDown={(evt: GamepadEvent) => {
                           if (evt.detail.button === GamepadButton.SECONDARY)
-                            toggleFavorite(variable.env, tVars(variable.title), defaultVal);
+                            toggleFavorite(
+                              variable.env,
+                              tVars(variable.title),
+                              defaultVal,
+                            );
                         }}
                         onSecondaryActionDescription={
                           favorites.some((f) => f.env === variable.env)
                             ? tCommon("remove_from_favorite")
                             : tCommon("add_to_favorite")
                         }
+                        {...bulkApplyProps(variable)}
                       >
                         <VariableRow
                           variable={variable}
@@ -772,57 +884,75 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
                     );
                   })}
                 </PanelSection>
-                {cat.subCategory && isCategoryVisible(cat.subCategory.title) && (
-                  <div style={{ marginLeft: 12 }}>
-                  <PanelSection title={tCat(cat.subCategory.title)}>
-                    {cat.subCategory.description && (
-                      <PanelSectionRow>
-                        <div style={{ fontSize: 11, color: "#aaa", lineHeight: 1.4, marginBottom: 4 }}>
-                          {tDescriptions(cat.subCategory.description)}
-                        </div>
-                      </PanelSectionRow>
-                    )}
-                    {(cat.subCategory.variables as Variable[]).map((variable) => {
-                      const isGlobal = isGlobalVar(variable.env);
-                      const globalHint = isGlobal
-                        ? t(
-                            isVarActive(variable.env)
-                              ? "global_active_hint"
-                              : "global_disabled_hint",
-                          )
-                        : undefined;
-                      const defaultVal = getVariableDefault(variable);
+                {cat.subCategory &&
+                  isCategoryVisible(cat.subCategory.title) && (
+                    <div style={{ marginLeft: 12 }}>
+                      <PanelSection title={tCat(cat.subCategory.title)}>
+                        {cat.subCategory.description && (
+                          <PanelSectionRow>
+                            <div
+                              style={{
+                                fontSize: 11,
+                                color: "#aaa",
+                                lineHeight: 1.4,
+                                marginBottom: 4,
+                              }}
+                            >
+                              {tDescriptions(cat.subCategory.description)}
+                            </div>
+                          </PanelSectionRow>
+                        )}
+                        {(cat.subCategory.variables as Variable[]).map(
+                          (variable) => {
+                            const isGlobal = isGlobalVar(variable.env);
+                            const globalHint = isGlobal
+                              ? t(
+                                  isVarActive(variable.env)
+                                    ? "global_active_hint"
+                                    : "global_disabled_hint",
+                                )
+                              : undefined;
+                            const defaultVal = getVariableDefault(variable);
 
-                      return (
-                        <Focusable
-                          key={variable.env}
-                          onButtonDown={(evt: GamepadEvent) => {
-                            if (evt.detail.button === GamepadButton.SECONDARY)
-                              toggleFavorite(variable.env, tVars(variable.title), defaultVal);
-                          }}
-                          onSecondaryActionDescription={
-                            favorites.some((f) => f.env === variable.env)
-                              ? tCommon("remove_from_favorite")
-                              : tCommon("add_to_favorite")
-                          }
-                        >
-                          <VariableRow
-                            variable={variable}
-                            isActive={isVarActive}
-                            getValue={getVarValue}
-                            onToggle={toggleVar}
-                            onValueChange={setVarValue}
-                            onDeactivate={deactivateVar}
-                            conflictGroups={conflictGroups}
-                            envToTitle={envToTitle}
-                            description={globalHint}
-                          />
-                        </Focusable>
-                      );
-                    })}
-                  </PanelSection>
-                  </div>
-                )}
+                            return (
+                              <Focusable
+                                key={variable.env}
+                                onButtonDown={(evt: GamepadEvent) => {
+                                  if (
+                                    evt.detail.button ===
+                                    GamepadButton.SECONDARY
+                                  )
+                                    toggleFavorite(
+                                      variable.env,
+                                      tVars(variable.title),
+                                      defaultVal,
+                                    );
+                                }}
+                                onSecondaryActionDescription={
+                                  favorites.some((f) => f.env === variable.env)
+                                    ? tCommon("remove_from_favorite")
+                                    : tCommon("add_to_favorite")
+                                }
+                                {...bulkApplyProps(variable)}
+                              >
+                                <VariableRow
+                                  variable={variable}
+                                  isActive={isVarActive}
+                                  getValue={getVarValue}
+                                  onToggle={toggleVar}
+                                  onValueChange={setVarValue}
+                                  onDeactivate={deactivateVar}
+                                  conflictGroups={conflictGroups}
+                                  envToTitle={envToTitle}
+                                  description={globalHint}
+                                />
+                              </Focusable>
+                            );
+                          },
+                        )}
+                      </PanelSection>
+                    </div>
+                  )}
               </React.Fragment>
             ))}
         </div>

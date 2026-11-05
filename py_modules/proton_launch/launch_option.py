@@ -1,7 +1,7 @@
 import shutil
 import traceback
 from pathlib import Path
-from typing import Optional
+from typing import Dict, Optional
 
 import decky
 
@@ -171,6 +171,77 @@ def set_launch_option_shortcut(app_id: int) -> bool:
                 return True
         except Exception as e:
             decky.logger.error(f"[launch_option] shortcut set error for {app_id} in {sc_path}: {e}\n{traceback.format_exc()}")
+    return False
+
+
+def read_shortcut_launch_options() -> Dict[int, str]:
+    """appid -> the LaunchOptions of every non-Steam shortcut (read-only)."""
+    result: Dict[int, str] = {}
+    for sc_path in get_shortcuts_paths():
+        try:
+            nodes, _ = read_binary(sc_path.read_bytes(), 0)
+            for tag, key, children in nodes:
+                if tag != 0x00 or key.lower() != "shortcuts":
+                    continue
+                for etag, _, efields in children:
+                    if etag != 0x00:
+                        continue
+                    appid_val = None
+                    launch_options = ""
+                    for f in efields:
+                        if f[0] == 0x02 and f[1].lower() == "appid":
+                            appid_val = f[2] & 0xFFFFFFFF
+                        elif f[0] == 0x01 and f[1].lower() == "launchoptions":
+                            launch_options = f[2]
+                    if appid_val is not None:
+                        result[appid_val] = launch_options
+        except Exception as e:
+            decky.logger.warning(f"[launch_option] shortcut read error in {sc_path}: {e}")
+    return result
+
+
+def set_shortcut_launch_options(app_id: int, value: str) -> bool:
+    """Replace a non-Steam app's LaunchOptions with exactly `value` (the
+    shortcuts.vdf is backed up first, like every other write here)."""
+    for sc_path in get_shortcuts_paths():
+        try:
+            nodes, _ = read_binary(sc_path.read_bytes(), 0)
+            modified = False
+            new_top = []
+            for tag, key, children in nodes:
+                if tag == 0x00 and key.lower() == "shortcuts":
+                    new_children = []
+                    for etag, ekey, efields in children:
+                        appid_val = None
+                        if etag == 0x00:
+                            for f in efields:
+                                if f[0] == 0x02 and f[1].lower() == "appid":
+                                    appid_val = f[2] & 0xFFFFFFFF
+                        if etag == 0x00 and appid_val == app_id:
+                            new_fields = []
+                            found = False
+                            for f in efields:
+                                if f[0] == 0x01 and f[1].lower() == "launchoptions":
+                                    new_fields.append((0x01, f[1], value))
+                                    found = True
+                                else:
+                                    new_fields.append(f)
+                            if not found:
+                                new_fields.append((0x01, "LaunchOptions", value))
+                            new_children.append((etag, ekey, new_fields))
+                            modified = True
+                        else:
+                            new_children.append((etag, ekey, efields))
+                    new_top.append((tag, key, new_children))
+                else:
+                    new_top.append((tag, key, children))
+            if modified:
+                shutil.copy2(sc_path, sc_path.with_suffix(".vdf.bak"))
+                sc_path.write_bytes(write_binary(new_top))
+                decky.logger.info(f"[launch_option] shortcut launch options set for app {app_id} in {sc_path}")
+                return True
+        except Exception as e:
+            decky.logger.error(f"[launch_option] shortcut options write error for {app_id} in {sc_path}: {e}\n{traceback.format_exc()}")
     return False
 
 

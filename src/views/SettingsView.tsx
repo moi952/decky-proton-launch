@@ -33,7 +33,8 @@ import { clearCoverCache } from "../utils/coverCache";
 import { CoverImageType } from "../context/SettingsContext";
 
 interface SettingsViewProps {
-  onBack: () => void;
+  // Absent when the page is a tab: no header, no way back.
+  onBack?: () => void;
 }
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
@@ -48,9 +49,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     setShowActiveSection,
     coverImageType,
     setCoverImageType,
+    autoApplyGroups,
+    setAutoApplyGroups,
+    tabbedNavigation,
+    setTabbedNavigation,
   } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
+  const { t: tGroups } = useTranslation("command_groups");
   const { variables: variablesData, refresh } = useRemoteData();
   const { clearCustomWrappers } = useCustomWrappers();
   const { clearCustomVariables } = useCustomVariables();
@@ -62,17 +68,19 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
 
   return (
     <div>
-      <PanelSection>
-        <Focusable
-          style={{ display: "flex", alignItems: "center", gap: "8px" }}
-          flow-children="horizontal"
-        >
-          <ActionButton onClick={onBack}>
-            <FiArrowLeft size={16} />
-          </ActionButton>
-          <span style={{ fontWeight: 600 }}>{tSettings("settings")}</span>
-        </Focusable>
-      </PanelSection>
+      {onBack && (
+        <PanelSection>
+          <Focusable
+            style={{ display: "flex", alignItems: "center", gap: "8px" }}
+            flow-children="horizontal"
+          >
+            <ActionButton onClick={onBack}>
+              <FiArrowLeft size={16} />
+            </ActionButton>
+            <span style={{ fontWeight: 600 }}>{tSettings("settings")}</span>
+          </Focusable>
+        </PanelSection>
+      )}
 
       <UpdateHistorySection versions={getWhatsNewVersions()} />
 
@@ -82,6 +90,14 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
             label={tSettings("hide_variables_page")}
             checked={hideVariablesPage}
             onChange={setHideVariablesPage}
+          />
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <ToggleField
+            label={tSettings("tabbed_navigation")}
+            description={tSettings("tabbed_navigation_hint")}
+            checked={tabbedNavigation}
+            onChange={setTabbedNavigation}
           />
         </PanelSectionRow>
         <PanelSectionRow>
@@ -101,6 +117,17 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
             ]}
             selectedValue={defaultHome}
             onChange={(value) => setDefaultHome(value as DefaultHome)}
+          />
+        </PanelSectionRow>
+      </PanelSection>
+
+      <PanelSection title={tGroups("title")}>
+        <PanelSectionRow>
+          <ToggleField
+            label={tGroups("settings_auto_apply")}
+            description={tGroups("settings_auto_apply_hint")}
+            checked={autoApplyGroups}
+            onChange={setAutoApplyGroups}
           />
         </PanelSectionRow>
       </PanelSection>

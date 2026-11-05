@@ -27,6 +27,7 @@ import {
   openEditCustomWrapperModal,
 } from "../utils/modals";
 import { Variable } from "../data/types";
+import { BulkPayload } from "../utils/bulkApply";
 import {
   getVariableDefault,
   getTopLevelVariables,
@@ -34,11 +35,14 @@ import {
 } from "../utils/variableDefaults";
 
 interface GlobalCommandsViewProps {
-  onBack: () => void;
+  // Absent when the page is a tab: no header, no way back.
+  onBack?: () => void;
+  onBulkApply?: (payload: BulkPayload) => void;
 }
 
 export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   onBack,
+  onBulkApply,
 }) => {
   const { t } = useTranslation("global_commands_view");
   const { t: tCat } = useTranslation("categories");
@@ -47,6 +51,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const { t: tCommon } = useTranslation("common");
   const { t: tDeleteWrapper } = useTranslation("delete_custom_wrapper_modal");
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
+  const { t: tBulk } = useTranslation("bulk_apply");
   const { isCategoryVisible, showActiveSection } = useSettings();
   const { variables: variablesData, conflictGroups } = useRemoteData();
   const {
@@ -157,6 +162,25 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
   const getVarValue = (envKey: string, defaultValue: string): string =>
     draft[envKey] ?? defaultValue;
 
+  // Options button on a catalog row: apply this variable, with the value it
+  // currently shows, onto several games.
+  const bulkApplyProps = (variable: Variable) =>
+    onBulkApply
+      ? {
+          onOptionsButton: () =>
+            onBulkApply({
+              title: tVars(variable.title),
+              vars: {
+                [variable.env]: getVarValue(
+                  variable.env,
+                  getVariableDefault(variable),
+                ),
+              },
+            }),
+          onOptionsActionDescription: tBulk("action_label"),
+        }
+      : {};
+
   const toggleFavorite = (env: string, name: string, value: string) => {
     const existing = favorites.find((f) => f.env === env);
     if (existing) {
@@ -190,22 +214,29 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
 
   return (
     <div>
-      <PanelSection>
-        <Focusable
-          style={{ display: "flex", alignItems: "center", gap: "8px" }}
-          flow-children="horizontal"
-        >
-          <ActionButton onClick={onBack}>
-            <FiArrowLeft size={16} />
-          </ActionButton>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontWeight: 600, fontSize: 13 }}>{t("title")}</div>
-            {saving && (
-              <div style={{ fontSize: 10, color: "#666" }}>{t("saving")}</div>
-            )}
-          </div>
-        </Focusable>
-      </PanelSection>
+      {!onBack && saving && (
+        <div style={{ fontSize: 10, color: "#666", padding: "0 16px" }}>
+          {t("saving")}
+        </div>
+      )}
+      {onBack && (
+        <PanelSection>
+          <Focusable
+            style={{ display: "flex", alignItems: "center", gap: "8px" }}
+            flow-children="horizontal"
+          >
+            <ActionButton onClick={onBack}>
+              <FiArrowLeft size={16} />
+            </ActionButton>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 600, fontSize: 13 }}>{t("title")}</div>
+              {saving && (
+                <div style={{ fontSize: 10, color: "#666" }}>{t("saving")}</div>
+              )}
+            </div>
+          </Focusable>
+        </PanelSection>
+      )}
 
       <PanelSection>
         <PanelSectionRow>
@@ -419,6 +450,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                             ? tCommon("remove_from_favorite")
                             : tCommon("add_to_favorite")
                         }
+                        {...bulkApplyProps(variable)}
                       >
                         <VariableRow
                           variable={variable}
@@ -474,6 +506,7 @@ export const GlobalCommandsView: React.FC<GlobalCommandsViewProps> = ({
                                     ? tCommon("remove_from_favorite")
                                     : tCommon("add_to_favorite")
                                 }
+                                {...bulkApplyProps(variable)}
                               >
                                 <VariableRow
                                   variable={variable}

@@ -15,11 +15,13 @@ from .profile import (
     profiles_dir, script_path, legacy_script_path, profile_path, write_profile,
     read_profile, read_profile_full, write_global_profile, read_global_profile,
     remove_env_keys_from_profiles, real_commands,
+    apply_vars_to_profile, remove_vars_from_profile, read_all_profiles,
 )
 from .launch_option import (
     LAUNCH_OPTION,
     set_launch_option, remove_launch_option, get_status,
     set_launch_option_shortcut, remove_launch_option_shortcut,
+    read_shortcut_launch_options, set_shortcut_launch_options,
     migrate_legacy_shortcut_options, legacy_apps_with_wrapper, duplicated_wrapper_apps,
     legacy_wrapper_still_referenced,
 )
@@ -306,6 +308,55 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
             decky.logger.error(f"[delete_game_profile] {app_id}: {e}")
             return {"success": False, "unwire_wrapper": False}
 
+    # ── Bulk apply (the same variables onto many games) ─────────────────────────
+    #
+    # One call per game rather than one call for the lot: the frontend drives
+    # the loop so it can show a live progress card, and a failure on one game
+    # never aborts the others. The wrapper itself is wired by the frontend
+    # for the same reason as set_game_profile (see the comment there).
+
+    async def apply_vars_to_game(
+        self,
+        app_id: int,
+        env_vars: Dict[str, str],
+        game_name: str = "",
+        overwrite: bool = False,
+    ) -> Dict[str, Any]:
+        try:
+            result = apply_vars_to_profile(app_id, env_vars, game_name, overwrite)
+            decky.logger.info(
+                f"[apply_vars_to_game] {app_id} — applied={result['applied']} "
+                f"unchanged={result['unchanged']} skipped={result['skipped']}"
+            )
+            return {"success": True, **result}
+        except Exception as e:
+            decky.logger.error(f"[apply_vars_to_game] {app_id}: {e}")
+            return {"success": False}
+
+    async def remove_vars_from_game(
+        self,
+        app_id: int,
+        keys: List[str],
+        expected: Optional[Dict[str, str]] = None,
+    ) -> Dict[str, Any]:
+        try:
+            result = remove_vars_from_profile(app_id, keys, expected)
+            decky.logger.info(
+                f"[remove_vars_from_game] {app_id} — removed={result['removed']} "
+                f"kept={result['kept']}"
+            )
+            return {"success": True, **result}
+        except Exception as e:
+            decky.logger.error(f"[remove_vars_from_game] {app_id}: {e}")
+            return {"success": False}
+
+    async def get_all_profiles(self) -> Dict[str, Dict[str, str]]:
+        try:
+            return read_all_profiles()
+        except Exception as e:
+            decky.logger.error(f"[get_all_profiles] {e}")
+            return {}
+
     # ── Global commands (applied to every game with the wrapper) ───────────────
 
     async def get_global_profile(self) -> Dict[str, str]:
@@ -363,6 +414,21 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
                 return remove_launch_option(app_id)
         except Exception as e:
             decky.logger.error(f"[remove_launch_option_only] {app_id}: {e}")
+            return False
+
+    async def get_shortcut_launch_options(self) -> Dict[str, str]:
+        """appid (string) -> launch options of every non-Steam shortcut."""
+        try:
+            return {str(k): v for k, v in read_shortcut_launch_options().items()}
+        except Exception as e:
+            decky.logger.error(f"[get_shortcut_launch_options] {e}")
+            return {}
+
+    async def set_shortcut_launch_options(self, app_id: int, value: str) -> bool:
+        try:
+            return set_shortcut_launch_options(app_id, value)
+        except Exception as e:
+            decky.logger.error(f"[set_shortcut_launch_options] {app_id}: {e}")
             return False
 
     async def get_wrapper_app_ids(self) -> List[int]:
@@ -928,6 +994,52 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
             decky.logger.error(f"[set_custom_wrappers] {e}")
             return False
 
+    def _command_groups_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "command_groups.json"
+
+    async def get_command_groups(self) -> List[Dict[str, Any]]:
+        try:
+            path = self._command_groups_path()
+            if path.is_file():
+                return json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            decky.logger.error(f"[get_command_groups] {e}")
+        return []
+
+    async def set_command_groups(self, data: List[Dict[str, Any]]) -> bool:
+        try:
+            path = self._command_groups_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_command_groups] {e}")
+            return False
+
+    # Games the background scan has already seen installed — what lets it
+    # tell a game installed just now from one that was always there.
+    def _known_games_path(self) -> Path:
+        return Path(decky.DECKY_PLUGIN_SETTINGS_DIR) / "known_games.json"
+
+    async def get_known_games(self) -> Dict[str, Any]:
+        try:
+            path = self._known_games_path()
+            if path.is_file():
+                return {"appids": json.loads(path.read_text(encoding="utf-8"))}
+        except Exception as e:
+            decky.logger.error(f"[get_known_games] {e}")
+        return {}
+
+    async def set_known_games(self, appids: List[int]) -> bool:
+        try:
+            path = self._known_games_path()
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(sorted(set(appids))), encoding="utf-8")
+            return True
+        except Exception as e:
+            decky.logger.error(f"[set_known_games] {e}")
+            return False
+
     def _known_envs(self) -> set:
         """Every env currently claimed by something real: a custom
         variable, a custom wrapper, or a catalog variable. Used to tell a
@@ -943,6 +1055,12 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
         try:
             data = json.loads(self._custom_wrappers_path().read_text(encoding="utf-8"))
             known.update(w["env"] for w in data if w.get("env"))
+        except Exception:
+            pass
+        try:
+            groups = json.loads(self._command_groups_path().read_text(encoding="utf-8"))
+            for g in groups:
+                known.update(k for k in (g.get("vars") or {}) if k)
         except Exception:
             pass
         try:

@@ -14,6 +14,10 @@ interface UiSettings {
   showRawTechnicalValues?: boolean;
   collapsedGameGroups?: string[];
   coverImageType?: CoverImageType;
+  // Read by the background scan too (autoApplyGroups.ts): absent = on.
+  autoApplyGroups?: boolean;
+  // Pages as tabs with L1/R1 instead of the icon bar. Absent = on.
+  tabbedNavigation?: boolean;
 }
 
 // "Not configured" isn't tracked here at all — it always starts collapsed on
@@ -41,6 +45,10 @@ interface SettingsContextValue {
   isGameGroupCollapsed: (status: string) => boolean;
   coverImageType: CoverImageType;
   setCoverImageType: (v: CoverImageType) => void;
+  autoApplyGroups: boolean;
+  setAutoApplyGroups: (v: boolean) => void;
+  tabbedNavigation: boolean;
+  setTabbedNavigation: (v: boolean) => void;
   settingsLoaded: boolean;
 }
 
@@ -56,11 +64,15 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     useState<DefaultHome>("game-manager");
   const [hideVariablesPage, setHideVariablesPageState] = useState(false);
   const [showActiveSection, setShowActiveSectionState] = useState(true);
-  const [showRawTechnicalValues, setShowRawTechnicalValuesState] = useState(true);
+  const [showRawTechnicalValues, setShowRawTechnicalValuesState] =
+    useState(true);
   const [collapsedGameGroups, setCollapsedGameGroups] = useState<Set<string>>(
     new Set(DEFAULT_COLLAPSED_GAME_GROUPS),
   );
-  const [coverImageType, setCoverImageTypeState] = useState<CoverImageType>("landscape");
+  const [coverImageType, setCoverImageTypeState] =
+    useState<CoverImageType>("landscape");
+  const [autoApplyGroups, setAutoApplyGroupsState] = useState(true);
+  const [tabbedNavigation, setTabbedNavigationState] = useState(true);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -94,6 +106,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         new Set(data.collapsedGameGroups ?? DEFAULT_COLLAPSED_GAME_GROUPS),
       );
       setCoverImageTypeState(data.coverImageType ?? "landscape");
+      setAutoApplyGroupsState(data.autoApplyGroups ?? true);
+      setTabbedNavigationState(data.tabbedNavigation ?? true);
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
@@ -119,15 +133,22 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     showRawTechnicalValues?: boolean;
     collapsedGameGroups?: Set<string>;
     coverImageType?: CoverImageType;
+    autoApplyGroups?: boolean;
+    tabbedNavigation?: boolean;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
       defaultHome: next.defaultHome ?? defaultHome,
       hideVariablesPage: next.hideVariablesPage ?? hideVariablesPage,
       showActiveSection: next.showActiveSection ?? showActiveSection,
-      showRawTechnicalValues: next.showRawTechnicalValues ?? showRawTechnicalValues,
-      collapsedGameGroups: [...(next.collapsedGameGroups ?? collapsedGameGroups)],
+      showRawTechnicalValues:
+        next.showRawTechnicalValues ?? showRawTechnicalValues,
+      collapsedGameGroups: [
+        ...(next.collapsedGameGroups ?? collapsedGameGroups),
+      ],
       coverImageType: next.coverImageType ?? coverImageType,
+      autoApplyGroups: next.autoApplyGroups ?? autoApplyGroups,
+      tabbedNavigation: next.tabbedNavigation ?? tabbedNavigation,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -177,11 +198,22 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     persist({ collapsedGameGroups: next });
   };
 
-  const isGameGroupCollapsed = (status: string) => collapsedGameGroups.has(status);
+  const isGameGroupCollapsed = (status: string) =>
+    collapsedGameGroups.has(status);
 
   const setCoverImageType = (v: CoverImageType) => {
     setCoverImageTypeState(v);
     persist({ coverImageType: v });
+  };
+
+  const setAutoApplyGroups = (v: boolean) => {
+    setAutoApplyGroupsState(v);
+    persist({ autoApplyGroups: v });
+  };
+
+  const setTabbedNavigation = (v: boolean) => {
+    setTabbedNavigationState(v);
+    persist({ tabbedNavigation: v });
   };
 
   return (
@@ -203,6 +235,10 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         isGameGroupCollapsed,
         coverImageType,
         setCoverImageType,
+        autoApplyGroups,
+        setAutoApplyGroups,
+        tabbedNavigation,
+        setTabbedNavigation,
         settingsLoaded,
       }}
     >

@@ -1,9 +1,14 @@
 import React from "react";
-import { WhatsNewProvider, OtherPluginsProvider, PluginUpdateProvider } from "@moi952/decky-plugin-toolkit";
+import {
+  WhatsNewProvider,
+  OtherPluginsProvider,
+  PluginUpdateProvider,
+} from "@moi952/decky-plugin-toolkit";
 import { LaunchStackProvider } from "./LaunchStackContext";
 import { FavoritesProvider } from "./FavoritesContext";
 import { CustomVariablesProvider } from "./CustomVariablesContext";
 import { CustomWrappersProvider } from "./CustomWrappersContext";
+import { CommandGroupsProvider } from "./CommandGroupsContext";
 import { SettingsProvider } from "./SettingsContext";
 import { RemoteDataProvider } from "./RemoteDataContext";
 import { SELF_PLUGIN_ID } from "../utils/otherPlugins";
@@ -17,13 +22,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       <FavoritesProvider>
         <CustomVariablesProvider>
           <CustomWrappersProvider>
-            <SettingsProvider>
-              <WhatsNewProvider currentVersion={CURRENT_VERSION}>
-                <OtherPluginsProvider selfPluginId={SELF_PLUGIN_ID}>
-                  <PluginUpdateProvider>{children}</PluginUpdateProvider>
-                </OtherPluginsProvider>
-              </WhatsNewProvider>
-            </SettingsProvider>
+            <CommandGroupsProvider>
+              <SettingsProvider>
+                <WhatsNewProvider currentVersion={CURRENT_VERSION}>
+                  <OtherPluginsProvider selfPluginId={SELF_PLUGIN_ID}>
+                    <PluginUpdateProvider>{children}</PluginUpdateProvider>
+                  </OtherPluginsProvider>
+                </WhatsNewProvider>
+              </SettingsProvider>
+            </CommandGroupsProvider>
           </CustomWrappersProvider>
         </CustomVariablesProvider>
       </FavoritesProvider>

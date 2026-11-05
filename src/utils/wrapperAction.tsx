@@ -25,6 +25,44 @@ async function getAppLaunchOptions(appId: number): Promise<string> {
   });
 }
 
+// Like getAppLaunchOptions, but null — never "" — when Steam doesn't answer
+// in time, so a caller can tell "unreadable" from "genuinely empty".
+export async function readLaunchOptions(appId: number): Promise<string | null> {
+  return new Promise((resolve) => {
+    let registration: { unregister: () => void } | undefined;
+    let settled = false;
+    const finish = (value: string | null) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timeoutId);
+      registration?.unregister();
+      resolve(value);
+    };
+    const timeoutId = setTimeout(() => finish(null), 3000);
+    registration = SteamClient.Apps.RegisterForAppDetails(
+      appId,
+      (details: any) =>
+        finish(
+          typeof details?.strLaunchOptions === "string"
+            ? details.strLaunchOptions
+            : details
+              ? ""
+              : null,
+        ),
+    );
+    // The callback can fire before registration is assigned.
+    if (settled) registration?.unregister();
+  });
+}
+
+// Writes a Steam game's launch options exactly as given (live, via the client).
+export async function setSteamLaunchOptions(
+  appId: number,
+  value: string,
+): Promise<void> {
+  await SteamClient.Apps.SetAppLaunchOptions(appId, value);
+}
+
 // ── Restart modal (non-Steam shortcuts only) ──────────────────────────────────
 
 const RestartModalContent: React.FC<{
@@ -46,6 +84,37 @@ const RestartModalContent: React.FC<{
 
 export function openRestartModal(game: SteamGame): void {
   showModal(<RestartModalContent game={game} />);
+}
+
+// One prompt for a whole batch of non-Steam games — a bulk run would
+// otherwise stack one restart modal per game.
+const MAX_NAMES_SHOWN = 5;
+
+const BulkRestartModalContent: React.FC<{
+  games: SteamGame[];
+  closeModal?: () => void;
+}> = ({ games, closeModal }) => {
+  const { t } = useTranslation("game_manager");
+  const names = games
+    .slice(0, MAX_NAMES_SHOWN)
+    .map((g) => g.name)
+    .join(", ");
+  const more =
+    games.length > MAX_NAMES_SHOWN ? ` +${games.length - MAX_NAMES_SHOWN}` : "";
+  return (
+    <ConfirmModal
+      closeModal={closeModal}
+      strTitle={t("restart_steam_title")}
+      strDescription={`${names}${more} — ${t("restart_steam_non_steam_body")}`}
+      strOKButtonText={t("restart_steam_btn")}
+      strCancelButtonText={t("ok")}
+      onOK={() => SteamClient.User.StartRestart(false)}
+    />
+  );
+};
+
+export function openBulkRestartModal(games: SteamGame[]): void {
+  showModal(<BulkRestartModalContent games={games} />);
 }
 
 // ── Steam app launch options (live via SteamClient) ───────────────────────────

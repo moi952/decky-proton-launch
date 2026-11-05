@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { Focusable } from "@decky/ui";
-import { FiSettings, FiList, FiPlay, FiCopy, FiGlobe } from "react-icons/fi";
+import {
+  FiSettings,
+  FiList,
+  FiPlay,
+  FiCopy,
+  FiGlobe,
+  FiLayers,
+} from "react-icons/fi";
 import { ActionButton } from "@moi952/decky-ui-kit";
 import PanelSectionCustom from "./PanelSectionCustom";
 import { ScriptStatus } from "../data/types";
@@ -15,6 +22,7 @@ interface NavBarProps {
   onHome: () => void;
   onGamesManager: () => void;
   onGlobalCommands: () => void;
+  onGroups?: () => void;
   onSettings: () => void;
   onCopyWrapper: () => void;
 }
@@ -26,10 +34,12 @@ export const NavBar: React.FC<NavBarProps> = ({
   onHome,
   onGamesManager,
   onGlobalCommands,
+  onGroups,
   onSettings,
   onCopyWrapper,
 }) => {
   const { t } = useTranslation("game_manager");
+  const { t: tGroups } = useTranslation("command_groups");
   const [showCommand, setShowCommand] = useState(false);
 
   return (
@@ -56,6 +66,14 @@ export const NavBar: React.FC<NavBarProps> = ({
         >
           <FiGlobe size={16} />
         </ActionButton>
+        {onGroups && (
+          <ActionButton
+            onClick={onGroups}
+            onOKActionDescription={tGroups("title")}
+          >
+            <FiLayers size={16} />
+          </ActionButton>
+        )}
         <div style={{ flex: 1 }} />
         {scriptStatus === "current" && (
           <span
