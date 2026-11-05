@@ -47,11 +47,27 @@ Open any game's page to disable a specific globally-enabled command just for tha
 
 ![Active section on a game page](./assets/active_section_game_page.jpeg)
 
+### Command groups
+
+A group is a set of variables created once — by pasting launch options such as `VAR=1 OTHER=/path %command%` — then applied to the games of your choice. Editing the group updates every game using it. A group can also follow an automatic filter (e.g. VR games), so matching games are added when they are installed; this can be turned off in Settings.
+
+![Command groups](./assets/groups_list.jpeg)
+
+Choosing the games shows which ones already have the group, with "VR" and "VR only" filters to tick matching games in one tap. A "Clean launch options" button removes from Steam's launch options what the plugin already applies, with a before/after preview and undo.
+
+![Applying a group to several games](./assets/group_apply_to_games.jpeg)
+
 ### Running game detection
 
 The plugin automatically detects the currently running game and shows it at the top — click it to jump directly to its settings.
 
 ![Running game](./assets/played_game.JPG)
+
+### Tab navigation
+
+Pages are shown as icon tabs — variables, games, global commands, command groups, settings. The controller's shoulder buttons switch page from anywhere (the labels follow the controller in use: LB / RB on Xbox, L1 / R1 on PlayStation and Steam, L / R on Switch), and the icons stay clickable with a mouse or touch. On by default; can be turned off in Settings.
+
+![Tab navigation](./assets/tab_navigation.jpeg)
 
 ### Settings
 
@@ -81,13 +97,14 @@ When a new version is available, a banner appears at the top with a direct link 
 
 - **Predefined Proton variables**: FSR4, DLSS4, XeSS, DXVK Async, ESYNC/FSYNC, MangoHud, and more
 - **Global commands**: enable commands once for every game with the wrapper, with per-game override to disable one individually
+- **Command groups**: apply a set of variables to several games at once, with VR filters and automatic application to newly installed games
 - **Per-game profiles**: configure and save launch options per game
 - **Favorites with full controls**: pinned commands keep their enable/disable toggle and enum value picker, right at the top
 - **Running game detection**: instantly jump to the settings of the game you're playing
 - **Wrapper script**: copy the `~/proton-launch %command%` wrapper or install it with one click
 - **Category visibility**: show or hide variable categories from the settings view
 - **Update notifications**: banner shown when a newer version is available on GitHub
-- **Gamepad navigation**: fully accessible with the Steam Deck controller
+- **Gamepad navigation**: fully accessible with the Steam Deck controller, with tab navigation using the controller's shoulder buttons (can be turned off in Settings)
 - **Multi-language support**: EN, FR, DE, ES, IT, PT-BR, PT-PT, RU, PL, NL, TR, UK, JA, KO, ZH-CN
 
 ---
