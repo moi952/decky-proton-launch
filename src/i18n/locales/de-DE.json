@@ -409,6 +409,16 @@
         "Leer gelassene Textfelder werden nicht mehr als leere Variable exportiert",
         "Neuer Bereich „Favoriten“ in der Ansicht „Globale Befehle“"
       ]
+    },
+    "v0_17_0": {
+      "title": "Neuigkeiten in Version 0.17.0",
+      "items": [
+        "Eine Variable mit dem Options-Button auf mehrere Spiele gleichzeitig anwenden, mit Live-Fortschrittskarte",
+        "Befehlsgruppen: Gruppe aus eingefügten Startoptionen erstellen, auf ausgewählte Spiele anwenden (Filter „VR“ und „Nur VR“ markieren passende Spiele mit einem Tipp) und durch Bearbeiten der Gruppe alle Spiele gleichzeitig aktualisieren",
+        "Automatischer Filter für Gruppen (z. B. VR-Spiele): neu installierte passende Spiele erhalten die Gruppe automatisch, in den Einstellungen abschaltbar",
+        "Schaltfläche „Startoptionen bereinigen“: entfernt aus den Steam-Startoptionen, was das Plugin bereits anwendet, mit Vorher/Nachher-Vorschau und Rückgängig",
+        "Tab-Navigation, standardmäßig aktiv und in den Einstellungen abschaltbar: Seitenwechsel mit den Schultertasten des Controllers von überall"
+      ]
     }
   }
 }

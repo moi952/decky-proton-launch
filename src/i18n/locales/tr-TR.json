@@ -407,6 +407,16 @@
         "Boş bırakılan metin alanları artık boş bir değişken olarak dışa aktarılmıyor",
         "Genel Komutlar görünümüne Favoriler bölümü eklendi"
       ]
+    },
+    "v0_17_0": {
+      "title": "0.17.0 sürümündeki yenilikler",
+      "items": [
+        "Seçenekler düğmesiyle bir değişkeni birden fazla oyuna aynı anda uygulama, canlı ilerleme kartıyla",
+        "Komut grupları: yapıştırılan başlatma seçeneklerinden grup oluşturma, seçilen oyunlara uygulama (“VR” ve “Yalnızca VR” filtreleri eşleşen oyunları tek dokunuşla işaretler) ve grubu düzenleyerek hepsini aynı anda güncelleme",
+        "Gruplar için otomatik filtre (ör. VR oyunları): yeni yüklenen eşleşen oyunlar grubu otomatik alır, Ayarlar'dan kapatılabilir",
+        "“Başlatma seçeneklerini temizle” düğmesi: eklentinin zaten uyguladığı öğeleri Steam başlatma seçeneklerinden kaldırır, önce/sonra önizlemesi ve geri alma ile",
+        "Sekmeli gezinme, varsayılan olarak açık ve Ayarlar'dan kapatılabilir: her yerden kumandanın omuz tuşlarıyla sayfa değiştirme"
+      ]
     }
   }
 }

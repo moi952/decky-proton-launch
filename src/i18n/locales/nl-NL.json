@@ -409,6 +409,16 @@
         "Leeggelaten tekstvelden worden niet langer als lege variabele geëxporteerd",
         "Nieuwe sectie Favorieten in de weergave Globale opdrachten"
       ]
+    },
+    "v0_17_0": {
+      "title": "Nieuw in versie 0.17.0",
+      "items": [
+        "Een variabele in één keer op meerdere games toepassen via de knop Opties, met een live voortgangskaart",
+        "Opdrachtgroepen: een groep maken van geplakte startopties, toepassen op gekozen games (de filters ‘VR’ en ‘Alleen VR’ vinken passende games in één tik aan) en alle games tegelijk bijwerken door de groep te bewerken",
+        "Automatisch filter voor groepen (bijv. VR-games): nieuw geïnstalleerde passende games krijgen de groep automatisch, uit te schakelen in Instellingen",
+        "Knop ‘Startopties opschonen’: verwijdert uit de Steam-startopties wat de plugin al toepast, met voor/na-voorbeeld en ongedaan maken",
+        "Tabnavigatie, standaard aan en uit te schakelen in Instellingen: van pagina wisselen met de schouderknoppen van de controller vanaf elke plek"
+      ]
     }
   }
 }

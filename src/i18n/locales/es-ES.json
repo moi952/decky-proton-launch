@@ -409,6 +409,16 @@
         "Los campos de texto que se dejan vacíos ya no se exportan como una variable vacía",
         "Nueva sección de Favoritos en la vista de Comandos globales"
       ]
+    },
+    "v0_17_0": {
+      "title": "Novedades de la versión 0.17.0",
+      "items": [
+        "Aplicar una variable a varios juegos a la vez desde el botón Opciones, con una tarjeta de progreso en directo",
+        "Grupos de comandos: creación de un grupo a partir de opciones de lanzamiento pegadas, aplicación a los juegos elegidos (los filtros «VR» y «Solo VR» marcan de una vez los juegos que coinciden) y actualización de todos ellos al editar el grupo",
+        "Filtro automático para los grupos (p. ej. juegos VR): los juegos coincidentes recién instalados reciben el grupo automáticamente, se puede desactivar en Ajustes",
+        "Botón «Limpiar opciones de lanzamiento»: quita de las opciones de lanzamiento de Steam lo que el plugin ya aplica, con vista previa antes/después y opción de deshacer",
+        "Navegación por pestañas, activada por defecto y desactivable en Ajustes: cambio de página con los botones de hombro del mando desde cualquier lugar"
+      ]
     }
   }
 }

@@ -409,6 +409,16 @@
         "Les champs texte laissés vides ne sont plus exportés comme variable vide",
         "Ajout d'une section Favoris dans la vue Commandes globales"
       ]
+    },
+    "v0_17_0": {
+      "title": "Nouveautés de la version 0.17.0",
+      "items": [
+        "Application d'une variable à plusieurs jeux en une fois depuis le bouton Options, avec une carte de progression en direct",
+        "Groupes de commandes : création d'un groupe à partir d'options de lancement collées, application aux jeux choisis (filtres « VR » et « VR seul » pour cocher d'un coup les jeux concernés), puis mise à jour de tous ces jeux en modifiant le groupe",
+        "Filtre automatique pour les groupes (ex. jeux VR) : les jeux correspondants nouvellement installés reçoivent le groupe automatiquement, désactivable dans les Réglages",
+        "Bouton « Nettoyer les options de lancement » : retire des options de lancement Steam ce que le plugin applique déjà, avec aperçu avant/après et annulation possible",
+        "Navigation par onglets, activée par défaut et désactivable dans les Réglages : changement de page avec les boutons d'épaule de la manette, depuis n'importe où"
+      ]
     }
   }
 }

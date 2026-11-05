@@ -409,6 +409,16 @@
         "I campi di testo lasciati vuoti non vengono più esportati come variabile vuota",
         "Aggiunta una sezione Preferiti nella vista Comandi globali"
       ]
+    },
+    "v0_17_0": {
+      "title": "Novità della versione 0.17.0",
+      "items": [
+        "Applicazione di una variabile a più giochi in una volta dal pulsante Opzioni, con una scheda di avanzamento in tempo reale",
+        "Gruppi di comandi: creazione di un gruppo da opzioni di avvio incollate, applicazione ai giochi scelti (i filtri «VR» e «Solo VR» spuntano in un colpo i giochi corrispondenti) e aggiornamento di tutti modificando il gruppo",
+        "Filtro automatico per i gruppi (es. giochi VR): i giochi corrispondenti appena installati ricevono il gruppo automaticamente, disattivabile nelle Impostazioni",
+        "Pulsante «Pulisci opzioni di avvio»: rimuove dalle opzioni di avvio di Steam ciò che il plugin applica già, con anteprima prima/dopo e annullamento",
+        "Navigazione a schede, attiva per impostazione predefinita e disattivabile nelle Impostazioni: cambio pagina con i tasti dorsali del controller da qualsiasi punto"
+      ]
     }
   }
 }

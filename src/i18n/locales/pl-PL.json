@@ -409,6 +409,16 @@
         "Pola tekstowe pozostawione puste nie są już eksportowane jako pusta zmienna",
         "Dodano sekcję Ulubione w widoku Komendy globalne"
       ]
+    },
+    "v0_17_0": {
+      "title": "Nowości w wersji 0.17.0",
+      "items": [
+        "Zastosowanie zmiennej do wielu gier naraz przyciskiem Opcje, z kartą postępu na żywo",
+        "Grupy poleceń: tworzenie grupy z wklejonych opcji uruchamiania, zastosowanie do wybranych gier (filtry „VR” i „Tylko VR” zaznaczają pasujące gry jednym dotknięciem) i aktualizacja ich wszystkich przez edycję grupy",
+        "Automatyczny filtr dla grup (np. gry VR): nowo zainstalowane pasujące gry otrzymują grupę automatycznie, można to wyłączyć w Ustawieniach",
+        "Przycisk „Wyczyść opcje uruchamiania”: usuwa z opcji uruchamiania Steam to, co wtyczka już stosuje, z podglądem przed/po i możliwością cofnięcia",
+        "Nawigacja kartami, domyślnie włączona i wyłączana w Ustawieniach: zmiana strony przyciskami barkowymi kontrolera z dowolnego miejsca"
+      ]
     }
   }
 }

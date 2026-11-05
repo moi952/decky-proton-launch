@@ -407,6 +407,16 @@
         "Os campos de texto deixados em branco já não são exportados como variável vazia",
         "Nova secção de Favoritos no ecrã de Comandos globais"
       ]
+    },
+    "v0_17_0": {
+      "title": "Novidades da versão 0.17.0",
+      "items": [
+        "Aplicação de uma variável a vários jogos de uma só vez através do botão Opções, com um cartão de progresso em direto",
+        "Grupos de comandos: criação de um grupo a partir de opções de arranque coladas, aplicação aos jogos escolhidos (os filtros «VR» e «Apenas VR» marcam de uma vez os jogos correspondentes) e atualização de todos ao editar o grupo",
+        "Filtro automático para grupos (ex.: jogos VR): os jogos correspondentes acabados de instalar recebem o grupo automaticamente, podendo ser desativado nas Definições",
+        "Botão «Limpar opções de arranque»: remove das opções de arranque do Steam o que o plugin já aplica, com pré-visualização antes/depois e opção de anular",
+        "Navegação por separadores, ativada por predefinição e desativável nas Definições: mudança de página com os botões de ombro do comando a partir de qualquer lugar"
+      ]
     }
   }
 }
