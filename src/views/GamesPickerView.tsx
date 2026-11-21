@@ -2,9 +2,8 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { SearchField } from "../components/SearchField";
 import { Focusable } from "@decky/ui";
 import { call } from "@decky/api";
-import { ActionButton } from "@moi952/decky-ui-kit";
+import { ActionButton, CollapsibleSection } from "@moi952/decky-ui-kit";
 import { GameRow } from "../components/GameRow";
-import { GameGroupHeader } from "../components/GameGroupHeader";
 import { FaCircleNotch, FaCog, FaSearch } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
@@ -20,8 +19,8 @@ import {
   getGameStatus,
 } from "../utils/gameStatus";
 
-import { reachesGame } from "../utils/forceLanguage";
 import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
+import { reachesGame } from "../utils/forceLanguage";
 import { InlineConfirm } from "../components/InlineConfirm";
 
 export type { SteamGame };
@@ -320,62 +319,64 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
 
             return (
               <div key={status} style={{ marginBottom: 8 }}>
-                <GameGroupHeader
+                <CollapsibleSection
+                  variant="group-header"
                   icon={GROUP_ICON[status]}
-                  color={STATUS_COLOR[status]}
-                  title={t(STATUS_GROUP_TITLE_KEY[status])}
+                  iconColor={STATUS_COLOR[status]}
+                  label={t(STATUS_GROUP_TITLE_KEY[status])}
                   count={groupGames.length}
-                  collapsed={collapsed}
+                  expanded={!collapsed}
                   onToggle={() => (isNone ? setNoneCollapsed((v) => !v) : toggleGameGroup(status))}
-                />
-                {!collapsed && (
-                  <Focusable flow-children="vertical">
-                    {visibleGames.map((game) => (
-                      <React.Fragment key={game.appid}>
-                        <GameRow
-                          game={game}
-                          status={status}
-                          onClick={() => onSelectGame(game)}
-                          onQuickAdd={() => handleQuickAdd(game)}
-                          quickAddLabel={
-                            wrapperApps.has(game.appid)
-                              ? t("remove_wrapper")
-                              : t("add_wrapper")
-                          }
-                        />
-                        {pendingRemoveWrapper === game.appid && (
-                          <div style={{ margin: "0 0 8px" }}>
-                            <InlineConfirm
-                              description={t("delete_wrapper_description", { game_name: game.name })}
-                              confirmLabel={t("delete_wrapper_confirm")}
-                              onCancel={() => setPendingRemoveWrapper(null)}
-                              onConfirm={() => confirmRemoveWrapper(game)}
-                            />
-                          </div>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </Focusable>
-                )}
-                {!collapsed && isIncremental && visibleCount < groupGames.length && (
-                  <div
-                    ref={sentinelRef}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: "8px 0",
-                    }}
-                  >
-                    <style>{`@keyframes plch-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
-                    <FaCircleNotch
-                      size={14}
+                >
+                  {!collapsed && (
+                    <Focusable flow-children="vertical">
+                      {visibleGames.map((game) => (
+                        <React.Fragment key={game.appid}>
+                          <GameRow
+                            game={game}
+                            status={status}
+                            onClick={() => onSelectGame(game)}
+                            onQuickAdd={() => handleQuickAdd(game)}
+                            quickAddLabel={
+                              wrapperApps.has(game.appid)
+                                ? t("remove_wrapper")
+                                : t("add_wrapper")
+                            }
+                          />
+                          {pendingRemoveWrapper === game.appid && (
+                            <div style={{ margin: "0 0 8px" }}>
+                              <InlineConfirm
+                                description={t("delete_wrapper_description", { game_name: game.name })}
+                                confirmLabel={t("delete_wrapper_confirm")}
+                                onCancel={() => setPendingRemoveWrapper(null)}
+                                onConfirm={() => confirmRemoveWrapper(game)}
+                              />
+                            </div>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </Focusable>
+                  )}
+                  {!collapsed && isIncremental && visibleCount < groupGames.length && (
+                    <div
+                      ref={sentinelRef}
                       style={{
-                        animation: "plch-spin 1s linear infinite",
-                        color: "#888",
+                        display: "flex",
+                        justifyContent: "center",
+                        padding: "8px 0",
                       }}
-                    />
-                  </div>
-                )}
+                    >
+                      <style>{`@keyframes plch-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+                      <FaCircleNotch
+                        size={14}
+                        style={{
+                          animation: "plch-spin 1s linear infinite",
+                          color: "#888",
+                        }}
+                      />
+                    </div>
+                  )}
+                </CollapsibleSection>
               </div>
             );
           })}

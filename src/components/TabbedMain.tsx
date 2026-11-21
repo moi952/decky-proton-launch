@@ -21,7 +21,6 @@ import {
   FiPlay,
   FiSettings,
 } from "react-icons/fi";
-import { GAME_GROUP_HEADER_STYLES } from "./GameGroupHeader";
 import { NowPlayingCard } from "./NowPlayingCard";
 import PanelSectionCustom from "./PanelSectionCustom";
 import { useRemoteData } from "../context/RemoteDataContext";
@@ -154,7 +153,6 @@ export const TabbedMain: React.FC<TabbedMainProps> = ({
 
   return (
     <BackHandler onBack={isOnHome ? undefined : onGoHome}>
-      <style>{GAME_GROUP_HEADER_STYLES}</style>
       <TabBar
         items={tabs}
         activeId={active.id}

@@ -45,7 +45,6 @@ import { useRemoteData } from "./context/RemoteDataContext";
 import { NavBar } from "./components/NavBar";
 import { TabbedMain, isMainView } from "./components/TabbedMain";
 import { NowPlayingCard } from "./components/NowPlayingCard";
-import { GAME_GROUP_HEADER_STYLES } from "./components/GameGroupHeader";
 import { SteamGame, ScriptStatus } from "./data/types";
 
 type View =
@@ -301,7 +300,6 @@ const App: React.FC = () => {
 
   return (
     <BackHandler onBack={isOnHome ? undefined : goHome}>
-      <style>{GAME_GROUP_HEADER_STYLES}</style>
       <NavBar
         view={mainView}
         scriptStatus={scriptStatus}

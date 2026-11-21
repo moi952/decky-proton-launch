@@ -23,6 +23,6 @@ export const BadgeIcon: React.FC<BadgeIconProps> = ({
       color,
     }}
   >
-    <Icon size={size} />
+    <Icon size={size} color={color} />
   </span>
 );
