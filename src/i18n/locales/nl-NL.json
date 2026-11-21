@@ -421,6 +421,14 @@
         "Knop ‘Startopties opschonen’: verwijdert uit de Steam-startopties wat de plugin al toepast, met voor/na-voorbeeld en ongedaan maken",
         "Tabnavigatie, standaard aan en uit te schakelen in Instellingen: van pagina wisselen met de schouderknoppen van de controller vanaf elke plek"
       ]
+    },
+    "v0_17_1": {
+      "title": "Nieuw in versie 0.17.1",
+      "items": [
+        "Taal van niet-Steam-games forceren (die van Steam), met een optie per game om het uit te zetten",
+        "Zoekbalk voor commando's in de globale commando's en op de pagina van een game, ook in de keuzes van lijsten (vanaf 2 tekens)",
+        "Betere compatibiliteit met Steam-thema's (zoals Float): pictogrammen, focusmarkering en keuzelijsten"
+      ]
     }
   },
   "force_language": {

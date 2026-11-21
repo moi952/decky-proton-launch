@@ -421,6 +421,14 @@
         "Schaltfläche „Startoptionen bereinigen“: entfernt aus den Steam-Startoptionen, was das Plugin bereits anwendet, mit Vorher/Nachher-Vorschau und Rückgängig",
         "Tab-Navigation, standardmäßig aktiv und in den Einstellungen abschaltbar: Seitenwechsel mit den Schultertasten des Controllers von überall"
       ]
+    },
+    "v0_17_1": {
+      "title": "Neuigkeiten in Version 0.17.1",
+      "items": [
+        "Sprache von Nicht-Steam-Spielen erzwingen (die von Steam), mit einer Option pro Spiel zum Abschalten",
+        "Suchleiste für Befehle in den globalen Befehlen und auf der Spielseite, auch in den Listenoptionen (ab 2 Zeichen)",
+        "Bessere Kompatibilität mit Steam-Themes (z. B. Float): Symbole, Fokus-Hervorhebung und Dropdown-Listen"
+      ]
     }
   },
   "force_language": {

@@ -421,6 +421,14 @@
         "Botón «Limpiar opciones de lanzamiento»: quita de las opciones de lanzamiento de Steam lo que el plugin ya aplica, con vista previa antes/después y opción de deshacer",
         "Navegación por pestañas, activada por defecto y desactivable en Ajustes: cambio de página con los botones de hombro del mando desde cualquier lugar"
       ]
+    },
+    "v0_17_1": {
+      "title": "Novedades de la versión 0.17.1",
+      "items": [
+        "Forzar el idioma de los juegos no Steam (el de Steam), con una opción por juego para quitarlo",
+        "Barra de búsqueda de comandos en los comandos globales y en la página de un juego, también dentro de las opciones de las listas (desde 2 caracteres)",
+        "Mejor compatibilidad con los temas de Steam (como Float): iconos, resaltado del foco y listas desplegables"
+      ]
     }
   },
   "force_language": {

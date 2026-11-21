@@ -421,6 +421,14 @@
         "“Clean launch options” button: removes from Steam launch options what the plugin already applies, with a before/after preview and undo",
         "Tab navigation, on by default and optional in Settings: switch pages with the controller's shoulder buttons from anywhere"
       ]
+    },
+    "v0_17_1": {
+      "title": "What's new in 0.17.1",
+      "items": [
+        "Force the language of non-Steam games (the one Steam uses), with a per-game option to turn it off",
+        "Command search bar in Global Commands and on a game's page, including the choices inside lists (from 2 characters)",
+        "Better compatibility with Steam themes (such as Float): icons, focus highlight and dropdown lists"
+      ]
     }
   },
   "force_language": {

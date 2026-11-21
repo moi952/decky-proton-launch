@@ -419,6 +419,14 @@
         "Botão «Limpar opções de arranque»: remove das opções de arranque do Steam o que o plugin já aplica, com pré-visualização antes/depois e opção de anular",
         "Navegação por separadores, ativada por predefinição e desativável nas Definições: mudança de página com os botões de ombro do comando a partir de qualquer lugar"
       ]
+    },
+    "v0_17_1": {
+      "title": "Novidades da versão 0.17.1",
+      "items": [
+        "Forçar o idioma dos jogos não Steam (o do Steam), com uma opção por jogo para desativar",
+        "Barra de pesquisa de comandos nos comandos globais e na página de um jogo, incluindo nas opções das listas (a partir de 2 carateres)",
+        "Melhor compatibilidade com temas do Steam (como o Float): ícones, destaque de foco e listas pendentes"
+      ]
     }
   },
   "force_language": {

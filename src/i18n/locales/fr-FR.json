@@ -421,6 +421,14 @@
         "Bouton « Nettoyer les options de lancement » : retire des options de lancement Steam ce que le plugin applique déjà, avec aperçu avant/après et annulation possible",
         "Navigation par onglets, activée par défaut et désactivable dans les Réglages : changement de page avec les boutons d'épaule de la manette, depuis n'importe où"
       ]
+    },
+    "v0_17_1": {
+      "title": "Nouveautés de la version 0.17.1",
+      "items": [
+        "Forcer la langue des jeux non-Steam (celle de Steam), avec une option par jeu pour la retirer",
+        "Barre de recherche de commandes dans les commandes globales et sur la page d'un jeu, y compris dans les choix des listes (à partir de 2 caractères)",
+        "Meilleure compatibilité avec les thèmes Steam (comme Float) : icônes, surbrillance au focus et listes déroulantes"
+      ]
     }
   },
   "force_language": {

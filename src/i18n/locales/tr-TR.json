@@ -419,6 +419,14 @@
         "“Başlatma seçeneklerini temizle” düğmesi: eklentinin zaten uyguladığı öğeleri Steam başlatma seçeneklerinden kaldırır, önce/sonra önizlemesi ve geri alma ile",
         "Sekmeli gezinme, varsayılan olarak açık ve Ayarlar'dan kapatılabilir: her yerden kumandanın omuz tuşlarıyla sayfa değiştirme"
       ]
+    },
+    "v0_17_1": {
+      "title": "0.17.1 sürümündeki yenilikler",
+      "items": [
+        "Steam dışı oyunların dilini Steam'in diline zorla, oyun başına kapatma seçeneğiyle",
+        "Genel komutlarda ve oyun sayfasında komut arama çubuğu, listelerin içindeki seçenekler dahil (2 karakterden itibaren)",
+        "Steam temalarıyla (Float gibi) daha iyi uyumluluk: simgeler, odak vurgusu ve açılır listeler"
+      ]
     }
   },
   "force_language": {

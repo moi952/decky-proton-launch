@@ -421,6 +421,14 @@
         "Przycisk „Wyczyść opcje uruchamiania”: usuwa z opcji uruchamiania Steam to, co wtyczka już stosuje, z podglądem przed/po i możliwością cofnięcia",
         "Nawigacja kartami, domyślnie włączona i wyłączana w Ustawieniach: zmiana strony przyciskami barkowymi kontrolera z dowolnego miejsca"
       ]
+    },
+    "v0_17_1": {
+      "title": "Nowości w wersji 0.17.1",
+      "items": [
+        "Wymuszenie języka gier spoza Steam (takiego jak w Steam), z opcją wyłączenia dla każdej gry",
+        "Pasek wyszukiwania poleceń w poleceniach globalnych i na stronie gry, także w opcjach list (od 2 znaków)",
+        "Lepsza zgodność z motywami Steam (np. Float): ikony, podświetlenie fokusu i listy rozwijane"
+      ]
     }
   },
   "force_language": {

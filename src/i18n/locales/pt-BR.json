@@ -421,6 +421,14 @@
         "Botão “Limpar opções de inicialização”: remove das opções de inicialização da Steam o que o plugin já aplica, com prévia antes/depois e opção de desfazer",
         "Navegação por abas, ativada por padrão e desativável nas Configurações: troca de página com os botões de ombro do controle de qualquer lugar"
       ]
+    },
+    "v0_17_1": {
+      "title": "Novidades da versão 0.17.1",
+      "items": [
+        "Forçar o idioma dos jogos não Steam (o do Steam), com uma opção por jogo para desativar",
+        "Barra de busca de comandos nos comandos globais e na página de um jogo, inclusive nas opções das listas (a partir de 2 caracteres)",
+        "Melhor compatibilidade com temas do Steam (como o Float): ícones, destaque de foco e listas suspensas"
+      ]
     }
   },
   "force_language": {
