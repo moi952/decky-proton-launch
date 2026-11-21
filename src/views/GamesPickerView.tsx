@@ -20,6 +20,7 @@ import {
   getGameStatus,
 } from "../utils/gameStatus";
 
+import { reachesGame } from "../utils/forceLanguage";
 import { toggleWrapper, doRemoveWrapper } from "../utils/wrapperAction";
 import { InlineConfirm } from "../components/InlineConfirm";
 
@@ -184,7 +185,8 @@ export const GamesPickerView: React.FC<GamesPickerViewProps> = ({
       // while other games are genuinely reached by the same globals.
       const disabledForThisGame = disabledGlobalsMap[g.appid] ?? [];
       const hasActiveGlobalForThisGame = activeGlobalKeys.some(
-        (key) => !disabledForThisGame.includes(key),
+        (key) =>
+          reachesGame(key, g.is_shortcut) && !disabledForThisGame.includes(key),
       );
       const status = getGameStatus(
         configuredStatus.has(g.appid),

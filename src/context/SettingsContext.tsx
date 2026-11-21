@@ -18,6 +18,8 @@ interface UiSettings {
   autoApplyGroups?: boolean;
   // Pages as tabs with L1/R1 instead of the icon bar. Absent = on.
   tabbedNavigation?: boolean;
+  // The non-Steam language option on the commands pages. Absent = shown.
+  showForceLanguage?: boolean;
 }
 
 // "Not configured" isn't tracked here at all — it always starts collapsed on
@@ -49,6 +51,8 @@ interface SettingsContextValue {
   setAutoApplyGroups: (v: boolean) => void;
   tabbedNavigation: boolean;
   setTabbedNavigation: (v: boolean) => void;
+  showForceLanguage: boolean;
+  setShowForceLanguage: (v: boolean) => void;
   settingsLoaded: boolean;
 }
 
@@ -73,6 +77,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     useState<CoverImageType>("landscape");
   const [autoApplyGroups, setAutoApplyGroupsState] = useState(true);
   const [tabbedNavigation, setTabbedNavigationState] = useState(true);
+  const [showForceLanguage, setShowForceLanguageState] = useState(true);
   const [settingsLoaded, setSettingsLoaded] = useState(false);
 
   useEffect(() => {
@@ -108,6 +113,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       setCoverImageTypeState(data.coverImageType ?? "landscape");
       setAutoApplyGroupsState(data.autoApplyGroups ?? true);
       setTabbedNavigationState(data.tabbedNavigation ?? true);
+      setShowForceLanguageState(data.showForceLanguage ?? true);
       if (recovered) {
         call<[UiSettings], boolean>("set_ui_settings", {
           hiddenCategories: categories ?? [],
@@ -135,6 +141,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     coverImageType?: CoverImageType;
     autoApplyGroups?: boolean;
     tabbedNavigation?: boolean;
+    showForceLanguage?: boolean;
   }) => {
     const payload: UiSettings = {
       hiddenCategories: [...(next.hiddenCategories ?? hiddenCategories)],
@@ -149,6 +156,7 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
       coverImageType: next.coverImageType ?? coverImageType,
       autoApplyGroups: next.autoApplyGroups ?? autoApplyGroups,
       tabbedNavigation: next.tabbedNavigation ?? tabbedNavigation,
+      showForceLanguage: next.showForceLanguage ?? showForceLanguage,
     };
     call<[UiSettings], boolean>("set_ui_settings", payload).catch(() => {});
   };
@@ -216,6 +224,11 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     persist({ tabbedNavigation: v });
   };
 
+  const setShowForceLanguage = (v: boolean) => {
+    setShowForceLanguageState(v);
+    persist({ showForceLanguage: v });
+  };
+
   return (
     <SettingsContext.Provider
       value={{
@@ -239,6 +252,8 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
         setAutoApplyGroups,
         tabbedNavigation,
         setTabbedNavigation,
+        showForceLanguage,
+        setShowForceLanguage,
         settingsLoaded,
       }}
     >

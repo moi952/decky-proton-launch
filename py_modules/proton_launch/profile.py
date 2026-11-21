@@ -9,6 +9,11 @@ def plugin_config_dir() -> Path:
     return Path(decky.DECKY_USER_HOME) / ".config" / "decky-proton-launch"
 
 
+# Pseudo-variable behind the "force language" command: its value is the locale,
+# the wrapper turns it into LANG + LC_ALL for non-Steam games only.
+FORCE_LANG_ENV = "DPL_FORCE_LANG"
+
+
 def profiles_dir() -> Path:
     return plugin_config_dir() / "profiles"
 

@@ -25,7 +25,8 @@
     "clean": "Clean",
     "no_data": "An internet connection is required to load the variables.",
     "save": "Save",
-    "edit": "Edit"
+    "edit": "Edit",
+    "search_command": "Search a command..."
   },
   "delete_favorite_modal": {
     "title": "Delete Favorite",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Clear image cache",
     "purge_image_cache_done": "Image cache cleared — covers will reload next time you open the games list.",
     "tabbed_navigation": "Tab navigation",
-    "tabbed_navigation_hint": "Pages as tabs, switched with the shoulder buttons."
+    "tabbed_navigation_hint": "Pages as tabs, switched with the shoulder buttons.",
+    "show_force_language": "Show the non-Steam games language option"
   },
   "launch_options_view": {
     "title": "Game launch options",
@@ -420,5 +422,10 @@
         "Tab navigation, on by default and optional in Settings: switch pages with the controller's shoulder buttons from anywhere"
       ]
     }
+  },
+  "force_language": {
+    "label": "Force non-Steam games language ({{lang}})",
+    "description": "In game mode, SteamOS doesn't pass the system language to non-Steam games. This option forces it on them.",
+    "detected": "Detected: {{source}} → {{locale}}"
   }
 }

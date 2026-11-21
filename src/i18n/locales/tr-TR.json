@@ -25,7 +25,8 @@
     "clean": "Temizle",
     "no_data": "Değişkenleri yüklemek için internet bağlantısı gereklidir.",
     "save": "Kaydet",
-    "edit": "Düzenle"
+    "edit": "Düzenle",
+    "search_command": "Komut ara..."
   },
   "delete_favorite_modal": {
     "title": "Favoriyi sil",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Görsel önbelleğini temizle",
     "purge_image_cache_done": "Görsel önbelleği temizlendi — kapaklar oyun listesini bir sonraki açışınızda yeniden yüklenecek.",
     "tabbed_navigation": "Sekmeli gezinme",
-    "tabbed_navigation_hint": "Sayfalar sekme olur, omuz tuşlarıyla değiştirilir."
+    "tabbed_navigation_hint": "Sayfalar sekme olur, omuz tuşlarıyla değiştirilir.",
+    "show_force_language": "Steam dışı oyunların dil seçeneğini göster"
   },
   "launch_options_view": {
     "title": "Başlatma seçenekleri",
@@ -418,5 +420,10 @@
         "Sekmeli gezinme, varsayılan olarak açık ve Ayarlar'dan kapatılabilir: her yerden kumandanın omuz tuşlarıyla sayfa değiştirme"
       ]
     }
+  },
+  "force_language": {
+    "label": "Steam dışı oyunların dilini zorla ({{lang}})",
+    "description": "Oyun modunda SteamOS, sistem dilini Steam dışı oyunlara iletmez. Bu seçenek dili zorla uygular.",
+    "detected": "Algılanan: {{source}} → {{locale}}"
   }
 }

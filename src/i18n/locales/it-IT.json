@@ -25,7 +25,8 @@
     "clean": "Pulisci",
     "no_data": "È necessaria una connessione internet per caricare le variabili.",
     "save": "Salva",
-    "edit": "Modifica"
+    "edit": "Modifica",
+    "search_command": "Cerca un comando..."
   },
   "delete_favorite_modal": {
     "title": "Elimina preferito",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Svuota la cache delle immagini",
     "purge_image_cache_done": "Cache delle immagini svuotata — le copertine verranno ricaricate alla prossima apertura della lista giochi.",
     "tabbed_navigation": "Navigazione a schede",
-    "tabbed_navigation_hint": "Le pagine diventano schede, si cambia con i tasti dorsali."
+    "tabbed_navigation_hint": "Le pagine diventano schede, si cambia con i tasti dorsali.",
+    "show_force_language": "Mostra l'opzione lingua dei giochi non Steam"
   },
   "launch_options_view": {
     "title": "Opzioni di avvio",
@@ -420,5 +422,10 @@
         "Navigazione a schede, attiva per impostazione predefinita e disattivabile nelle Impostazioni: cambio pagina con i tasti dorsali del controller da qualsiasi punto"
       ]
     }
+  },
+  "force_language": {
+    "label": "Forza la lingua dei giochi non Steam ({{lang}})",
+    "description": "In modalità gioco, SteamOS non trasmette la lingua di sistema ai giochi non Steam. Questa opzione la impone.",
+    "detected": "Rilevato: {{source}} → {{locale}}"
   }
 }

@@ -25,7 +25,8 @@
     "clean": "지우기",
     "no_data": "변수를 불러오려면 인터넷 연결이 필요합니다.",
     "save": "저장",
-    "edit": "편집"
+    "edit": "편집",
+    "search_command": "명령 검색..."
   },
   "delete_favorite_modal": {
     "title": "즐겨찾기 삭제",
@@ -87,7 +88,8 @@
     "purge_image_cache": "이미지 캐시 지우기",
     "purge_image_cache_done": "이미지 캐시를 지웠습니다. 다음에 게임 목록을 열면 커버가 다시 로드됩니다.",
     "tabbed_navigation": "탭 탐색",
-    "tabbed_navigation_hint": "페이지를 탭으로 바꾸고 숄더 버튼으로 전환합니다."
+    "tabbed_navigation_hint": "페이지를 탭으로 바꾸고 숄더 버튼으로 전환합니다.",
+    "show_force_language": "비Steam 게임 언어 옵션 표시"
   },
   "launch_options_view": {
     "title": "실행 옵션",
@@ -420,5 +422,10 @@
         "탭 탐색(기본값 켜짐, 설정에서 끌 수 있음): 어디서든 컨트롤러의 숄더 버튼으로 페이지 전환"
       ]
     }
+  },
+  "force_language": {
+    "label": "비Steam 게임 언어 고정 ({{lang}})",
+    "description": "게임 모드에서 SteamOS는 비Steam 게임에 시스템 언어를 전달하지 않습니다. 이 옵션은 해당 언어를 강제로 적용합니다.",
+    "detected": "감지됨: {{source}} → {{locale}}"
   }
 }

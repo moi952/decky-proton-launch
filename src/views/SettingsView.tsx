@@ -53,6 +53,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
     setAutoApplyGroups,
     tabbedNavigation,
     setTabbedNavigation,
+    showForceLanguage,
+    setShowForceLanguage,
   } = useSettings();
   const { t } = useTranslation("categories");
   const { t: tSettings } = useTranslation("settings_view");
@@ -138,6 +140,13 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onBack }) => {
             label={tSettings("show_active_section")}
             checked={showActiveSection}
             onChange={setShowActiveSection}
+          />
+        </PanelSectionRow>
+        <PanelSectionRow>
+          <ToggleField
+            label={tSettings("show_force_language")}
+            checked={showForceLanguage}
+            onChange={setShowForceLanguage}
           />
         </PanelSectionRow>
         {variablesData.map((cat) => (

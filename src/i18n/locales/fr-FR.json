@@ -25,7 +25,8 @@
     "clean": "Nettoyer",
     "no_data": "Une connexion internet est requise pour charger les variables.",
     "save": "Enregistrer",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "search_command": "Rechercher une commande..."
   },
   "delete_favorite_modal": {
     "title": "Supprimer des favoris",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Purger le cache d'images",
     "purge_image_cache_done": "Cache d'images vidé — les couvertures seront rechargées à la prochaine ouverture de la liste des jeux.",
     "tabbed_navigation": "Navigation par onglets",
-    "tabbed_navigation_hint": "Les pages deviennent des onglets, changés avec les boutons d'épaule."
+    "tabbed_navigation_hint": "Les pages deviennent des onglets, changés avec les boutons d'épaule.",
+    "show_force_language": "Afficher l'option de langue des jeux non-Steam"
   },
   "launch_options_view": {
     "title": "Options de lancement",
@@ -420,5 +422,10 @@
         "Navigation par onglets, activée par défaut et désactivable dans les Réglages : changement de page avec les boutons d'épaule de la manette, depuis n'importe où"
       ]
     }
+  },
+  "force_language": {
+    "label": "Forcer la langue des jeux non-Steam ({{lang}})",
+    "description": "En mode jeu, SteamOS ne transmet pas la langue du système aux jeux non-Steam. Cette option la leur impose.",
+    "detected": "Détecté : {{source}} → {{locale}}"
   }
 }

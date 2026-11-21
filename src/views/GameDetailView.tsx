@@ -13,6 +13,14 @@ import { ActionButton } from "@moi952/decky-ui-kit";
 import { InlineConfirm } from "../components/InlineConfirm";
 import { GameCover } from "../components/GameCover";
 import { VariableRow } from "../components/VariableRow";
+import { ForceLanguageRow } from "../components/ForceLanguageRow";
+import { SearchField } from "../components/SearchField";
+import {
+  filterCategories,
+  isSearching,
+  matchesText,
+} from "../utils/variableSearch";
+import { FORCE_LANG_ENV, reachesGame } from "../utils/forceLanguage";
 import { FavoritesPanelSection } from "../components/FavoritesPanelSection";
 import { GameGroupsSection } from "../components/GameGroupsSection";
 import { BulkPayload } from "../utils/bulkApply";
@@ -23,7 +31,7 @@ import {
   FiLink,
   FiTerminal,
 } from "react-icons/fi";
-import { FaCog } from "react-icons/fa";
+import { FaCog, FaSearch } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import type { SteamGame } from "./GamesPickerView";
 import { useSettings } from "../context/SettingsContext";
@@ -75,7 +83,8 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const { t: tDeleteVariable } = useTranslation("delete_custom_variable_modal");
   const { t: tBulk } = useTranslation("bulk_apply");
   const { t: tClean } = useTranslation("clean_options");
-  const { isCategoryVisible, showActiveSection } = useSettings();
+  const { isCategoryVisible, showActiveSection, showForceLanguage } =
+    useSettings();
   const {
     customVariables,
     removeCustomVariable,
@@ -105,6 +114,7 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   );
   const [globalVars, setGlobalVars] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const [saving, setSaving] = useState(false);
   const [showLog, setShowLog] = useState(false);
   const [log, setLog] = useState<string>("");
@@ -245,7 +255,8 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   // GamesPickerView's own per-game computation — not just whether any
   // global command exists anywhere (see gameStatus.ts's getGameStatus).
   const hasActiveGlobalForThisGame = Object.keys(globalVars).some(
-    (key) => !disabledGlobals.includes(key),
+    (key) =>
+      reachesGame(key, game.is_shortcut) && !disabledGlobals.includes(key),
   );
   const status = getGameStatus(
     hasRealCommands,
@@ -391,6 +402,19 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
   const activeCustomWrappers = customWrappers.filter((w) => isVarActive(w.env));
   const activeCatalogVariables = topLevelVariables.filter(
     (v) => isVarActive(v.env) && !activeFavoriteEnvs.has(v.env),
+  );
+  const visibleCategories = filterCategories(
+    variablesData,
+    isCategoryVisible,
+    search,
+    tVars,
+  );
+  const searching = isSearching(search);
+  const shownCustomVariables = customVariables.filter((cv) =>
+    matchesText(search, cv.name, cv.env, cv.value),
+  );
+  const shownCustomWrappers = customWrappers.filter((w) =>
+    matchesText(search, w.name, w.env, w.exec),
   );
   const hasActiveCommands =
     showActiveSection &&
@@ -594,7 +618,16 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
         </PanelSection>
       ) : (
         <div>
-          {hasActiveCommands && (
+          <SearchField
+            value={search}
+            onChange={setSearch}
+            size="small"
+            highlightOnFocus={false}
+            bottomSeparator={false}
+            placeholder={tCommon("search_command")}
+            iconEnd={<FaSearch size={12} color="#888" />}
+          />
+          {!searching && hasActiveCommands && (
             <PanelSection title={tCat("active")}>
               {activeFavorites.map((fav) => {
                 const catalogVar = allVariables.find((v) => v.env === fav.env);
@@ -694,25 +727,37 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             </PanelSection>
           )}
 
-          <FavoritesPanelSection
-            allVariables={allVariables}
-            isActive={isVarActive}
-            getValue={getVarValue}
-            onToggle={toggleVar}
-            onValueChange={setVarValue}
-            onDeactivate={deactivateVar}
-            conflictGroups={conflictGroups}
-            envToTitle={envToTitle}
-            getDescription={(env) =>
-              isGlobalVar(env)
-                ? t(
-                    isVarActive(env)
-                      ? "global_active_hint"
-                      : "global_disabled_hint",
-                  )
-                : undefined
-            }
-          />
+          {game.is_shortcut && showForceLanguage && (
+            <PanelSection>
+              <ForceLanguageRow
+                query={search}
+                isActive={isVarActive(FORCE_LANG_ENV)}
+                onToggle={(locale) => toggleVar(FORCE_LANG_ENV, locale)}
+              />
+            </PanelSection>
+          )}
+
+          {!searching && (
+            <FavoritesPanelSection
+              allVariables={allVariables}
+              isActive={isVarActive}
+              getValue={getVarValue}
+              onToggle={toggleVar}
+              onValueChange={setVarValue}
+              onDeactivate={deactivateVar}
+              conflictGroups={conflictGroups}
+              envToTitle={envToTitle}
+              getDescription={(env) =>
+                isGlobalVar(env)
+                  ? t(
+                      isVarActive(env)
+                        ? "global_active_hint"
+                        : "global_disabled_hint",
+                    )
+                  : undefined
+              }
+            />
+          )}
           <GameGroupsSection
             game={game}
             profile={draft}
@@ -723,9 +768,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
               });
             }}
           />
-          {customVariables.length > 0 && (
+          {shownCustomVariables.length > 0 && (
             <PanelSection title={tCat("custom")}>
-              {customVariables.map((cv) => {
+              {shownCustomVariables.map((cv) => {
                 if (pendingDeleteVariable === cv.id) {
                   return (
                     <PanelSectionRow key={cv.id}>
@@ -772,9 +817,9 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             </PanelSection>
           )}
 
-          {customWrappers.length > 0 && (
+          {shownCustomWrappers.length > 0 && (
             <PanelSection title={tCat("custom_wrappers")}>
-              {customWrappers.map((w) => {
+              {shownCustomWrappers.map((w) => {
                 if (pendingDeleteCustomWrapper === w.id) {
                   return (
                     <PanelSectionRow key={w.id}>
@@ -835,126 +880,120 @@ export const GameDetailView: React.FC<GameDetailViewProps> = ({
             </PanelSection>
           )}
 
-          {variablesData
-            .filter((cat) => isCategoryVisible(cat.category))
-            .map((cat) => (
-              <React.Fragment key={cat.category}>
-                <PanelSection title={tCat(cat.category)}>
-                  {(cat.variables as Variable[]).map((variable) => {
-                    const isGlobal = isGlobalVar(variable.env);
-                    const globalHint = isGlobal
-                      ? t(
-                          isVarActive(variable.env)
-                            ? "global_active_hint"
-                            : "global_disabled_hint",
-                        )
-                      : undefined;
-                    const defaultVal = getVariableDefault(variable);
+          {visibleCategories.map((cat) => (
+            <React.Fragment key={cat.category}>
+              <PanelSection title={tCat(cat.category)}>
+                {(cat.variables as Variable[]).map((variable) => {
+                  const isGlobal = isGlobalVar(variable.env);
+                  const globalHint = isGlobal
+                    ? t(
+                        isVarActive(variable.env)
+                          ? "global_active_hint"
+                          : "global_disabled_hint",
+                      )
+                    : undefined;
+                  const defaultVal = getVariableDefault(variable);
 
-                    return (
-                      <Focusable
-                        key={variable.env}
-                        onButtonDown={(evt: GamepadEvent) => {
-                          if (evt.detail.button === GamepadButton.SECONDARY)
-                            toggleFavorite(
-                              variable.env,
-                              tVars(variable.title),
-                              defaultVal,
-                            );
-                        }}
-                        onSecondaryActionDescription={
-                          favorites.some((f) => f.env === variable.env)
-                            ? tCommon("remove_from_favorite")
-                            : tCommon("add_to_favorite")
-                        }
-                        {...bulkApplyProps(variable)}
-                      >
-                        <VariableRow
-                          variable={variable}
-                          isActive={isVarActive}
-                          getValue={getVarValue}
-                          onToggle={toggleVar}
-                          onValueChange={setVarValue}
-                          onDeactivate={deactivateVar}
-                          conflictGroups={conflictGroups}
-                          envToTitle={envToTitle}
-                          description={globalHint}
-                        />
-                      </Focusable>
-                    );
-                  })}
-                </PanelSection>
-                {cat.subCategory &&
-                  isCategoryVisible(cat.subCategory.title) && (
-                    <div style={{ marginLeft: 12 }}>
-                      <PanelSection title={tCat(cat.subCategory.title)}>
-                        {cat.subCategory.description && (
-                          <PanelSectionRow>
-                            <div
-                              style={{
-                                fontSize: 11,
-                                color: "#aaa",
-                                lineHeight: 1.4,
-                                marginBottom: 4,
-                              }}
-                            >
-                              {tDescriptions(cat.subCategory.description)}
-                            </div>
-                          </PanelSectionRow>
-                        )}
-                        {(cat.subCategory.variables as Variable[]).map(
-                          (variable) => {
-                            const isGlobal = isGlobalVar(variable.env);
-                            const globalHint = isGlobal
-                              ? t(
-                                  isVarActive(variable.env)
-                                    ? "global_active_hint"
-                                    : "global_disabled_hint",
-                                )
-                              : undefined;
-                            const defaultVal = getVariableDefault(variable);
+                  return (
+                    <Focusable
+                      key={variable.env}
+                      onButtonDown={(evt: GamepadEvent) => {
+                        if (evt.detail.button === GamepadButton.SECONDARY)
+                          toggleFavorite(
+                            variable.env,
+                            tVars(variable.title),
+                            defaultVal,
+                          );
+                      }}
+                      onSecondaryActionDescription={
+                        favorites.some((f) => f.env === variable.env)
+                          ? tCommon("remove_from_favorite")
+                          : tCommon("add_to_favorite")
+                      }
+                      {...bulkApplyProps(variable)}
+                    >
+                      <VariableRow
+                        variable={variable}
+                        isActive={isVarActive}
+                        getValue={getVarValue}
+                        onToggle={toggleVar}
+                        onValueChange={setVarValue}
+                        onDeactivate={deactivateVar}
+                        conflictGroups={conflictGroups}
+                        envToTitle={envToTitle}
+                        description={globalHint}
+                      />
+                    </Focusable>
+                  );
+                })}
+              </PanelSection>
+              {cat.subCategory && isCategoryVisible(cat.subCategory.title) && (
+                <div style={{ marginLeft: 12 }}>
+                  <PanelSection title={tCat(cat.subCategory.title)}>
+                    {cat.subCategory.description && (
+                      <PanelSectionRow>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: "#aaa",
+                            lineHeight: 1.4,
+                            marginBottom: 4,
+                          }}
+                        >
+                          {tDescriptions(cat.subCategory.description)}
+                        </div>
+                      </PanelSectionRow>
+                    )}
+                    {(cat.subCategory.variables as Variable[]).map(
+                      (variable) => {
+                        const isGlobal = isGlobalVar(variable.env);
+                        const globalHint = isGlobal
+                          ? t(
+                              isVarActive(variable.env)
+                                ? "global_active_hint"
+                                : "global_disabled_hint",
+                            )
+                          : undefined;
+                        const defaultVal = getVariableDefault(variable);
 
-                            return (
-                              <Focusable
-                                key={variable.env}
-                                onButtonDown={(evt: GamepadEvent) => {
-                                  if (
-                                    evt.detail.button ===
-                                    GamepadButton.SECONDARY
-                                  )
-                                    toggleFavorite(
-                                      variable.env,
-                                      tVars(variable.title),
-                                      defaultVal,
-                                    );
-                                }}
-                                onSecondaryActionDescription={
-                                  favorites.some((f) => f.env === variable.env)
-                                    ? tCommon("remove_from_favorite")
-                                    : tCommon("add_to_favorite")
-                                }
-                                {...bulkApplyProps(variable)}
-                              >
-                                <VariableRow
-                                  variable={variable}
-                                  isActive={isVarActive}
-                                  getValue={getVarValue}
-                                  onToggle={toggleVar}
-                                  onValueChange={setVarValue}
-                                  onDeactivate={deactivateVar}
-                                  conflictGroups={conflictGroups}
-                                  envToTitle={envToTitle}
-                                  description={globalHint}
-                                />
-                              </Focusable>
-                            );
-                          },
-                        )}
-                      </PanelSection>
-                    </div>
-                  )}
-              </React.Fragment>
-            ))}
+                        return (
+                          <Focusable
+                            key={variable.env}
+                            onButtonDown={(evt: GamepadEvent) => {
+                              if (evt.detail.button === GamepadButton.SECONDARY)
+                                toggleFavorite(
+                                  variable.env,
+                                  tVars(variable.title),
+                                  defaultVal,
+                                );
+                            }}
+                            onSecondaryActionDescription={
+                              favorites.some((f) => f.env === variable.env)
+                                ? tCommon("remove_from_favorite")
+                                : tCommon("add_to_favorite")
+                            }
+                            {...bulkApplyProps(variable)}
+                          >
+                            <VariableRow
+                              variable={variable}
+                              isActive={isVarActive}
+                              getValue={getVarValue}
+                              onToggle={toggleVar}
+                              onValueChange={setVarValue}
+                              onDeactivate={deactivateVar}
+                              conflictGroups={conflictGroups}
+                              envToTitle={envToTitle}
+                              description={globalHint}
+                            />
+                          </Focusable>
+                        );
+                      },
+                    )}
+                  </PanelSection>
+                </div>
+              )}
+            </React.Fragment>
+          ))}
         </div>
       )}
 

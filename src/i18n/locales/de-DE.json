@@ -25,7 +25,8 @@
     "clean": "Leeren",
     "no_data": "Eine Internetverbindung ist erforderlich, um die Variablen zu laden.",
     "save": "Speichern",
-    "edit": "Bearbeiten"
+    "edit": "Bearbeiten",
+    "search_command": "Befehl suchen..."
   },
   "delete_favorite_modal": {
     "title": "Favorit löschen",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Bild-Cache leeren",
     "purge_image_cache_done": "Bild-Cache geleert — Cover werden beim nächsten Öffnen der Spieleliste neu geladen.",
     "tabbed_navigation": "Tab-Navigation",
-    "tabbed_navigation_hint": "Seiten als Tabs, Wechsel mit den Schultertasten."
+    "tabbed_navigation_hint": "Seiten als Tabs, Wechsel mit den Schultertasten.",
+    "show_force_language": "Sprachoption für Nicht-Steam-Spiele anzeigen"
   },
   "launch_options_view": {
     "title": "Startoptionen",
@@ -420,5 +422,10 @@
         "Tab-Navigation, standardmäßig aktiv und in den Einstellungen abschaltbar: Seitenwechsel mit den Schultertasten des Controllers von überall"
       ]
     }
+  },
+  "force_language": {
+    "label": "Sprache von Nicht-Steam-Spielen erzwingen ({{lang}})",
+    "description": "Im Spielmodus gibt SteamOS die Systemsprache nicht an Nicht-Steam-Spiele weiter. Diese Option erzwingt sie.",
+    "detected": "Erkannt: {{source}} → {{locale}}"
   }
 }

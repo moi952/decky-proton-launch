@@ -14,7 +14,7 @@ from .steam import get_steam_roots, get_user_dirs, get_all_steamapps_dirs, get_s
 from .profile import (
     profiles_dir, script_path, legacy_script_path, profile_path, write_profile,
     read_profile, read_profile_full, write_global_profile, read_global_profile,
-    remove_env_keys_from_profiles, real_commands,
+    remove_env_keys_from_profiles, real_commands, FORCE_LANG_ENV,
     apply_vars_to_profile, remove_vars_from_profile, read_all_profiles,
 )
 from .launch_option import (
@@ -100,7 +100,7 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
 
     # ── Script management ───────────────────────────────────────────────────────
 
-    SCRIPT_VERSION = "v9"
+    SCRIPT_VERSION = "v10"
 
     def _wrapper_chains(self) -> List[Dict[str, str]]:
         """(env, exec) pairs to chain to — from "wrappers_exec" in the cached
@@ -205,6 +205,21 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
                 "    source \"${PROFILE}\"\n"
                 "else\n"
                 "    echo \"[proton-launch] no profile found (appid=${APPID})\" >> \"${LOG}\"\n"
+                "fi\n"
+                "# Force the user's language for non-Steam games (DPL_FORCE_LANG holds\n"
+                "# the locale). Only when that locale is generated on this system —\n"
+                "# forcing a missing one would drop the game to the C locale.\n"
+                "if [ -n \"${DPL_FORCE_LANG:-}\" ]; then\n"
+                "    if [[ \"${APPID}\" =~ ^[0-9]+$ ]] && [ $(( APPID >> 25 )) -ne 0 ]; then\n"
+                "        WANT=$(echo \"${DPL_FORCE_LANG}\" | tr 'A-Z' 'a-z' | sed 's/utf-8/utf8/')\n"
+                "        if locale -a 2>/dev/null | tr 'A-Z' 'a-z' | grep -qxF \"${WANT}\"; then\n"
+                "            export LANG=\"${DPL_FORCE_LANG}\" LC_ALL=\"${DPL_FORCE_LANG}\"\n"
+                "            echo \"[proton-launch] forcing language ${DPL_FORCE_LANG}\" >> \"${LOG}\"\n"
+                "        else\n"
+                "            echo \"[proton-launch] locale ${DPL_FORCE_LANG} not installed, language untouched\" >> \"${LOG}\"\n"
+                "        fi\n"
+                "    fi\n"
+                "    unset DPL_FORCE_LANG\n"
                 "fi\n"
                 "# Log what's actually resolved after BOTH profiles are applied,\n"
                 "# not a raw dump of each file — a per-game 'unset' overriding a\n"
@@ -1046,7 +1061,7 @@ class Plugin(PluginUpdaterMixin, WhatsNewSeenMixin, OtherPluginsSeenMixin):
         truly orphaned export apart from one that's still legitimately in
         use — env isn't required to be unique to one UI item, so a
         deletion must never blind-strip a key something else still owns."""
-        known: set = set()
+        known: set = {FORCE_LANG_ENV}
         try:
             data = json.loads(self._custom_variables_path().read_text(encoding="utf-8"))
             known.update(v["env"] for v in data if v.get("env"))

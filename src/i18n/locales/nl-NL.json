@@ -25,7 +25,8 @@
     "clean": "Wissen",
     "no_data": "Een internetverbinding is vereist om de variabelen te laden.",
     "save": "Opslaan",
-    "edit": "Bewerken"
+    "edit": "Bewerken",
+    "search_command": "Zoek een commando..."
   },
   "delete_favorite_modal": {
     "title": "Favoriet verwijderen",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Afbeeldingscache wissen",
     "purge_image_cache_done": "Afbeeldingscache gewist — covers worden opnieuw geladen zodra je de spellenlijst weer opent.",
     "tabbed_navigation": "Navigatie met tabbladen",
-    "tabbed_navigation_hint": "Pagina's als tabbladen, wisselen met de schouderknoppen."
+    "tabbed_navigation_hint": "Pagina's als tabbladen, wisselen met de schouderknoppen.",
+    "show_force_language": "Taaloptie voor niet-Steam-games tonen"
   },
   "launch_options_view": {
     "title": "Startopties",
@@ -420,5 +422,10 @@
         "Tabnavigatie, standaard aan en uit te schakelen in Instellingen: van pagina wisselen met de schouderknoppen van de controller vanaf elke plek"
       ]
     }
+  },
+  "force_language": {
+    "label": "Taal van niet-Steam-games forceren ({{lang}})",
+    "description": "In gamemodus geeft SteamOS de systeemtaal niet door aan niet-Steam-games. Deze optie dwingt die taal af.",
+    "detected": "Gedetecteerd: {{source}} → {{locale}}"
   }
 }

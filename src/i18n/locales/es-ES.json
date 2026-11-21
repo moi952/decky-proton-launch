@@ -25,7 +25,8 @@
     "clean": "Limpiar",
     "no_data": "Se requiere conexión a internet para cargar las variables.",
     "save": "Guardar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "search_command": "Buscar un comando..."
   },
   "delete_favorite_modal": {
     "title": "Eliminar favorito",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Vaciar la caché de imágenes",
     "purge_image_cache_done": "Caché de imágenes vaciada — las portadas se recargarán la próxima vez que abras la lista de juegos.",
     "tabbed_navigation": "Navegación por pestañas",
-    "tabbed_navigation_hint": "Las páginas pasan a ser pestañas, que se cambian con los botones de hombro."
+    "tabbed_navigation_hint": "Las páginas pasan a ser pestañas, que se cambian con los botones de hombro.",
+    "show_force_language": "Mostrar la opción de idioma de los juegos no Steam"
   },
   "launch_options_view": {
     "title": "Opciones de lanzamiento",
@@ -420,5 +422,10 @@
         "Navegación por pestañas, activada por defecto y desactivable en Ajustes: cambio de página con los botones de hombro del mando desde cualquier lugar"
       ]
     }
+  },
+  "force_language": {
+    "label": "Forzar el idioma de los juegos no Steam ({{lang}})",
+    "description": "En modo juego, SteamOS no transmite el idioma del sistema a los juegos no Steam. Esta opción se lo impone.",
+    "detected": "Detectado: {{source}} → {{locale}}"
   }
 }

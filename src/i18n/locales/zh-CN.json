@@ -25,7 +25,8 @@
     "clean": "清空",
     "no_data": "加载变量需要互联网连接。",
     "save": "保存",
-    "edit": "编辑"
+    "edit": "编辑",
+    "search_command": "搜索命令..."
   },
   "delete_favorite_modal": {
     "title": "删除收藏",
@@ -87,7 +88,8 @@
     "purge_image_cache": "清除图片缓存",
     "purge_image_cache_done": "图片缓存已清除 — 下次打开游戏列表时封面将重新加载。",
     "tabbed_navigation": "标签页导航",
-    "tabbed_navigation_hint": "页面变为标签页，用肩键切换。"
+    "tabbed_navigation_hint": "页面变为标签页，用肩键切换。",
+    "show_force_language": "显示非 Steam 游戏的语言选项"
   },
   "launch_options_view": {
     "title": "启动选项",
@@ -420,5 +422,10 @@
         "标签页导航，默认开启，可在设置中关闭：在任何位置用手柄肩键切换页面"
       ]
     }
+  },
+  "force_language": {
+    "label": "强制非 Steam 游戏使用语言 ({{lang}})",
+    "description": "在游戏模式下，SteamOS 不会把系统语言传给非 Steam 游戏。此选项会强制应用该语言。",
+    "detected": "检测到：{{source}} → {{locale}}"
   }
 }

@@ -25,7 +25,8 @@
     "clean": "クリア",
     "no_data": "変数を読み込むにはインターネット接続が必要です。",
     "save": "保存",
-    "edit": "編集"
+    "edit": "編集",
+    "search_command": "コマンドを検索..."
   },
   "delete_favorite_modal": {
     "title": "お気に入り削除",
@@ -87,7 +88,8 @@
     "purge_image_cache": "画像キャッシュを消去",
     "purge_image_cache_done": "画像キャッシュを消去しました。次回ゲーム一覧を開いたときにカバー画像が再読み込みされます。",
     "tabbed_navigation": "タブナビゲーション",
-    "tabbed_navigation_hint": "ページをタブにして、ショルダーボタンで切り替えます。"
+    "tabbed_navigation_hint": "ページをタブにして、ショルダーボタンで切り替えます。",
+    "show_force_language": "非Steamゲームの言語オプションを表示"
   },
   "launch_options_view": {
     "title": "起動オプション",
@@ -420,5 +422,10 @@
         "タブナビゲーション（初期設定でオン、設定でオフにできます）：どこからでもコントローラーのショルダーボタンでページを切り替え"
       ]
     }
+  },
+  "force_language": {
+    "label": "非Steamゲームの言語を固定 ({{lang}})",
+    "description": "ゲームモードでは、SteamOS は非Steamゲームにシステム言語を渡しません。このオプションで言語を強制します。",
+    "detected": "検出: {{source}} → {{locale}}"
   }
 }

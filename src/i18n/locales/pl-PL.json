@@ -25,7 +25,8 @@
     "clean": "Wyczyść",
     "no_data": "Połączenie z internetem jest wymagane do załadowania zmiennych.",
     "save": "Zapisz",
-    "edit": "Edytuj"
+    "edit": "Edytuj",
+    "search_command": "Szukaj polecenia..."
   },
   "delete_favorite_modal": {
     "title": "Usuń ulubione",
@@ -87,7 +88,8 @@
     "purge_image_cache": "Wyczyść pamięć podręczną obrazów",
     "purge_image_cache_done": "Pamięć podręczna obrazów wyczyszczona — okładki zostaną wczytane ponownie po następnym otwarciu listy gier.",
     "tabbed_navigation": "Nawigacja kartami",
-    "tabbed_navigation_hint": "Strony jako karty, przełączane przyciskami barkowymi."
+    "tabbed_navigation_hint": "Strony jako karty, przełączane przyciskami barkowymi.",
+    "show_force_language": "Pokaż opcję języka gier spoza Steam"
   },
   "launch_options_view": {
     "title": "Opcje uruchamiania",
@@ -420,5 +422,10 @@
         "Nawigacja kartami, domyślnie włączona i wyłączana w Ustawieniach: zmiana strony przyciskami barkowymi kontrolera z dowolnego miejsca"
       ]
     }
+  },
+  "force_language": {
+    "label": "Wymuś język gier spoza Steam ({{lang}})",
+    "description": "W trybie gry SteamOS nie przekazuje języka systemu grom spoza Steam. Ta opcja go wymusza.",
+    "detected": "Wykryto: {{source}} → {{locale}}"
   }
 }
